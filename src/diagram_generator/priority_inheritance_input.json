@@ -6,6 +6,7 @@
                 0,
                 1,
                 0,
+                1,
                 0,
                 0
             ]
@@ -15,7 +16,8 @@
             "active": [
                 0,
                 0,
-                1,
+                0,
+                0,
                 1,
                 1
             ]
@@ -25,14 +27,21 @@
             "active": [
                 1,
                 0,
+                1,
                 0,
                 0,
                 0
             ]
         }
     },
-    "title": "Task Schedule with Priority Inversion",
+    "title": "Task Schedule with Priority Inheritance",
     "annotations": [
+        {
+            "task": "task_low",
+            "time": 0,
+            "position": "start",
+            "text": "Mutex Lock"
+        },
         {
             "task": "task_high",
             "time": 1,
@@ -41,21 +50,21 @@
         },
         {
             "task": "task_low",
-            "time": 0,
-            "position": "start",
-            "text": "Mutex Lock"
-        },
-        {
-            "task": "task_med",
             "time": 2,
             "position": "start",
-            "text": "Next Free Task Runs"
+            "text": "Inherits High Priority\nReleases Mutex"
+        },
+        {
+            "task": "task_high",
+            "time": 3,
+            "position": "end",
+            "text": "Resumes Execution"
         },
         {
             "task": "task_med",
             "time": 4,
-            "position": "end",
-            "text": "Never forced to yield as no\nready higher priority task\nRuns to completion"
+            "position": "start",
+            "text": "Starts execution"
         }
     ]
 }

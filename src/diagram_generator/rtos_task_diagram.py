@@ -56,6 +56,13 @@ def plot_task_schedule(task_data, title, annotations=None):
     ax.set_ylabel("Tasks")
     plt.title(title)
     plt.grid(axis="x", linestyle="--", alpha=0.5)
+
+    # Add a legend for the hatched rectangle
+    legend_patch = patches.Patch(
+        facecolor="none", edgecolor="hotpink", hatch="////", label="Task Running"
+    )
+    ax.legend(handles=[legend_patch], loc="upper right", fontsize=8, frameon=True)
+
     plt.tight_layout()
 
 
