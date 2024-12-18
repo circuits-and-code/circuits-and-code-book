@@ -10,6 +10,7 @@ def plot_task_schedule(task_data, title, annotations=None):
 
     Parameters:
     - task_data (dict): Dictionary containing task names and their active status.
+    - title (str): Title of the plot.
     - annotations (list): List of dictionaries specifying annotations.
     """
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -27,15 +28,15 @@ def plot_task_schedule(task_data, title, annotations=None):
     ax.set_xticklabels(range(1, max_time + 1))  # Time steps start from 1
 
     # Plot each task as horizontal blocks where active == 1
+    box_height = 0.4  # Reduced height for rectangles
     for i, (task_name, task_info) in enumerate(task_data.items()):
         active_states = task_info["active"]
         for time_idx, active in enumerate(active_states):
             if active == 1:
-                # Add a rectangle at (time_idx, task_index)
                 rect = patches.Rectangle(
-                    (time_idx, i - 0.4),  # (x, y) position
-                    1,
-                    0.8,  # Width and height of the block
+                    (time_idx, i - box_height / 2),  # Center the rectangle vertically
+                    1,  # Width of the rectangle
+                    box_height,  # Height of the rectangle
                     facecolor=None,
                     edgecolor="hotpink",
                     lw=1.5,
@@ -46,7 +47,7 @@ def plot_task_schedule(task_data, title, annotations=None):
     # Add annotations if provided
     if annotations:
         for annotation in annotations:
-            add_annotation(ax, annotation, task_names)
+            add_annotation(ax, annotation, task_names, box_height)
 
     # Beautify the plot
     ax.set_xlim(0, max_time)
@@ -54,31 +55,27 @@ def plot_task_schedule(task_data, title, annotations=None):
     ax.invert_yaxis()  # Invert Y-axis to align with input order
     ax.set_xlabel("Time")
     ax.set_ylabel("Tasks")
-    plt.title(title)
-    plt.grid(axis="x", linestyle="--", alpha=0.5)
+    ax.set_title(title)
+    ax.grid(axis="x", linestyle="--", alpha=0.5)
 
     # Add a legend for the hatched rectangle
     legend_patch = patches.Patch(
         facecolor="none", edgecolor="hotpink", hatch="////", label="Task Running"
     )
-    ax.legend(handles=[legend_patch], loc="upper right", fontsize=8, frameon=True)
+    ax.legend(handles=[legend_patch], loc="upper right", fontsize=10, frameon=True)
 
     plt.tight_layout()
 
 
-def add_annotation(ax, annotation, task_names):
+def add_annotation(ax, annotation, task_names, box_height):
     """
     Adds an annotation to the plot based on task and time position.
 
     Parameters:
     - ax: Matplotlib Axes object to add annotation to.
     - annotation (dict): Annotation schema.
-        Required keys:
-        - 'task': Task identifier.
-        - 'time': Time index (start or end).
-        - 'position': 'start' or 'end'.
-        - 'text': Annotation text.
     - task_names (list): List of task identifiers to find task index.
+    - box_height (float): Height of the rectangle to adjust text alignment.
     """
     task_index = task_names.index(annotation["task"])
     time_index = annotation["time"]
@@ -88,10 +85,11 @@ def add_annotation(ax, annotation, task_names):
     # Adjust alignment based on position (start or end)
     if position == "start":
         ha_align = "left"
-        x_pos = time_index + 0.05  # Slightly right inside the box
+        x_pos = time_index + 0.05
     else:  # 'end'
         ha_align = "right"
-        x_pos = time_index + 0.95  # Slightly left inside the box
+        x_pos = time_index + 0.95
+
     y_pos = task_index
 
     ax.text(
@@ -107,7 +105,8 @@ def add_annotation(ax, annotation, task_names):
     )
 
 
-if __name__ == "__main__":
+def main():
+    """Main function to parse arguments and plot the task schedule."""
     parser = argparse.ArgumentParser(description="Generate an RTOS task diagram.")
     parser.add_argument(
         "input_data_path",
@@ -121,12 +120,18 @@ if __name__ == "__main__":
     # Load task data from JSON file
     with open(args.input_data_path, "r") as file:
         input_data = json.load(file)
-        # Run the function
-        plot_task_schedule(
-            input_data["task_data"], input_data["title"], input_data["annotations"]
-        )
 
+    # Run the function
+    plot_task_schedule(
+        input_data["task_data"], input_data["title"], input_data.get("annotations")
+    )
+
+    # Save or display the plot
     if args.output_path:
         plt.savefig(args.output_path)
     else:
         plt.show()
+
+
+if __name__ == "__main__":
+    main()

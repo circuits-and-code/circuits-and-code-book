@@ -1,0 +1,20 @@
+name: Code Format Check
+
+on:
+  push:
+    branches:
+      - main 
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 
+        with:
+          submodules: recursive
+      - name: Set up system
+        run: python3 scripts/setup.py --skip-upgrade
+      - name: Check Code Format
+        run: python3 scripts/format.py --dry-run
