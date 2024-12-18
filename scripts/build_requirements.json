@@ -3,6 +3,7 @@
         "texlive",
         "latexmk",
         "texlive-latex-extra",
-        "texlive-fonts-recommended"
+        "texlive-fonts-recommended",
+        "build-essential"
     ]
 }
