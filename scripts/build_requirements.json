@@ -1,5 +1,6 @@
 {
     "apt": [
-        "texlive"
+        "texlive",
+        "latexmk"
     ]
 }
