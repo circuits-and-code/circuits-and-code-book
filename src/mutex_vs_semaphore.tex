@@ -45,8 +45,23 @@ The key differences between a mutex and a semaphore are that
     \item A mutex is typically used to protect access to a shared resource, while a semaphore is typically used to signal an event or control access to a pool of resources.
 \end{itemize}
 
-\subsection{Priority Inversion}
-A common follow-up question is to ask about the potential consequences of using a mutex in a real-time system. One of the most common issues is \textit{priority inversion}, which occurs when a high-priority task is blocked by a lower-priority task that holds a mutex. 
+\subsection{Priority Inversion and Inheritance}
+A common follow-up question is to ask about the potential consequences of using a mutex in a real-time system. One of the most common issues is \textit{priority inversion}, which occurs when a high-priority task is blocked by a lower-priority task that holds a mutex. An example of this situation is shown in figure \ref{fig:priority_inversion}. In this scenario, the high-priority task is blocked by the mutex held by the low-priority task. Since the medium priority task is of higher priority than the low-priority task, it will run before the low-priority task, causing the high-priority task to be blocked for an extended period of time. This can lead to missed deadlines and degraded system performance.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{generated_images/priority_inversion.png}
+    \caption{Priority inversion diagram.}
+    \label{fig:priority_inversion}
+\end{figure}
+
+A solution to fix this is called \textit{priority inheritance} - the OS will temporarily boost the priority of the low-priority task to the priority of the high-priority task while the low-priority task holds the mutex. This ensures that the high-priority task can run as soon as the low-priority task releases the mutex. An example of this situation is shown in figure \ref{fig:priority_inheritance}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{generated_images/priority_inheritance.png}
+    \caption{Priority inheritance diagram.}
+    \label{fig:priority_inheritance}
+\end{figure}
 
 \end{document}

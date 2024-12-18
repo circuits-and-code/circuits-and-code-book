@@ -8,9 +8,8 @@ OUTPUT_DIR = "output"
 MAIN_TEX_PATH = "main.tex"
 GENERATED_IMAGES_DIR = os.path.abspath("src/generated_images")
 IMAGE_GENERATION_COMMANDS = [
-    "python3 src/diagram_generator/priority_inversion.py src/diagram_generator/priority_inversion_input.json --output_path={}/priority_inversion.png".format(
-        GENERATED_IMAGES_DIR
-    ),
+    f"python3 src/diagram_generator/rtos_task_diagram.py src/diagram_generator/priority_inversion_input.json --output_path={GENERATED_IMAGES_DIR}/priority_inversion.png",
+    f"python3 src/diagram_generator/rtos_task_diagram.py src/diagram_generator/priority_inheritance_input.json --output_path={GENERATED_IMAGES_DIR}/priority_inheritance.png",
 ]
 
 
