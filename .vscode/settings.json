@@ -8,7 +8,7 @@
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "-pdf",
-                "-outdir=../output",
+                "-outdir=%OUTDIR%",
                 "%DOC%"
             ],
             "env": {}
@@ -21,7 +21,7 @@
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "-lualatex",
-                "-outdir=../output",
+                "-outdir=%OUTDIR%",
                 "%DOC%"
             ],
             "env": {}
@@ -34,7 +34,7 @@
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "-xelatex",
-                "-outdir=../output",
+                "-outdir=%OUTDIR%",
                 "%DOC%"
             ],
             "env": {}
@@ -124,5 +124,6 @@
             ],
             "env": {}
         }
-    ]
+    ],
+    "latex-workshop.latex.outDir": "../output"
 }

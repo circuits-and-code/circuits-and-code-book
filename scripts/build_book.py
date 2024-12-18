@@ -1,9 +1,8 @@
 import subprocess
-import argparse
 import os
 import shutil
 
-# Constant for the output directory
+# Constants for the output directory and main .tex file
 OUTPUT_DIR = "output"
 MAIN_TEX_PATH = "src/main.tex"
 
@@ -16,18 +15,24 @@ def main():
     print(f"Creating {OUTPUT_DIR} directory...")
     os.makedirs(OUTPUT_DIR)
 
-    # Construct the pdflatex command
-    pdflatex_command = f"pdflatex -output-directory={OUTPUT_DIR} {MAIN_TEX_PATH}"
+    # Construct the latexmk command
+    latexmk_command = [
+        "latexmk",
+        "-pdf",  # Generate PDF using pdflatex
+        "-pdflatex=pdflatex -interaction=nonstopmode -synctex=1 -output-directory="
+        + OUTPUT_DIR,
+        MAIN_TEX_PATH,
+    ]
 
-    # Run the pdflatex command and show the output in the console
-    print(f"Running command: {pdflatex_command}")
+    # Run the latexmk command and show the output in the console
+    print(f"Running command: {' '.join(latexmk_command)}")
     process = subprocess.Popen(
-        pdflatex_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        latexmk_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
 
     # Print the output in real-time
-    for line in iter(process.stdout.readline, b""):
-        print(line.decode().strip())
+    for line in process.stdout:
+        print(line.strip())
     process.stdout.close()
 
     # Wait for the process to finish and check the exit status
@@ -36,8 +41,8 @@ def main():
         print("PDF successfully compiled!")
     else:
         print("An error occurred during compilation.")
-        for line in iter(process.stderr.readline, b""):
-            print(line.decode().strip())
+        for line in process.stderr:
+            print(line.strip())
         process.stderr.close()
 
 
