@@ -125,5 +125,9 @@
             "env": {}
         }
     ],
-    "latex-workshop.latex.outDir": "../output"
+    "latex-workshop.latex.outDir": "../output",
+    "editor.wordWrap": "on",
+    "cSpell.words": [
+        "UART"
+    ],
 }

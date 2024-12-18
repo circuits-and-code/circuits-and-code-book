@@ -1,0 +1,61 @@
+{
+    "task_data": {
+        "task_high": {
+            "name": "High Priority Task",
+            "active": [
+                0,
+                1,
+                0,
+                0,
+                0
+            ]
+        },
+        "task_med": {
+            "name": "Med Priority Task",
+            "active": [
+                0,
+                0,
+                1,
+                1,
+                1
+            ]
+        },
+        "task_low": {
+            "name": "Low Priority Task",
+            "active": [
+                1,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    },
+    "title": "Task Schedule with Priority Inversion",
+    "annotations": [
+        {
+            "task": "task_high",
+            "time": 1,
+            "position": "start",
+            "text": "Mutex Lock, Fails"
+        },
+        {
+            "task": "task_low",
+            "time": 0,
+            "position": "start",
+            "text": "Mutex Lock"
+        },
+        {
+            "task": "task_med",
+            "time": 2,
+            "position": "start",
+            "text": "Next Free Task Runs"
+        },
+        {
+            "task": "task_med",
+            "time": 4,
+            "position": "end",
+            "text": "Never forced to yield as no\nready higher priority task\nRuns to completion"
+        }
+    ]
+}

@@ -1,6 +1,8 @@
 {
     "apt": [
         "texlive",
-        "latexmk"
+        "latexmk",
+        "texlive-latex-extra",
+        "texlive-fonts-recommended"
     ]
 }
