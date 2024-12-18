@@ -10,7 +10,8 @@
 \usepackage{graphicx}       % For images
 \usepackage{float}
 \usepackage{hyperref}
-
+\usepackage{xcolor}
+\usepackage{titlesec}
 
 
 \title{The Sahil and Daniel Firmware/Hardware Co-op Question Guide}
@@ -22,8 +23,16 @@
 
 \tableofcontents
 
-\newpage
+\renewcommand{\thesection}{\Roman{section}}
 
+\newpage
+\subfile{preamble.tex}
+
+% Reset to Arabic numerals and section counter
+\renewcommand{\thesection}{\arabic{section}}
+\setcounter{section}{0} % Reset section numbering
+
+\newpage
 \subfile{mutex_vs_semaphore.tex}
 
 
