@@ -12,6 +12,36 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{titlesec}
+\usepackage{listings}
+\usepackage{courier}
+
+% Listings settings for C language
+\lstdefinestyle{modernC}{
+    language=C,
+    basicstyle=\ttfamily\small, % Use modern monospaced font
+    keywordstyle=\color{blue}\bfseries,
+    identifierstyle=\color{black},
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{teal},
+    numberstyle=\tiny\color{gray},
+    numbers=left, 
+    numbersep=8pt,
+    backgroundcolor=\color{gray!10}, % Light gray background
+    frame=single,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    showstringspaces=false,
+    escapeinside={\%*}{*)}, % Escaping for inline LaTeX
+    morekeywords={uint8_t, uint16_t, uint32_t} % Custom keywords
+}
+
+% Set the style
+\lstset{style=modernC}
+
+\newcommand{\bluehref}[2]{%
+    \textcolor{blue}{\underline{\href{#1}{#2}}}%
+}
 
 
 \title{The Sahil and Daniel Firmware/Hardware Co-op Question Guide}
@@ -34,6 +64,9 @@
 
 \newpage
 \subfile{mutex_vs_semaphore.tex}
+
+\newpage
+\subfile{pid.tex}
 
 
 \end{document}

@@ -1,3 +1,4 @@
 black
 matplotlib
 click
+numpy

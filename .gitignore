@@ -10,3 +10,4 @@ output/
 __pycache__/
 
 generated_images/
+build/

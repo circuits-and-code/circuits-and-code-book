@@ -2,6 +2,7 @@ import subprocess
 import os
 import shutil
 import click
+import check_code_snippets
 
 # Constants
 OUTPUT_DIR = "output"
@@ -10,6 +11,7 @@ GENERATED_IMAGES_DIR = os.path.abspath("src/generated_images")
 IMAGE_GENERATION_COMMANDS = [
     f"python3 src/diagram_generator/rtos_task_diagram.py src/diagram_generator/priority_inversion_input.json --output_path={GENERATED_IMAGES_DIR}/priority_inversion.png",
     f"python3 src/diagram_generator/rtos_task_diagram.py src/diagram_generator/priority_inheritance_input.json --output_path={GENERATED_IMAGES_DIR}/priority_inheritance.png",
+    f"python3 src/diagram_generator/pid_discretization.py --output_path={GENERATED_IMAGES_DIR}/pid_discretization.png",
 ]
 
 
@@ -74,6 +76,7 @@ def main():
     """Main entry point of the script."""
     generate_images()
     execute_latex_build()
+    check_code_snippets.check_all_code_snippets()
 
 
 if __name__ == "__main__":
