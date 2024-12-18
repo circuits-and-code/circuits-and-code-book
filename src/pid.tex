@@ -1,0 +1,47 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Implement a PID controller in C and discuss its typical applications}
+A PID (\textit{Proportional-Integral-Derivative}) controller is common type of feedback controller. It's ubiquity comes from its relatively easy implementation and effectiveness in a wide range of control systems. Its typical applications include \textbf{motor speed/position control, temperature control, lighting regulation}, and many more. The theory behind PID controllers is considered to be out of scope for this guide, but Tim Wescott's article titled \bluehref{http://www.wescottdesign.com/articles/pid/pidWithoutAPhd.pdf}{PID Without a PhD} provides a great introduction to PID controllers without delving into linear control theory.
+
+\subsection{PID Controller Implementation}
+As a review, the form of a PID controller is given by equation \eqref{eq:pid_controller}. $K_p$ is the proportional gain, $K_i$ is the integral gain, and $K_d$ is the derivative gain, with $u(t)$ being the desired controller output. The error term $e(t)$ is the difference between the desired setpoint (i.e. reference) and the system output (i.e. process variable). The integral term is the sum of all past errors, and the derivative term is the rate of change of the error. The equation can appear daunting, but the implementation is quite straightforward.
+\begin{equation}
+    u(t) = K_p e(t) + K_i \int_{0}^{t} e(\tau) d\tau + K_d \frac{de(t)}{dt}
+    \label{eq:pid_controller}
+\end{equation}
+
+\noindent First, a C structure definition is created to hold the PID gains, as well as temporary variables for calculating the integral and derivative terms. This structure is shown in listing \ref{code:pid}.
+\lstinputlisting[caption={PID Control Structure}, label={code:pid}]{pid/pid_typedef.h}
+
+\noindent Breaking apart the problem into smaller functions, we can implement the terms of the equation as follows in C. Note that \texttt{dt} is the timestep (period) between control loop iterations.
+\begin{itemize}
+    \item The proportional term is simply the product of the proportional gain and the error. \newline
+    \texttt{const float p\_term = pid->K\_p * error;}.
+    \item The integral term accumulates the error over time, effectively summing up all past errors. To approximate this integral, we use the Backward Euler method, which updates the integral by adding the product of the current error and the timestep. Note that the computation of the \texttt{i\_term} comes after the addition of the integral in this approximation. See figure \ref{fig:pid_signal_discretization} for a visual example. \newline 
+    \texttt{pid->integral += error * dt;}. \newline
+    \texttt{const float i\_term = pid->K\_i * pid->integral;}. \newline
+    \item The derivative term is the rate of change of the error. To approximate this derivative, we use the Backward Euler method, which calculates the derivative as the difference between the current error and the previous error, divided by the timestep. See figure \ref{fig:pid_signal_discretization}.\newline
+    \texttt{const float d\_term = pid->K\_d * ((error - pid->prev\_error) / dt);}.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{generated_images/pid_discretization.png}
+    \caption{Input signal discretization in a PID Controller.}
+    \label{fig:pid_signal_discretization}
+\end{figure}
+
+\noindent Putting it all together, the PID controller step function is shown in Listing~\ref{code:pid_controller}. Note the added check for a \texttt{NULL} pointer, as well as the implicit assumption that the \texttt{pid->prev\_error} and \texttt{pid->integral} terms are initialized to zero before the first run.
+
+\lstinputlisting[caption={PID Controller Step}, label={code:pid_controller}]{pid/pid_controller.c}
+
+\subsection{Follow-ups}
+In an interview setting, you may be asked to discuss the following topics:
+\begin{itemize}
+    \item \textbf{Anti-windup}: What is integral windup, and how can it be prevented in a PID controller?
+    \item \textbf{Tuning}: What effect does adjusting the gains $K_p$, $K_i$ and $K_d$ have on the system's response?
+    \item \textbf{Filtering}: What are possible implications of using a poorly filtered signal with a PID controller?
+\end{itemize}
+
+\end{document}
