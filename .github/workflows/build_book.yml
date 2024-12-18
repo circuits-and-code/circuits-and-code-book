@@ -1,0 +1,41 @@
+name: Build Book
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-book:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Run setup script
+      run: python3 scripts/setup.py --skip-upgrade
+
+    - name: Build the book
+      run: python3 scripts/build_book.py
+
+    - name: Archive built book
+      if: success()
+      run: |
+        mkdir -p artifacts
+        cp output/main.pdf artifacts/
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: built-book
+        path: artifacts
