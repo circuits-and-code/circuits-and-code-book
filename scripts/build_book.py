@@ -1,55 +1,80 @@
 import subprocess
 import os
 import shutil
+import click
 
-# Constants for the output directory and main .tex file
+# Constants
 OUTPUT_DIR = "output"
 MAIN_TEX_PATH = "main.tex"
+GENERATED_IMAGES_DIR = os.path.abspath("src/generated_images")
+IMAGE_GENERATION_COMMANDS = [
+    "python3 src/diagram_generator/priority_inversion.py src/diagram_generator/priority_inversion_input.json --output_path={}/priority_inversion.png".format(
+        GENERATED_IMAGES_DIR
+    ),
+]
 
 
-def main():
-    # Remove the output directory if it exists, then recreate it
-    if os.path.exists(OUTPUT_DIR):
-        print(f"Removing existing {OUTPUT_DIR} directory...")
-        shutil.rmtree(OUTPUT_DIR)
-    print(f"Creating {OUTPUT_DIR} directory...")
-    os.makedirs(OUTPUT_DIR)
-    output_dir = os.path.abspath(OUTPUT_DIR)
+def remove_and_create_dir(directory_path):
+    """Remove the directory if it exists, then recreate it."""
+    if os.path.exists(directory_path):
+        click.secho(f"Removing existing {directory_path} directory...", fg="yellow")
+        shutil.rmtree(directory_path)
+    os.makedirs(directory_path)
 
-    # Construct the latexmk command
-    latexmk_command = [
-        "latexmk",
-        "-pdf",  # Generate PDF using pdflatex
-        "-pdflatex=pdflatex",
-        "-interaction=nonstopmode",
-        "-synctex=1",
-        f"-output-directory={output_dir}",
-        MAIN_TEX_PATH,
-    ]
 
-    os.chdir("src")
-
-    # Run the latexmk command and show the output in the console
-    print(f"Running command: {' '.join(latexmk_command)}")
+def run_command(command):
+    """Run a shell command and handle its output."""
+    click.secho(f"Running command: {command}", fg="green")
     process = subprocess.Popen(
-        latexmk_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
 
-    # chdir to src
-    # Print the output in real-time
+    # Print stdout in real-time
     for line in process.stdout:
         print(line.strip())
     process.stdout.close()
 
-    # Wait for the process to finish and check the exit status
+    # Wait for process to finish and handle errors
     return_code = process.wait()
-    if return_code == 0:
-        print("PDF successfully compiled!")
-    else:
-        print("An error occurred during compilation.")
+    if return_code != 0:
+        click.secho("An error occurred:", fg="red")
         for line in process.stderr:
             print(line.strip())
-        process.stderr.close()
+        raise RuntimeError("Command failed: {}".format(command))
+
+
+def generate_images():
+    """Generate images using predefined commands."""
+    remove_and_create_dir(GENERATED_IMAGES_DIR)
+    for command in IMAGE_GENERATION_COMMANDS:
+        run_command(command)
+
+
+def execute_latex_build():
+    """Compile the LaTeX document using latexmk."""
+    remove_and_create_dir(OUTPUT_DIR)
+    output_dir = os.path.abspath(OUTPUT_DIR)
+
+    latexmk_command = (
+        f"latexmk -pdf -pdflatex=pdflatex -interaction=nonstopmode "
+        f"-synctex=1 -output-directory={output_dir} {MAIN_TEX_PATH}"
+    )
+
+    os.chdir("src")  # Change to the source directory
+    try:
+        run_command(latexmk_command)
+        click.secho("PDF successfully compiled!", fg="green")
+    except RuntimeError:
+        click.secho("Failed to compile PDF.", fg="red")
+        raise
+    finally:
+        os.chdir("..")  # Return to the original directory
+
+
+def main():
+    """Main entry point of the script."""
+    generate_images()
+    execute_latex_build()
 
 
 if __name__ == "__main__":

@@ -57,7 +57,6 @@ def plot_task_schedule(task_data, title, annotations=None):
     plt.title(title)
     plt.grid(axis="x", linestyle="--", alpha=0.5)
     plt.tight_layout()
-    plt.show()
 
 
 def add_annotation(ax, annotation, task_names):
@@ -108,6 +107,7 @@ if __name__ == "__main__":
         type=str,
         help="Path to JSON file containing task data.",
     )
+    parser.add_argument("--output_path", type=str, help="Path to save the plot.")
 
     args = parser.parse_args()
 
@@ -118,3 +118,8 @@ if __name__ == "__main__":
         plot_task_schedule(
             input_data["task_data"], input_data["title"], input_data["annotations"]
         )
+
+    if args.output_path:
+        plt.savefig(args.output_path)
+    else:
+        plt.show()
