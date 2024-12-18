@@ -1,12 +1,52 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{Mutex vs. Semaphore}
+\section{What are the differences between a mutex and a semaphore, and in what use cases are each typically employed?}
 
-\section{Math Example}
-Here is a simple equation:
-\begin{equation}
-   E = mc^2
-\end{equation}
+A mutex and a semaphore are both synchronization primitives that can be used to signal and/or synchronize access to shared resources in a multi-threaded environment. 
+
+\subsection{Semaphore}
+A \textit{semaphore} (also known as a \textit{counting semaphore}) is a signalling mechanism that allows a thread to signal one or more waiting threads that a particular event has occurred. It can be thought of as a shared non-negative integer counter.
+\newline
+\newline
+Using a semaphore involves two main operations: \begin{itemize}
+    \item \texttt{signal\_semaphore()} - increments the semaphore counter
+    \item \texttt{wait\_for\_semaphore\_signal()} - decrements the semaphore count, and if the count is less than zero, blocks the calling thread until the count is greater than zero.
+\end{itemize}
+
+\noindent A semaphore is often used in the following scenarios:
+\begin{itemize}
+    \item Controlling access to a pool of resources 
+    \begin{itemize}
+        \item Ex: A server thread with a limited number of connections - the semaphore count would represent the number of available connections, with the semaphore being decremented when a connection is acquired and incremented when a connection is released. A client thread would wait for the semaphore to be incremented before attempting to acquire a connection.
+    \end{itemize}
+    \item Signalling to thread(s) that a particular event has occurred. In the context of an RTOS, where there is only one core available, a semaphore can be used to signal an event to a higher priority task from a lower priority task, and have the higher priority task run instantly. This is because the higher priority task will preempt the lower priority task once it is no longer 'blocked' by the semaphore as it will be available for the higher priority task to acquire.
+    \begin {itemize}
+        \item Ex: An interrupt service routine (ISR) can signal to a worker thread that an event has occurred. \textit{Note: Event flags are also commonly used for this purpose, if provided by the OS.}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Mutex}
+A \textit{mutex} (short for \textit{mutual exclusion}) is a signalling mechanism that is used to prevent multiple threads from accessing a shared resource simultaneously. It can be thought of as a lock that is either locked or unlocked.
+\newline
+\newline
+\noindent Using a mutex involves two main operations: \begin{itemize}
+    \item \texttt{lock\_mutex()} - attempts to lock the mutex. If the mutex is already locked, the calling thread will block until the mutex is unlocked.
+    \item \texttt{unlock\_mutex()} - unlocks the mutex, allowing other threads to lock it.
+\end{itemize}
+
+\noindent Consider a UART driver that is being accessed by multiple threads. If the UART driver is not thread-safe, it is possible that two threads could attempt to write to the UART at the same time, causing garbled output. In this case, a mutex could be used to ensure that only one thread can access the UART at a time.
+
+\subsection{Putting it together}
+The key differences between a mutex and a semaphore are that
+\begin{itemize}
+    \item A mutex only has 2 states, locked and unlocked, while a semaphore can count.
+    \item A mutex has a concept of ownership, while a semaphore does not. This means that the thread that locks a mutex must be the one to unlock it, while any thread can signal or wait on a semaphore.
+    \item A mutex is typically used to protect access to a shared resource, while a semaphore is typically used to signal an event or control access to a pool of resources.
+\end{itemize}
+
+\subsection{Priority Inversion}
+A common follow-up question is to ask about the potential consequences of using a mutex in a real-time system. One of the most common issues is \textit{priority inversion}, which occurs when a high-priority task is blocked by a lower-priority task that holds a mutex. 
+
 
 \end{document}

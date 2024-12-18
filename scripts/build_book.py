@@ -4,7 +4,7 @@ import shutil
 
 # Constants for the output directory and main .tex file
 OUTPUT_DIR = "output"
-MAIN_TEX_PATH = "src/main.tex"
+MAIN_TEX_PATH = "main.tex"
 
 
 def main():
@@ -14,15 +14,20 @@ def main():
         shutil.rmtree(OUTPUT_DIR)
     print(f"Creating {OUTPUT_DIR} directory...")
     os.makedirs(OUTPUT_DIR)
+    output_dir = os.path.abspath(OUTPUT_DIR)
 
     # Construct the latexmk command
     latexmk_command = [
         "latexmk",
         "-pdf",  # Generate PDF using pdflatex
-        "-pdflatex=pdflatex -interaction=nonstopmode -synctex=1 -output-directory="
-        + OUTPUT_DIR,
+        "-pdflatex=pdflatex",
+        "-interaction=nonstopmode",
+        "-synctex=1",
+        f"-output-directory={output_dir}",
         MAIN_TEX_PATH,
     ]
+
+    os.chdir("src")
 
     # Run the latexmk command and show the output in the console
     print(f"Running command: {' '.join(latexmk_command)}")
@@ -30,6 +35,7 @@ def main():
         latexmk_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
 
+    # chdir to src
     # Print the output in real-time
     for line in process.stdout:
         print(line.strip())
