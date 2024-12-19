@@ -128,8 +128,13 @@
     "latex-workshop.latex.outDir": "../output",
     "editor.wordWrap": "on",
     "cSpell.words": [
+        "microcontroller",
         "Sahil",
         "setpoint",
         "UART"
     ],
+    "files.associations": {
+        "bitbang_ex.h": "c"
+    },
+    "cmake.ignoreCMakeListsMissing": true,
 }
