@@ -1,0 +1,22 @@
+{
+  "signal": [
+    { 
+      "name": "SCLK", 
+      "wave": "1.lhlhlhlhlhlhlhlh." 
+    },
+    { 
+      "name": "CS", 
+      "wave": "1l................h" 
+    },
+    { 
+      "name": "MOSI", 
+      "wave": "x.3.3.3.3.3.3.3.3.x", 
+      "data": ["D7", "D6", "D5", "D4", "D3", "D2", "D1", "D0"] 
+    },
+    { 
+      "name": "MISO", 
+      "wave": "x.4.4.4.4.4.4.4.4.x", 
+      "data": ["Q7", "Q6", "Q5", "Q4", "Q3", "Q2", "Q1", "Q0"] 
+    }
+  ]
+}
