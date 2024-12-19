@@ -1,0 +1,31 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{How would you sense the voltage of a battery with a microcontroller?}
+
+\noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter on the microcontroller can sample the signal safely.
+
+\subsection{Motivation}
+Electronics systems often require high power actuators and batteries to operate so relatively high battery bus voltages are often selected by engineers. Microcontrollers require low input voltages (i.e. 1.8V, 3.3V, 5V) to operate to reduce power consumption. As chemical batteries charge and discharge the voltage of that battery varies due to state of charge and other factors. For this reason, microcontrollers in embedded systems often need to sense the voltage of a battery!
+
+\subsection{Voltage Divider Circuit}
+introduce the circuit, how to solve it with kcl/kvl and ohms law 
+
+what happens if resistors are too small? 
+
+what happens if resistors are too large?
+
+\subsection{Analog to Digital Sampling}
+Clamping diodes on microcontroller pins, TVS diodes 
+
+Basics of sampling theory, why you want a low pass capacitor. How to solve for cutoff frequency? 
+
+Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of sampling theory! 
+
+\subsection{Input Bias Current}
+Real world ADCs suffer from a non-ideality known as input bias current. 
+
+Can compensate with lower value resistors.
+Can compensate with unity gain op amp? That amp also has input bias, compensation resistor. 
+
+\end{document}
