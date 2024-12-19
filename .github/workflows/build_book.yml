@@ -35,7 +35,7 @@ jobs:
         mkdir -p artifacts
         cp output/main.pdf artifacts/
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: built-book
         path: artifacts

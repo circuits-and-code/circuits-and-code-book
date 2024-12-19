@@ -4,6 +4,7 @@
         "latexmk",
         "texlive-latex-extra",
         "texlive-fonts-recommended",
-        "build-essential"
+        "build-essential",
+        "texlive-fonts-extra"
     ]
 }
