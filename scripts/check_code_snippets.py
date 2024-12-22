@@ -1,4 +1,4 @@
-CODE_SNIPPET_PATHS = ["src/pid", "src/bitbang_spi"]
+CODE_SNIPPET_PATHS = ["src/code/pid", "src/code/bitbang_spi"]
 
 import subprocess
 import shutil

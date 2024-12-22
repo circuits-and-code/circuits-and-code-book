@@ -15,7 +15,7 @@ As a review, the form of a PID controller is given by equation \eqref{eq:pid_con
 \end{equation}
 
 \noindent First, a C structure definition is created to hold the PID gains, as well as temporary variables for calculating the integral and derivative terms. This structure is shown in listing \ref{code:pid}.
-\lstinputlisting[caption={PID Control Structure}, label={code:pid}]{pid/pid_typedef.h}
+\lstinputlisting[caption={PID Control Structure}, label={code:pid}]{code/pid/pid_typedef.h}
 
 \noindent Breaking apart the problem into smaller functions, we can implement the terms of the equation as follows in C. Note that \texttt{dt} is the timestep (period) between control loop iterations.
 \begin{itemize}
@@ -37,7 +37,7 @@ As a review, the form of a PID controller is given by equation \eqref{eq:pid_con
 
 \noindent Putting it all together, the PID controller step function is shown in Listing~\ref{code:pid_controller}. Note the added check for a \texttt{NULL} pointer, as well as the implicit assumption that the \texttt{pid->prev\_error} and \texttt{pid->integral} terms are initialized to zero before the first run.
 
-\lstinputlisting[caption={PID Controller Step}, label={code:pid_controller}]{pid/pid_controller.c}
+\lstinputlisting[caption={PID Controller Step}, label={code:pid_controller}]{code/pid/pid_controller.c}
 
 \subsection{Follow-ups}
 In an interview setting, you may be asked to discuss the following topics:
