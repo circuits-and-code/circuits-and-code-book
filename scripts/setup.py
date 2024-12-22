@@ -15,22 +15,29 @@ def run_command(command):
         exit(1)
 
 
-def update_and_upgrade(skip_upgrade=False):
+def update_and_upgrade(skip_upgrade=False, no_sudo=False):
     """Update and optionally upgrade the system's package list."""
     print("Updating apt package list...")
-    run_command("sudo apt-get update")
-    if not skip_upgrade:
-        print("Upgrading apt packages...")
-        run_command("sudo apt-get upgrade -y")
+    command = (
+        "apt-get update" if skip_upgrade else "apt-get update && apt-get upgrade -y"
+    )
+
+    if no_sudo:
+        run_command(command)
     else:
-        print("Skipping apt upgrade...")
+        run_command(f"sudo {command}")
 
 
-def install_apt_components(components):
+def install_apt_components(components, no_sudo=False):
     """Install components using apt-get."""
     print("Installing apt components...")
     component_list = " ".join(components)
-    run_command(f"sudo apt-get install -y {component_list}")
+    command = f"apt-get install -y {component_list}"
+
+    if no_sudo:
+        run_command(command)
+    else:
+        run_command(f"sudo {command}")
 
 
 def install_pip_components(components):
@@ -85,6 +92,11 @@ if __name__ == "__main__":
         default="scripts/python_requirements.txt",
         help="Path to the pip requirements.txt file",
     )
+    parser.add_argument(
+        "--no-sudo",
+        action="store_true",
+        help="Do not use sudo to install packages",
+    )
     args = parser.parse_args()
 
     # Read from JSON and requirements.txt
@@ -102,7 +114,7 @@ if __name__ == "__main__":
         exit(1)
 
     # Execute functions
-    update_and_upgrade(skip_upgrade=args.skip_upgrade)
-    install_apt_components(apt_components)
+    update_and_upgrade(skip_upgrade=args.skip_upgrade, no_sudo=args.no_sudo)
+    install_apt_components(apt_components, no_sudo=args.no_sudo)
     install_pip_components(pip_components)
     update_submodules()
