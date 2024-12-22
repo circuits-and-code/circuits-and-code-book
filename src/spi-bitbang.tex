@@ -6,7 +6,7 @@
 \subsection{Given Code}
 Assume the header shown in listing \ref{code:bit-bang-header} is available for use in the bit-banging implementation of SPI. The transceive function should use CPOL = 1, CPHA = 1. 
 
-\lstinputlisting[caption={Bit Bang HAL Header}, label={code:bit-bang-header}]{bitbang_spi/bitbang_spi_header.h}
+\lstinputlisting[caption={Bit Bang HAL Header}, label={code:bit-bang-header}]{code/bitbang_spi/bitbang_spi_header.h}
 
 \spoilerline
 
@@ -20,7 +20,7 @@ In embedded systems, communication protocols like SPI are typically handled by d
 
 \noindent Bit-banging is usually implemented by manually controlling the individual pins of a microcontroller in software to emulate a hardware peripheral. While this approach is slower and uses more CPU resources, it provides flexibility for situations where hardware support is limited. Listing \ref{code:bit-bang-square-ex} shows an example of a square wave generator implemented using bit-banging. Note the use of \texttt{delayMicroseconds()} to control the timing of the square wave, which blocks the CPU until the desired time has passed, which contributes to the inefficiency of bit-banging.
 
-\lstinputlisting[caption={Bit-Banged Square Wave Implementation}, label={code:bit-bang-square-ex}]{bitbang_spi/bitbang_ex.c}
+\lstinputlisting[caption={Bit-Banged Square Wave Implementation}, label={code:bit-bang-square-ex}]{code/bitbang_spi/bitbang_ex.c}
 
 \subsection{SPI Review}
 Consider the SPI timing diagram in figure \ref{fig:spi_timing}. The SPI protocol consists of 4 signals: MOSI (Master Out Slave In)\footnote{The phrases 'master' and 'slave' are slowly being phased out due to their origins. However, at time of writing, MISO and MOSI remain the most common, and are used in this guide. Alternative verbiage includes 'controller' for master and 'peripheral' for slave.}, MISO (Master In Slave Out), SCLK (Serial Clock), and CS (Chip Select). The master device controls the clock signal and selects the device using the CS signal. Data is transmitted on MOSI and received on MISO simultaneously, with the clock signal synchronizes the master/slave communication.
@@ -53,6 +53,6 @@ Going through the timing diagram in figure \ref{fig:spi_timing} piece by piece, 
 
 % TODO: Make sure we talk about bit shifting somewhere... it's kind of a fundamental topic lol
 
-\lstinputlisting[caption={Bit Bang SPI Implementation}, label={code:bit-bang-spi}]{bitbang_spi/bitbang_spi.c}
+\lstinputlisting[caption={Bit Bang SPI Implementation}, label={code:bit-bang-spi}]{code/bitbang_spi/bitbang_spi.c}
 
 \end{document}
