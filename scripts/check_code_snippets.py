@@ -2,6 +2,7 @@ CODE_SNIPPET_PATHS = [
     "src/code/pid",
     "src/code/bitbang_spi",
     "src/code/bitstream_parity",
+    "src/code/keyword",
 ]
 
 import subprocess
