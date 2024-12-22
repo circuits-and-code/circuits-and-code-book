@@ -12,3 +12,6 @@ Latex Extension Approach:
 - Download `LaTeX Workshop` from VSCode Extension Marketplace
 - Open and save `main.tex` to compile the entire directory 
 - Open and save `{filename}.tex` to compile an individual file
+
+## Notes
+https://docs.google.com/document/d/1Akp2vB-8zvOjKRvKKtQ4xRd1HW5HwOgYOPMeZlsEUBo/edit

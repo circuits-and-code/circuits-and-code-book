@@ -5,27 +5,95 @@
 
 \noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter on the microcontroller can sample the signal safely.
 
+% DRAW :voltage divider circuit
+
 \subsection{Motivation}
-Electronics systems often require high power actuators and batteries to operate so relatively high battery bus voltages are often selected by engineers. Microcontrollers require low input voltages (i.e. 1.8V, 3.3V, 5V) to operate to reduce power consumption. As chemical batteries charge and discharge the voltage of that battery varies due to state of charge and other factors. For this reason, microcontrollers in embedded systems often need to sense the voltage of a battery!
+Electronics systems often require high power actuators and batteries to operate so relatively high battery bus voltages are often selected by engineers. Microcontrollers require low input voltages (i.e. 1.8V, 3.3V, 5V) to operate to reduce power consumption and transistor size. As chemical batteries charge and discharge the voltage of that battery varies due to state of charge and other factors. For this reason, microcontrollers in embedded systems often need to sense the voltage of a battery!
 
 \subsection{Voltage Divider Circuit}
-introduce the circuit, how to solve it with kcl/kvl and ohms law 
+Ohm's law relates voltage, $V$, to current, $I$, by \eqref{eq:ohms_law} for a resistor.
+\begin{equation}
+    V = I * R
+    \label{eq:ohms_law}
+\end{equation}
+Applying \eqref{eq:ohms_law} to each of the two resistors shown results in \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot} where $I$ is identical for both resistors as they are connected in series.
+\begin{equation}
+    V_in - V_out = I * R_t
+    I = \frac{V_in - V_out}{R_t}
+    \label{eq:ohms_law_top}
+\end{equation}
+\begin{equation}
+    V_out - 0 = I * R_b
+    I = \frac{V_out}{R_b}
+    \label{eq:ohms_law_bot}
+\end{equation} 
+Solving the system of equations to eliminate $I$ gives \eqref{eq:voltage_divider} as follows. 
+\begin{equation}
+    \frac{V_out}{R_b} = \frac{V_in - V_out}{R_t}
+    V_out * R_t = R_b * (V_in - V_out)
+    V_out * R_t = V_in * R_b - V_out * R_b
+    V_out * R_t + V_out * R_b = V_in * R_b
+    V_out (R_t + R_b) = V_in * R_b
+    \frac{V_out}{V_in} = \frac{R_b}{R_t + R_b}
+    \label{eq:voltage_divider}
+\end{equation} 
+This indicates for a given $V_in$, based on the values chosen for $R_t$ and $R_b$ where $R_t$ > 0 and $R_b$ > 0, $V_out$ is set such that $V_in$ > $V_out$. Given a maximum ADC voltage and a maximum battery voltage a desired ratio between $R_t$ and $R_b$ can be determined. However, we still need to select $R_t$ + $R_b$ = $R_sum$. Recall that resistor power dissipation is given by
+\begin{equation}
+    P = V * I = \frac{V * V}{R} = I * I * R 
+    \label{eq:resistor_power}
+\end{equation} 
+Note that the input voltage of the battery is fixed so if $R_sum$ is too small then power dissipation increases rapdily. This power dissipation occurs constantly and can be significantly wasteful. If $R_sum$ is too large then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. In reality we often select $I$ = ~1mA of current to flow in a sensing resistor divider though different values may be seen based on the application. This boils down to \eqref{eq:divider_current}. 
+\begin{equation}
+    R_t + R_b = R_sum = \frac{V_in_nominal}{I} = \frac{V_in_nominal}{~1mA}
+    \label{eq:divider_current}
+\end{equation} 
 
-what happens if resistors are too small? 
+\subsection{Pin Overvoltage}
+Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event! The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. 
 
-what happens if resistors are too large?
+% DRAW : a pin with diodes on it to rails inside microcontroller 
 
-\subsection{Analog to Digital Sampling}
-Clamping diodes on microcontroller pins, TVS diodes 
+These diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_cc$, and when a voltage is applied that is below the microcontroller's ground reference, $V_ss$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Essentially, allowing the microcontroller to sink some current limitted overvoltage event is permissible in some cases. 
 
+A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. Additionally, when overvolting an ADC pin you will not be receiving accurate readings.
+
+\subsection{Analog to Digital}
+
+% TODO : write this section
 Basics of sampling theory, why you want a low pass capacitor. How to solve for cutoff frequency? 
+
+The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a digital value. 
 
 Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of sampling theory! 
 
 \subsection{Input Bias Current}
-Real world ADCs suffer from a non-ideality known as input bias current. 
+Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_bias$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
 
-Can compensate with lower value resistors.
-Can compensate with unity gain op amp? That amp also has input bias, compensation resistor. 
+% DRAW : resistor divider with I_bias loading current on V_out
+
+\begin{equation}
+    % TODO : write out the proof
+    \label{eq:loaded_voltage_divider}
+\end{equation} 
+
+Using the above circuit we can solve for a new equation for $V_out$ shown in \eqref{eq:voltage_divider}. We can compensate for this by reducing $R_sum$. 
+% TODO : explain why
+
+Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
+
+% DRAW : op-amp bufferred version
+
+% TODO : write : That amp also has input bias, compensation resistor. 
+
+\subsection{Quiescent Current}
+% TODO : write
+quiescent current is current drawn when the circuit is just sitting there
+can remove quiescent current of this circuit with transistors -> why is has to be high side switching
+using FET or a BJT for this functionality
+
+\subsection{Layout Considerations}
+% TODO : write
+low impedance net should be as small as possible to avoid noise from coupling into the signal. 
+low pass capacitor should be placed near the ADC pin so it can filter out any noise that couples into the low impedance analog net. 
 
 \end{document}
