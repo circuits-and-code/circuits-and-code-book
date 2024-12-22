@@ -12,7 +12,7 @@ A \textit{semaphore} (also known as a \textit{counting semaphore}) is a signalli
 \newline
 Using a semaphore involves two main operations: \begin{itemize}
     \item \texttt{signal\_semaphore()} - increments the semaphore counter
-    \item \texttt{wait\_for\_semaphore\_signal()} - decrements the semaphore count, and if the count is less than zero, blocks the calling thread until the count is greater than zero.
+    \item \texttt{wait\_for\_semaphore\_signal(timeout)} - decrements the semaphore count, and if the count is less than zero, blocks the calling thread until the count is greater than zero.
 \end{itemize}
 
 \noindent A semaphore is often used in the following scenarios:
@@ -32,7 +32,7 @@ A \textit{mutex} (short for \textit{mutual exclusion}) is a signalling mechanism
 \newline
 \newline
 \noindent Using a mutex involves two main operations: \begin{itemize}
-    \item \texttt{lock\_mutex()} - attempts to lock the mutex. If the mutex is already locked, the calling thread will block until the mutex is unlocked.
+    \item \texttt{lock\_mutex(timeout)} - attempts to lock the mutex. If the mutex is already locked, the calling thread will block until the mutex is unlocked.
     \item \texttt{unlock\_mutex()} - unlocks the mutex, allowing other threads to lock it.
 \end{itemize}
 
