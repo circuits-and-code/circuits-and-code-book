@@ -1,5 +1,8 @@
 {
     "apt": [
+        "git",
+        "cmake",
+        "clang-format",
         "texlive",
         "latexmk",
         "texlive-latex-extra",

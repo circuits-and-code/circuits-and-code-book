@@ -9,12 +9,15 @@ on:
 
 jobs:
   check-format:
+    # Specify the Docker container for the job
+    container:
+      image: sahilkale1/fw_hw_book_docker_img:latest
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3 
         with:
           submodules: recursive
-      - name: Set up system
-        run: python3 scripts/setup.py --skip-upgrade
       - name: Check Code Format
         run: python3 scripts/format.py --dry-run
