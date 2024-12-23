@@ -30,7 +30,7 @@ A simple approach to count the number of 1's in a byte is to iterate through eac
 \noindent While effective, this approach is not efficient. It requires 8 iterations to count the number of 1's in a byte. We can improve this by using a technique called \textit{Brian Kernighan's Algorithm}.
 
 \subsubsection{Brian Kernighan's Algorithm}
-Brian Kernighan's Algorithm is a technique to count the number of set bits in a byte. The algorithm works by repeatedly 'removing' the least significant $1$ bit and counting the number of iterations required to reach 0. Listing \ref{code:count-one-brian-kernighan} shows the implementation of this algorithm. It is more efficient than the simple approach as it only requires the number of set bits to be counted.
+Brian Kernighan's Algorithm is a technique to count the number of set bits in a byte. The algorithm works by repeatedly 'removing' the least significant $1$ bit and counting the number of iterations required to reach 0. Listing \ref{code:count-one-brian-kernighan} shows the implementation of this algorithm. It is more efficient than the simple approach as it only requires the number of set bits to be counted \cite{seander_bithacks}.
 
 \lstinputlisting[caption={Brian Kernighan's Algorithm to Count Number of 1's in a Byte}, label={code:count-one-brian-kernighan}]{code/bitstream_parity/count_ones_bk.c}
 
