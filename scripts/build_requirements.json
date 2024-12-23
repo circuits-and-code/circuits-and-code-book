@@ -8,6 +8,8 @@
         "texlive-latex-extra",
         "texlive-fonts-recommended",
         "build-essential",
-        "texlive-fonts-extra"
+        "texlive-fonts-extra",
+        "texlive-bibtex-extra",
+        "biber"
     ]
 }
