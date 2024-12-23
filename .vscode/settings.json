@@ -128,8 +128,10 @@
     "latex-workshop.latex.outDir": "../output",
     "editor.wordWrap": "on",
     "cSpell.words": [
+        "deasserted",
         "Kernighan's",
         "microcontroller",
+        "prescaler",
         "Sahil",
         "setpoint",
         "UART"

@@ -1,0 +1,111 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Given the following datasheet and code snippet, initialize the ADC and write a polling function to read the ADC voltage.}
+Assume that the ADC is to be run with an ADC conversion clock frequency of 1 MHz.
+
+\subsubsection{Functions to Implement}
+
+\lstinputlisting[caption={User Implemented Functions}, label={code:adc-init-user-function}]{code/adc_init/adc_init_header.h}
+
+\subsubsection{Sample Datasheet}
+The MythicalMicrocontroller is a big-endian microcontroller with a clock frequency of 8 MHz. It features a single-shot 12-bit analog-to-digital converter (ADC) with a reference voltage of 3.3V, with a multiplexer to select between 4 input channels. 
+
+\paragraph{ADC Configuration Register (WRITE) - ADDR 0x4000007C}
+The ADC configuration register is used to configure the ADC module with the key system parameters. The ADC must be enabled and ready before any conversions can be performed.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|p{10cm}|}
+        \hline
+        \textbf{Name} & \textbf{Bits} & \textbf{Description} \\ \hline
+        \texttt{ADC\_EN} & 7 & ADC Enable Bit - Write \texttt{1} to enable the ADC for conversion. \\ \hline
+        \texttt{ADC\_CONVERSION\_BEGIN} & 6 & Set bit to begin an ADC conversion. The \texttt{ADC\_READY} bit in the \texttt{ADC\_STATUS\_REGISTER} must be asserted before this bit is set. The bit clears automatically once a conversion finishes. \\ \hline
+        \texttt{ADC\_MUX\_SEL 1:0} & 5:4 & ADC multiplexer channel selection bits. \\ \hline
+        \texttt{ADC\_CLK\_DIV 3:0} & 3:0 & ADC Clock prescaler. The ADC clock frequency is determined by the following equation:\newline$f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ \\ \hline
+    \end{tabular}
+    \caption{ADC Register Description}
+    \label{tab:adc_en_register}
+\end{table}
+
+\paragraph{ADC Status Register (READ) - ADDR 0x4000007D}
+The ADC status register is used to check the status of the ADC module. The ADC is ready to perform a conversion when the \texttt{ADC\_RDY} bit is set. The \texttt{ADC\_BUSY} bit is set when the ADC is performing a conversion, and cleared when the conversion is complete.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|p{10cm}|}
+        \hline
+        \textbf{Name} & \textbf{Bits} & \textbf{Description} \\ \hline
+        \texttt{ADC\_RDY} & 7 & ADC is ready for use when bit is \texttt{1} \\ \hline
+        \texttt{RESERVED} & 6:1 & Reserved \\ \hline
+        \texttt{ADC\_BUSY} & 0 & ADC is busy with processing the conversion when the bit is asserted. A transition from the bit being asserted to being deasserted indicates the completion of a conversion. \\ \hline
+    \end{tabular}
+    \caption{ADC Register Description}
+    \label{tab:adc_status_register}
+\end{table}
+\newpage
+\paragraph{ADC Data HIGH Register (READ) - ADDR 0x4000007E}
+The ADC Data H register contains the upper 4 bits of the 12-bit ADC conversion result.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|p{10cm}|}
+        \hline
+        \textbf{Name} & \textbf{Bits} & \textbf{Description} \\ \hline
+        \texttt{RESERVED} & 7:4 & Reserved \\ \hline
+        \texttt{ADC\_DATA\_H 3:0} & 3:0 & Upper 4 bits of the 12-bit ADC conversion result \\ \hline
+    \end{tabular}
+    \caption{ADC Data H Register Description}
+    \label{tab:adc_data_h_register}
+\end{table}
+
+\paragraph{ADC Data LOW Register (READ) - ADDR 0x4000007F}
+The ADC Data L register contains the lower 8 bits of the 12-bit ADC conversion result.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|p{10cm}|}
+        \hline
+        \textbf{Name} & \textbf{Bits} & \textbf{Description} \\ \hline
+        \texttt{ADC\_DATA\_L 7:0} & 7:0 & Lower 8 bits of the 12-bit ADC conversion result \\ \hline
+    \end{tabular}
+    \caption{ADC Data L Register Description}
+    \label{tab:adc_data_l_register}
+\end{table}
+
+\spoilerline
+
+\subsection{Setting Up the Problem}
+When coming across a peripheral initialization problem, it is essential to break down the problem into smaller parts and to understand the requirements - they often have a lot of bark, but not much bite given the limited scope of an interview. The problem can be broken down into two main parts: initialization and conversion. As a first step, we can go ahead and define the register addresses and bit positions for the ADC configuration and status registers, shown in listing \ref{code:adc-registers}.
+
+\lstinputlisting[caption={ADC Registers and Bit Positions}, label={code:adc-registers}]{code/adc_init/adc_init_registers.h}
+\noindent Note the use of \texttt{volatile} in the register definitions. This keyword tells the compiler that the value of the variable can change at any time, which is essential for memory-mapped registers.
+
+\subsection {initialization} 
+Initializing the ADC can be broken down into the following steps. The code is shown in listing \ref{code:adc-init}.
+\begin{enumerate}
+    \item \textbf{Set the ADC Clock Frequency}: Calculate the ADC clock prescaler value to achieve a 1 MHz ADC conversion clock frequency given the 8 MHz MCU clock frequency. We can use the formula $f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ to calculate the prescaler ($ADC\_CLK\_DIV$) value (3).
+    \item \textbf{Enable the ADC}: Write to the ADC configuration register to enable the ADC.
+    \item \textbf{Poll the ADC Status Register}: Poll the ADC status register to check if the ADC is ready for a conversion.
+\end{enumerate}
+
+\lstinputlisting[caption={ADC Initialization}, label={code:adc-init}]{code/adc_init/adc_init.c}
+
+\subsection{Conversion}
+The conversion problem can be addressed as follows. The code is shown in listing \ref{code:adc-conversion}.
+\begin{enumerate}
+    \item \textbf{Set the ADC Multiplexer Channel}: Write to the ADC configuration register to select the desired ADC multiplexer channel.
+    \item \textbf{Begin the ADC Conversion}: Write to the ADC configuration register to begin an ADC conversion.
+    \item \textbf{Poll the ADC Status Register}: Wait for the ADC to finish the conversion by polling the ADC status register.
+    \item \textbf{Read the ADC Data Registers}: Read the ADC data registers to get the 12-bit ADC conversion result. We need to read the ADC data registers in two separate reads (high and low) and combine the results by shifting the high bits left by 8 and ORing with the low bits.
+    \item \textbf{Calculate the ADC Voltage}: Calculate the ADC voltage from the 12-bit ADC conversion result by using the formula $V_{ADC} = \frac{ADC\_RESULT \times V_{REF}}{2^{12}}$.
+\end{enumerate}
+
+\lstinputlisting[caption={ADC Conversion}, label={code:adc-conversion}]{code/adc_init/adc_conversion.c}
+
+\subsection{Follow-ups}
+In an interview setting, you may be asked to discuss the following topics:
+\begin{itemize}
+    \item Strategies for avoiding polling in the ADC conversion function (ex: DMA, interrupts, etc).
+    \item The impact of the ADC clock frequency on the ADC conversion time and resolution.
+    \item ADC error sources and how to mitigate them.
+\end{itemize}
+
+\end{document}
