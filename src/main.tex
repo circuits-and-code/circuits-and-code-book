@@ -14,6 +14,12 @@
 \usepackage{titlesec}
 \usepackage{listings}
 \usepackage{courier}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{references.bib}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{nameref}
 
 % Listings settings for C language
 \lstdefinestyle{modernC}{
@@ -45,8 +51,13 @@
 
 \newcommand{\spoilerline}{%
     \begin{center}
-        ------------ \textbf{Spoilers Ahead} ------------
+        ------------ \textbf{Answers Ahead} ------------
     \end{center}%
+}
+
+\newcommand{\newnoindentpara}{
+    \par
+    \noindent
 }
 
 
@@ -75,6 +86,9 @@
 \subfile{pid.tex}
 
 \newpage
+\subfile{bitstream_parity.tex}
+
+\newpage
 \subfile{voltage_divider.tex}
 
 \newpage
@@ -82,5 +96,26 @@
 
 \newpage
 \subfile{transmission_lines.tex}
+
+\newpage
+\subfile{spi-bitbang.tex}
+
+\newpage
+\subfile{interrupts.tex}
+
+\newpage
+\subfile{keyword.tex}
+
+\newpage
+\subfile{adc_init.tex}
+
+\newpage
+\subfile{packet-parsing.tex}
+
+\newpage
+\printbibliography
+
+\newpage
+\subfile{appendix_packet_parsing_tests.tex}
 
 \end{document}

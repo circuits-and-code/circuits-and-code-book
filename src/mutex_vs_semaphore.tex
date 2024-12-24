@@ -4,7 +4,7 @@
 \section{What are the differences between a mutex and a semaphore, and in what use cases are each typically employed?}
 
 \spoilerline
-\noindent A mutex and a semaphore are both synchronization primitives that can be used to signal and/or synchronize access to shared resources in a multi-threaded environment. 
+\noindent A mutex and a semaphore are both synchronization primitives that can be used to signal and/or synchronize access to shared resources in a multi-threaded environment. This section summarizes general principles of interrupt service routines, as commonly described in embedded systems literature - Digikey has excellent articles on the implementation of real-time operating systems (RTOS) and synchronization primitives \cite{digikey_rtos}.
 
 \subsection{Semaphore}
 A \textit{semaphore} (also known as a \textit{counting semaphore}) is a signalling mechanism that allows a thread to signal one or more waiting threads that a particular event has occurred. It can be thought of as a shared non-negative integer counter.
@@ -12,7 +12,7 @@ A \textit{semaphore} (also known as a \textit{counting semaphore}) is a signalli
 \newline
 Using a semaphore involves two main operations: \begin{itemize}
     \item \texttt{signal\_semaphore()} - increments the semaphore counter
-    \item \texttt{wait\_for\_semaphore\_signal()} - decrements the semaphore count, and if the count is less than zero, blocks the calling thread until the count is greater than zero.
+    \item \texttt{wait\_for\_semaphore\_signal(timeout)} - decrements the semaphore count, and if the count is less than zero, blocks the calling thread until the count is greater than zero.
 \end{itemize}
 
 \noindent A semaphore is often used in the following scenarios:
@@ -32,7 +32,7 @@ A \textit{mutex} (short for \textit{mutual exclusion}) is a signalling mechanism
 \newline
 \newline
 \noindent Using a mutex involves two main operations: \begin{itemize}
-    \item \texttt{lock\_mutex()} - attempts to lock the mutex. If the mutex is already locked, the calling thread will block until the mutex is unlocked.
+    \item \texttt{lock\_mutex(timeout)} - attempts to lock the mutex. If the mutex is already locked, the calling thread will block until the mutex is unlocked.
     \item \texttt{unlock\_mutex()} - unlocks the mutex, allowing other threads to lock it.
 \end{itemize}
 
@@ -56,7 +56,7 @@ A common follow-up question is to ask about the potential consequences of using 
     \label{fig:priority_inversion}
 \end{figure}
 
-A solution to fix this is called \textit{priority inheritance} - the OS will temporarily boost the priority of the low-priority task to the priority of the high-priority task while the low-priority task holds the mutex. This ensures that the high-priority task can run as soon as the low-priority task releases the mutex. An example of this situation is shown in figure \ref{fig:priority_inheritance}.
+A solution to fix this is called \textit{priority inheritance} - the OS will temporarily boost the priority of the low-priority task to the priority of the high-priority task while the low-priority task holds the mutex \cite{digikey_priority_inversion}. This ensures that the high-priority task can run as soon as the low-priority task releases the mutex. An example of this situation is shown in figure \ref{fig:priority_inheritance}.
 
 \begin{figure}[H]
     \centering

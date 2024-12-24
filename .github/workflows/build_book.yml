@@ -12,28 +12,26 @@ jobs:
   build-book:
     runs-on: ubuntu-latest
 
+    container:
+      image: sahilkale1/fw_hw_book_docker_img:latest
+
     steps:
     # Step 1: Checkout the repository
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Step 2: Set up Python
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-
-    - name: Run setup script
-      run: python3 scripts/setup.py --skip-upgrade
-
+    # Step 2: Build the book
     - name: Build the book
       run: python3 scripts/build_book.py
 
+    # Step 3: Archive the built book
     - name: Archive built book
       if: success()
       run: |
         mkdir -p artifacts
         cp output/main.pdf artifacts/
+
+    # Step 4: Upload artifact
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
