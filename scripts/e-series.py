@@ -1,4 +1,4 @@
-
+# fmt: off
 # Constants for series values for reference
 # https://en.wikipedia.org/wiki/E_series_of_preferred_numbers 
 
@@ -19,3 +19,5 @@ E_VALUES_DICT = {}
 for i, e_series in enumerate(E_SERIES) : # series is singular and plural which is a bit confusing but hopefully this is self-explanatory lol
     E_VALUES_DICT[f"E{e_series}"] = E_VALUES_LIST[i]
     assert e_series == len(E_VALUES_LIST[i])
+
+# fmt: on
