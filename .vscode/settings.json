@@ -138,7 +138,8 @@
         "UART"
     ],
     "files.associations": {
-        "bitbang_ex.h": "c"
+        "bitbang_ex.h": "c",
+        "timer_registers.h": "c"
     },
     "cmake.ignoreCMakeListsMissing": true,
 }
