@@ -81,7 +81,7 @@ When coming across a peripheral initialization problem, it is essential to break
 \subsection {initialization} 
 Initializing the ADC can be broken down into the following steps. The code is shown in listing \ref{code:adc-init}.
 \begin{enumerate}
-    \item \textbf{Set the ADC Clock Frequency}: Calculate the ADC clock prescaler value to achieve a 1 MHz ADC conversion clock frequency given the 8 MHz MCU clock frequency. We can use the formula $f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ to calculate the prescaler ($ADC\_CLK\_DIV$) value (3).
+    \item \textbf{Set the ADC Clock Frequency}: Calculate the ADC clock prescaler value to achieve a 1 MHz ADC conversion clock frequency given the 8 MHz MCU clock frequency. We can use the formula $f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ to calculate the prescaler ($ADC\_CLK\_DIV$) value (7).
     \item \textbf{Enable the ADC}: Write to the ADC configuration register to enable the ADC.
     \item \textbf{Poll the ADC Status Register}: Poll the ADC status register to check if the ADC is ready for a conversion.
 \end{enumerate}

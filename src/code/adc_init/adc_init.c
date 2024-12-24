@@ -3,7 +3,7 @@
 
 void adc_init(void) {
   // Set the prescaler to 3
-  const uint8_t PRESCALER_1MHZ_ADC_CLK = 3;
+  const uint8_t PRESCALER_1MHZ_ADC_CLK = 7;
   *ADC_CONFIG_REG = PRESCALER_1MHZ_ADC_CLK;
 
   // Enable the ADC
