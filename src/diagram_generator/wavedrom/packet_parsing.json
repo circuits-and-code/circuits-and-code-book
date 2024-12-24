@@ -1,0 +1,20 @@
+{
+  "signal": [
+    { 
+      "wave": "34.4.6.6.6.6.7",
+            "data": [
+        "0x55",
+        "Temp MSB + 32",
+        "Temp LSB (Fractional)",
+        "Pressure MSB",
+        "Pressure Byte 2",
+        "Pressure Byte 3",
+        "Pressure LSB",
+        "Checksum"
+      ]
+    },
+  ],
+    "config": {
+    "hscale": 2,
+   },
+}
