@@ -1,0 +1,31 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{If you probe the resistance a 50 ohm coaxial cable on one end with the other end open circuit with a DMM, what resistance does it show? What if the cable is infinitely long?}
+
+% draw: what probing the coaxial cable looks like (center pin and shield )
+
+\noindent On a bench-top coaxial cable (relatively short length) the DMM (\textit{Digital Multi Meter}) will read OL (\textit{Open Loop}) when probed as in DC analysis the center pin is not connected to the outer shield. When the transmission line is of infinite length the DMM will report the characteristic impedance, in this case, 50 ohms.
+
+\subsection{Transmission Lines}
+% draw : schematic of transmission line model
+% draw : lumped element section of RLGC inside transmission line section
+
+% TODO : basically use lumped element model to derive Z_o = sqrt(L/C) I think is best path here
+
+\subsection{DMM Resistance Measurement}
+A DMM measured resistance by 
+% TOOD : write 
+
+In the case of the finite length transmission line, the DMM and human are usually not fast enough to sample the resistance before the transmission line is able to refelct the voltage waves back and forth down the transmission line enough for it to all even out and only the DC values to be considerred.
+
+In the case of the infinite length transmission line, the DMM is creating a voltage wave down the transmission line that is never reflected back (as the line is infinite) and is measuring the current it is providing into the line. 
+
+\subsection{Time Domain Reflectometry}
+Lossless transmission lines are characerized by a propogation constant, $beta$, and characteristic impedance, $Z_o$. 
+
+A finite length coaxial cable can have it's length measured using time domain reflectometry (TDR) analysis provided the propogation constant is known. This is useful as it let's us figure out where a break could be inside a coaxial cable. 
+
+% TODO : consider, concept of a bounce diagram to be discussed here? ? 
+
+\end{document}
