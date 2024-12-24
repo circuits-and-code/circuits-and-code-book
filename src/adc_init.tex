@@ -78,7 +78,7 @@ When coming across a peripheral initialization problem, it is essential to break
 \lstinputlisting[caption={ADC Registers and Bit Positions}, label={code:adc-registers}]{code/adc_init/adc_init_registers.h}
 \noindent Note the use of \texttt{volatile} in the register definitions. This keyword tells the compiler that the value of the variable can change at any time, which is essential for memory-mapped registers.
 
-\subsection {initialization} 
+\subsection {Initialization} 
 Initializing the ADC can be broken down into the following steps. The code is shown in listing \ref{code:adc-init}.
 \begin{enumerate}
     \item \textbf{Set the ADC Clock Frequency}: Calculate the ADC clock prescaler value to achieve a 1 MHz ADC conversion clock frequency given the 8 MHz MCU clock frequency. We can use the formula $f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ to calculate the prescaler ($ADC\_CLK\_DIV$) value (3).
