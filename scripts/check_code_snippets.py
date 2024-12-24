@@ -5,6 +5,7 @@ CODE_SNIPPET_PATHS = [
     "src/code/keyword",
     "src/code/adc_init",
     "src/code/packet_parsing",
+    "src/code/timer",
 ]
 
 RUNNABLE_PATHS = ["src/code/packet_parsing/build"]

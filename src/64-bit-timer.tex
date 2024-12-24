@@ -1,0 +1,36 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Given a 64-bit timer consisting of two 32-bit count registers, implement a function to get the 64 bit count.}
+Assume that the timer is initialized and updates itself atomically. The following registers are available, with the header for the question available in Listing~\ref{code:timer-registers}:
+\begin{itemize}
+    \item \texttt{CNT\_LOW} is the lower 32 bits of the timer count.
+    \item \texttt{CNT\_HIGH} is the upper 32 bits of the timer.
+\end{itemize}
+
+\lstinputlisting[caption={Timer Registers}, label={code:timer-registers}]{code/timer/timer_registers.h}
+
+\spoilerline
+
+\subsection{Simple Implementation}
+On first glance, it's tempting to claim the answer is as simple as combining the two 32-bit registers into a 64-bit value, much like what is presented in Listing~\ref{code:timer-64bit-naive}.
+
+\lstinputlisting[caption={Naive 64-bit Timer Read}, label={code:timer-64bit-naive}]{code/timer/timer_64bit_naive.c}
+
+\noindent However, this implementation fails to consider that the 32-bit registers are updated by timer hardware asynchronously. If the timer updates the \texttt{CNT\_HIGH} register between reading \texttt{CNT\_LOW} and \texttt{CNT\_HIGH}, the resulting 64-bit value will be incorrect. Consider the following scenario:
+\begin{enumerate}
+    \item Assume that at the start of the function, the timer count register values are as follows: \texttt{CNT\_LOW = 0xFFFFFFFF}, while \texttt{CNT\_HIGH = 0x00000000}.
+    \item The function reads the \texttt{CNT\_LOW} value as \texttt{0xFFFFFFFF}\footnote{This is $2^{32}-1$ in hex - \texttt{0x} means hexadecimal notation in C and is commonly used in datasheets and embedded software manuals as a result of the industry's adoption of C and C++.}.
+    \item In between reading \texttt{CNT\_LOW} and \texttt{CNT\_HIGH}, the timer increments. This causes \texttt{CNT\_LOW} to wrap around to \texttt{0x00000000} and consequently \texttt{CNT\_HIGH} to increment to \texttt{0x00000001}.
+    \item The function now reads the \texttt{CNT\_HIGH} value as \texttt{0x00000001}.
+    \item The resulting 64-bit value is \texttt{0x00000001 FFFFFFFF}, which is incorrect. The correct value should be \texttt{0x00000001 00000000}.
+\end{enumerate}
+
+\noindent The implications of this is that the 64 bit time value is no longer \textit{monotonic} (constantly increasing), aside from being straight up incorrect. Consumers of this function may experience unexpected behavior if the timer is used for timekeeping or scheduling, as the time value may appear to jump backwards if called near a timer update/roll-over. Note that this issue would also occur if the read order of the high and low COUNT registers were swapped in the implementation.
+
+\subsection{Correct Implementation}
+To correctly read the 64-bit timer value, we need to ensure that the \texttt{CNT\_HIGH} register and \texttt{CNT\_LOW} register are 'synchronized' in time. This can be achieved by reading the \texttt{CNT\_HIGH} register first, then reading the \texttt{CNT\_LOW} register, and finally reading the \texttt{CNT\_HIGH} register again. If the two \texttt{CNT\_HIGH} reads are equal, we can be confident that the 64-bit value is correct as a roll-over did not occur. If a roll-over did occur, we re-read the low and high values and use that for the computation of the 64 bit time, as we are no longer close to a roll-over event. The correct implementation is shown in Listing~\ref{code:timer-64bit-correct}.
+
+\lstinputlisting[caption={Correct 64-bit Timer Read}, label={code:timer-64bit-correct}]{code/timer/timer_64bit_correct.c}
+
+\end{document}
