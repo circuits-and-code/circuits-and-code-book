@@ -1,0 +1,87 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Briefly describe \textit{Controller Area Network} (CAN)?}
+
+\spoilerline
+\noindent \textit{Controller Area Network} (CAN) is a popular communication protocol developed by Bosch in the 1980's \cite{cadence_canbus_history}. It's widely used in the automotive and robotics industries due to its robustness, reliability, and tailor-made features for automotive-type environments.\newline
+\newnoindentpara \textit{Note that CAN is a fairly complex protocol, and depending on the interviewee's knowledge level about the protocol, can cause an answer to this question to get quite deep and involved. However, this answer describes some of the primary features of CAN that are integral to its operation, as many of those features are asked as standalone questions or elaborated upon in an interview setting.} \newline
+
+\subsection{CAN Physical Layer}
+The CAN standard defines the physical and data link layers of the OSI model. The physical layer uses a \textbf{differential pair} of wires (\textit{CAN\_H and CAN\_L}) to transmit data, as opposed to a single wire. It is an open-drain bus, meaning that the bus is pulled to a dominant state (logical 0) by a node asserting a dominant state, while a recessive state (logical 1) is achieved by no node asserting a dominant state - this is shown in figure \ref{fig:can-dominant-recessive}. Note that CAN requires a separate transceiver to convert the digital signals from the CAN peripheral (known as \textit{CAN\_TX} and \textit{CAN\_RX}) to the differential signals on the bus. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/can_dominant_recessive.png}
+    \caption{Dominant (CAN H ~3.5V, CAN L ~1.5V) and recessive (CAN H/L = ~2.5V) bits \cite{ti_can_signal_levels}}
+    \label{fig:can-dominant-recessive}
+\end{figure}
+
+\subsubsection{Differential Pair} 
+A differential pair works by creating 2 signals: a positive signal, and a negative signal (which is the logical inverse of the positive signal). Both signals are transmitted simultaneously to the receiver, which can then subtract the two signals to recover the original data. A schematic implementation of a differential receiver is shown in figure \ref{fig:diff-physical-layer}, with a sample digital message shown in figure \ref{fig:diff-digital-sample}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/wikipedia_diff_signal.png}
+    \caption{Differential Pair Physical Layer, Source: Wikipedia \cite{wikipedia_differential_signalling}}
+    \label{fig:diff-physical-layer}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/diff_digital_signal.png}
+    \caption{Digital Differential Signal Sample}
+    \label{fig:diff-digital-sample}
+\end{figure}
+
+\noindent An advantage of using a differential pair is that it reduces the impact of electromagnetic interference (EMI) on the signal, as any interference will affect both wires equally. This allows the receiver to subtract the two signals, effectively removing the interference. The schematic in figure \ref{fig:diff-physical-layer-noise} shows how the receiver can subtract the two signals to remove noise.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/diff_pair_noise_immunity.png}
+    \caption{Differential Pair Physical Layer with Noise, Source: Stack Overflow \cite{stackoverflow_diff_pair_noise}}
+    \label{fig:diff-physical-layer-noise}
+\end{figure}
+
+\subsection{Bus Topology}
+CAN uses a \textbf{multi-master} communication scheme, meaning that any node on the bus can initiate a message transmission. This is in contrast to a \textbf{master-slave} communication scheme, where only the master can initiate communication. They are connected in a \textbf{bus topology}, where all nodes are electrically \footnote{Physically, they may be connected differently, however, this answer only focuses on the electrical connection} connected in parallel. Essentially, every node on the bus can see every message transmitted on the bus, and every node has the ability to initiate message transmission. The bus is terminated with a 120 ohm resistor at both ends to prevent signal reflections. Note that the CAN bus is \textit{asynchronous}, meaning every node must know the bus \textit{bitrate} beforehand to understand transmissions from other nodes. A schematic of a bus topology is shown in figure \ref{fig:bus-topology}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/wikipedia_can_bus_topology.png}
+    \caption{CAN Bus Topology, Source: Wikipedia \cite{wikipedia_can_bus_image}}
+    \label{fig:bus-topology}
+\end{figure}
+
+\subsection{Message Structure}
+A CAN message consists of a variety of fields, of which the most important are:
+\begin{itemize}
+    \item \textbf{Arbitration Field/Message identifier:} This field contains the message identifier, which is used to determine message priority. The lower the value of the identifier, the higher the priority of the message.
+    \item \textbf{Control Field:} This field contains information about the message, such as the message length.
+    \item \textbf{Data Field:} This field contains the actual data being transmitted. In CAN 2.0, this field can contain up to 8 bytes of data.
+    \item \textbf{CRC Field:} This field contains a cyclic redundancy check (CRC) to ensure the message's data integrity.
+    \item \textbf{Acknowledgement Field:} This field is used to acknowledge the receipt of a message.
+\end{itemize}
+
+\noindent Typically, a microcontroller will have a CAN peripheral that handles the low-level details of the CAN protocol, such as message transmission, reception, error detection, etc. The microcontroller's firmware will interact with the CAN peripheral to send and receive messages, as well as configure key parameters such as the bitrate, message filters (only receive certain message ID's), etc.
+
+\subsubsection{CAN Arbitration}
+CAN features a unique, \textit{non-destructive} (without data loss), \textit{bit-wise} arbitration mechanism, based on the message identifier. Due to the open-drain nature of the bus, a dominant bit (0) will always override a recessive bit (1). When two nodes start transmitting a message identifier, they constantly monitor the bus to see if the message identifier bit they are transmitting is the same as the message identifier bit on the bus. If a node sees that the message identifier it is transmitting is different from the message identifier on the bus, it will stop transmitting and wait for the bus to become idle before trying to transmit again. Because of this, the node with the lowest message identifier will always win the arbitration and be able to transmit its message (and thus, lower message ID's have higher priority). This is shown in figure \ref{fig:can-arbitration}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/can_bus_arbitration.png}
+    \caption{CAN Arbitration Sequence}
+    \label{fig:can-arbitration}
+\end{figure}
+
+\noindent The CAN arbitration mechanism is one of the key features that make CAN a robust and reliable communication protocol. It ensures that the node with the highest priority message will always be able to transmit its message, even in the presence of multiple nodes trying to transmit messages simultaneously. However, care should be used with low message identifiers, as they can starve (or \textit{step on}) higher message identifiers from transmitting.
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item \textbf{Explain how CAN can detect TX errors using TX/RX loopback?}
+    \item \textbf{How would you debug a CAN bus that is not working?}
+    \item \textbf{What is 'Time Quanta' in CAN?}
+\end{itemize}
+
+
+\end{document}

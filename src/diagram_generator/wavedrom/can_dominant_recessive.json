@@ -1,0 +1,26 @@
+{
+    "signal": [
+      { 
+        "name": "CAN H", 
+        "wave": "z1" ,
+      },
+      { 
+        "name": "CAN L", 
+        "wave": "z0" ,
+      },
+      { 
+        "name": "Binary", 
+        "wave": "38",
+        "node": "........d...",
+        "data": ["1 (recessive)", "0 (dominant)"]
+      },
+      { 
+        "name": "Equivalent Bus Waveform", 
+        "wave": "z2" ,
+      },
+    ],
+      "config" : {
+      "hscale": 3
+      }
+  }
+  
