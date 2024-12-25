@@ -2,12 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 
-NUM_POINTS = 1
+NUM_POINTS = 5
 
 
 def plot_sine_backward_derivative_and_sum(NUM_POINTS=20):
     # Time range
-    T = 0.4 * np.pi  # One full sine wave period
+    T = 0.8 * np.pi  # One full sine wave period
     dt = T / NUM_POINTS  # Time step based on the number of points
     t = np.linspace(0, T, 1000)  # Continuous time for the sine wave
 
