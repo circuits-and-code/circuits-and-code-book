@@ -7,13 +7,22 @@
 Embedded systems often need to track power and current consumption of loads to:
 \begin{itemize}
     \item Determine battery state of charge by integrating the power the battery has been charged and discharged over time
-    \item Detect failures if a load is drawing an excessive amount of power. 
-    \item Ensure the system does not provide too much power to
+    \item Detect if a load is drawing an excessive amount of power indicating it has failed or an anomaly is occurring. 
+    \item Ensure the system does not overload a source power supply which could cause the entire system to lose power. 
+    \item Ensure a load is connected nominally.
 \end{itemize}
-Power and current are electrically related by $P = I * V$. We've already seen how sense microcontroller's can sense voltages, $V$, so now we need to sense current to determine power. 
+Power and current are electrically related by $P = I * V$. We've already seen how sense microcontroller's can sense voltages, $V$, so now we will explore current, $I$, sensing which is related to power electrically where $P = I * V$.
 
 \subsection{Resistive Current Sensing}
-% TODO : write
+The simplest and most commonly used method of current sense in embedded systems is resistive current sense which leverages Ohm's Law, $I = \frac{V}{R}$, to sense the voltage drop across a known resistor value in series with the load to determine the amount of current flowing.
+An important design decision for engineers is selecting the resistor to use as $R$ in this case. 
+
+% If the value chosen for $R$ is large -power consumption goes up
+% large vs small R values 
+
+% high side vs low side 
+
+
 
 \subsection{Other Methods}
 % TODO : write
