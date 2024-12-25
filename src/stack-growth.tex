@@ -1,19 +1,19 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{Write a C function to determine the direction of stack growth on your system.}
+\section{Write a C function to determine the direction of stack growth on a system.}
 \spoilerline
 
 \subsection{Understanding the Stack}
-The stack is a region of memory that is used to store local variables and function call information. The stack is a \textit{stack} data structure, meaning that data comes in as though it was last-in, first-out (LIFO). This means that the last item placed on the stack is the first item to be removed. The stack is used to store local variables, function arguments, and the return address of the function\footnote{It's worth noting that the direction of stack growth is usually a strictly academic question - there is little use in only knowing the direction of stack growth.}. This is opposed to \textit{heap memory}, which is allocated \textit{dynamically} and is used to store data that persists beyond the scope of a function call and is managed by the user using \texttt{malloc} and \texttt{free}.
+The stack is a region of memory that is used to store local variables and function call information. The stack uses a \textit{stack} data structure, meaning that data is organized with by last-in, first-out (LIFO) organization. This means that the last item placed on the stack is the first item to be removed. The stack is used to store local variables, function arguments, and the return address of the function\footnote{It's worth noting that the direction of stack growth is usually a strictly academic question - there is usually little use in only knowing the direction of stack growth.}. This is opposed to \textit{heap memory}, which is allocated \textit{dynamically} and is used to store data that persists beyond the scope of a function call and is managed by the user using \texttt{malloc} and \texttt{free}.
 
 \subsubsection{Stack Frame Example}
-When a function is called a new \textit{stack frame} is created, the return address is pushed onto the stack, and when the function returns, the return address is popped off the stack and execution. If you've heard of the terms stack trace, this is where it comes from - looking through the contents of the stack to find the 'path' of execution as well as the contents of the arguments supplied.
+When a function is called, a new \textit{stack frame} is pushed onto the call stack. This stack frame typically includes the return address of the calling function, local variables, and sometimes arguments for the function. When the function returns, its stack frame is popped off the stack, and execution resumes from the stored return address. The term stack trace refers to examining the stack's contents to understand the sequence of function calls that led to the current state, along with associated information like return addresses and (in some cases) function arguments.
 \newline
 \newnoindentpara Consider the following C snippet in this example, on a system where the stack grows downwards (from higher addresses to lower addresses). 
 \lstinputlisting[caption={Stack Example}, label={code:stack-ex}]{code/stack/stack_ex/main.c}
 
-\noindent Generally speaking, the stack might look something like what is found in Table \ref{table:stack_overview} if we paused inside the \texttt{multiply} function. Note the stack grows downwards, hence the decrease in address values. Also note that a new stack frame is created for each function call.
+\noindent Generally speaking, the stack might look something like what is found in Table \ref{table:stack_overview} if we paused inside the \texttt{multiply} function. Note the stack grows downwards in this example system, hence the decrease in address values. Also note that a new stack frame is created for each function call.
 
 \begin{table}[H]
     \centering

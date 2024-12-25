@@ -1,26 +1,35 @@
 {
-    "signal": [
-      { 
-        "name": "Node A: ID 0x452", 
-        "wave": "xz2..z2zxxxx" ,
-        "node": ".......c...."
-      },
-      { 
-        "name": "Node B: ID 0x442", 
-        "wave": "xz2..z2...z2",
-      },
-      { 
-        "name": "Bus Waveform", 
-        "wave": "xz2..z2...z2",
-      },
-      { 
-        "name": "Binary", 
-        "wave": "x38883878838",
-        "node": "........d...",
-        "data": ["1", "0", "0", "0", "1", "0", "0", "0", "0", "1", "0"]
-      },
-    ],
-      "edge": [
-    "c-~>d Loses Arbitration",]
-  }
-  
+  "signal": [
+    { 
+      "name": "Node A: ID 0x452", 
+      "wave": "xz2..z2zxxxx" ,
+    },
+    { 
+      "name": "Node A in Binary", 
+      "wave": "x3888389xxxx",
+       "node": ".......c....",
+      "data": ["1", "0", "0", "0", "1", "0", "1"]
+    },
+    { 
+      "name": "Node B: ID 0x442", 
+      "wave": "xz2..z2...z2",
+    },
+    { 
+      "name": "Node B in Binary", 
+      "wave": "x38883878838",
+      "data": ["1", "0", "0", "0", "1", "0", "0", "0", "0", "1", "0"]
+    },
+    { 
+      "name": "Bus Waveform", 
+      "wave": "xz2..z2...z2",
+    },
+    { 
+      "name": "Bus Waveform in Binary", 
+      "wave": "x38883878838",
+      "node": "........d...",
+      "data": ["1", "0", "0", "0", "1", "0", "0", "0", "0", "1", "0"]
+    },
+  ],
+    "edge": [
+  "c->d Node A Loses Arbitration",]
+}

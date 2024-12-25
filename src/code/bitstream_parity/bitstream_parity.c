@@ -13,7 +13,7 @@ bool bitstream_parity_valid(uint8_t *bitstream, uint32_t length,
   switch (scheme) {
   case BITSTREAM_PARITY_EVEN:
     // If the number of ones is odd, the parity bit should be 1
-    expected_parity = (ones & 1U) != 0U;
+    expected_parity = (ones & 1U) != 0U; // & 1U is equivalent to % 2
     break;
   case BITSTREAM_PARITY_ODD:
     // If the number of ones is even, the parity bit should be 0
