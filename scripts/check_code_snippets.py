@@ -6,9 +6,15 @@ CODE_SNIPPET_PATHS = [
     "src/code/adc_init",
     "src/code/packet_parsing",
     "src/code/timer",
+    "src/code/stack",
+    "src/code/stack/stack_ex",
 ]
 
-RUNNABLE_PATHS = ["src/code/packet_parsing/build"]
+RUNNABLE_PATHS = [
+    "src/code/packet_parsing/build",
+    "src/code/stack/build",
+    "src/code/stack/stack_ex/build",
+]
 
 import subprocess
 import shutil
