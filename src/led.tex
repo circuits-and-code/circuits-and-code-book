@@ -3,6 +3,8 @@
 
 \section{How to power a green LED at 10mA current from a microcontroller GPIO pin capable of sourcing and sinking 5mA maximum with a 3.3V logic level?}
 
+\spoilerline
+
 \noindent The microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired so an external transistor is required to buffer the signal from the microcontroller. The following circuit in figure (led circuit) demonstrates a simple cost optimized solution to this problem. 
 
 % DRAW: microcontroller I/O pin connected to the base of an NPN BJT through a current limitting resistor.

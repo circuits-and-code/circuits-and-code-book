@@ -1,0 +1,40 @@
+{
+    "signal": [
+      {
+        "name": "Bitstream - No Parity",
+        "wave": "x101.0.1.xx"
+      },
+      {
+        "name": "Binary - No Parity",
+        "wave": "x33333333xx",
+        "data": ["1", "0", "1", "1", "0", "0", "1", "1"]
+      },
+      {
+        "name": "Bitstream - Odd Parity",
+        "wave": "x101.0.1.0x"
+      },
+      {
+        "name": "Binary - Odd Parity",
+        "wave": "x333333337x",
+        "data": ["1", "0", "1", "1", "0", "0", "1", "1", "0"]
+      },
+      {
+        "name": "Bitstream - Even Parity",
+        "wave": "x101.0.1..x"
+      },
+      {
+        "name": "Binary - Even Parity",
+        "wave": "x333333337x",
+        "data": ["1", "0", "1", "1", "0", "0", "1", "1", "1"]
+      },
+      {
+        "name": "Bitstream - Even Parity (Incorrect)",
+        "wave": "x1010..1..x"
+      },
+      {
+        "name": "Binary - Even Parity (Incorrect)",
+        "wave": "x333433339x",
+        "data": ["1", "0", "1", "0", "0", "0", "1", "1", "1"]
+      },
+    ]
+}

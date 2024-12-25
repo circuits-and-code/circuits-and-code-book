@@ -13,17 +13,17 @@ Some examples are as follows:
     \item \textbf{I/O Interrupts:} Used to handle input/output operations.
     \item \textbf{Hardware Interrupts:} Used to signal hardware events, such as a button press.
 \end{itemize}
-\noindent An interrupt is a powerful construct as it allows the CPU to handle events without necessairly \textit{polling} for whether an event has occurred. This allows the CPU to perform other tasks while waiting for an event to occur. \newline
+\noindent An interrupt is a powerful construct as it allows the CPU to handle events without necessarily \textit{polling} for whether an event has occurred. This allows the CPU to perform other tasks while waiting for an event to occur. \newline
 \newline
-\noindent Elaborting on the button press interrupt example: the CPU can continue executing other tasks until the button is pressed, at which point the interrupt is triggered and the CPU can handle the button press. This is in contrast to polling, where the CPU would have to continuously check if the button is pressed, which is inefficient and wastes CPU cycles.
+\noindent Elaborating on the button press interrupt example: the CPU can continue executing other tasks until the button is pressed, at which point the interrupt is triggered and the CPU can handle the button press. This is in contrast to polling, where the CPU would have to continuously check if the button is pressed, which is inefficient and wastes CPU cycles.
 
 \subsubsection{Theory of Operation Review}
 When an interrupt occurs, the CPU saves the current state of the program and pushes it on the stack, executes the \textit{interrupt service routine} (ISR), and then restores the program's state. \cite{white2024}
 \newline
 \newnoindentpara Broadly speaking, there are 2 types of interrupt handling mechanisms. Depending on the system architecture and interrupt source type, one or both may be used \cite{myersInterrupts}:
 \begin{itemize}
-    \item \textbf{Non-Vectored/Polled Interrupts:} Interrupts are handled by a common ISR, which then determines the source of the interrupt. Ex: 3 button interrupts are handled by a single ISR, which then determines which button was pressed.
-    \item \textbf{Vectored Interrupts:} The interrupting device directly specifies the ISR to be executed; the address of the ISR to call is usually stored in a table of function pointers called the \textit{vector table}. Ex: 3 button interrupts are handled by 3 separate ISRs.
+    \item \textbf{Non-Vectored/Polled Interrupts:} Interrupts are handled by a common ISR, which then determines the source of the interrupt. An example would be 3 button interrupts are handled by a single ISR, which then determines which button was pressed.
+    \item \textbf{Vectored Interrupts:} The interrupting device directly specifies the ISR to be executed; the address of the ISR to call is usually stored in a table of function pointers called the \textit{vector table}. An example would be 3 button interrupts are handled by 3 separate ISRs.
 \end{itemize}
 
 \newnoindentpara Several other concepts are important to understand when working with interrupts, but are not directly related to the question. These include:
