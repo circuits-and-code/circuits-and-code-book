@@ -5,18 +5,26 @@
 
 \noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter on the microcontroller can sample the signal safely.
 
-% DRAW :voltage divider circuit
+\begin{figure}[h!]
+\begin{center}
+\begin{circuitikz}[american]
+  \draw (-1, 4) node[anchor=east] {$V_{in}$} -- (0, 4) -- (0, 3); 
+  \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+  \draw (0, 0) node[ground]{};
+  \draw (0, 1.5) -- (1, 1.5) node[right] {$V_{out}$};
+  \label{ct:voltage_divider}
+\end{circuitikz}
+\caption{Voltage Divider Circuit}
+\end{center}
+\end{figure}
 
 \subsection{Motivation}
 Electronics systems often require high power actuators and batteries to operate so relatively high battery bus voltages are often selected by engineers. Microcontrollers require low input voltages (i.e. 1.8V, 3.3V, 5V) to operate to reduce power consumption and transistor size. As chemical batteries charge and discharge the voltage of that battery varies due to state of charge and other factors. For this reason, microcontrollers in embedded systems often need to sense the voltage of a battery!
 
 \subsection{Voltage Divider Circuit}
-Ohm's law relates voltage, $V$, to current, $I$, by \eqref{eq:ohms_law} for a resistor.
-\begin{equation}
-    V = I * R
-    \label{eq:ohms_law}
-\end{equation}
-Applying \eqref{eq:ohms_law} to each of the two resistors shown results in \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot} where $I$ is identical for both resistors as they are connected in series.
+Ohm's Law relates voltage, $V$, to current, $I$, by $V = I * R$ or $\frac{V}{I} = R$ for a resistor.
+
+Applying Ohm's Law to each of the two resistors shown results in \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot} where $I$ is identical for both resistors as they are connected in series.
 \begin{equation}
     V_in - V_out = I * R_t
     I = \frac{V_in - V_out}{R_t}
@@ -48,14 +56,25 @@ Note that the input voltage of the battery is fixed so if $R_sum$ is too small t
     \label{eq:divider_current}
 \end{equation} 
 
+\subsection{Voltage Divider Intuition}
+Consider a few specific cases of this circuit to help build intuition to approach problems featuring the voltage divider.
+\begin{itemize}
+    \item A simple case of the voltage divider circuit is when $R_t = R_b = R$ where $frac{V_{out}}{V_{in}} = \frac{R}{R+R} = \frac{R}{2*R} = \frac{1}{2}$ which means $V_{in} = 2 * V_{out}$ or $V_{out} = \frac{V_in}{2}$.
+    \item Because $R_t > 0$ and $R_b > 0$ are required (as negative resistors do not exist), in all cases of the circuit being employed we observe that $0 < frac{V_{out}}{V_{in}} < 1$ meanning the voltage divider always scales a voltage down from it's input. 
+    \item This circuit assumes no source impedance from $V_{in}$ and no loading connected to $V_{out}$. We will see later that this assumption is not always valid. 
+\end{itemize}
+
 \subsection{Pin Overvoltage}
 Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event! The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. 
 
 % DRAW : a pin with diodes on it to rails inside microcontroller 
 
-These diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_cc$, and when a voltage is applied that is below the microcontroller's ground reference, $V_ss$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Essentially, allowing the microcontroller to sink some current limitted overvoltage event is permissible in some cases. 
+These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_cc$, and when a voltage is applied that is below the microcontroller's ground reference, $V_ss$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Essentially, allowing the microcontroller to sink some current limitted overvoltage event is permissible in some cases. 
 
-A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. Additionally, when overvolting an ADC pin you will not be receiving accurate readings.
+% TODO; idk should i explain the difference between TVS and clamping diode?
+TVS diodes are also used. 
+
+A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors. Additionally, when overvolting an ADC pin you will not be receiving accurate readings.
 
 \subsection{Analog to Digital}
 
