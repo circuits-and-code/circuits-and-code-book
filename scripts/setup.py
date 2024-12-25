@@ -18,14 +18,19 @@ def run_command(command):
 def update_and_upgrade(skip_upgrade=False, no_sudo=False):
     """Update and optionally upgrade the system's package list."""
     print("Updating apt package list...")
-    command = (
-        "apt-get update" if skip_upgrade else "apt-get update && apt-get upgrade -y"
-    )
+    COMMANDS = [
+        "apt-get update",
+    ]
 
-    if no_sudo:
-        run_command(command)
-    else:
-        run_command(f"sudo {command}")
+    if not skip_upgrade:
+        print("Upgrading apt packages...")
+        COMMANDS.append("apt-get upgrade -y")
+
+    for command in COMMANDS:
+        if no_sudo:
+            run_command(command)
+        else:
+            run_command(f"sudo {command}")
 
 
 def install_apt_components(components, no_sudo=False):

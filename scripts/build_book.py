@@ -13,6 +13,7 @@ IMAGE_GENERATION_COMMANDS = [
     f"python3 src/diagram_generator/rtos_task_diagram.py src/diagram_generator/priority_inheritance_input.json --output_path={GENERATED_IMAGES_DIR}/priority_inheritance.png",
     f"python3 src/diagram_generator/pid_discretization_integral.py --output_path={GENERATED_IMAGES_DIR}/pid_discretization_integral.png",
     f"python3 src/diagram_generator/pid_discretization_derivative.py --output_path={GENERATED_IMAGES_DIR}/pid_discretization_derivative.png",
+    f"python3 scripts/build_svg_images.py --input-dir=src/images/svg/ --output-dir={GENERATED_IMAGES_DIR}/svg_generated",
 ]
 
 
