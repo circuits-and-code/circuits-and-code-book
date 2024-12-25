@@ -17,23 +17,32 @@ As a review, the form of a PID controller is given by equation \eqref{eq:pid_con
 \noindent First, a C structure definition is created to hold the PID gains, as well as temporary variables for calculating the integral and derivative terms. This structure is shown in listing \ref{code:pid}.
 \lstinputlisting[caption={PID Control Structure}, label={code:pid}]{code/pid/pid_typedef.h}
 
-\noindent Breaking apart the problem into smaller functions, we can implement the terms of the equation as follows in C. Note that \texttt{dt} is the timestep (period) between control loop iterations. See figure \ref{fig:pid_signal_discretization} for a visual representation of the input signal discretization in a PID controller.
+\noindent Breaking apart the problem into smaller functions, we can implement the terms of the equation as follows in C. Note that \texttt{dt} is the timestep (period) between control loop iterations.
 \begin{itemize}
     \item The proportional term is simply the product of the proportional gain and the error. \newline
     \texttt{const float p\_term = pid->K\_p * error;}.
-    \item The integral term accumulates the error over time, summing up all past errors. To approximate this integral, we use the commonly-chosen Backward Euler method \cite{AbramovitchPID}, which updates the integral by adding the product of the current error and the timestep. Note that the computation of the \texttt{i\_term} comes after the addition of the integral.
+    \item The integral term accumulates the error over time, summing up all past errors. To approximate this integral, we use the commonly-chosen Backward Euler method \cite{AbramovitchPID}, which updates the integral (sum) by adding the product of the current error and the timestep. Note that the computation of the \texttt{i\_term} comes after the addition of the integral in this approximation. See figure \ref{fig:pid-backward-euler-integral} for a visual representation of the Backward Euler method.
+    \newline
     \texttt{pid->integral += error * dt;}. \newline
-    \texttt{const float i\_term = pid->K\_i * pid->integral;}. \newline
-    \item The derivative term is the rate of change of the error. To approximate this derivative, we use the Backward Euler method, which calculates the derivative as the difference between the current error and the previous error, divided by the timestep.\newline
-    \texttt{const float d\_term = pid->K\_d * ((error - pid->prev\_error) / dt);}.
-\end{itemize}
+    \texttt{const float i\_term = pid->K\_i * pid->integral;}.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{generated_images/pid_discretization_integral.png}
+        \caption{Backward Euler Discretization of the Integral Term}
+        \label{fig:pid-backward-euler-integral}
+    \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{generated_images/pid_discretization.png}
-    \caption{Input signal discretization in a PID Controller.}
-    \label{fig:pid_signal_discretization}
-\end{figure}
+    \item The derivative term is the rate of change of the error. To approximate this derivative, we use the Backward Euler method, which calculates the derivative (slope) as the difference between the current error and the previous error, divided by the timestep (i.e. rise/run). See figure \ref{fig:pid-backward-euler-derivative} for a visual representation of the Backward Euler method.
+    \newline
+    \texttt{const float d\_term = pid->K\_d * ((error - pid->prev\_error) / dt);}.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{generated_images/pid_discretization_derivative.png}
+        \caption{Backward Euler Discretization of the Derivative Term}
+        \label{fig:pid-backward-euler-derivative}
+    \end{figure}
+
+\end{itemize}
 
 \noindent Putting it all together, the PID controller step function is shown in Listing~\ref{code:pid_controller}. Note the added check for a \texttt{NULL} pointer, as well as the implicit assumption that the \texttt{pid->prev\_error} and \texttt{pid->integral} terms are initialized to zero before the first run.
 
