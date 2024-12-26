@@ -10,7 +10,7 @@ Assume that the ADC is to be run with an ADC conversion clock frequency of 1 MHz
 \lstinputlisting[caption={User Implemented Functions}, label={code:adc-init-user-function}]{code/adc_init/adc_init_header.h}
 
 \subsubsection{Sample Datasheet}
-The MythicalMicrocontroller is a big-endian microcontroller with a clock frequency of 8 MHz. It features a single-shot 12-bit analog-to-digital converter (ADC) with a reference voltage of 3.3V, with a multiplexer to select between 4 input channels. 
+The MythicalMicrocontroller is a microcontroller with a clock frequency of 8 MHz. It features a single-shot 12-bit analog-to-digital converter (ADC) with a reference voltage of 3.3V, with a multiplexer to select between 4 input channels. 
 
 \paragraph{ADC Configuration Register (WRITE) - ADDR 0x4000007C}
 The ADC configuration register is used to configure the ADC module with the key system parameters. The ADC must be enabled and ready before any conversions can be performed.
@@ -29,20 +29,20 @@ The ADC configuration register is used to configure the ADC module with the key 
 \end{table}
 
 \paragraph{ADC Status Register (READ) - ADDR 0x4000007D}
-The ADC status register is used to check the status of the ADC module. The ADC is ready to perform a conversion when the \texttt{ADC\_RDY} bit is set. The \texttt{ADC\_BUSY} bit is set when the ADC is performing a conversion, and cleared when the conversion is complete.
+The ADC status register is used to check the status of the ADC module. The ADC is ready to perform a conversion when the \texttt{ADC\_INITIALIZED} bit is set. The \texttt{ADC\_BUSY} bit is set when the ADC is performing a conversion, and cleared when the conversion is complete.
 \begin{table}[h!]
     \centering
     \begin{tabular}{|l|c|p{10cm}|}
         \hline
         \textbf{Name} & \textbf{Bits} & \textbf{Description} \\ \hline
-        \texttt{ADC\_RDY} & 7 & ADC is ready for use when bit is \texttt{1} \\ \hline
+        \texttt{ADC\_INITIALIZED} & 7 & ADC is enabled and ready for use when bit is \texttt{1} \\ \hline
         \texttt{RESERVED} & 6:1 & Reserved \\ \hline
         \texttt{ADC\_BUSY} & 0 & ADC is busy with processing the conversion when the bit is asserted. A transition from the bit being asserted to being deasserted indicates the completion of a conversion. \\ \hline
     \end{tabular}
     \caption{ADC Register Description}
     \label{tab:adc_status_register}
 \end{table}
-\newpage
+
 \paragraph{ADC Data HIGH Register (READ) - ADDR 0x4000007E}
 The ADC Data H register contains the upper 4 bits of the 12-bit ADC conversion result.
 \begin{table}[h!]
@@ -83,7 +83,7 @@ Initializing the ADC can be broken down into the following steps. The code is sh
 \begin{enumerate}
     \item \textbf{Set the ADC Clock Frequency}: Calculate the ADC clock prescaler value to achieve a 1 MHz ADC conversion clock frequency given the 8 MHz MCU clock frequency. We can use the formula $f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ to calculate the prescaler ($ADC\_CLK\_DIV$) value (7).
     \item \textbf{Enable the ADC}: Write to the ADC configuration register to enable the ADC.
-    \item \textbf{Poll the ADC Status Register}: Poll the ADC status register to check if the ADC is ready for a conversion.
+    \item \textbf{Poll the ADC Status Register}: Check if the ADC is ready for a conversion.
 \end{enumerate}
 
 \lstinputlisting[caption={ADC Initialization}, label={code:adc-init}]{code/adc_init/adc_init.c}
@@ -101,11 +101,10 @@ The conversion problem can be addressed as follows. The code is shown in listing
 \lstinputlisting[caption={ADC Conversion}, label={code:adc-conversion}]{code/adc_init/adc_conversion.c}
 
 \subsection{Follow-ups}
-In an interview setting, you may be asked to discuss the following topics:
 \begin{itemize}
-    \item Strategies for avoiding polling in the ADC conversion function (ex: DMA, interrupts, etc).
-    \item The impact of the ADC clock frequency on the ADC conversion time and resolution.
-    \item ADC error sources and how to mitigate them.
+    \item \textbf{Strategies for avoiding polling in the ADC conversion function (ex: DMA, interrupts, etc)}.
+    \item \textbf{What is the impact of the ADC clock frequency on the ADC conversion time and resolution?}
+    \item \textbf{What are sources of error in an ADC and how are they mitigated?}
 \end{itemize}
 
 \end{document}
