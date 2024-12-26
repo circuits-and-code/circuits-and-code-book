@@ -1,0 +1,10 @@
+{
+    "signal": [
+      { 
+        "name": "SDA", 
+        "wave": "x8.3..54...74...78.x", 
+        "data": ["START", "7-bit Addr", "R/W", "8-bit Data","ACK", "8-bit Data","ACK", "STOP"] 
+      },
+    ]
+  }
+  

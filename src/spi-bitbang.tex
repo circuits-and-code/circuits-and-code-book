@@ -23,13 +23,13 @@ In embedded systems, communication protocols like SPI are typically handled by d
 \lstinputlisting[caption={Bit-Banged Square Wave Implementation}, label={code:bit-bang-square-ex}]{code/bitbang_spi/bitbang_ex.c}
 
 \subsection{SPI Review}
-Consider the SPI timing diagram in figure \ref{fig:spi_timing}. The SPI protocol consists of 4 signals: MOSI (Master Out Slave In)\footnote{The phrases 'master' and 'slave' are slowly being phased out due to their origins. However, at time of writing, MISO and MOSI remain the most common, and are used in this guide. Alternative verbiage includes 'controller' for master and 'peripheral' for slave.}, MISO (Master In Slave Out), SCLK (Serial Clock), and CS (Chip Select). The master device controls the clock signal and selects the device using the CS signal; data is transmitted on MOSI and received on MISO simultaneously on predefined edges of the clock signal.
+Consider the SPI timing diagram in figure \ref{fig:spi_timing_2}. The SPI protocol consists of 4 signals: MOSI (Master Out Slave In), MISO (Master In Slave Out), SCLK (Serial Clock), and CS (Chip Select). The master device controls the clock signal and selects the device using the CS signal; data is transmitted on MOSI and received on MISO simultaneously on predefined edges of the clock signal.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.4]{generated_images/svg_generated/spi_waveform.png}
     \caption{1-byte SPI Timing Diagram}
-    \label{fig:spi_timing}
+    \label{fig:spi_timing_2}
 \end{figure}
 
 \noindent Note that the SPI protocol can be configured in different clock sampling modes, which define the clock polarity (CPOL) and phase (CPHA). Figure \ref{fig:spi_timing} shows CPOL = 1, CPHA = 1. A SPI slave device's datasheet will usually specify the required CPOL and CPHA settings for proper communication real-world implementation.
