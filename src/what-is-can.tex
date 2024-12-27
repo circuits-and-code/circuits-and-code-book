@@ -13,7 +13,7 @@ The CAN standard defines the physical and data link layers of the OSI model. The
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{generated_images/svg_generated/can_dominant_recessive.png}
-    \caption{Dominant (CAN H ~3.5V, CAN L ~1.5V) and recessive (CAN H/L = ~2.5V) bits \cite{ti_can_signal_levels}}
+    \caption{Recessive and dominant bits waveform \cite{ti_can_signal_levels}}
     \label{fig:can-dominant-recessive}
 \end{figure}
 
@@ -41,10 +41,13 @@ A differential pair works by creating two signals: a positive signal, and a nega
     \label{fig:diff-physical-layer-noise}
 \end{figure}
 
-\noindent Another advantage of this configuration is immunity to small common mode offsets.
-% TODO : @daniel elaborate
+\noindent Another advantage of this configuration is immunity to common mode voltage offsets. Ideally CAN transceivers are designed to output a dominant state being CAN_H at 3.5V and CAN_L at 1.5V with a recessive state being CAN_H and CAN_L at 2.5V. However, an advantage of differential signalling is these can be shifted if two transceivers have a voltage potential differene between each of their ground planes so more accurately we can define a dominant state as CAN_H at $3.5 + N$ V and CAN_L at $1.5 + N$ V and a recessive state being  CAN_H and CAN_L at $2.5 + N$ V. Note that there is a limit to how large N can be based on the specific CAN transcievers being used. 
+\noindent Shifts in ground potential are common in embedded systems with high current power transmission; consider a motor controller may be interfaced with CAN and be receiving power from a controller board. Due to the high current going to the motor and the parasitic resistance of the wire, a potential difference due to Ohm's law arrises between the ground on the controller and the ground on the motor controller. CAN is very robust to this small change in potential whereas a single ended signal could suffer logic level issues.
+% maybe this is better explained in the signalling section to avoid bloating this? 
+% might need a better explanation and some figures for this?
+
 \newline
-\noindent CAN wires are often twisted as the current flow in the signal lines is in opposing directions so the signals are coupled. When the differential pair wires are twisted, the magnetic field created by current flow in opposing directions for each bus state change in adjacent half-twists are in opposite directions and cancel each other out. Twisting wires also allows some control over the characteristic impedance. Note that CAN is very forgiving and outside of production applications and more complex bus topologies, twisting CAN wires is unnecessary for successful data transmission. 
+\noindent CAN wires are often twisted as the current flow in the signal lines is in opposing directions. When the differential pair wires are twisted, the magnetic field created by current flow in opposing directions for each bus state change in adjacent half-twists are in opposite directions and cancel each other out. Twisting wires also allows some control over the characteristic impedance. Note that CAN is very forgiving and outside of production applications and more complex bus topologies, twisting CAN wires is unnecessary for successful data transmission. 
 
 \subsection{Bus Topology}
 CAN uses a \textbf{multi-master} communication scheme, meaning that any node on the bus can initiate a message transmission. This is in contrast to a \textbf{master-slave} communication scheme, where only the master can initiate communication. They are connected in a \textbf{bus topology}, where all nodes are electrically \footnote{Physically, they may be connected differently, however, this answer only focuses on the electrical connection} connected in parallel. Essentially, every node on the bus can see every message transmitted on the bus, and every node has the ability to initiate message transmission. Note that the CAN bus is \textit{asynchronous}, meaning every node must know the bus \textit{bitrate} beforehand to understand transmissions from other nodes.
