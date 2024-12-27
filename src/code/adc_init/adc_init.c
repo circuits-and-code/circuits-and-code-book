@@ -10,6 +10,6 @@ void adc_init(void) {
   *ADC_CONFIG_REG |= (1 << BITPOS_ADC_EN);
 
   // Wait for the ADC to be ready
-  while ((*ADC_STATUS_REG & (1 << BITPOS_ADC_CONVERSION_RDY)) == false)
+  while ((*ADC_STATUS_REG & (1 << BITPOS_ADC_CONVERSION_INITIALIZED)) == false)
     ;
 }
