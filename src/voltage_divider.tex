@@ -1,7 +1,7 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{How would you sense the voltage of a battery with a microcontroller?}
+\section{How would you sense the voltage of a battery with a microcontroller?} % @daniel consider a reword: "Describe the electrical circuitry required to measure the voltage of a battery with an ADC", and add a small clarification that the battery voltage is higher than the microcontroller's ADC reference voltage (not always the case, but a common scenario).
 \spoilerline
 
 \noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter on the microcontroller can sample the signal safely.
@@ -23,45 +23,52 @@
 Electronics systems often require high power actuators and batteries to operate so relatively high battery bus voltages are often selected by engineers. Microcontrollers require low input voltages (i.e. 1.8V, 3.3V, 5V) to operate to reduce power consumption and transistor size. As chemical batteries charge and discharge the voltage of that battery varies due to state of charge and other factors. For this reason, microcontrollers in embedded systems often need to sense the voltage of a battery!
 
 \subsection{Voltage Divider Circuit}
-Ohm's Law relates voltage, $V$, to current, $I$, by $V = I * R$ or $\frac{V}{I} = R$ for a resistor.
-
-Applying Ohm's Law to each of the two resistors shown results in \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot} where $I$ is identical for both resistors as they are connected in series.
+Ohm's Law relates the voltage across a resistor, $V$, to current, $I$, by $V = I \cdot R$. Applying Ohm's Law to each of the two resistors shown results in equations \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot}. Because the resistors are in series, the current, ($I$), flowing through them is the same (i.e. $I_{R_t} = I_{R_b} = I$).
 \begin{equation}
-    V_in - V_out = I * R_t
-    I = \frac{V_in - V_out}{R_t}
+    \begin{aligned}[b]
+        V_{in} - V_{out} = I \cdot R_t \\
+        I = \frac{V_{in} - V_{out}}{R_t}
+    \end{aligned}
     \label{eq:ohms_law_top}
 \end{equation}
+
 \begin{equation}
-    V_out - 0 = I * R_b
-    I = \frac{V_out}{R_b}
+    \begin{aligned}
+        V_{out} - 0 = I \cdot R_b \\
+        I = \frac{V_{out}}{R_b}
+    \end{aligned}
     \label{eq:ohms_law_bot}
-\end{equation} 
-Solving the system of equations to eliminate $I$ gives \eqref{eq:voltage_divider} as follows. 
+\end{equation}
+
+\noindent Solving the system of equations to eliminate $I$ gives \eqref{eq:voltage_divider} as follows. 
+
 \begin{equation}
-    \frac{V_out}{R_b} = \frac{V_in - V_out}{R_t}
-    V_out * R_t = R_b * (V_in - V_out)
-    V_out * R_t = V_in * R_b - V_out * R_b
-    V_out * R_t + V_out * R_b = V_in * R_b
-    V_out (R_t + R_b) = V_in * R_b
-    \frac{V_out}{V_in} = \frac{R_b}{R_t + R_b}
+    \begin{aligned}[b]
+        \frac{V_{out}}{R_b} &= \frac{V_{in} - V_{out}}{R_t} \\
+        V_{out} \cdot R_t &= R_b \cdot (V_{in} - V_{out}) \\
+        V_{out} \cdot R_t &= V_{in} \cdot R_b - V_{out} \cdot R_b \\
+        V_{out} \cdot R_t + V_{out} \cdot R_b &= V_{in} \cdot R_b \\
+        V_{out} \cdot (R_t + R_b) &= V_{in} \cdot R_b \\
+        \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_t + R_b}
+    \end{aligned}
     \label{eq:voltage_divider}
-\end{equation} 
-This indicates for a given $V_in$, based on the values chosen for $R_t$ and $R_b$ where $R_t$ > 0 and $R_b$ > 0, $V_out$ is set such that $V_in$ > $V_out$. Given a maximum ADC voltage and a maximum battery voltage a desired ratio between $R_t$ and $R_b$ can be determined. However, we still need to select $R_t$ + $R_b$ = $R_sum$. Recall that resistor power dissipation is given by
-\begin{equation}
+\end{equation}
+This indicates for a given $V_{in}$, based on the values chosen for $R_t$ and $R_b$ where $R_t > 0 \ \Omega$ and $R_b > 0 \ \Omega$, $V_{out}$ is set such that $V_{out}$ < $V_{in}$, and is scaled by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage ($V_{out}$) and a maximum battery voltage ($V_{in}$), a desired ratio between $R_t$ and $R_b$ can be determined. However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Recall that resistor power dissipation is given by equation \ref{eq:resistor_power} below:
+\begin{equation} % @daniel This equation is seems slightly extraneous, consider removing it and leaving just the text about how it draws current and power dissipation is bad?
     P = V * I = \frac{V * V}{R} = I * I * R 
     \label{eq:resistor_power}
 \end{equation} 
-Note that the input voltage of the battery is fixed so if $R_sum$ is too small then power dissipation increases rapdily. This power dissipation occurs constantly and can be significantly wasteful. If $R_sum$ is too large then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. In reality we often select $I$ = ~1mA of current to flow in a sensing resistor divider though different values may be seen based on the application. This boils down to \eqref{eq:divider_current}. 
-\begin{equation}
-    R_t + R_b = R_sum = \frac{V_in_nominal}{I} = \frac{V_in_nominal}{~1mA}
+Note that the input voltage of the battery is fixed so if $R_{sum}$ is too small then power dissipation increases rapidly. This power dissipation occurs constantly and can be significantly wasteful. If $R_{sum}$ is too large then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. A common value selected for $I$ is ~1mA of current to flow in a sensing resistor divider, though different values may be seen based on the application. This boils down to \eqref{eq:divider_current}. 
+\begin{equation} % @daniel can we remove the {nominal} subscript?
+    R_t + R_b = R_{sum} = \frac{V_{in_{nominal}}}{I} = \frac{V_{in_{nominal}}}{1 \ \mathrm{mA}}
     \label{eq:divider_current}
 \end{equation} 
 
 \subsection{Voltage Divider Intuition}
 Consider a few specific cases of this circuit to help build intuition to approach problems featuring the voltage divider.
 \begin{itemize}
-    \item A simple case of the voltage divider circuit is when $R_t = R_b = R$ where $frac{V_{out}}{V_{in}} = \frac{R}{R+R} = \frac{R}{2*R} = \frac{1}{2}$ which means $V_{in} = 2 * V_{out}$ or $V_{out} = \frac{V_in}{2}$.
-    \item Because $R_t > 0$ and $R_b > 0$ are required (as negative resistors do not exist), in all cases of the circuit being employed we observe that $0 < frac{V_{out}}{V_{in}} < 1$ meanning the voltage divider always scales a voltage down from it's input. 
+    \item A simple case of the voltage divider circuit is when $R_t = R_b = R$ where $\frac{V_{out}}{V_{in}} = \frac{R}{R+R} = \frac{R}{2*R} = \frac{1}{2}$ which means $V_{in} = 2 * V_{out}$ or $V_{out} = \frac{V_in}{2}$.
+    \item Because $R_t > 0$ and $R_b > 0$ are required (as negative resistors do not exist), in all cases of the circuit being employed we observe that $0 < \frac{V_{out}}{V_{in}} < 1$ meaning the voltage divider always scales a voltage down from it's input. 
     \item This circuit assumes no source impedance from $V_{in}$ and no loading connected to $V_{out}$. We will see later that this assumption is not always valid. 
 \end{itemize}
 
@@ -70,7 +77,7 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
 
 % DRAW : a pin with diodes on it to rails inside microcontroller 
 
-These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_cc$, and when a voltage is applied that is below the microcontroller's ground reference, $V_ss$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Essentially, allowing the microcontroller to sink some current limitted overvoltage event is permissible in some cases. 
+These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Essentially, allowing the microcontroller to sink some current limitted overvoltage event is permissible in some cases. 
 
 % TODO; idk should i explain the difference between TVS and clamping diode?
 TVS diodes are also used. 
@@ -96,7 +103,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
     \label{eq:loaded_voltage_divider}
 \end{equation} 
 
-Using the above circuit we can solve for a new equation for $V_out$ shown in \eqref{eq:voltage_divider}. We can compensate for this by reducing $R_sum$. 
+Using the above circuit we can solve for a new equation for $V_{out}$ shown in \eqref{eq:voltage_divider}. We can compensate for this by reducing $R_{sum}$. 
 % TODO : explain why
 
 Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
