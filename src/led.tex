@@ -54,8 +54,15 @@ FETs, at least ideally, do not require any power consumption to hold them enable
 low side better than high side swiching because NCH FETs have lower RDSon than PCH FETs 
 
 \subsection{Pulse Width Modulation}
-When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the duty cycle of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off.
+When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. PWM implementations are usually done in hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted to control the brightness. An example of a PWM waveform with a duty cycle of 80\% is shown in figure \ref{fig:pwm_waveform}.
 
-% @sahil -> maybe show people how to setup a PWM, a PWM diagram here would be nice showing definition of duty cycle and frequency ? idk if this is within scope tho, feel free to provide thoughts Sahil. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{generated_images/svg_generated/pwm.png}
+    \caption{PWM Waveform}
+    \label{fig:pwm_waveform}
+\end{figure}
+
+\noindent Note that PWM's application is not limited to LED's - in general, PWM can be thought of as a way to control the average voltage across a load, and is used in motor control, power supplies, and more.
 
 \end{document}
