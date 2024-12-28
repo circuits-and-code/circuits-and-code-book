@@ -5,15 +5,16 @@
 
 \spoilerline
 
-% draw: what probing the coaxial cable looks like (center pin and shield )
+% image: what probing the coaxial cable looks like (center pin and shield), real or hand drawn is ight i guess?
 
 \noindent On a bench-top coaxial cable (relatively short length) the DMM (\textit{Digital Multi Meter}) will read OL (\textit{Open Loop}) when probed as in DC analysis the center pin is not connected to the outer shield. When the transmission line is of infinite length the DMM will report the characteristic impedance, in this case, 50 ohms.
 
 \subsection{Transmission Lines}
-% draw : schematic of transmission line model
-% draw : lumped element section of RLGC inside transmission line section
-
-% TODO : basically use lumped element model to derive Z_o = sqrt(L/C) I think is best path here
+Here we will analyze the lossless transmission line model in which conductors are considered without resistance and dielectrics are considered without loss. This model is drawn to represent a transmission line in which the conductor has inductance and the two conductors have capacitance to each other, each represented per unit length as $L\prime$ and $C\prime$ respectively.
+% draw : schematic lumped element section of LC inside transmission line model (ece 373 lec 1 slide 17 has this proof)
+Analyzing one small section of this line for $\Delta z$ 
+% TODO : basically use lumped element model to derive/prove Z_o and beta definitions. 
+$Z_o = \sqrt{\frac{L}{C}}$ and $\beta = \omega * \sqrt{L*C}$.
 
 \subsection{DMM Resistance Measurement}
 A DMM measured resistance by 

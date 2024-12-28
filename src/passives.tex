@@ -3,28 +3,111 @@
 
 \section{Determine the step response of the following circuits.}
 
-% Formulas defining the passives with a table
+\noindent In a real interview you would likely be given just one of these circuits, however, for the sake of building intuition and the first principles approach, numerous circuits are analyzed.
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+        \draw (0, 4) node[anchor=east] {$V_{in}$};
+        \draw (0, 4) to[resistor, l=$R$] (5, 4);
+        \draw (5, 4) node[right] {$V_{out}$};
+        \draw (-0.5, 2) -- (5.5, 2); % ground line at the bottom
+        \draw (3, 2) node[ground]{};
+        \label{ct:series_resistor}
+        \end{circuitikz}
+        \caption{Circuit A}
+    \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+    % TODO DRAW
+    \caption{Circuit B}
+    \label{fig:voltage_divider}
+\end{figure}
+
+\begin{figure}[h!]
+    % TODO DRAW
+    \caption{Circuit C}
+    \label{fig:rc_low_pass_filter}
+\end{figure}
+
+\begin{figure}[h!]
+    % TODO DRAW
+    \caption{Circuit D}
+    \label{fig:rc_high_pass_filter}
+\end{figure}
+
+\begin{figure}[h!]
+    % TODO DRAW
+    \caption{Circuit E}
+    \label{fig:c_current_source}
+\end{figure}
+
+\begin{figure}[h!]
+    % TODO DRAW
+    \caption{Circuit F}
+    \label{fig:rc_current_source}
+\end{figure}
+
+\begin{figure}[h!]
+    % TODO DRAW
+    \caption{Circuit G}
+    \label{fig:rlc_series}
+\end{figure}
+
+\begin{figure}[h!]
+    % TODO DRAW
+    \caption{Circuit H}
+    \label{fig:rlc_parallel}
+\end{figure}
+
+\spoilerline
+
+\noindent For a question like this, assuming ideal components is expected as further information has not been provided to aid in a more complex analysis.
+
+\subsection{Passives}
+Recall all ideal passives follow the definitions given in the following figure. Note that $\omega = 2 * \pi * f$ and the imaginary component of impedance, $Z = \frac{V}{I}$ represents reactance $X$ defining a phase shift. Resistors are not frequency or time dependent while inductors and capacitors are. 
 \begin{figure}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|}
         \hline
          & Resistor & Capacitor & Inductor \\ \hline
         Time Domain & $V = I * R$ & $I = C * \frac{dv}{dt}$ & $V = L * \frac{di}{dt}$ \\ \hline
-        Frequency Domain & $\frac{V}{I} = R$ & $\frac{V}{I} = \frac{1}{j*w*C}$ & $\frac{V}{I} = j*w*L$ \\ \hline
+        Frequency Domain & $\frac{V}{I} = R$ & $\frac{V}{I} = \frac{1}{j*\omega*C}$ & $\frac{V}{I} = j*\omega*L$ \\ \hline
     \end{tabular}
     \caption{Passive Element Definitions}
     \label{fig:passive definitions}
 \end{figure}
 
-% capacitor and current source series
+\subsection{Circuit A: Series Resistor}
+In this circuit we note Ohm's law, $V = I * R$, however, as there is no load, $I=0$ on the resistor in this circuit we note there is no voltage drop, $V=I*R=0*R=0$, across the resistor, consequently $V_{in} = V_{out}$ for this circuit. 
 
-% RC low pass
+% DRAW: a plot just showing an input step being followed perfectly
+
+\subsection{Circuit A: Voltage Divider}
+This circuit is a voltage divider depicted slightly differently than in a previous question, but the same equations hold. 
+
+
+\subsection{Circuit C: RC Low Pass Filter}
+From the two elements in the circuit we get in the time domain $I = C * \frac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I * R$. Cancelling out $I$ which is equivalent in both elements we get $V_{in} - V_{out} = R * C * \frac{dV_{out}}{dt}$ which can be algebraically manipulated into $-\frac{dV_{out}}{V_{out}-V_{in}} = -\frac{dt}{R*C}$ where we perform the integral on each side revealing $\ln{\frac{V_{out}-V_{in}}{V_out}}=-\frac{t}{R*C}$ which can be algebraically manipulated into $V_{out}=V_{in}*(1-\exp(\frac{-t}{R*C}))$. Note when analyzing this circuit we commonly define a constant $\tau = R * C$ as the time constant of the RC circuit which represents the time it takes $1-\exp{-1}$ or ~63 percent of the step size. 
+
+% TODO : add a nice solution plot showing an exponential rise and some key points labelled, notably time constant 
+
+This circuit can also be analyzed in the frequency domain. 
+% reasonable to do a full derivation here without laplace
+
+% TODO : frequency domain plot of this circuit in log log scale 
+
 % connection to I2C
 
-% RC high pass
+\subsection{Circuit D: RC High Pass Filter}
 
-% RL Low pass
+\subsection{Circuit E: Series Capacitor with Current Source}
 
-% RLC Resonance Introduction, series and parallel
+\subsection{Circuit F: Series RC with Current Source}
+
+\subsection{Circuit G: Series RLC}
+
+\subsection{Circuit H: Parallel RLC}
 
 \end{document}
