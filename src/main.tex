@@ -76,9 +76,7 @@
 \renewcommand{\thesection}{\arabic{section}} % Reset to Arabic numerals
 \setcounter{section}{0} % Reset section numbering
 
-% One .tex per questions 
-\newpage
-\subfile{passives.tex}
+% One .tex per question (no limit to the number of questions, but let's keep it under 30 so we finish eventually lol)
 \newpage
 \subfile{keyword.tex}
 \newpage
@@ -99,6 +97,8 @@
 \subfile{interrupts.tex}
 \newpage
 \subfile{voltage_divider.tex}
+\newpage
+\subfile{passives.tex} % place after voltage_divider.tex and before opamp.tex
 \newpage
 \subfile{opamp.tex}
 \newpage
