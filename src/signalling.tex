@@ -1,7 +1,12 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{You have a sensor positioned three meters away from a central controller, what type of signal would you use to transfer the data?}
+\section{You have a sensor positioned a meter away from a central controller, what type of signal would you use to transfer the data?}
+The sensor is a temperature sensor and readings are needed at a rate of 100 Hz with a precision of 0.1C and a temperature range of -40C to 125C.
+
+\spoilerline
+
+\noindent I2C or UART protocol should be selected in this case. 
 
 \subsection{Digital Signalling}
 
@@ -24,5 +29,6 @@ The most common digital protocols in embedded systems are:
 \end{itemize}
 
 \subsection{Analog Signalling}
+% differential vs single ended analog signals, maybe some thermistor circuits 
 
 \end{document}

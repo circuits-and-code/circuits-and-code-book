@@ -1,17 +1,47 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{}
-% idk what to ask here, but people should know all the common configurations cuz they do get asked, maybe a "explain the following circuit type question?
+\section{Give the transfer function for the following circuits.}
 
-% virtual short assumption
+% DRAW: Unity Amp
 
+% DRAW: Inverting
 
-% Unity Amp
-% Difference amp 
-% Inverting
-% Non-inverting
+% DRAW: Non-inverting
+
+% DRAW: Difference amp 
+
+\spoilerline
+
+\subsection{Operational Amplifiers}
+Ideal opamps (\textit{Operational Amplifier}) are active devices defined by $V_{out} = A \cdot (V_{+} - V_{-})$ and $I_{V_{+}} = I_{V_{-}} = 0$ where $A = \inf$. 
+
+% Derive virtual short assumption
+
+\subsection{Solutions}
+Applying this knowledge of the virtual short assumption we see all configurations given in the question feature negative feedback so we can use in our analysis that $V_{+} = V_{-}$. 
+
+\subsubsection{Unity Gain Amplifier}
+
+\subsubsection{Inverting Amplifier}
+
+\subsubsection{Non-inverting Amplifier}
+
+\subsubsection{Difference Amplifier}
+
+\subsection{Non-idealities}
+% TODO : Saturation
+Saturation occurs when 
+$V_{ee} < V_{out} < V_{cc}$
+
 % Input offset voltage
-% Instrumentation amp 
+
+% Input bias current
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item What is an Instrumentation Amplifier? When would you use it?
+    \item Why are non-inverting amplifiers preferred over inverting amplifiers?
+\end{itemize}
 
 \end{document}
