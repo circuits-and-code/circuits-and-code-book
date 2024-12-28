@@ -57,12 +57,12 @@ Ohm's Law relates the voltage across a resistor, $V$, to current flowing through
     \end{aligned}
     \label{eq:voltage_divider}
 \end{equation}
-This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is scaled down from $V_{in}$ by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage rating, $V_{out}$, and a maximum battery voltage, $V_{in}$, a desired ratio between $R_t$ and $R_b$ can be determined. 
+This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is scaled down from $V_{in}$ by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage rating, $V_{out}$, and a maximum battery voltage, $V_{in}$, a desired ratio between $R_t$ and $R_b$ can be determined. \newline
 
-However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Subsituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that the input voltage of the battery is roughly fixed at some $V_{in_{nominal}}$ so if $R_{sum}$ is too small then power dissipation increases. This power dissipation occurs constantly, can be significantly wasteful, and is referred to as quiescent current. 
+\newnoindentpara However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Subsituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that the input voltage of the battery is roughly fixed at some $V_{in_{nominal}}$ so if $R_{sum}$ is too small then power dissipation increases. This power dissipation occurs constantly, can be significantly wasteful, and is referred to as quiescent current. \newline
 % Introducing power dissipation formula in this question is important in my opinion as it opens intuition for the future.
 
-If $R_{sum}$ is too large then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. A common value selected for $I$ is roughly 1mA of current to flow in a sensing resistor divider, though different values may be seen based on the application.
+\newnoindentpara If the $R_{sum}$ is too large, then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. A common value selected for $I$ is roughly 1mA of current to flow in a sensing resistor divider, though different values may be seen based on the application.
 
 \subsection{Voltage Divider Intuition}
 Consider a few specific cases of this circuit to help build intuition to approach problems featuring the voltage divider.
@@ -73,25 +73,25 @@ Consider a few specific cases of this circuit to help build intuition to approac
 \end{itemize}
 
 \subsection{Pin Overvoltage}
-Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. 
+Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
 
 % DRAW : a pin with diodes on it to rails inside microcontroller 
 
-These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when overvolting an ADC pin you will not be receiving accurate readings.
+\noindent These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when overvolting an ADC pin you will not be receiving accurate readings. \newline
 
-External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
+\newnoindentpara External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
 \subsection{Analog to Digital}
-The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory!
+The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory. \newline
 % this paragraph provides motivation for why we want a low pass capacitor. I don't want to do too much detail, I think if you can say the word "Aliasing" in an interview it's plenty.
 
-To avoid aliasing it is common to see low pass capacitors added to voltage divider circuits to filter out higher frequency noise. The cutoff frequency is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of it's input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing as this low pass filter is not ideal. 
+\newnoindentpara To avoid aliasing it is common to see low pass capacitors added to voltage divider circuits to filter out higher frequency noise. The cutoff frequency is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of it's input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing as this low pass filter is not ideal. 
 % Just intended to bring up the concept and build intuition, no proof or definitions or math is worth giving here. 
 
 % TODO DRAW : voltage divider and low pass capacitor
 
 \subsection{Input Bias Current}
-Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_bias$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
+Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_{bias}$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
 
 % DRAW : resistor divider with I_bias loading current on V_out
 
@@ -111,9 +111,9 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
 %     \label{eq:loaded_voltage_divider}
 % \end{equation}
 
-Using the above circuit we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. 
+\noindent Using the above circuit we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. 
 
-Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
+\noindent Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
 
 % DRAW : op-amp bufferred version
 
