@@ -1,41 +1,45 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{How would you sense the voltage of a battery with a microcontroller?} % @daniel consider a reword: "Describe the electrical circuitry required to measure the voltage of a battery with an ADC", and add a small clarification that the battery voltage is higher than the microcontroller's ADC reference voltage (not always the case, but a common scenario).
+\section{How would you sense the voltage of a battery with a microcontroller?} 
+% Question is deliberately vague and short. The question is often asked in this manner in real interviews. The term "ADC" is not given in the question to test if an interviewer is familiar with the concept and also to bait interviewees into given excessively complex nonsensical solutions.
+Assume the nominal voltage of the battery is 24 V.
+% This clarification is given to ensure interviewees understand the battery voltage is higher than the microcontroller's ADC reference voltage without giving away too much of the solution. 24 V is chosen as it is much higher than microcontroller ADC voltage, but low enough to avoid high voltage considerations in the answer.
 \spoilerline
 
 \noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter on the microcontroller can sample the signal safely.
 
 \begin{figure}[h!]
-\begin{center}
-\begin{circuitikz}[american]
-  \draw (-1, 4) node[anchor=east] {$V_{in}$} -- (0, 4) -- (0, 3); 
-  \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
-  \draw (0, 0) node[ground]{};
-  \draw (0, 1.5) -- (1, 1.5) node[right] {$V_{out}$};
-  \label{ct:voltage_divider}
-\end{circuitikz}
-\caption{Voltage Divider Circuit}
-\end{center}
+    \begin{center}
+        \begin{circuitikz}[american]
+        \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+        \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+        \draw (0, 0) node[ground]{};
+        \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
+        \label{ct:voltage_divider}
+        \end{circuitikz}
+        % \setlength{\belowcaptionskip}{-10pt} % remove weird space after figure, idk how to do this correctly
+        \caption{Voltage Divider Circuit}
+    \end{center}
 \end{figure}
 
 \subsection{Motivation}
-Electronics systems often require high power actuators and batteries to operate so relatively high battery bus voltages are often selected by engineers. Microcontrollers require low input voltages (i.e. 1.8V, 3.3V, 5V) to operate to reduce power consumption and transistor size. As chemical batteries charge and discharge the voltage of that battery varies due to state of charge and other factors. For this reason, microcontrollers in embedded systems often need to sense the voltage of a battery!
+Electronics systems often require high power actuators and batteries to operate so relatively high battery bus voltages are often selected by engineers to minimize current and conduction losses. Microcontrollers require low input voltages (i.e. 1.8V, 3.3V, 5V) to operate to reduce power consumption and transistor size. As chemical batteries charge and discharge the voltage of that battery varies due to numerous factors, notably including, state of charge. For this reason, microcontrollers in embedded systems often need to sense the voltage of a battery!
 
 \subsection{Voltage Divider Circuit}
-Ohm's Law relates the voltage across a resistor, $V$, to current, $I$, by $V = I \cdot R$. Applying Ohm's Law to each of the two resistors shown results in equations \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot}. Because the resistors are in series, the current, ($I$), flowing through them is the same (i.e. $I_{R_t} = I_{R_b} = I$).
+Ohm's Law relates the voltage across a resistor, $V$, to current flowing through the resistor, $I$, by $V = I \cdot R$. Applying Ohm's Law to each of the two resistors shown results in equations \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot}. Because the resistors are in series, the current, $I$, flowing through them is the same ($I = I_{R_t} = I_{R_b}$).
 \begin{equation}
     \begin{aligned}[b]
-        V_{in} - V_{out} = I \cdot R_t \\
-        I = \frac{V_{in} - V_{out}}{R_t}
+        V_{in} - V_{out} &= I \cdot R_t \\
+        I &= \frac{V_{in} - V_{out}}{R_t}
     \end{aligned}
     \label{eq:ohms_law_top}
 \end{equation}
 
 \begin{equation}
     \begin{aligned}
-        V_{out} - 0 = I \cdot R_b \\
-        I = \frac{V_{out}}{R_b}
+        V_{out} - 0 &= I \cdot R_b \\
+        I &= \frac{V_{out}}{R_b}
     \end{aligned}
     \label{eq:ohms_law_bot}
 \end{equation}
@@ -53,74 +57,81 @@ Ohm's Law relates the voltage across a resistor, $V$, to current, $I$, by $V = I
     \end{aligned}
     \label{eq:voltage_divider}
 \end{equation}
-This indicates for a given $V_{in}$, based on the values chosen for $R_t$ and $R_b$ where $R_t > 0 \ \Omega$ and $R_b > 0 \ \Omega$, $V_{out}$ is set such that $V_{out}$ < $V_{in}$, and is scaled by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage ($V_{out}$) and a maximum battery voltage ($V_{in}$), a desired ratio between $R_t$ and $R_b$ can be determined. However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Recall that resistor power dissipation is given by equation \ref{eq:resistor_power} below:
-\begin{equation} % @daniel This equation is seems slightly extraneous, consider removing it and leaving just the text about how it draws current and power dissipation is bad?
-    P = V * I = \frac{V * V}{R} = I * I * R 
-    \label{eq:resistor_power}
-\end{equation} 
-Note that the input voltage of the battery is fixed so if $R_{sum}$ is too small then power dissipation increases rapidly. This power dissipation occurs constantly and can be significantly wasteful. If $R_{sum}$ is too large then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. A common value selected for $I$ is ~1mA of current to flow in a sensing resistor divider, though different values may be seen based on the application. This boils down to \eqref{eq:divider_current}. 
-\begin{equation} % @daniel can we remove the {nominal} subscript?
-    R_t + R_b = R_{sum} = \frac{V_{in_{nominal}}}{I} = \frac{V_{in_{nominal}}}{1 \ \mathrm{mA}}
-    \label{eq:divider_current}
-\end{equation} 
+This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is scaled down from $V_{in}$ by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage rating, $V_{out}$, and a maximum battery voltage, $V_{in}$, a desired ratio between $R_t$ and $R_b$ can be determined. 
+
+However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Subsituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that the input voltage of the battery is roughly fixed at some $V_{in_{nominal}}$ so if $R_{sum}$ is too small then power dissipation increases. This power dissipation occurs constantly, can be significantly wasteful, and is referred to as quiescent current. 
+% Introducing power dissipation formula in this question is important in my opinion as it opens intuition for the future.
+
+If $R_{sum}$ is too large then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. A common value selected for $I$ is roughly 1mA of current to flow in a sensing resistor divider, though different values may be seen based on the application.
 
 \subsection{Voltage Divider Intuition}
 Consider a few specific cases of this circuit to help build intuition to approach problems featuring the voltage divider.
 \begin{itemize}
-    \item A simple case of the voltage divider circuit is when $R_t = R_b = R$ where $\frac{V_{out}}{V_{in}} = \frac{R}{R+R} = \frac{R}{2*R} = \frac{1}{2}$ which means $V_{in} = 2 * V_{out}$ or $V_{out} = \frac{V_in}{2}$.
-    \item Because $R_t > 0$ and $R_b > 0$ are required (as negative resistors do not exist), in all cases of the circuit being employed we observe that $0 < \frac{V_{out}}{V_{in}} < 1$ meaning the voltage divider always scales a voltage down from it's input. 
-    \item This circuit assumes no source impedance from $V_{in}$ and no loading connected to $V_{out}$. We will see later that this assumption is not always valid. 
+    \item A simple case of the voltage divider circuit is when both resistors have the same value. $R = R_t = R_b$. In this case, $\frac{V_{out}}{V_{in}} = \frac{R}{R+R} = \frac{R}{2 \cdot R} = \frac{1}{2}$ which means $V_{in} = 2 \cdot V_{out}$ or $V_{out} = \frac{1}{2} \cdot V_{in}$.
+    \item Because $R_t > 0 \ \Omega$ and $R_b > 0 \ \Omega$ are required (as negative resistors do not exist), in all cases of the circuit being employed we observe that $0 < \frac{V_{out}}{V_{in}} < 1$. This indicates that $V_{out}$ < $V_{in}$ always holds for the voltage divider so the circuit always scales a voltage down from it's input to it's output.
+    \item This circuit assumes no source impedance from $V_{in}$ and no loading connected to $V_{out}$. We will see later that this assumption is not always valid in practical circuits. 
 \end{itemize}
 
 \subsection{Pin Overvoltage}
-Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event! The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. 
+Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. 
 
 % DRAW : a pin with diodes on it to rails inside microcontroller 
 
-These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Essentially, allowing the microcontroller to sink some current limitted overvoltage event is permissible in some cases. 
+These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when overvolting an ADC pin you will not be receiving accurate readings.
 
-% TODO; idk should i explain the difference between TVS and clamping diode?
-TVS diodes are also used. 
-
-A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors. Additionally, when overvolting an ADC pin you will not be receiving accurate readings.
+External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
 \subsection{Analog to Digital}
+The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory!
+% this paragraph provides motivation for why we want a low pass capacitor. I don't want to do too much detail, I think if you can say the word "Aliasing" in an interview it's plenty.
 
-% TODO : write this section
-Basics of sampling theory, why you want a low pass capacitor. How to solve for cutoff frequency? 
+To avoid aliasing it is common to see low pass capacitors added to voltage divider circuits to filter out higher frequency noise. The cutoff frequency is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of it's input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing as this low pass filter is not ideal. 
+% Just intended to bring up the concept and build intuition, no proof or definitions or math is worth giving here. 
 
-The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a digital value. 
-
-Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of sampling theory! 
+% TODO DRAW : voltage divider and low pass capacitor
 
 \subsection{Input Bias Current}
 Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_bias$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
 
 % DRAW : resistor divider with I_bias loading current on V_out
 
-\begin{equation}
-    % TODO : write out the proof
-    \label{eq:loaded_voltage_divider}
-\end{equation} 
+% TODO : finish proof
+% Commented out on purpose I just want to be sure I didn't mess up the solution
+% \begin{equation}
+%     \begin{aligned}[b]
+%         I_{R_t} &= I_{R_b} + I_{load} \\
+%         I_{R_b} &= \frac{V_{out}}{R_b} \\
+%         I_{R_t} &= \frac{V_{in} - V_{out}}{R_t} \\
+%         \frac{V_{out}}{R_b} + I_{load} &= \frac{V_{in} - V_{out}}{R_t} \\
+%         V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot (V_{in} - V_{out}) \\
+%         V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot V_{in} - R_b \cdot V_{out} \\
+%         
+%         \frac{V_{out}}{V_{in}} &= 
+%     \end{aligned}
+%     \label{eq:loaded_voltage_divider}
+% \end{equation}
 
-Using the above circuit we can solve for a new equation for $V_{out}$ shown in \eqref{eq:voltage_divider}. We can compensate for this by reducing $R_{sum}$. 
-% TODO : explain why
+Using the above circuit we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. 
 
 Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
 
 % DRAW : op-amp bufferred version
 
-% TODO : write : That amp also has input bias, compensation resistor. 
+Op-amps also have input bias current, however, we can compensate for it using the following circuit:
+
+% DRAW : op-amp bufferred version with compensation resistor. 
 
 \subsection{Quiescent Current}
 % TODO : write
-quiescent current is current drawn when the circuit is just sitting there
-can remove quiescent current of this circuit with transistors -> why is has to be high side switching
-using FET or a BJT for this functionality
+Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not neccessary. An example circuit is given:  
+
+% TODO DRAW : high side PMOS and NPN transistor to drive it to disable voltage divider
 
 \subsection{Layout Considerations}
-% TODO : write
-low impedance net should be as small as possible to avoid noise from coupling into the signal. 
-low pass capacitor should be placed near the ADC pin so it can filter out any noise that couples into the low impedance analog net. 
+When placing a voltage divider circuit on a PCB, note that:
+\begin{itemize}
+    \item The $V_{out}$ trace should be as short as possible to avoid noise from coupling into the signal. 
+    \item The low pass capacitor should be placed near the ADC pin so it can filter out noise that couples into $V_{out}$ before the ADC samples it.
+\end{itemize}
 
 \end{document}
