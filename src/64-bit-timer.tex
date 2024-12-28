@@ -2,7 +2,7 @@
 \begin{document}
 
 \section{Given a 64-bit timer consisting of two 32-bit count registers, implement a function to get the 64 bit count.}
-Assume that the timer is initialized and updates itself atomically. The following registers are available, with the header for the question available in Listing~\ref{code:timer-registers}:
+Assume that the timer is initialized, counts up, and updates itself atomically. The following registers are available, with the header for the question available in Listing~\ref{code:timer-registers}:
 \begin{itemize}
     \item \texttt{CNT\_LOW} is the lower 32 bits of the timer count.
     \item \texttt{CNT\_HIGH} is the upper 32 bits of the timer.
@@ -11,6 +11,9 @@ Assume that the timer is initialized and updates itself atomically. The followin
 \lstinputlisting[caption={Timer Registers}, label={code:timer-registers}]{code/timer/timer_registers.h}
 
 \spoilerline
+
+\subsection{Timer Background}
+As a review, a timer is a hardware peripheral that can be configured in firmware to perform specific operations. Generally, timers have a counter that increments or decrements at a fixed rate, and the current count of the timer is accessed by means of a dedicated \texttt{COUNT} register. In the context of this question, it's mentioned that the timer counts up, meaning the count value increases with time at some unspecified rate. As an example, suppose we want to keep track of the number of milliseconds that have passed since the timer was started. If the timer is configured to increment every millisecond, the count value will increase by 1 every millisecond, and the count value can be read to determine the time elapsed in milliseconds.
 
 \subsection{Simple Implementation}
 On first glance, it's tempting to claim the answer is as simple as combining the two 32-bit registers into a 64-bit value, much like what is presented in Listing~\ref{code:timer-64bit-naive}.
