@@ -68,7 +68,7 @@ This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is sca
 Consider a few specific cases of this circuit to help build intuition to approach problems featuring the voltage divider.
 \begin{itemize}
     \item A simple case of the voltage divider circuit is when both resistors have the same value. $R = R_t = R_b$. In this case, $\frac{V_{out}}{V_{in}} = \frac{R}{R+R} = \frac{R}{2 \cdot R} = \frac{1}{2}$ which means $V_{in} = 2 \cdot V_{out}$ or $V_{out} = \frac{1}{2} \cdot V_{in}$.
-    \item Because $R_t > 0 \ \Omega$ and $R_b > 0 \ \Omega$ are required (as negative resistors do not exist), in all cases of the circuit being employed we observe that $0 < \frac{V_{out}}{V_{in}} < 1$. This indicates that $V_{out}$ < $V_{in}$ always holds for the voltage divider so the circuit always scales a voltage down from it's input to it's output.
+    \item Because $R_t > 0 \ \Omega$ and $R_b > 0 \ \Omega$ are required (as negative resistors do not exist), in all cases of the circuit being employed we observe that $0 < \frac{V_{out}}{V_{in}} < 1$. This indicates that $V_{out}$ < $V_{in}$ always holds for the voltage divider so the circuit always scales a voltage down from its input to its output.
     \item This circuit assumes no source impedance from $V_{in}$ and no loading connected to $V_{out}$. We will see later that this assumption is not always valid in practical circuits. 
 \end{itemize}
 
@@ -85,7 +85,7 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
 The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory. \newline
 % this paragraph provides motivation for why we want a low pass capacitor. I don't want to do too much detail, I think if you can say the word "Aliasing" in an interview it's plenty.
 
-\newnoindentpara To avoid aliasing it is common to see low pass capacitors added to voltage divider circuits to filter out higher frequency noise. The cutoff frequency is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of it's input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing as this low pass filter is not ideal. 
+\newnoindentpara To avoid aliasing it is common to see low pass capacitors added to voltage divider circuits to filter out higher frequency noise. The cutoff frequency is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of its input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing as this low pass filter is not ideal. 
 % Just intended to bring up the concept and build intuition, no proof or definitions or math is worth giving here. 
 
 % TODO DRAW : voltage divider and low pass capacitor
