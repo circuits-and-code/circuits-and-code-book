@@ -3,26 +3,37 @@
 
 \section{Determine the step response of the following circuits.}
 
-\noindent In a real interview you would likely be given just one of these circuits, however, for the sake of building intuition and the first principles approach, numerous circuits are analyzed.
+\noindent In a real interview you would likely be given just one of these circuits.
+% Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-        \draw (0, 4) node[anchor=east] {$V_{in}$};
-        \draw (0, 4) to[resistor, l=$R$] (5, 4);
-        \draw (5, 4) node[right] {$V_{out}$};
-        \draw (-0.5, 2) -- (5.5, 2); % ground line at the bottom
-        \draw (3, 2) node[ground]{};
-        \label{ct:series_resistor}
+            \draw (0, 4) node[anchor=east] {$V_{in}$};
+            \draw (0, 4) to[resistor, l=$R$] (5, 4);
+            \draw (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2); % ground line at the bottom
+            \draw (3, 2) node[ground]{};
+            \label{ct:series_resistor}
         \end{circuitikz}
         \caption{Circuit A}
     \end{center}
 \end{figure}
 
 \begin{figure}[h!]
-    % TODO DRAW
-    \caption{Circuit B}
-    \label{fig:voltage_divider}
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 4) node[anchor=east] {$V_{in}$};
+            \draw (0, 4) to[resistor, l=$R_1$] (5, 4); % top resistor to the left, horizontal
+            \draw (3.5, 4) to[resistor, l=$R_2$] (3.5, 2); % bottom resistor, vertical
+            % \draw (4, 4) -- (5, 4); % line from the resistor to V_{out} net, not needed how i drew it! 
+            \draw (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2); % ground line at the bottom
+            \draw (3, 2) node[ground]{};
+            \label{fig:voltage_divider}
+        \end{circuitikz}
+        \caption{Circuit B}
+    \end{center}
 \end{figure}
 
 \begin{figure}[h!]
