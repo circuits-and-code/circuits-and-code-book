@@ -10,14 +10,13 @@ bool bitstream_parity_valid(uint8_t *bitstream, uint32_t length,
     ones += count_ones_bk(bitstream[i]);
   }
   bool expected_parity = false;
+  const bool number_of_ones_is_odd = (ones & 1U); // & 1U is equivalent to % 2
   switch (scheme) {
   case BITSTREAM_PARITY_EVEN:
-    // If the number of ones is odd, the parity bit should be 1
-    expected_parity = (ones & 1U) != 0U; // & 1U is equivalent to % 2
+    expected_parity = (number_of_ones_is_odd) == true;
     break;
   case BITSTREAM_PARITY_ODD:
-    // If the number of ones is even, the parity bit should be 0
-    expected_parity = (ones & 1U) == 0U;
+    expected_parity = (number_of_ones_is_odd) == false;
     break;
   default:
     // No other parity schemes are supported
