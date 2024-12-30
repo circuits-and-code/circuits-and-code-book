@@ -12,6 +12,7 @@ CODE_SNIPPET_PATHS = [
 
 RUNNABLE_PATHS = [
     "src/code/packet_parsing/build",
+    "src/code/keyword/build",
     "src/code/stack/build",
     "src/code/stack/stack_ex/build",
 ]
