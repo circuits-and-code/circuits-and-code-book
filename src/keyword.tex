@@ -2,11 +2,12 @@
 \begin{document}
 
 \section{Explain the following C keywords: \texttt{volatile}, \texttt{const}, and \texttt{static}.}
+For each keyword, explain its purpose, as well as use-cases where it would be beneficial to use it.
 
 \spoilerline
 
 \subsection{Volatile}
-The \textbf{volatile} keyword is used to tell the compiler that a variable's value can be \textit{changed unexpectedly} (the value can be changed by something outside the current scope, such as an interrupt service routine (ISR) or by hardware via memory-mapped input/outputs, or I/O). The compiler should not optimize the variable's access, as it may change at any time.
+The \textbf{volatile} keyword is used to tell the compiler that a variable's value can be \textit{changed unexpectedly} (the value can be changed by something outside the current scope, such as an interrupt service routine (ISR) or by hardware via memory-mapped input/outputs, or I/O). The compiler should not optimize the variable's access, as it may change at any time. Note that using volatile where not necessary can lead to worse performance, as the compiler may not optimize the variable's access. 
 
 \subsubsection{Example Volatile Use Case}
 Consider a short program below in listing \ref{code:volatile-use-case} where a timer interrupt service routine (ISR) increments a variable \texttt{timer\_counter} every millisecond. 

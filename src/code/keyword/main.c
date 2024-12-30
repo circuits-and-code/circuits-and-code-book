@@ -11,6 +11,6 @@ int main(void) {
   for (uint32_t i = 0; i < 5; i++) {
     some_function();
   }
-  // prints: 0 1 2 3 4 
+  // prints: 0 1 2 3 4
   return 0;
 }
