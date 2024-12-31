@@ -7,7 +7,7 @@
 
 \noindent The microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired so an external transistor is required to buffer the signal from the microcontroller. The following circuit in figure (led circuit) demonstrates a simple cost optimized solution to this problem. 
 
-% DRAW: microcontroller I/O pin connected to the base of an NPN BJT through a current limitting resistor.
+% DRAW: microcontroller I/O pin connected to the base of an NPN BJT through a current limiting resistor.
 % \begin{figure}[H]
 %     \centering
 %     \includegraphics[scale=0.4]{generated_images/xxx.png}
@@ -34,8 +34,10 @@ Let's start with a simplified version of this circuit and solve for  the resisto
 This circuit can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and then applying ohms law to solve for solve for $R_l$ as shown in \eqref{eq:led_current_limitting_resistor_math}
 
 \begin{equation}
-    V_s - V_f = R_l * I _f
-    R_l = \frac{V_s - V_f}{I_f}
+    \begin{aligned}[b]
+        V_s - V_f &= R_l * I _f \\
+        R_l &= \frac{V_s - V_f}{I_f}
+    \end{aligned}
     \label{eq:led_current_limitting_resistor_math}
 \end{equation}
 

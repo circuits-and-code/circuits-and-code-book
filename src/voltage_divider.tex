@@ -83,12 +83,26 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
 
 \subsection{Analog to Digital}
 The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory. \newline
-% this paragraph provides motivation for why we want a low pass capacitor. I don't want to do too much detail, I think if you can say the word "Aliasing" in an interview it's plenty.
+% Paragraph provides motivation for why we want a low pass capacitor. I don't want to do too much detail, I think if you can say the word "Aliasing" in an interview it's plenty.
 
 \newnoindentpara To avoid aliasing it is common to see low pass capacitors added to voltage divider circuits to filter out higher frequency noise. The cutoff frequency is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of its input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing as this low pass filter is not ideal. 
 % Just intended to bring up the concept and build intuition, no proof or definitions or math is worth giving here. 
 
-% TODO DRAW : voltage divider and low pass capacitor
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (2.5, 1.5) node[right] {$V_{out}$};
+            \draw (1.5, 1.5) to[capacitor, l=$C$] (1.5, 0);
+            \draw (1.5, 0) node[ground]{};
+            \label{ct:voltage_divider_low_passed}
+        \end{circuitikz}
+        % \setlength{\belowcaptionskip}{-10pt} % TODO : remove extra space after figure
+        \caption{Voltage Divider Circuit with Anti-Aliasing Capacitor}
+    \end{center}
+\end{figure}
 
 \subsection{Input Bias Current}
 Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_{bias}$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
@@ -126,7 +140,7 @@ Op-amps also have input bias current, however, we can compensate for it using th
 % TODO : write
 Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
 
-% TODO DRAW : high side PMOS and NPN transistor to drive it to disable voltage divider
+% DRAW : high side PMOS and NPN transistor to drive it to disable voltage divider
 
 \subsection{Layout Considerations}
 When placing a voltage divider circuit on a PCB, note that:
