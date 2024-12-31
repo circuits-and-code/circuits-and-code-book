@@ -35,13 +35,36 @@ bool test_incorrect_checksum(void) {
 }
 
 bool test_correct_packet(void) {
-  uint8_t packet[] = {0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55};
+  uint8_t packet[] = {0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+  uint8_t fake_temperature_degC = 12U;
+  packet[1] = fake_temperature_degC + 32U;
+
+  uint8_t fake_temperature_fraction_degC = 5U;
+  packet[2] = fake_temperature_fraction_degC;
+
+  uint32_t fake_pressure_pA = 101325U;
+  packet[3] = (fake_pressure_pA >> 24) & 0xFF;
+  packet[4] = (fake_pressure_pA >> 16) & 0xFF;
+  packet[5] = (fake_pressure_pA >> 8) & 0xFF;
+  packet[6] = fake_pressure_pA & 0xFF;
+
+  uint32_t checksum = 0U;
+  for (size_t i = 0; i < 7; i++) {
+    checksum += packet[i];
+  }
+
+  packet[7] = checksum & 0xFF;
 
   weather_data_t weather_data;
   bool success = parse_packet(packet, sizeof(packet), &weather_data);
 
-  success &= (FLOAT_EQUALS(weather_data.temperature_degC, -32.0f));
-  success &= (FLOAT_EQUALS(weather_data.pressure_kPa, 0.0f));
+  success &= (FLOAT_EQUALS(weather_data.temperature_degC, 12.5f));
+  success &= (FLOAT_EQUALS(weather_data.pressure_kPa,
+                           (float)fake_pressure_pA / 1000.0f));
+
+  printf("Temperature: %.2f degC\n", weather_data.temperature_degC);
+  printf("Pressure: %.2f kPa\n", weather_data.pressure_kPa);
 
   return success;
 }
