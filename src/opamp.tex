@@ -1,17 +1,91 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{}
-% idk what to ask here, but people should know all the common configurations cuz they do get asked, maybe a "explain the following circuit type question?
+\section{Give the transfer function for the following circuits.}
 
-% virtual short assumption
+\noindent In a real interview you would likely be given just one of these circuits.
+% Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            % DRAW: Unity Amp
+            \label{fig:unity_amp}
+        \end{circuitikz}
+        \caption{Circuit A}
+    \end{center}
+\end{figure}
 
-% Unity Amp
-% Difference amp 
-% Inverting
-% Non-inverting
-% Input offset voltage
-% Instrumentation amp 
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            % DRAW: Inverting
+            \label{fig:inverting_amp}
+        \end{circuitikz}
+        \caption{Circuit B}
+    \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            % DRAW: Non-inverting
+            \label{fig:non_inverting_amp}
+        \end{circuitikz}
+        \caption{Circuit C}
+    \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            % DRAW: Difference amp
+            \label{fig:difference_amp}
+        \end{circuitikz}
+        \caption{Circuit D}
+    \end{center}
+\end{figure}
+
+\spoilerline
+
+\subsection{Operational Amplifiers}
+Ideal opamps (\textit{Operational Amplifier}) are active devices defined by $V_{out} = A \cdot (V_{+} - V_{-})$ and $I_{V_{+}} = I_{V_{-}} = 0$ where $A = \inf$. 
+
+% Derive virtual short assumption
+
+\subsection{Solutions}
+Applying this knowledge of the virtual short assumption we see all configurations given in the question feature negative feedback so we can use in our analysis that $V_{+} = V_{-}$. 
+
+\subsubsection{Unity Gain Amplifier}
+% TODO write
+
+\subsubsection{Inverting Amplifier}
+% TODO write
+
+\subsubsection{Non-inverting Amplifier}
+% TODO write
+
+\subsubsection{Difference Amplifier}
+% TODO write
+
+\subsection{Non-idealities}
+While most interview questions focus on ideal opamps, real opamps suffer from numerous non-idealities. The most important of which should be understood to aid in circuit design questions and are described below. 
+
+\subsubsection{Saturation}
+Saturation occurs when 
+$V_{ee} < V_{out} < V_{cc}$
+% TODO write
+
+\subsubsection{Input Offset Voltage}
+% TODO write
+
+\subsubsection{Input Bias Current}
+% TODO write
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item Why are non-inverting amplifiers preferred over inverting amplifiers? % Input Impedance
+    \item What is an Instrumentation Amplifier? When would you use it? % Non-inverting amplifier's buffering a difference amplifier
+\end{itemize}
 
 \end{document}

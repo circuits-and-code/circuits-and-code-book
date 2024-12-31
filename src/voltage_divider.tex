@@ -4,7 +4,7 @@
 \section{How would you sense the voltage of a battery with a microcontroller?} 
 % Question is deliberately vague and short. The question is often asked in this manner in real interviews. The term "ADC" is not given in the question to test if an interviewer is familiar with the concept and also to bait interviewees into given excessively complex nonsensical solutions.
 Assume the nominal voltage of the battery is 24 V.
-% This clarification is given to ensure interviewees understand the battery voltage is higher than the microcontroller's ADC reference voltage without giving away too much of the solution. 24 V is chosen as it is much higher than microcontroller ADC voltage, but low enough to avoid high voltage considerations in the answer.
+% This clarification is given to ensure interviewees understand the battery voltage is higher than a standard microcontroller's ADC maximum voltage without giving away too much of the solution while also being low enough to avoid high voltage considerations in the solution.
 \spoilerline
 
 \noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter on the microcontroller can sample the signal safely.
@@ -12,13 +12,13 @@ Assume the nominal voltage of the battery is 24 V.
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-        \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
-        \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
-        \draw (0, 0) node[ground]{};
-        \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
-        \label{ct:voltage_divider}
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
+            \label{ct:voltage_divider}
         \end{circuitikz}
-        % \setlength{\belowcaptionskip}{-10pt} % remove weird space after figure, idk how to do this correctly
+        % \setlength{\belowcaptionskip}{-10pt} % TODO : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
         \caption{Voltage Divider Circuit}
     \end{center}
 \end{figure}
@@ -59,7 +59,7 @@ Ohm's Law relates the voltage across a resistor, $V$, to current flowing through
 \end{equation}
 This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is scaled down from $V_{in}$ by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage rating, $V_{out}$, and a maximum battery voltage, $V_{in}$, a desired ratio between $R_t$ and $R_b$ can be determined. \newline
 
-\newnoindentpara However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Subsituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that the input voltage of the battery is roughly fixed at some $V_{in_{nominal}}$ so if $R_{sum}$ is too small then power dissipation increases. This power dissipation occurs constantly, can be significantly wasteful, and is referred to as quiescent current. \newline
+\newnoindentpara However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Substituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that the input voltage of the battery is roughly fixed at some $V_{in_{nominal}}$ so if $R_{sum}$ is too small then power dissipation increases. This power dissipation occurs constantly, can be significantly wasteful, and is referred to as quiescent current. \newline
 % Introducing power dissipation formula in this question is important in my opinion as it opens intuition for the future.
 
 \newnoindentpara If the $R_{sum}$ is too large, then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. A common value selected for $I$ is roughly 1mA of current to flow in a sensing resistor divider, though different values may be seen based on the application.
@@ -93,9 +93,10 @@ The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a d
 \subsection{Input Bias Current}
 Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_{bias}$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
 
-% DRAW : resistor divider with I_bias loading current on V_out
+% TODO DRAW : resistor divider with I_bias loading current on V_out
 
-% TODO : finish proof
+% TODO : finish proof below and update subsequent paragraph
+
 % Commented out on purpose I just want to be sure I didn't mess up the solution
 % \begin{equation}
 %     \begin{aligned}[b]
@@ -123,7 +124,7 @@ Op-amps also have input bias current, however, we can compensate for it using th
 
 \subsection{Quiescent Current}
 % TODO : write
-Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not neccessary. An example circuit is given:  
+Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
 
 % TODO DRAW : high side PMOS and NPN transistor to drive it to disable voltage divider
 

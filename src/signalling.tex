@@ -1,28 +1,55 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{You have a sensor positioned three meters away from a central controller, what type of signal would you use to transfer the data?}
+\section{You have a sensor positioned a meter away from a central controller, what type of signal would you use to transfer the data?}
+The sensor is a temperature sensor and readings are needed at a rate of 100 Hz with a precision of 0.1C and a temperature range of -40C to 125C.
+
+\spoilerline
+
+\noindent I2C or UART protocol should be selected in this case. 
 
 \subsection{Digital Signalling}
-
-% Logic Level & Shifting
-
-% Differential vs. Single ended
-% Busses vs point to point protocols
-% Full-Duplex vs Half-Duplex
-% Push Pull vs Open Drain 
+Digital signals represent data using discrete values. Digital protocols describe the rules in which digital signals can be used to transfer data. Important attributes of these protocols include:
+\begin{itemize}
+    \item Differential vs. single ended: single ended signals use a single wire and a reference ground to transmit data while differential signals use two complementary wires and optionally use a reference ground. Differential signalling does not by itself offer higher noise immunity, but it allows for lower logic level voltages compared to single ended signals. 
+    \item Busses vs. point to point protocols: point to point protocols connect two devices together whereas bussed protocols allow multiple devices to communicate together on the same wires. 
+    \item Full-duplex vs. half-duplex: duplex means that both devices are capable of transmitting data. Half-duplex means that only one device can transmit at a time, whereas full-duplex is not bound by that requirement. 
+    \item Push pull vs. open drain: push-pull means that the drivers are capable of pulling the signal lines high and pulling the signal lines low. In an  open drain protocol the drivers are only capable of the signal lines low and resistors are used to pull the line high when no drivers are asserting them.
+    \item Synchronous vs. asynchronous: A synchronous protocol makes use of a clock signal to ensure the sender and receiver are synchronized together. Clock signals can be on their own dedicated wire or be encoded as a part of the data. Asynchronous protocols assume that the sender and receiver's unique clocks are close enough that data can still be received. This is a reasonable assumption for lower data-rates and protocols featuring pauses in transmission for re-alignment.
+    % The below commented ones aren't important enough to bring up in my opinion. I don't think I'm missing any obvious ones above. 
+    % \item Single-ended vs duplex 
+    % \item Parallel vs Serial
+    % \item Isolated vs Non-Isolated
+    % \item Unidirectional vs bidirectional 
+    % \item balanced vs unbalanced differential signals 
+\end{itemize}
 
 The most common digital protocols in embedded systems are:
-\begin{itemize}
+\begin{itemize} % maybe turn this into a table? show what protocols are what?
     \item PWM (\textit{Pulse Width Modulation})
     \item UART (\textit{Universal Asynchronous Receiver Transmitter}) is a single-ended serial
-    \item I2C
+    \item I2C 
     \item SPI
     \item CAN
     \item Ethernet
     \item USB
 \end{itemize}
 
+% Logic Level & Shifting
+
 \subsection{Analog Signalling}
+% What is an analog signal
+
+Microcontrollers, the brains of embedded systems, compute digitally so analog signals are often overlooked, however, there are numerous reasons for relying on them including: 
+\begin{itemize}
+    \item All signals from real sensors begin as "analog" values so for any IC (\textit{integrated circuit}) that outputs a digital value, when you pay for that IC, you're also paying for their onboard ADC.
+    \item Analog signals simple and cheap to implement. Microcontrollers often feature ADCs with numerous available input pins and external analog muxes (\textit{multiplexers}) are very cheap. This means it is easy to have a microcontroller sample numerous analog signals on a PCB for a low cost.
+    \item Simple signal processing can be performed in hardware before digital computation is required. The most common example of analog signal processing in hardware is first order low pass filter. 
+    \item More complex analog circuits are used in applications where higher bandwidth is needed in control loops. Analog feedback loops are very common in power electronics, but the flexibility and easy modification of 
+\end{itemize}
+
+% differential vs single ended analog signals, maybe some thermistor circuits 
+
+% Be sure to properly compare analog and digital signals, when would you want to use both of them
 
 \end{document}

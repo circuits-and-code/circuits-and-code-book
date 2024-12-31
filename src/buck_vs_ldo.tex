@@ -1,44 +1,117 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{When would you use a Buck Converters or a Low Dropout Regulators as a power source?}
+\section{When would you use a Buck Converter or a Low Dropout Regulator?}
+
+\spoilerline
 
 \subsection{Low Dropout Regulator}
 \begin{figure}[h!]
-    \begin{circuitikz}
-        % DRAW: schematic, this is proving to be quite difficult, you'd think chatgpt would be capable but i guess not ....
-    \end{circuitikz}
+    \begin{center}
+        \begin{circuitikz}
+            \draw (0, 4) node[anchor=east] {$V_{in}$} -- (1, 4); 
+            \draw (1.5,4) node[npn, rotate=90, scale=1.5] (npn) {}
+                (1,4) to[short] (npn.C)
+                (npn.E) to[short] ++(3.5,0) node[right] {$V_{out}$};
+            \draw (5.5, 4) to[resistor] (5.5, 2); % TODO : fix these resistors
+            \draw (5.5, 2) to[resistor] (5.5, 0);
+            \draw (5.5, 0) node[ground]{};
+            \draw (3,1.6) node[op amp, rotate=180, yscale=-1, scale=0.8] (opamp) {}
+                (opamp.+) node[right] {$V_{ref}$}
+                (opamp.-) to[short] (5.5, 2)
+                (opamp.out) to[short] (npn.B); % TODO make this 90 degrees instead of 45
+            \label{ct:low_dropout_regulator}
+        \end{circuitikz}
+    \end{center}
     \caption{Low Dropout Regulator Conceptual Schematic}
 \end{figure}
 
-% Efficiency of LDO 
+LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{Integrated Circuits}). LDOs are most commonly used as a voltage source for low voltage, low current, high stability circuits such as simple microcontrollers and analog circuits. They are also ideal in any space constrained application as they can be extremely small. 
+
+\subsubsection{Selection}
+When selecting an LDO for a given application, consider: 
+\begin{itemize}
+    \item Maximum input voltage: the semiconductor pass element inside the transistor is rated 
+    \item Output voltage: some LDOs feature adjustable output voltages with a feedback pin, however, if you're looking for a fixed common output voltage, there are fixed LDOs available.
+    \item Maximum output current: the pass element semiconductor has some limit to 
+    \item Maximum power dissipation: 
+    \item Dropout voltage: In order to maintain a stable output voltage the LDO needs sufficient input voltage, mathematically $V_{in} > V_{out} + V_{dropout}$. The $V_{dropout}$ varies between components, but is usually around 0.5 V. 
+\end{itemize}
+Optimizing these parameters in component selection to save board space and cost while ensuring functionality.
+
+\subsubsection{Losses}
+In an LDO, the pass element transistor (usually implemented as a PMOS FET or NPN BJT) acting similarly to a variable resistor is actively controlled to maintain a fixed output voltage regardless of changes to input voltage, load current, and temperature. This variable resistance gives rise to conduction losses in this form of voltage regulator. Assuming a fixed input voltage and load current the losses in an LDO can be easily calculated as $P = V_{drop} * I_{out} = (V_{in} - V_{out}) * I_{out}$.
+
+Another source of losses in an LDO is quiescent losses. This is the power requirement when the LDO is enabled and is always present regardless of loading $I_{out}$, even when $I_{out} = 0$. Quiescent current is required for an LDOs control loop to function and is usually negligible compared to conduction losses.  
 
 \subsection{Buck Converter}
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}
             \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
-            \draw (0.5, 4) to[switch] (2, 4); % TODO : figure out how to make switch bigger
+            \draw (0.5, 4) to[switch] (2, 4); % TODO : figure out how to make switch bigger so it looks better, for some reason using scale breaks it ... 
             \draw (2, 2) to[diode] (2, 4);
             \draw (2, 4) to[inductor, l=$L$] (4, 4);
             \draw (4, 2) to[C, l=$C$] (4, 4);
             \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
             \draw (-0.5, 2) -- (5.5, 2);
             \draw (3, 2) node[ground]{};
+            \label{ct:buck_converter}
         \end{circuitikz}
     \end{center}
-    % TODO : it adds a very large new line here for no reason
+    % TODO : it adds a very large new line after the figure, figure out how to fix this
     \caption{Asynchronous Buck Converter Conceptual Schematic}
 \end{figure}
+
+The buck converter is the simplest switch mode power supply with concepts applicable to numerous more complex topologies so a fundamental understanding is very important and frequently evaluated in interviews. 
+
+\subsubsection{Operation}
+When a buck converter is working, the high side switch turns on, during $T_{on}$, and off, during $T_{off}$. The duty cycle of said buck converter is given by $D_{on} = \frac{T_{on}}{T_{on} + T_{off}}$. The switching frequency of a buck converter is given by $f_{sw} = \frac{1}{T_{on} + T_{off}}$. Buck converters generally operate under a roughly constant switching frequency, but modulate their duty cycle with an active control loop such that a stable output voltage can be produced. The current paths for each state of the circuit are depicted below. 
+
+% DRAW : Buck Circuit Current Path HS ON
+
+% DRAW : Buck Circuit Current Path HS OFF
+
+Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM $D_{on} = \frac{V_{out}}{V_{in}}$ holds ideally (under infinite switching frequency assumption) and is nearly true practically. 
+
+% DRAW : CCM Plotted Current Waveform
+
+When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit enters DCM (\textit{Discontinuous Conduction Mode}) in which $I_L$ reaches $I_L = 0$.
+
+% DRAW : DCM Plotted Current Waveform
+
+\subsubsection{Switching}
+The switch depicted in Figure \ref{ct:buck_converter} is commonly referred to as a high side switch. In practice the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) which feature fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
+
+An asynchronous buck converter is depicted in Figure \ref{ct:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. Synchronous buck converters replace this diode with a MOSFET. 
+
+\subsubsection{Losses}
 % Switching and Conduction Losses as a concept
-% CCM vs DCM ? 
 % Efficiency
 
-\subsection{Comparison}
-% When to use either
+\subsubsection{Desgin}
+Selection of switching frequency is critical in the design of a buck converter. Increasing switching frequency increases switching losses in the converter, but allows the usage of a lower inductance inductors which are usually cheaper and come in smaller packages. Switching frequencies of modern buck converters range from roughly 100 KHz to 5 MHz. 
 
-\subsection{Power Tree}
+\subsection{Comparison}
+% TODO : When to use either
+
+Buck converters are more efficient than LDOs in a majority of applications though an LDO may be optimal in applications where $V_{in} \approx V_{out}$ and/or $I_{out} \approx 0$. 
+
+LDOs require less board space than buck converters and are lower cost. 
+
+LDOs produce a more stable output voltage and can have higher control loop bandwidth as they do not have a switching stage nor an output filter as a buck converter does. 
+
+Both converter topologies require input and output capacitance to produce relatively stable output voltages.
+
+\subsubsection{Power Tree}
+Embedded system controllers often have relatively high voltage power sources, to minimize current consumption, and are tasked with distributing lower voltage power to endpoints. Usually a single controller is responsible for driving numerous loads with each having their own power requirements, most notably a roughly fixed voltage. 
 % Series vs parallel converter tradeoffs
 % Power tree design
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item What is Diode Emulation Mode for a Buck Converter?
+    \item 
+\end{itemize}
 
 \end{document}
