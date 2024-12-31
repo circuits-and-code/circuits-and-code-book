@@ -23,9 +23,9 @@ bool parse_packet(const uint8_t *packet, size_t len,
       temperature_degC += (float)packet[1] - 32.0f; // integer part;
       temperature_degC += (float)packet[2] / 10.0f; // fractional part;
       float pressure_Pa = 0.0f;
-      pressure_Pa += (float)(packet[3] << (NUM_BITS_IN_BYTE * 3));
-      pressure_Pa += (float)(packet[4] << (NUM_BITS_IN_BYTE * 2));
-      pressure_Pa += (float)(packet[5] << (NUM_BITS_IN_BYTE * 1));
+      pressure_Pa += (float)((uint32_t)packet[3] << (NUM_BITS_IN_BYTE * 3));
+      pressure_Pa += (float)((uint32_t)packet[4] << (NUM_BITS_IN_BYTE * 2));
+      pressure_Pa += (float)((uint32_t)packet[5] << (NUM_BITS_IN_BYTE * 1));
       pressure_Pa += (float)(packet[6]);
       weather_data->temperature_degC = temperature_degC;
       weather_data->pressure_kPa = pressure_Pa / 1000.0f; // Convert Pa to kPa

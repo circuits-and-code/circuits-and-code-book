@@ -14,12 +14,12 @@ The weather sensor outputs a UART packet with the following format. A graphical 
     \hline
     \textbf{Byte} & \textbf{Description} \\ \hline
     0 & Start of Frame (0x55) \\ \hline
-    1 & Temperature data (Celsius) - Integer part + 32 \\ \hline
+    1 & Temperature data (Celsius) - Integer part + 32 ($T_{integer} = Byte_{1} - 32$)  \\ \hline
     2 & Temperature data (Celsius) - Fractional part \\ \hline
-    3 & Pressure data (Pa) - MSB \\ \hline
-    4 & Pressure data (Pa) \\ \hline
-    5 & Pressure data (Pa) \\ \hline
-    6 & Pressure data (Pa) - LSB \\ \hline
+    3 & Pressure data (Pa - Integer Part) - MSB \\ \hline
+    4 & Pressure data (Pa - Integer Part) \\ \hline
+    5 & Pressure data (Pa - Integer Part) \\ \hline
+    6 & Pressure data (Pa - Integer Part) - LSB \\ \hline
     7 & Checksum - Lowest byte of the sum of bytes 1-6 \\ \hline
     \end{tabular}
     \caption{Byte Descriptions for Weather Sensor UART Packet}
