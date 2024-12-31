@@ -12,11 +12,11 @@ Assume the nominal voltage of the battery is 24 V.
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-        \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
-        \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
-        \draw (0, 0) node[ground]{};
-        \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
-        \label{ct:voltage_divider}
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
+            \label{ct:voltage_divider}
         \end{circuitikz}
         % \setlength{\belowcaptionskip}{-10pt} % TODO : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
         \caption{Voltage Divider Circuit}
@@ -59,7 +59,7 @@ Ohm's Law relates the voltage across a resistor, $V$, to current flowing through
 \end{equation}
 This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is scaled down from $V_{in}$ by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage rating, $V_{out}$, and a maximum battery voltage, $V_{in}$, a desired ratio between $R_t$ and $R_b$ can be determined. \newline
 
-\newnoindentpara However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Subsituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that the input voltage of the battery is roughly fixed at some $V_{in_{nominal}}$ so if $R_{sum}$ is too small then power dissipation increases. This power dissipation occurs constantly, can be significantly wasteful, and is referred to as quiescent current. \newline
+\newnoindentpara However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Substituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that the input voltage of the battery is roughly fixed at some $V_{in_{nominal}}$ so if $R_{sum}$ is too small then power dissipation increases. This power dissipation occurs constantly, can be significantly wasteful, and is referred to as quiescent current. \newline
 % Introducing power dissipation formula in this question is important in my opinion as it opens intuition for the future.
 
 \newnoindentpara If the $R_{sum}$ is too large, then the current flowing in the resistor divider is so small that noise coupling into the signal or input bias current into the ADC can result in significant measuring error. A common value selected for $I$ is roughly 1mA of current to flow in a sensing resistor divider, though different values may be seen based on the application.

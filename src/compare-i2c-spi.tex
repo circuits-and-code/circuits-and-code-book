@@ -17,8 +17,8 @@ The physical layer of I2C consists of two wires: SDA (Serial Data) and SCL (Seri
 \end{figure}
 
 \noindent The bidirectional nature of the SDA and SCL lines is achieved by using \textit{open-drain} drivers. Open-drain drivers can pull the line low, but not drive it high, instead relying on a \textit{pull-up} resistor to "pull the voltage up". This is contrast to a \textit{push-pull} driver, which can drive the line both high and low. Open-drain drivers, while advantageous in ensuring that the bus can never be shorted by two devices driving the line with different voltages, suffers from slower rise/fall times due to the pull-up resistor forming an RC circuit with the parasitic bus capacitance, and limits the maximum bus speed to 400kHz traditionally, though higher speeds just above 1 MHz are permissible in newer versions of the specification.
-% more information about RC circuit diagram is not given here as it will be coverred in "passive_circuits.tex"
-% should we add information about pull-up resistor value selection here ? 
+% More information about RC circuit diagram is not given here as it will be covered in "passive_circuits.tex"
+% @sahil should we add information about pull-up resistor value selection here ? 
 
 \subsubsection{Data Format}
 The data format of I2C features the following components, and is shown graphically in figure \ref{fig:i2c_data_format}:
@@ -64,7 +64,7 @@ SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (
     \item \textbf{Bus Speed}: SPI is faster than I2C, with speeds in the MHz range compared to I2C's kHz range due to the differences in drive type. As a result, SPI is often used in applications where the transfer speed is required to be high.
     \item \textbf{Wiring Complexity}: I2C requires, at most, two wires, regardless of the number of devices on the bus owing to its addressing scheme. SPI requires at least four wires, plus an additional wire for each slave device.
     \item \textbf{Frame Format}: I2C has a more complex frame format than SPI, with start and stop conditions, address bytes, and acknowledge bits. SPI has a simpler frame format, with no addressing scheme and no acknowledge bits, which can make it easier to implement.
-    % Comparison of I2C and SPI with analog signals is further elaborated on in= signalling.tex
+    % Comparison of I2C and SPI with analog signals is further elaborated on in signalling.tex
 \end{itemize}
 
 \subsection{Follow-ups}
