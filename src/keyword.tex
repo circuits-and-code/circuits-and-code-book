@@ -2,11 +2,12 @@
 \begin{document}
 
 \section{Explain the following C keywords: \texttt{volatile}, \texttt{const}, and \texttt{static}.}
+For each keyword, explain its purpose, as well as use-cases where it would be beneficial to use it.
 
 \spoilerline
 
 \subsection{Volatile}
-The \textbf{volatile} keyword is used to tell the compiler that a variable's value can be \textit{changed unexpectedly} (the value can be changed by something outside the current scope, such as an interrupt service routine (ISR) or by hardware via memory-mapped input/outputs, or I/O). The compiler should not optimize the variable's access, as it may change at any time.
+The \textbf{volatile} keyword is used to tell the compiler that a variable's value can be \textit{changed unexpectedly} (the value can be changed by something outside the current scope, such as an interrupt service routine (ISR) or by hardware via memory-mapped input/outputs, or I/O). The compiler should not optimize the variable's access, as it may change at any time. Note that using volatile where not necessary can lead to worse performance, as the compiler may not optimize the variable's access. 
 
 \subsubsection{Example Volatile Use Case}
 Consider a short program below in listing \ref{code:volatile-use-case} where a timer interrupt service routine (ISR) increments a variable \texttt{timer\_counter} every millisecond. 
@@ -57,7 +58,7 @@ When used with global variables, the \texttt{static} keyword limits the variable
 \subsubsection{Static Local Variables}
 When used with local variables within functions, the \texttt{static} keyword changes the variable's storage class to static. This means that the variable is stored in the data segment rather than the stack (where temporary data and variables are stored \cite{embedded_com_Static}), and its value is retained between function calls. This is useful when you want a variable to retain its value between function calls. Listing \ref{code:static-local-variable} shows an example of a static local variable.
 
-\lstinputlisting[caption={Static Local Variable}, label={code:static-local-variable}]{code/keyword/static_local.c}
+\lstinputlisting[caption={Static Local Variable}, label={code:static-local-variable}]{code/keyword/main.c}
 
 
 \end{document}

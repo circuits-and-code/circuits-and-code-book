@@ -13,7 +13,7 @@ def plot_task_schedule(task_data, title, annotations=None):
     - title (str): Title of the plot.
     - annotations (list): List of dictionaries specifying annotations.
     """
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(10, 5))
 
     # Y-axis task labels
     task_names = list(task_data.keys())

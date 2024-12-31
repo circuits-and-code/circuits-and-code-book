@@ -4,7 +4,7 @@
 \section{What are the differences between a mutex and a semaphore, and in what use cases are each typically employed?}
 
 \spoilerline
-\noindent A mutex and a semaphore are both synchronization primitives that can be used to signal and/or synchronize access to shared resources in a multi-threaded environment. This section summarizes general principles of interrupt service routines, as commonly described in embedded systems literature - Digikey has excellent articles on the implementation of real-time operating systems (RTOS) and synchronization primitives \cite{digikey_rtos}.
+\noindent A mutex and a semaphore are both synchronization primitives that can be used to signal and/or synchronize access to shared resources in a multi-threaded environment. This section summarizes general principles of interrupt service routines, as commonly described in embedded systems literature - DigiKey has excellent articles on the implementation of real-time operating systems (RTOS) and synchronization primitives \cite{digikey_rtos}.
 
 \subsection{Semaphore}
 A \textit{semaphore} (also known as a \textit{counting semaphore}) is a signalling mechanism that allows a thread to signal one or more waiting threads that a particular event has occurred. It can be thought of as a shared non-negative integer counter.
@@ -26,6 +26,12 @@ Using a semaphore involves two main operations: \begin{itemize}
         \item Ex: An interrupt service routine (ISR) can signal to a worker thread that an event has occurred. \textit{Note: Event flags are also commonly used for this purpose, if provided by the OS.}
     \end{itemize}
 \end{itemize}
+A short example of using a semaphore is shown in listing \ref{code:semaphore-example}.
+\begin{lstlisting}[caption={Example of Semaphore Usage}, label={code:semaphore-example}]
+semaphore_wait(conn_semaphore); // Wait for an available connection
+use_connection();
+semaphore_signal(conn_semaphore); // Release the connection
+\end{lstlisting}    
 
 \subsection{Mutex}
 A \textit{mutex} (short for \textit{mutual exclusion}) is a signalling mechanism that is used to prevent multiple threads from accessing a shared resource simultaneously. It can be thought of as a lock that is either locked or unlocked.
@@ -36,7 +42,12 @@ A \textit{mutex} (short for \textit{mutual exclusion}) is a signalling mechanism
     \item \texttt{unlock\_mutex()} - unlocks the mutex, allowing other threads to lock it.
 \end{itemize}
 
-\noindent Consider a UART driver that is being accessed by multiple threads. If the UART driver is not thread-safe, it is possible that two threads could attempt to write to the UART at the same time, causing garbled output. In this case, a mutex could be used to ensure that only one thread can access the UART at a time.
+\noindent Consider a UART driver that is being accessed by multiple threads. If the UART driver is not thread-safe, it is possible that two threads could attempt to write to the UART at the same time, causing garbled output. In this case, a mutex could be used to ensure that only one thread can access the UART at a time. Pseudocode for this scenario is shown in listing \ref{code:mutex-example}.
+\begin{lstlisting}[caption={Example of Mutex Usage}, label={code:mutex-example}]
+mutex_lock(uart_mutex, DELAY_INFINITE);
+uart_write("Hello");
+mutex_unlock(uart_mutex);
+\end{lstlisting}
 
 \subsection{Putting it together}
 The key differences between a mutex and a semaphore are that
@@ -51,7 +62,7 @@ A common follow-up question is to ask about the potential consequences of using 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{generated_images/priority_inversion.png}
+    \includegraphics[scale=0.55]{generated_images/priority_inversion.png}
     \caption{Priority inversion diagram.}
     \label{fig:priority_inversion}
 \end{figure}
@@ -61,7 +72,7 @@ A solution to fix this is called \textit{priority inheritance} - the OS will tem
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{generated_images/priority_inheritance.png}
+    \includegraphics[scale=0.55]{generated_images/priority_inheritance.png}
     \caption{Priority inheritance diagram.}
     \label{fig:priority_inheritance}
 \end{figure}
@@ -69,6 +80,7 @@ A solution to fix this is called \textit{priority inheritance} - the OS will tem
 \subsection{Follow-ups}
 \begin{itemize}
     \item \textbf{Describe other RTOS features that can be used for inter-task communication.}
+    \item \textbf{Explain how deadlock can occur in an RTOS and how it can be prevented.}
 \end{itemize}
 
 \end{document}
