@@ -28,8 +28,14 @@
 
 \begin{figure}[h!]
     \begin{center}
-        \begin{circuitikz}[american]
-            % DRAW: Non-inverting
+        \begin{circuitikz}[american, transform shape]
+            \draw (0,0) node[left]{$V_{in}$} to[short] ++ (1,0)
+                node[op amp, noinv input up, anchor=+](opamp){}
+                (opamp.-) -- ++(0,-1) coordinate(FB)
+                to[R=$R_i$] ++(0,-2) node[ground]{}
+                (FB) to[R=$R_f$] (FB -| opamp.out) -- (opamp.out)
+                to [short] ++(1,0) node[right]{$V_{out}$};
+            % Drawing very similar to "CircuiTikZ 1.7.0 Manual Page 23"
             \label{fig:non_inverting_amp}
         \end{circuitikz}
         \caption{Circuit C}
@@ -73,7 +79,7 @@ While most interview questions focus on ideal opamps, real opamps suffer from nu
 
 \subsubsection{Saturation}
 Saturation occurs when 
-$V_{ee} < V_{out} < V_{cc}$
+For a rail to rail opamp, $V_{out}$ is bounded by the rails, $V_{ee}$ and $V_{cc}$, such that $V_{ee} < V_{out} < V_{cc}$. 
 % TODO write
 
 \subsubsection{Input Offset Voltage}

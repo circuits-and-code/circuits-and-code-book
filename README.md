@@ -1,5 +1,5 @@
 # fw-hw-questions
-FW/SW Interview Question Guide
+FW/HW Interview Question Guide
 
 ## Development Instructions
 
