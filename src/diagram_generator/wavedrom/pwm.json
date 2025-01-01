@@ -1,14 +1,13 @@
 {
-    "signal": [
-      { 
-        "name": "Output (80%)", 
-        "wave": "h...l.h...l." 
-      },
-      {
-        "name": "Digital",
-        "wave": "7...8.7...8.",
-        "data": ["ON", "OFF", "ON", "OFF"]
-      }
-    ]
-  }
-  
+  "signal": [
+    { 
+      "name": "Output (80%)", 
+      "wave": "h...lh...l" 
+    },
+    {
+      "name": "Digital",
+      "wave": "7...87...8",
+      "data": ["ON", "OFF", "ON", "OFF"]
+    }
+  ]
+}
