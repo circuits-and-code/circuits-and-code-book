@@ -107,7 +107,22 @@ The voltage is sampled by an ADC (\textit{Analog to Digital Converter}) into a d
 \subsection{Input Bias Current}
 Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_{bias}$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
 
-% TODO DRAW : resistor divider with I_bias loading current on V_out
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5); 
+            \draw (0, 3.5) to[resistor, l=$R_t$, i=$I_{R_t}$] (0, 1.5);
+            \draw (0, 1.5) to[resistor, l=$R_b$, i=$I_{R_b}$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (2.5, 1.5) node[right] {$V_{out}$};
+            \draw (1.5, 1.5) to[isource, l=$I_{bias}$] (1.5, 0);
+            \draw (1.5, 0) node[ground]{};
+            \label{ct:voltage_divider_loaded}
+        \end{circuitikz}
+        % TODO : remove extra space after figure
+        \caption{Voltage Divider Circuit with Loading}
+    \end{center}
+\end{figure}
 
 % TODO : finish proof below and update subsequent paragraph
 
@@ -137,10 +152,9 @@ Op-amps also have input bias current, however, we can compensate for it using th
 % DRAW : op-amp bufferred version with compensation resistor. 
 
 \subsection{Quiescent Current}
-% TODO : write
 Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
 
-% DRAW : high side PMOS and NPN transistor to drive it to disable voltage divider
+% DRAW : high side PMOS and NPN transistor to drive it to disable voltage divider   
 
 \subsection{Layout Considerations}
 When placing a voltage divider circuit on a PCB, note that:

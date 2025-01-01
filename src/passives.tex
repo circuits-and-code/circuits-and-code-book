@@ -3,8 +3,7 @@
 
 \section{Determine the step response of the following circuits.}
 
-\noindent In a real interview you would likely be given just one of these circuits.
-% Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
+\noindent State any assumptions regarding component values.
 
 \begin{figure}[h!]
     \begin{center}
@@ -26,7 +25,6 @@
             \draw (0, 4) node[anchor=east] {$V_{in}$};
             \draw (0, 4) to[resistor, l=$R_1$] (5, 4); % top resistor to the left, horizontal
             \draw (3.5, 4) to[resistor, l=$R_2$] (3.5, 2); % bottom resistor, vertical
-            % \draw (4, 4) -- (5, 4); % line from the resistor to V_{out} net, not needed how i drew it! 
             \draw (5, 4) node[right] {$V_{out}$};
             \draw (-0.5, 2) -- (5.5, 2); % ground line at the bottom
             \draw (3, 2) node[ground]{};
@@ -39,7 +37,12 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % TODO DRAW
+            \draw (0, 4) node[anchor=east] {$V_{in}$};
+            \draw (0, 4) to[resistor, l=$R$] (5, 4);
+            \draw (3.5, 4) to[capacitor, l=$C$] (3.5, 2);
+            \draw (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2);
+            \draw (3, 2) node[ground]{};
             \label{fig:rc_low_pass_filter}
         \end{circuitikz}
         \caption{Circuit C}
@@ -49,7 +52,12 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % TODO DRAW
+            \draw (0, 4) node[anchor=east] {$V_{in}$};
+            \draw (0, 4) to[capacitor, l=$C$] (5, 4);
+            \draw (3.5, 4) to[resistor, l=$R$] (3.5, 2);
+            \draw (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2);
+            \draw (3, 2) node[ground]{};
             \label{fig:rc_high_pass_filter}
         \end{circuitikz}
         \caption{Circuit D}
@@ -57,67 +65,98 @@
 \end{figure}
 
 \begin{figure}[h!]
-    % TODO DRAW
-    \caption{Circuit E}
-    \label{fig:c_current_source}
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0,0) to[isource, l=$I_{in}$] (0,3) -- (2,3) to[C=$C$] (2,0) -- (0,0);
+            \draw (2, 3) node[right] {$V_{out}$};
+            \draw (1, 0) node[ground]{};
+            \label{fig:c_current_source}
+        \end{circuitikz}
+        \caption{Circuit E}
+    \end{center}
 \end{figure}
 
 \begin{figure}[h!]
-    % TODO DRAW
-    \caption{Circuit F}
-    \label{fig:rc_current_source}
+    \begin{center}
+        \begin{circuitikz}[american]
+            % TODO DRAW
+            \label{fig:rc_current_source}
+        \end{circuitikz}
+        \caption{Circuit F}
+    \end{center}
 \end{figure}
 
 \begin{figure}[h!]
-    % TODO DRAW
-    \caption{Circuit G}
-    \label{fig:lseries_cshunt} 
+    \begin{center}
+        \begin{circuitikz}[american]
+            % TODO DRAW
+            \label{fig:lseries_cshunt}
+        \end{circuitikz}
+        \caption{Circuit G}
+    \end{center}
 \end{figure}
 
 \begin{figure}[h!]
-    % TODO DRAW
-    \caption{Circuit H}
-    \label{fig:lseries_cseries} 
+    \begin{center}
+        \begin{circuitikz}[american]
+            % TODO DRAW
+            \label{fig:lseries_cseries}
+        \end{circuitikz}
+        \caption{Circuit H}
+    \end{center}
 \end{figure}
 
 \spoilerline
 
-\noindent For a question like this, assuming ideal components is expected as further information has not been provided to aid in a more complex analysis.
+\noindent For a question like this, assuming ideal components is expected as further information has not been provided to aid in a more complex analysis. In a real interview you would likely be given just one of these circuits.
+% Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
 \subsection{Passives}
-Recall all ideal passives follow the definitions given in the following figure. Note that $\omega = 2 * \pi * f$ and the imaginary component of impedance, $Z = \frac{V}{I}$ represents reactance $X$ defining a phase shift. Resistors are not frequency or time dependent while inductors and capacitors are. 
+Recall all ideal passives follow the definitions given in the following figure. Note that $\omega = 2 \cdot \pi \cdot f$ and the imaginary component of impedance, $Z = \frac{V}{I}$ represents reactance $X$ defining a phase shift. Resistors are not frequency or time dependent while inductors and capacitors are. 
 \begin{figure}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|}
         \hline
          & Resistor & Capacitor & Inductor \\ \hline
-        Time Domain & $V = I * R$ & $I = C * \frac{dv}{dt}$ & $V = L * \frac{di}{dt}$ \\ \hline
-        Frequency Domain & $\frac{V}{I} = R$ & $\frac{V}{I} = \frac{1}{j*\omega*C}$ & $\frac{V}{I} = j*\omega*L$ \\ \hline
+        Time Domain & $V = I \cdot R$ & $I = C \cdot \frac{dv}{dt}$ & $V = L \cdot \frac{di}{dt}$ \\ \hline
+        Frequency Domain & $\frac{V}{I} = R$ & $\frac{V}{I} = \frac{1}{j \cdot \omega \cdot C}$ & $\frac{V}{I} = j \cdot \omega \cdot L$ \\ \hline
     \end{tabular}
     \caption{Passive Element Definitions}
     \label{fig:passive definitions}
 \end{figure}
 
+\subsection{Step Response}
+Step response of a circuit is what the output waveform with respect to time looks like given a unit step function is applied to the input. Traditionally this means plotting $V_{out}$ waveform given 
+
+\[
+    V_{in}(t) =
+    \begin{cases} 
+        0 & t < 0, \\
+        1 & t \geq 0.
+    \end{cases}
+\]
+
 \subsection{Circuit A: Series Resistor}
-In this circuit we note Ohm's law, $V = I * R$, however, as there is no load, $I=0$ on the resistor in this circuit we note there is no voltage drop, $V=I*R=0*R=0$, across the resistor, consequently $V_{in} = V_{out}$ for this circuit. 
+In this circuit we note Ohm's law, $V = I \cdot R$, however, as there is no load, $I=0$ on the resistor in this circuit we note there is no voltage drop, $V=I \cdot R=0 \cdot R=0$, across the resistor, consequently $V_{in} = V_{out}$ for this circuit. 
 
-% DRAW: a plot just showing an input step being followed perfectly
+% DRAW PLOT : showing an input step being followed perfectly
 
-\subsection{Circuit A: Voltage Divider}
-This circuit is a voltage divider depicted slightly differently than in a previous question, but the same equations hold. 
+\subsection{Circuit B: Voltage Divider}
+This circuit is a voltage divider depicted slightly differently than in a previous question, but the same equations hold: $\frac{V_{out}}{V_{in}} = \frac{R_2}{R_1 + R_2}$. In this case to produce a step response plot we need to make an assumption regarding the values of $R_1$ and $R_2$; for simplicity I will assume $R_1 = R_2$ so my resulting transfer function is $\frac{V_{out}}{V_{in}} = 1/2$.
 
+% DRAW PLOT : of V_{out}
 
 \subsection{Circuit C: RC Low Pass Filter}
-From the two elements in the circuit we get in the time domain $I = C * \frac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I * R$. Cancelling out $I$ which is equivalent in both elements we get $V_{in} - V_{out} = R * C * \frac{dV_{out}}{dt}$ which can be algebraically manipulated into $-\frac{dV_{out}}{V_{out}-V_{in}} = -\frac{dt}{R*C}$ where we perform the integral on each side revealing $\ln{\frac{V_{out}-V_{in}}{V_out}}=-\frac{t}{R*C}$ which can be algebraically manipulated into $V_{out}=V_{in}*(1-\exp(\frac{-t}{R*C}))$. Note when analyzing this circuit we commonly define a constant $\tau = R * C$ as the time constant of the RC circuit which represents the time it takes $1-\exp{-1}$ or ~63 percent of the step size. 
+From the two elements in the circuit we get in the time domain $I = C \cdot \frac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I \cdot R$. Cancelling out $I$ which is equivalent in both elements we get $V_{in} - V_{out} = R \cdot C \cdot \frac{dV_{out}}{dt}$ which can be algebraically manipulated into $-\frac{dV_{out}}{V_{out}-V_{in}} = -\frac{dt}{R \cdot C}$ where we perform the integral on each side revealing $\ln{\frac{V_{out}-V_{in}}{V_out}}=-\frac{t}{R \cdot C}$ which can be algebraically manipulated into $V_{out}=V_{in} \cdot (1-e^{\frac{-t}{R \cdot C}})$. Note when analyzing this circuit we commonly define a constant $\tau = R \cdot C$ as the time constant of the RC circuit which represents the time it takes $1-e^{-1}$ or ~63 percent of the step size. As the question allows us to choose component values for the components I will assume $R$ and $C$ are chosen such that $\tau = R \cdot C = 1$ for simplicity.
 
-% TODO : add a nice solution plot showing an exponential rise and some key points labelled, notably time constant 
+% DRAW PLOT : add a nice solution plot showing an exponential rise and some key points labelled, notably time constant 
 
 This circuit can also be analyzed in the frequency domain. 
 % reasonable to do a full derivation here without laplace
 
 % TODO : frequency domain plot of this circuit in log log scale 
 
-% connection to I2C
+% connection to I2C 
 
 \subsection{Circuit D: RC High Pass Filter}
 
