@@ -1,23 +1,32 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{How to power a green LED at 10mA current from a microcontroller GPIO pin capable of sourcing and sinking 5mA maximum with a 3.3V logic level?}
+\section{Draw a circuit to control a green LED at 10mA current from a microcontroller GPIO pin capable of sourcing and sinking 5mA maximum with a 3.3V logic level?}
 
 \spoilerline
 
-\noindent The microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired so an external transistor is required to buffer the signal from the microcontroller. The following circuit in figure (led circuit) demonstrates a simple cost optimized solution to this problem. 
+\noindent The microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired so an external transistor is required to buffer the signal from the microcontroller. The following circuit in Figure \ref{fig:led_circuit} demonstrates a simple cost optimized solution to this problem. 
 
-% DRAW: microcontroller I/O pin connected to the base of an NPN BJT through a current limiting resistor.
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[scale=0.4]{generated_images/xxx.png}
-%     \caption{GPIO driving an LED.}
-%     \label{fig:led_circuit}
-% \end{figure}
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 6) node[vcc] () {$+3.3$};
+            \draw (0, 6) to[empty led] (0, 4.5);
+            \draw (0, 4.5) to[resistor, l=$R_l$] (0, 3);
+            \draw (0, 3) -- (0, 2.5);
+            \draw (0, 2) node[npn, xscale=-1] (q1) {};
+            \draw (q1.E) node[ground]{};
+            \draw (q1.B) to[resistor, l=$R_b$] ++ (2.2, 0);
+            \draw[thick] (3, 3) rectangle (5, 1) node[pos=0.5]{GPIO};;
+            \label{fig:led_circuit}
+        \end{circuitikz}
+        \caption{GPIO driving an LED}
+    \end{center}
+\end{figure}
 
-The base resistor can be sized to a low E-series value say 100 ohms. The forward voltage drop of a green LED, $V_f$, is roughly 2 V so we can use \eqref{eq:led_current_limitting_resistor} to solve for $R_l$. This resistor can be found in the E24 resistor series as a common resistor value so no rounding is needed. 
+The base resistor, $R_b$ can be sized to a low E-series value say 100 ohms. The forward voltage drop of a green LED, $V_f$, is roughly 2 V so we can use \eqref{eq:led_current_limitting_resistor} to solve for $R_l$. This resistor can be found in the E24 resistor series as a common resistor value so no rounding is needed. 
 \begin{equation}
-    R_l = \frac{V_s - V_f}{I_f} = \frac{3.3-2}{10m} =  130 
+    R_l = \frac{V_s - V_f}{I_f} = \frac{3.3-2}{10m} = 130 \Omega
     \label{eq:led_current_limitting_resistor}
 \end{equation}
 
@@ -29,31 +38,73 @@ LEDs can also be a primary feature of a device! An example case is high power LE
 \subsection{LED Current}
 Let's start with a simplified version of this circuit and solve for  the resistor value! 
 
-% DRAW : series resistor and LED 
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 6) node[vcc] () {$V_s$};
+            \draw (0, 6) to[empty led, v=$V_f$, i=$I_f$] (0, 4);
+            \draw (0, 4) to[resistor, l=$R_l$] (0, 2);
+            \draw (0, 2) node[ground] () {};
+            \label{fig:led_circuit_simple}
+        \end{circuitikz}
+        \caption{Voltage Source Powering an LED}
+    \end{center}
+\end{figure}
 
-This circuit can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and then applying ohms law to solve for solve for $R_l$ as shown in \eqref{eq:led_current_limitting_resistor_math}
+The circuit given in Figure \ref{fig:led_circuit_simple} can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and then applying Ohms Law to solve for solve for $R_l$ as shown in \eqref{eq:led_current_limitting_resistor_math}:
 
 \begin{equation}
     \begin{aligned}[b]
-        V_s - V_f &= R_l * I _f \\
+        V_s - V_f &= R_l \cdot I _f \\
         R_l &= \frac{V_s - V_f}{I_f}
     \end{aligned}
     \label{eq:led_current_limitting_resistor_math}
 \end{equation}
 
-Note for LEDs that the brightness is correlated to the current through the LED, consequently, the brightness can be changed by changing the resistance value or the voltage to the LED. Note that $V_f$ is somewhat dependent on $I_f$ and device temperature. Exact relations are given by LED manufacturers in their device datasheets, however, this simple calculation is enough for approximate solutions. 
+Note for LEDs that the brightness is correlated to the current through the LED, consequently, the brightness can be changed by changing the resistance value or the voltage to the LED. Note that $V_f$ is somewhat dependent on $I_f$ and device temperature. "I-V Curves" across temperature are given by LED manufacturers in their device datasheets, however, this simple calculation is enough for approximate solutions. 
 
 To give a reference, small 0603 LEDs are usually rated for 20mA max (so 20mA * 2V = 40mW), and are visible indoors at just 1mA. For a firmware debugging LED, ~2.5mA, is very common. 
 
 \subsection{Transistor}
 Transistors are three terminal electrical switches in which one terminal is used to control the switching between the other two terminals. The two most commonly used transistors are MOSFETs (\textit{Metal Oxide Semiconductor Field Effect Transistors}) and BJTs (\textit{Bipolar Junction Transistors}) though there are other types. For a BJT, a small current to the base allows a large current to flow between emitter and collector terminals. For a FET (\textit{Field Effect Transistor}), a voltage potential difference between the gate and the source allows current to flow between drain and source. These devices can be drawn with a variety of schematic symbols, but are most commonly seen as:
 
-% DRAW : FET  & BJT devices NPN PNP NCH PCH with terminals labelled 
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 4) node[npn] (q1) {NPN BJT};
+            \draw (q1.E) ++ (0, -0.5) node[anchor=south]{Emitter};
+            \draw (q1.B) ++ (-1, 0) node[anchor=west]{Base};
+            \draw (q1.C) ++ (0, 0.5) node[anchor=north]{Collector};
+            \draw (4, 4) node[pnp] (q2) {PNP BJT};
+            \draw (q2.E) ++ (0, 0.5) node[anchor=north]{Emitter};
+            \draw (q2.B) ++ (-1, 0) node[anchor=west]{Base};
+            \draw (q2.C) ++ (0, -0.5) node[anchor=south]{Collector};
+            \draw (8, 4) node[nigfete](q3){NCH FET};
+            \draw (q3.G) ++ (-1, 0) node[anchor=west]{Gate};
+            \draw (q3.S) ++ (0, -0.5) node[anchor=south]{Source};
+            \draw (q3.D) ++ (0, 0.5) node[anchor=north]{Drain};
+            \draw(12, 4) node[pigfete](q4){PCH FET};
+            \draw (q4.G) ++ (-1, 0) node[anchor=west]{Gate};
+            \draw (q4.D) ++ (0, -0.5) node[anchor=south]{Drain};
+            \draw (q4.S) ++ (0, 0.5) node[anchor=north]{Source};
+            \label{fig:transistors}
+        \end{circuitikz}
+        \caption{Common Transistors}
+    \end{center}
+\end{figure}
 
 FETs, at least ideally, do not require any power consumption to hold them enabled whereas BJTs require current to be supplied constantly. This means FETs are preferred when power consumption is a critical consideration; this is primarily for higher power circuits in which excessive power consumption directly results in a need for expensive cooling systems. BJTs are a much older technology and are easier to fabricate making them far preferred when optimizing for cost.
 
-% TODO: High side switching pros & cons Vs Low side pros & cons
-low side better than high side swiching because NCH FETs have lower RDSon than PCH FETs 
+Another consideration is low side switching vs high side switching when using a transistor to enable and disable (aka switch) a load. The solution given in Figure \ref{fig:led_circuit} demonstrates low side switching. There are numerous implications of this design decision.
+
+% Don't want to do any more drawings or open to can of worms too much here, hopefully this is sufficient? Could even scope creep and add a new question "Would you use high side or low side switch for this load.
+
+% Removed Content
+% When switching high current loads, NCH FETs are preferred because they have lower RDSon (\textit{Resistance Drain-Source when On}) and therefore lower conduction losses than PCH FETs. To turn an NCH FET a positive voltage must be generated between the gate and the source, $V_{gs} > 0$. 
+
+% References
+% https://www.elektormagazine.com/articles/high-side-low-side-switching
+% https://www.baldengineer.com/low-side-vs-high-side-transistor-switch.html
 
 \subsection{Pulse Width Modulation}
 When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. PWM implementations are usually done in hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted to control the brightness. An example of a PWM waveform with a duty cycle of 80\% is shown in figure \ref{fig:pwm_waveform}.
