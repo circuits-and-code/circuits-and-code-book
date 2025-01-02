@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-float adc_read_channel_V(uint8_t channel, float *voltage) {
+bool adc_read_channel_V(uint8_t channel, float *voltage) {
   bool ret = false;
   const bool channel_valid = (channel <= MAX_ADC_CHANNEL);
   const bool adc_ready =
