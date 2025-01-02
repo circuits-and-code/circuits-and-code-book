@@ -4,39 +4,11 @@
 \section{Draw a circuit to control a green LED at 10mA current from a microcontroller GPIO pin capable of sourcing and sinking 5mA maximum with a 3.3V logic level?}
 
 \spoilerline
+\subsection{Context}
+Discrete LEDs (\textit{Light Emitting Diodes}) are often used on circuit boards indicators to end users and firmware developers about the state of an embedded system\footnote{LEDs can also be a primary feature of a device - an example case is high power LEDs, such as automobile headlights, which require more complex circuitry to drive. This question will address only the simpler case of lower power LEDs.}. A common first program executed during board bring-up by firmware developers is to blink the onboard LEDs as an indicator the microcontroller is alive and functional. For end users, it is very common to use LEDs to indicate that the embedded system is powered on and operating nominally. Often, in electronic circuits, an LED is connected in some fashion to a microcontroller GPIO (\textit{General Purpose Input / Output}) pin in order to turn it on and off via firmware. 
 
-\noindent The microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired so an external transistor is required to buffer the signal from the microcontroller. The following circuit in Figure \ref{fig:led_circuit} demonstrates a simple cost optimized solution to this problem. 
-
-\begin{figure}[h!]
-    \begin{center}
-        \begin{circuitikz}[american]
-            \draw (0, 6) node[vcc] () {$+3.3$};
-            \draw (0, 6) to[empty led] (0, 4.5);
-            \draw (0, 4.5) to[resistor, l=$R_l$] (0, 3);
-            \draw (0, 3) -- (0, 2.5);
-            \draw (0, 2) node[npn, xscale=-1] (q1) {};
-            \draw (q1.E) node[ground]{};
-            \draw (q1.B) to[resistor, l=$R_b$] ++ (2.2, 0);
-            \draw[thick] (3, 3) rectangle (5, 1) node[pos=0.5]{GPIO};;
-            \label{fig:led_circuit}
-        \end{circuitikz}
-        \caption{GPIO driving an LED}
-    \end{center}
-\end{figure}
-
-The base resistor, $R_b$ can be sized to a low E-series value say 100 ohms. The forward voltage drop of a green LED, $V_f$, is roughly 2 V so we can use \eqref{eq:led_current_limitting_resistor} to solve for $R_l$. This resistor can be found in the E24 resistor series as a common resistor value so no rounding is needed. 
-\begin{equation}
-    R_l = \frac{V_s - V_f}{I_f} = \frac{3.3-2}{10m} = 130 \Omega
-    \label{eq:led_current_limitting_resistor}
-\end{equation}
-
-\subsection{Motivation}
-Discrete LEDs are often used on circuit boards indicators to end users and firmware developers about the state of an embedded system. A common first program executed during board bring-up by firmware developers is to blink the onboard LEDs as an indicator the microcontroller is alive and functional. For end users it is very common to use LEDs to indicate that the embedded system is powered on and operating nominally. 
-
-LEDs can also be a primary feature of a device! An example case is high power LEDs, such as automobile headlights, which require more complex circuitry to drive. This guide will address only the simple case of lower power LEDs. 
-
-\subsection{LED Current}
-Let's start with a simplified version of this circuit and solve for  the resistor value! 
+\subsection{Controlling Current to an LED} 
+\noindent The circuit given in figure \ref{fig:led_circuit_simple} shows a simple schematic of an LED powered from a constant voltage source, $V_s$, with a fixed resistance, $R_l$ in series with the LED. The LED has a forward voltage drop, $V_f$, and a forward current, $I_f$. The goal is to determine the value of $R_l$, limiting the current through the LED ($I_f$).
 
 \begin{figure}[h!]
     \begin{center}
@@ -51,7 +23,7 @@ Let's start with a simplified version of this circuit and solve for  the resisto
     \end{center}
 \end{figure}
 
-The circuit given in Figure \ref{fig:led_circuit_simple} can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and then applying Ohms Law to solve for solve for $R_l$ as shown in \eqref{eq:led_current_limitting_resistor_math}:
+\noindent The circuit can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and applying Ohms Law to solve for solve for $R_l$, as shown in equation \eqref{eq:led_current_limitting_resistor_math}:
 
 \begin{equation}
     \begin{aligned}[b]
@@ -61,14 +33,12 @@ The circuit given in Figure \ref{fig:led_circuit_simple} can be solved by modell
     \label{eq:led_current_limitting_resistor_math}
 \end{equation}
 
-Note for LEDs that the brightness is correlated to the current through the LED, consequently, the brightness can be changed by changing the resistance value or the voltage to the LED. Note that $V_f$ is somewhat dependent on $I_f$ and device temperature. "I-V Curves" across temperature are given by LED manufacturers in their device datasheets, however, this simple calculation is enough for approximate solutions. 
+\noindent Note that for LEDs, the brightness is proportional to the current flowing through the LED. Consequently, the brightness of the LED can be varied by changing the resistance value or the voltage to the LED\footnote{To give a reference, small 0603 LEDs are usually rated for 20mA max (so 20mA * 2V = 40mW), and are visible indoors at just 1mA. For a firmware debugging LED, ~2.5mA, is very common}. In practice, an LED's forward voltage is somewhat dependent on $I_f$ and device temperature. "I-V Curves" across temperature are usually given by LED manufacturers in the LED's datasheets, however, an assumption of a constant $V_f$ is enough for approximate solutions.
 
-To give a reference, small 0603 LEDs are usually rated for 20mA max (so 20mA * 2V = 40mW), and are visible indoors at just 1mA. For a firmware debugging LED, ~2.5mA, is very common. 
+\subsection{Transistors}
+Transistors are three terminal, electronically-controlled switches in which one terminal is used to control the switching between the other two terminals. The two most commonly used transistors are MOSFETs (\textit{Metal Oxide Semiconductor Field Effect Transistors}) and BJTs (\textit{Bipolar Junction Transistors}), though there are other types. For a BJT, a small current to the base allows a large current to flow between emitter and collector terminals. For a FET (\textit{Field Effect Transistor}), a voltage potential difference between the gate and the source allows current to flow between drain and source. These devices can be drawn with a variety of schematic symbols, but are most commonly seen as:
 
-\subsection{Transistor}
-Transistors are three terminal electrical switches in which one terminal is used to control the switching between the other two terminals. The two most commonly used transistors are MOSFETs (\textit{Metal Oxide Semiconductor Field Effect Transistors}) and BJTs (\textit{Bipolar Junction Transistors}) though there are other types. For a BJT, a small current to the base allows a large current to flow between emitter and collector terminals. For a FET (\textit{Field Effect Transistor}), a voltage potential difference between the gate and the source allows current to flow between drain and source. These devices can be drawn with a variety of schematic symbols, but are most commonly seen as:
-
-\begin{figure}[h!]
+\begin{figure}[H]
     \begin{center}
         \begin{circuitikz}[american]
             \draw (0, 4) node[npn] (q1) {NPN BJT};
@@ -93,9 +63,9 @@ Transistors are three terminal electrical switches in which one terminal is used
     \end{center}
 \end{figure}
 
-FETs, at least ideally, do not require any power consumption to hold them enabled whereas BJTs require current to be supplied constantly. This means FETs are preferred when power consumption is a critical consideration; this is primarily for higher power circuits in which excessive power consumption directly results in a need for expensive cooling systems. BJTs are a much older technology and are easier to fabricate making them far preferred when optimizing for cost.
+\noindent FET's, ideally, do not require any power consumption to keep them enabled, whereas BJTs require current to be supplied constantly. This means FETs are typically preferred when power consumption is a critical consideration; this is primarily for higher power circuits in which excessive power consumption directly results in a need for expensive cooling systems. BJTs are a much older technology and are easier to fabricate, making them far preferred when optimizing for cost. \newline
 
-Another consideration is low side switching vs high side switching when using a transistor to enable and disable (aka switch) a load. The solution given in Figure \ref{fig:led_circuit} demonstrates low side switching. There are numerous implications of this design decision.
+\newnoindentpara Another consideration is low versus high side switching when using a transistor to enable and disable (aka switch) a load. The solution presented in figure \ref{fig:led_circuit} demonstrates low side switching. There are numerous implications of this design decision. % maybe add a quick one-liner
 
 % Don't want to do any more drawings or open to can of worms too much here, hopefully this is sufficient? Could even scope creep and add a new question "Would you use high side or low side switch for this load.
 
@@ -105,6 +75,38 @@ Another consideration is low side switching vs high side switching when using a 
 % References
 % https://www.elektormagazine.com/articles/high-side-low-side-switching
 % https://www.baldengineer.com/low-side-vs-high-side-transistor-switch.html
+
+\subsection{Controlling the LED from a Microcontroller} 
+
+\noindent From the question, it's given that the microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired. As a result, an external transistor can be used to buffer the control signal from the microcontroller, but draw the current from another voltage source that can supply the required current. The following circuit in figure \ref{fig:led_circuit} demonstrates a simple, cost optimized solution to this problem using a BJT.
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 6) node[vcc] () {$+3.3V$};
+            \draw (0, 6) to[empty led] (0, 4.5);
+            \draw (0, 4.5) to[resistor, l=$R_l$] (0, 3);
+            \draw (0, 3) -- (0, 2.5);
+            \draw (0, 2) node[npn, xscale=-1] (q1) {};
+            \draw (q1.E) node[ground]{};
+            \draw (q1.B) to[resistor, l=$R_b$] ++ (2.2, 0);
+            \draw[thick] (3, 3) rectangle (5, 1) node[pos=0.5]{GPIO};;
+            \label{fig:led_circuit}
+        \end{circuitikz}
+        \caption{GPIO driving an LED}
+    \end{center}
+\end{figure}
+
+\noindent The base resistor, $R_b$ can be sized to a low E-series value (\textasciitilde $100 \ \Omega$). The forward voltage drop of a green LED, $V_f$, is roughly $2V$ - equation \eqref{eq:led_current_limitting_resistor} can be used to solve for $R_l$. This resistor can be found in the E24 resistor series as a common resistor value so no rounding is needed. % I feel like the E24 comment should be a footnote to avoid confusing a potential reader, or elaborated upon to make it more clear if E-series is a key concept to understand the solution.
+
+% @daniel can't you go a lot lower on the BJT than 100 ohms? I_b = Beta * I_c. Assuming a 3.3V pin and 0.7 Vbe, I_b = (3.3 - 0.7) / 100 = 26 mA, exceeding the 10mA from the pin...
+% @ daniel I've been asked to walk thru the BJT math, might be helpful since the 100 ohms is given without explanation or intuition about why it's chosen. Think that is a natural follow-up from the transistor section, and it's a good opportunity to show how to calculate the base resistor value.
+
+\begin{equation}
+    R_l = \frac{V_s - V_f}{I_f} = \frac{3.3-2}{10\,\text{mA}} = 130 \,\Omega
+    \label{eq:led_current_limitting_resistor}
+\end{equation}
+
 
 \subsection{Pulse Width Modulation}
 When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. PWM implementations are usually done in hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted to control the brightness. An example of a PWM waveform with a duty cycle of 80\% is shown in figure \ref{fig:pwm_waveform}.
@@ -116,6 +118,6 @@ When controlling an LED from a microcontroller, the brightness of the LED can be
     \label{fig:pwm_waveform}
 \end{figure}
 
-\noindent Note that PWM's application is not limited to LED's - in general, PWM can be thought of as a way to control the average voltage across a load, and is used in motor control, power supplies, and more.
+\noindent Note that PWM's application is not limited to LEDs - in general, PWM can be thought of as a way to control the average voltage across a load, and is used in motor control, power supplies, and more.
 
 \end{document}
