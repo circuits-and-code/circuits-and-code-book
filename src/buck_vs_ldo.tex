@@ -94,25 +94,19 @@ For a majority of applications, especially when $I_{load}$ is large and/or $\fra
 Selection of switching frequency is critical in the design of a buck converter. Increasing switching frequency increases switching losses in the converter, but allows the usage of a lower inductance inductors which are usually cheaper and come in smaller packages. Switching frequencies of modern buck converters range from roughly 100 KHz to 5 MHz. 
 
 \subsection{Comparison}
-% TODO : When to use either
-
 Buck converters are more efficient than LDOs in a majority of applications though an LDO may be optimal in applications where $V_{in} \approx V_{out}$ and/or $I_{out} \approx 0$. 
-
-LDOs require less board space than buck converters and are lower cost. 
-
-LDOs produce a more stable output voltage and can have higher control loop bandwidth as they do not have a switching stage nor an output filter as a buck converter does. 
-
-Both converter topologies require input and output capacitance to produce relatively stable output voltages.
+Buck converters require more physical space than LDOs on a circuit board, mostly because they need an inductor to operate. The need for an inductor and switching circuitry also makes buck converters more expensive than LDOs. 
+LDOs produce a more stable output voltage and can have higher control loop bandwidth as they do not have a switching stage nor an output filter as compared to a buck converter. Both converter topologies require input and output capacitance to produce relatively stable output voltages.
 
 \subsubsection{Power Tree}
-Embedded system controllers often have relatively high voltage power sources, to minimize current consumption, and are tasked with distributing lower voltage power to endpoints. Usually a single controller is responsible for driving numerous loads with each having their own power requirements, most notably a roughly fixed voltage. 
-% Series vs parallel converter tradeoffs
-% Power tree design
+Embedded system controllers often have relatively high voltage power sources, to minimize current and in turn conduction losses, and are tasked with distributing lower voltage power to endpoints. Usually a single controller board is responsible for driving numerous loads with each having their own power requirements, most notably a roughly fixed voltage. 
+
+Consider a hypothetical controller in an automobile mobile controller tasked with powering a 24V motor and a 5V sensor from a 48V source. A solution could be to convert 48V to 24V for the motor and use another converter to convert 48V to 5V. However, a more efficient approach is to convert 48V to 24V and supplying the 24V to the motor and another converter to produce 5V for the sensor. There are numerous tradeoffs between operating cascaded versus parallel converters in a power tree including: failure modes, low power states, and conversion efficiency. 
 
 \subsection{Follow-ups}
 \begin{itemize}
-    \item What is Diode Emulation Mode and Forced Pulse Width Modulation Mode for a Buck Converter?
-    \item Why are input capacitors required?
+    \item When would you use Diode Emulation Mode and Forced Pulse Width Modulation Mode for a Buck Converter?  % Deeper understanding of inductor current
+    \item Why are input capacitors required? % Parasitic Inductance & Filtering
 \end{itemize}
 
 \end{document}
