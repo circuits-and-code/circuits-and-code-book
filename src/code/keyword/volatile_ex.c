@@ -13,7 +13,7 @@ void ISR_Timer(void) {
 int main(void) {
   while (1) {
     if (shared_counter % 1000 == 0) {
-      // Do something every 1s econd
+      // Do something every 1 second
     }
   }
   return 0;
