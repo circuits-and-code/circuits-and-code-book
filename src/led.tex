@@ -82,7 +82,7 @@ Another consideration is low side switching vs high side switching when using a 
             \draw (0, 2) node[npn, xscale=-1] (q1) {};
             \draw (q1.E) node[ground]{};
             \draw (q1.B) to[resistor, l=$R_b$] ++ (2.2, 0);
-            \draw[thick] (3, 3) rectangle (5, 1) node[pos=0.5]{GPIO};;
+            \draw[thick] (3, 3) rectangle (5, 1) node[pos=0.5]{GPIO};
             \label{fig:led_circuit}
         \end{circuitikz}
         \caption{GPIO driving an LED}

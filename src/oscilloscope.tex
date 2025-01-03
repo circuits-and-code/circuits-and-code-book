@@ -1,17 +1,40 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{How would you select an oscilloscope and probe if you wanted to analyze the signal integrity of a 40 mbps SPI Signal on a PCB?}
-
-\subsection{Bandwidth}
-
-\subsection{Probes}
-% sample waveform
-% 1x vs 10x
+\section{How would you select an oscilloscope and probe if you wanted to analyze the signal integrity of a 40 mbps SPI signal on a PCB?}
 
 \subsection{Oscilloscopes}
-% sample rate
+An oscilloscope is a device that plots voltage vs time in a two dimensional graph. It does this by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a continuous time continuous value signal into quantized samples that can be plotted on a monitor. Consequently the oscilloscope can perform many digital logic operations on the signal offering a plethora of features for engineers. 
 
 \subsection{Triggering}
+As the signals we are usually analyzing in electronics are far faster than humans can process, oscilloscopes use the concept of triggering to set a $t=0s$ point from a signal. This allows a periodic high frequency signal to appear stationary on the oscilloscope screen when the trigger is set correctly. 
+
+The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0s$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. 
+
+Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.  
+
+\subsection{Probes}
+The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally. 
+
+These basic probes feature 
+% 1x vs 10x
+
+% differential voltage probes
+
+% current clamps
+
+% concept of earth ground being shared
+
+% sample waveform for checkign probes
+
+\subsection{Sample Rate}
+% sample rate
+% why oscilloscope is diff from a DMM
+
+\subsection{Bandwidth}
+The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. In the context of wideband measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.
+
+Oscilloscopes and measurement probes each have their own bandwidth specifications. 
+% elaborate
 
 \end{document}
