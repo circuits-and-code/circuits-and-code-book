@@ -13,13 +13,13 @@
             \draw (1.5,4) node[npn, rotate=90, scale=1.5] (npn) {}
                 (1,4) to[short] (npn.C)
                 (npn.E) to[short] ++(3.5,0) node[right] {$V_{out}$};
-            \draw (5.5, 4) to[resistor] (5.5, 2); % TODO : fix these resistors
+            \draw (5.5, 4) to[resistor] (5.5, 2);
             \draw (5.5, 2) to[resistor] (5.5, 0);
             \draw (5.5, 0) node[ground]{};
             \draw (3,1.6) node[op amp, rotate=180, yscale=-1, scale=0.8] (opamp) {}
                 (opamp.+) node[right] {$V_{ref}$}
-                (opamp.-) to[short] (5.5, 2)
-                (opamp.out) to[short] (npn.B); % TODO make this 90 degrees instead of 45
+                (opamp.-) to[short] (5.5, 2);
+            \draw (opamp.out) -- (1.5, 1.6) -- (npn.B);
             \label{ct:low_dropout_regulator}
         \end{circuitikz}
     \end{center}
@@ -95,7 +95,9 @@ Selection of switching frequency is critical in the design of a buck converter. 
 
 \subsection{Comparison}
 Buck converters are more efficient than LDOs in a majority of applications though an LDO may be optimal in applications where $V_{in} \approx V_{out}$ and/or $I_{out} \approx 0$. 
+
 Buck converters require more physical space than LDOs on a circuit board, mostly because they need an inductor to operate. The need for an inductor and switching circuitry also makes buck converters more expensive than LDOs. 
+
 LDOs produce a more stable output voltage and can have higher control loop bandwidth as they do not have a switching stage nor an output filter as compared to a buck converter. Both converter topologies require input and output capacitance to produce relatively stable output voltages.
 
 \subsubsection{Power Tree}
