@@ -86,10 +86,11 @@ The switch depicted in Figure \ref{ct:buck_converter} is commonly referred to as
 An asynchronous buck converter is depicted in Figure \ref{ct:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. Synchronous buck converters replace this diode with a MOSFET. 
 
 \subsubsection{Losses}
-% Switching and Conduction Losses as a concept
-% Efficiency
+In a buck converter there are two major forms of loss: switching losses and conduction losses. Switching losses is power dissipated every time the FETs are switched and scale proportionally with switching frequency. Conduction losses are due to parasitic resistance of elements in the converter and consequently scale proportionally to load current. Buck converters have some quiescent current associated with their active control loop, however, these losses are negligible compared to switching and conduction losses and are not usually analyzed. 
 
-\subsubsection{Desgin}
+For a majority of applications, especially when $I_{load}$ is large and/or $\frac{V_{out}}{V_{in}}$ is very small, buck converters are significantly more efficient than LDOs. Typical buck converter efficiency, $\frac{P_{out}}{P_{in}}$, exceeds 90 percent.  
+
+\subsubsection{Switching Frequency}
 Selection of switching frequency is critical in the design of a buck converter. Increasing switching frequency increases switching losses in the converter, but allows the usage of a lower inductance inductors which are usually cheaper and come in smaller packages. Switching frequencies of modern buck converters range from roughly 100 KHz to 5 MHz. 
 
 \subsection{Comparison}

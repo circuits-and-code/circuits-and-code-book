@@ -79,7 +79,12 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % TODO DRAW
+            \draw (0,0) to[isource, l=$I_{in}$] (0,3);
+            \draw (0, 3) to[resistor, l=$R$] (3, 3);
+            \draw (3, 3) node[right] {$V_{out}$};
+            \draw (3, 3) to[capacitor, l=$C$] (3, 0);
+            \draw (3, 0) -- (0, 0);
+            \draw(1.5, 0) node[ground]{};
             \label{fig:rc_current_source}
         \end{circuitikz}
         \caption{Circuit F}
@@ -89,7 +94,12 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % TODO DRAW
+            \draw (0, 4) node[anchor=east] {$V_{in}$};
+            \draw (0, 4) to[inductor, l=$L$] (5, 4);
+            \draw (3.5, 4) to[capacitor, l=$C$] (3.5, 2);
+            \draw (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2);
+            \draw (3, 2) node[ground]{};
             \label{fig:lseries_cshunt}
         \end{circuitikz}
         \caption{Circuit G}

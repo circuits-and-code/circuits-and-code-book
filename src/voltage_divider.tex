@@ -75,9 +75,26 @@ Consider a few specific cases of this circuit to help build intuition to approac
 \subsection{Pin Overvoltage}
 Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
 
-% DRAW : a pin with diodes on it to rails inside microcontroller 
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 3) node[vcc]{}; 
+            \draw (0, 1.5) to[empty diode] (0, 3);
+            \draw (-2, 1.5) -- (0.5, 1.5);
+            \draw[dashed] (0.5, 1.5) -- (1.5, 1.5);
+            \draw (0, 0) to[empty diode] (0, 1.5);
+            \draw (0, 0) node[ground]{};
+            \draw (-2, 1.5) node[anchor=east] {IO Pin};
+            \draw[thick] (-1, 4.5) rectangle (3, -1);
+            \draw (1, 4) node[]{Microcontroller};
+            \label{ct:clamping_diodes}
+        \end{circuitikz}
+        % TODO : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
+        \caption{Microcontroller Pin with Clamping Diodes}
+    \end{center}
+\end{figure}
 
-\noindent These clamping diodes will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when overvolting an ADC pin you will not be receiving accurate readings. \newline
+\noindent These clamping diodes, shown in Figure \ref{ct:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when overvolting an ADC pin you will not be receiving accurate readings. \newline
 
 \newnoindentpara External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
@@ -155,6 +172,8 @@ Op-amps also have input bias current, however, we can compensate for it using th
 Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
 
 % DRAW : high side PMOS and NPN transistor to drive it to disable voltage divider   
+
+% This circuit is also explained in https://electronics.stackexchange.com/questions/64490/low-current-battery-monitoring/64491#64491 & https://discord.com/channels/776618956638388305/779145203688013845/1199193108336889958 . It's fairly interesting so I figure it's worth including in the guide.
 
 \subsection{Layout Considerations}
 When placing a voltage divider circuit on a PCB, note that:
