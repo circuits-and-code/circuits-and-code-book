@@ -3,13 +3,17 @@
 
 \section{Give the transfer function for the following circuits.}
 
-\noindent In a real interview you would likely be given just one of these circuits.
+\noindent In a real interview expect just one of these circuits.
 % Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % DRAW: Unity Amp
+            \draw (0,0) node[left]{$V_{in}$} to[short] ++ (1,0)
+                node[op amp, noinv input up, anchor=+](opamp){}
+                (opamp.-) -- ++(0,-1) coordinate(FB)
+                (FB) to[short] (FB -| opamp.out) -- (opamp.out)
+                to [short] ++(1,0) node[right]{$V_{out}$};
             \label{fig:unity_amp}
         \end{circuitikz}
         \caption{Circuit A}
@@ -19,7 +23,14 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % DRAW: Inverting
+            \draw (0, 0) node[left]{$V_{in}$};
+            \draw (0, 0) to[resistor, l=$R_i$] (2, 0);
+            \draw (2, 0) node[op amp, anchor=-](opamp){};
+            \draw (opamp.+) node[ground]{};
+            \draw (2, 0) -- (2, 1);
+            \draw (2, 1) to[resistor, l=$R_f$] (4.5, 1);
+            \draw (4.5, 1) -- (4.5, -0.5);
+            \draw (opamp.out) to [short] ++ (0.5, 0) node[right]{$V_{out}$};
             \label{fig:inverting_amp}
         \end{circuitikz}
         \caption{Circuit B}
@@ -55,24 +66,37 @@
 \spoilerline
 
 \subsection{Operational Amplifiers}
-Ideal opamps (\textit{Operational Amplifier}) are active devices defined by $V_{out} = A \cdot (V_{+} - V_{-})$ and $I_{V_{+}} = I_{V_{-}} = 0$ where $A = \inf$. 
+Ideal opamps (\textit{Operational Amplifier}) are active devices defined by $V_{out} = A \cdot (V_{+} - V_{-})$ and $I_{V_{+}} = I_{V_{-}} = 0$ where $A \approx \inf$. When an opamp is connected in a negative feedback configuration, the inputs, $V_{+}$ and $V_{-}$, are considered "virtually shorted", $V_{+} = V_{-}$. Negative feedback in an opamp circuit means there is a current path from it's output, $V_{out}$, to it's inverting terminal, $V_{-}$.
 
-% Derive virtual short assumption
+% consider drawing an opamp with terminals labelled. maybe unnecessary
 
 \subsection{Solutions}
 Applying this knowledge of the virtual short assumption we see all configurations given in the question feature negative feedback so we can use in our analysis that $V_{+} = V_{-}$. 
 
 \subsubsection{Unity Gain Amplifier}
-% TODO write
+From the drawn circuit we see $V_{in} = V_{+}$ and $V_{out} = V_{-}$. For the opamp we can apply $V_{out} = A \cdot (V_{+} - V_{-}) = A \cdot (V_{in} - V_{out}) = A \cdot V_{in} - A \cdot V_{out}$ which can be rearranged into $V_{out} + A \cdot V_{out} = A \cdot V_{in}$, $V_{out} \cdot (1 + A) = A \cdot V_{in}$. Now to solve for the transfer function gives $\frac{V_{out}}{V_{in}} = \frac{A}{1+A}$. Recall that $A \approx \inf$ so the $1$ in the denominator becomes insignificant leading to $\frac{V_{out}}{V_{in}} = 1$ or $V_{out} = V_{in}$.
+
+This circuit can also be solved easily with the virtual short assumption, $V_{+} = V_{-}$, by substituting in $V_{in} = V_{+}$ and $V_{out} = V_{-}$, the solution is trivially $V_{out} = V_{in}$.
+
+This circuit acts as a current buffer. Because $I_{V_{+}} = 0$ and $V_{in} = V_{+}$ we see that $I_{V_{in}} = 0$ so the circuit doesn't load the input at all. However, the op amp is capable of providing however much current is required to any load! 
 
 \subsubsection{Inverting Amplifier}
 % TODO write
 
+% solve with A first then show how it can follow the virtual short assumption.
+
 \subsubsection{Non-inverting Amplifier}
 % TODO write
 
+% solve only with virtual short assumption. 
+
+Notice when $R_i = \inf \Omega$ and $R_f = 0 \Omega$ the non-inverting amplifier circuit becomes a unity gain amplifier circuit and the transfer function mathematically aligns with this conclusion.
+
 \subsubsection{Difference Amplifier}
 % TODO write
+
+% solve only with virtual short assumption. 
+
 
 \subsection{Non-idealities}
 While most interview questions focus on ideal opamps, real opamps suffer from numerous non-idealities. The most important of which should be understood to aid in circuit design questions and are described below. 
