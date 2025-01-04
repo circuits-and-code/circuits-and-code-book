@@ -16,23 +16,20 @@ Another parameter of the trigger is the mode. In normal mode the oscilloscope wi
 \subsection{Probes}
 The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally. 
 
-These basic probes feature 
-% 1x vs 10x
+These basic probes usually feature a slider for 1x and 10x operating modes. Note that more advanced probes may feature different multiplications and simpler probes may be fixed at a single multiplication. These multiplications scale the voltage the probe is receiving before it enters the oscilloscope. At 1x mode the sampled voltage is directly passed to the oscilloscope. At higher multiplications, a voltage divider inside the probe is used to scale down the probed voltage before the oscilloscope. At multiplications lower than 1x the probe is an active probe and contains some sort of amplifier internally, this is very uncommon. Oscilloscopes have a maximum input voltage on their analog to digital converters which makes using 10x or 100x probes sometimes required. Another advantage of using 10x mode instead of 1x mode is higher bandwidth is offered. Oscilloscopes in their channel configuration menus allow you to software compensate for these scaling factors so the oscilloscope display shows the real voltage being probed rather than the voltage being sampled.
 
-% differential voltage probes
+Simple probes have a ground connection that is required to have a quality signal. Ground on each scope probe are shorted together and  are shorted to earth ground by the oscilloscope. This is done for safety, but can make differential voltage measurements difficult. Consider attempting to measure the voltage drop across a resistor in which neither end is connected to ground. To do this with single ended probes two probes must be used; one on each end of the resistor, each referenced to the same ground. Then the oscilloscope can mathematically compute the difference between each sampled signal. This gives rise to differential voltage probes which provide isolation. In this scenario a single differential probe can be used to probe the drop across the resistor.
 
-% current clamps
+Current clamps are another type of probe that are used to measure current by outputting a voltage which can be connected to an oscilloscope. Oscilloscopes have the mathematical functionality to do this conversion in software. Current clamps work on the principle of magnetic current sensing and have active amplifier in them.
 
-% concept of earth ground being shared
-
-% sample waveform for checkign probes
+Oscilloscopes feature a sample waveform output, usually a 1 kHz square wave. This is intended for verifying probes are functional and the oscilloscope is setup correctly.
 
 \subsection{Sample Rate}
-% sample rate
-% why oscilloscope is diff from a DMM
+Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope.
+% sample rate implications when selecting a scope
 
 \subsection{Bandwidth}
-The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. In the context of wideband measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.
+The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. In the context of wide-band measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.
 
 Oscilloscopes and measurement probes each have their own bandwidth specifications. 
 % elaborate
