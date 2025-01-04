@@ -25,17 +25,28 @@ Digital signals represent data using discrete values. Digital protocols describe
 \end{itemize}
 
 The most common digital protocols in embedded systems are:
-\begin{itemize} % maybe turn this into a table? show what protocols are what?
-    \item PWM (\textit{Pulse Width Modulation})
-    \item UART (\textit{Universal Asynchronous Receiver Transmitter}) is a single-ended serial
-    \item RS-232
-    \item RS-485 
-    \item I2C (\textit{Inter-Interconnected Controller})
-    \item SPI (\textit{Serial Peripheral Interface})
-    \item CAN (\textit{Controller Area Network})
-    \item Ethernet 
-    \item USB (\textit{Universal Serial Bus})
-\end{itemize}
+% \begin{itemize}
+%     \item PWM (\textit{Pulse Width Modulation})
+%     \item UART (\textit{Universal Asynchronous Receiver Transmitter}) is a single-ended serial
+%     \item RS-232
+%     \item RS-485 
+%     \item I2C (\textit{Inter-Interconnected Controller})
+%     \item SPI (\textit{Serial Peripheral Interface})
+%     \item CAN (\textit{Controller Area Network})
+%     \item Ethernet 
+%     \item USB (\textit{Universal Serial Bus})
+% \end{itemize}
+% Convert into table below and remove the above 
+\begin{figure}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline & Abbreviation & Name & Type & Bus & Duplex & Driver & Synchronicity \\ \hline
+        
+
+    \end{tabular}
+    \caption{Digital Protocol Definitions}
+    \label{fig:digital_protocols}
+\end{figure}
 
 Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds consequently for them to communicate properly, logic level shifting the signal is required. For low speed single ended signals this can be implemented with a single transistor and for more complex cases there are often ICs available. 
 

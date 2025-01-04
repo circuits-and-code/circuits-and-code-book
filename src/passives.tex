@@ -109,7 +109,14 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % TODO DRAW
+            \draw (0, 4) node[anchor=east] {$V_{in}$};
+            \draw (0, 4) -- (0.75, 4);
+            \draw (0.75, 4) to[inductor, l=$L$] (2.5, 4);
+            \draw (2.5, 4) to [capacitor, l=$C$] (4.25, 4);
+            \draw (4.25, 4) -- (5, 4);
+            \draw (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2);
+            \draw (3, 2) node[ground]{};
             \label{fig:lseries_cseries}
         \end{circuitikz}
         \caption{Circuit H}
@@ -174,8 +181,6 @@ This circuit is extremely fundamental and has implications for numerous situatio
 % DRAW PLOT : I2C signal with real rise time s
 
 Increasing the value of $R_{pullup}$ results in less power consumption, but slower rise times as $\tau = R \cdot C$. There is often a lower limit to the value of $R_{pullup}$ as drivers must be rated for the current to pull the line low. Selecting the value of $R_{pullup}$ is a careful consideration for design engineers with values commonly ranging from $1 k \Omega$ to $10 k \Omega$.
-
-% connection to I2C 
 
 \subsection{Circuit D: RC High Pass Filter}
 
