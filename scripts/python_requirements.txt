@@ -4,3 +4,6 @@ click
 numpy
 cairosvg
 pillow
+pandoc
+setuptools
+language_tool_python

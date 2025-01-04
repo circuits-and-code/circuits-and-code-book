@@ -10,6 +10,7 @@
         "build-essential",
         "texlive-fonts-extra",
         "texlive-bibtex-extra",
-        "biber"
+        "biber",
+        "texlive-extra-utils"
     ]
 }
