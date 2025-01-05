@@ -14,23 +14,19 @@ Here we will analyze the lossless transmission line model in which conductors ar
 
 % DRAW : schematic lumped element section of LC inside transmission line model (ece 373 lec 1 slide 17 has this proof)
 
-Analyzing one small section of this line for $\Delta z$ 
-% TODO : basically use lumped element model to derive/prove Z_o and beta definitions. 
-$Z_o = \sqrt{\frac{L}{C}}$ and $\beta = \omega * \sqrt{L*C}$.
+Analyzing one small section of this line for $\Delta z$ as done in \bluehref{https://en.wikipedia.org/wiki/Characteristic_impedance}{Wikipedia Characteristic Impedance} and \bluehref{https://en.wikipedia.org/wiki/Propagation_constant}{Wikipedia Propogation Constant} reveals $Z_o = \sqrt{\frac{L}{C}}$ and $\beta = \omega * \sqrt{L*C}$ which can be used to characterize the line.
+% Doing the full proof with the telegrapher's equation's is excessive so im just gonna link to wikipedia which mostly does it.
 
 \subsection{DMM Resistance Measurement}
 A DMM conceptually measures resistance by sending out some current and measuring the voltage it sees then computes $R = \frac{V}{I}$ to determine the resistance value. The current, $I$, a DMM sends out is very tiny so it is not able to damage sensitive circuits. 
 
-In the case of the finite length transmission line, the DMM and human are usually not fast enough to sample the resistance before the transmission line is able to reflect the voltage waves back and forth down the transmission line enough for it to all even out and only the DC values to be considered.
+In the case of the finite length transmission line, the DMM and human are usually not fast enough to sample the resistance before the transmission line is able to reflect the voltage waves back and forth down the transmission line enough for it to all even out and only the DC values to be considered. For this reason an Open Loop, representing $R \approx \inf$, would be measured by the DMM. 
 
-In the case of the infinite length transmission line, the DMM is creating a voltage wave down the transmission line that is never reflected back (as the line is infinite) and is measuring the current it is providing into the line.
+In the case of the infinite length transmission line, the DMM is creating a voltage wave down the transmission line that is never reflected back (as the line is infinite) and is measuring the current it is providing into the line. For this reason $R = Z_o$ would be measured by the DMM.
 
 \subsection{Time Domain Reflectometry}
-Lossless transmission lines are characterized by a propagation constant, $\beta$, and characteristic impedance, $Z_o$. 
-
-A finite length coaxial cable can have its length measured using time domain reflectometry (TDR) analysis provided the propagation constant is known. This is useful as it let's us figure out where a break could be inside a coaxial cable. 
-
-% TODO : consider, concept of a bounce diagram to be discussed here? ? 
+A finite length coaxial cable can have its length measured using \bluehref{https://en.wikipedia.org/wiki/Time-domain_reflectometer}{time domain reflectometry (TDR)} analysis provided the propagation constant is known. This is useful as it let's us figure out where a break could be inside a coaxial cable. 
+% The second edition of this book could introduce concept of a bounce diagram here
 
 \subsection{Types of Transmission Lines}
 Transmission line types:
