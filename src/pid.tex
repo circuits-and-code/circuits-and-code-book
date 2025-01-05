@@ -21,7 +21,7 @@ As a review, the form of a PID controller is given by equation \eqref{eq:pid_con
 \begin{itemize}
     \item The proportional term is simply the product of the proportional gain and the error. It is responsible for increasing system responsiveness, but can cause overshoot. \newline
     \texttt{const float p\_term = pid->K\_p * error;}.
-    \item The integral term accumulates the error over time, summing up all past errors. By doing so, it helps reduce steady-state error. To approximate this integral, we use the commonly-chosen Backward Euler method \cite{AbramovitchPID}, which updates the integral (sum) by adding the product of the current error and the timestep. Note that the computation of the \texttt{i\_term} comes after the addition of the integral in this approximation. See figure \ref{fig:pid-backward-euler-integral} for a visual representation of the Backward Euler method.
+    \item The integral term accumulates the error over time, summing up all past errors. Applying a control signal proportional to the integral-error helps reduce steady-state error. To approximate this integral, we use the commonly-chosen Backward Euler method \cite{AbramovitchPID}, which updates the integral (sum) by adding the product of the current error and the timestep. Note that the computation of the \texttt{i\_term} comes after the addition of the integral in this approximation. See figure \ref{fig:pid-backward-euler-integral} for a visual representation of the Backward Euler method.
     \newline
     \texttt{pid->integral += error * dt;}. \newline
     \texttt{const float i\_term = pid->K\_i * pid->integral;}.
@@ -44,7 +44,7 @@ As a review, the form of a PID controller is given by equation \eqref{eq:pid_con
 
 \end{itemize}
 
-\noindent Putting it all together, the PID controller step function is shown in Listing~\ref{code:pid_controller}. Note the added check for a \texttt{NULL} pointer, as well as the implicit assumption that the \texttt{pid->prev\_error} and \texttt{pid->integral} terms are initialized to zero before the first run.
+\noindent Putting it all together, the PID controller step function is shown in Listing~\ref{code:pid_controller}. Note the added check for a \texttt{NULL} pointer and positive timestep as either can cause the function to not run correctly.
 
 \lstinputlisting[caption={PID Controller Step}, label={code:pid_controller}]{code/pid/pid_controller.c}
 
