@@ -109,7 +109,14 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % TODO DRAW
+            \draw (0, 4) node[anchor=east] {$V_{in}$};
+            \draw (0, 4) -- (0.75, 4);
+            \draw (0.75, 4) to[inductor, l=$L$] (2.5, 4);
+            \draw (2.5, 4) to [capacitor, l=$C$] (4.25, 4);
+            \draw (4.25, 4) -- (5, 4);
+            \draw (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2);
+            \draw (3, 2) node[ground]{};
             \label{fig:lseries_cseries}
         \end{circuitikz}
         \caption{Circuit H}
@@ -146,6 +153,8 @@ Step response of a circuit is what the output waveform with respect to time look
     \end{cases}
 \]
 
+In the laplace domain the unit step function is given by $V_{in}(j \cdot \omega) = \frac{1}{j \cdot \omega}$. To determine the response of a circuit in the laplace domain, $V_{out}(j \cdot \omega) = V_{in}{j \cdot \omega} * H(j \cdot \omega)$ where $H(j \cdot \omega)$ defines the system transfer function. 
+
 \subsection{Circuit A: Series Resistor}
 In this circuit we note Ohm's law, $V = I \cdot R$, however, as there is no load, $I=0$ on the resistor in this circuit we note there is no voltage drop, $V=I \cdot R=0 \cdot R=0$, across the resistor, consequently $V_{in} = V_{out}$ for this circuit. 
 
@@ -161,12 +170,17 @@ From the two elements in the circuit we get in the time domain $I = C \cdot \fra
 
 % DRAW PLOT : add a nice solution plot showing an exponential rise and some key points labelled, notably time constant 
 
-This circuit can also be analyzed in the frequency domain. 
-% reasonable to do a full derivation here without laplace
+This circuit can also be analyzed in the frequency domain. In this case for the capacitor $Z_c = \frac{1}{j \cdot \omega \cdot c}$ and for the resistor $Z_r = R$. For the voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_2}{R_1 + R_2}$, can be extrapolated into $\frac{V_{out}}{V_{in}} = \frac{Z_2}{Z_1 + Z_2}$ so by substituting in the values for this circuit $H = \frac{V_{out}}{V_{in}} = \frac{Z_c}{Z_r + Z_c} = \frac{\frac{1}{j \cdot \omega \cdot c}}{R + \frac{1}{j \cdot \omega \cdot c}} = \frac{1}{1 + j \cdot \omega \cdot c \cdot R} = \frac{1}{1+\frac{j \cdot \omega}{\omega_{0}}}$ where $\omega_{0} = \frac{1}{R \cdot C}$ is defined is a pole of the system transfer function $H$. Plotting this single pole low pass filter reveals:
 
-% TODO : frequency domain plot of this circuit in log log scale 
+% DRAW PLOT : frequency domain plot of this circuit in log log scale 
 
-% connection to I2C 
+To find the step response using the laplace domain $V_{out}(j \cdot \omega) = H(j \cdot \omega) \cdot \frac{1}{j \cdot w}$ is applied and then an inverse laplace transformation reveals an identical solution to the time domain solution.
+
+This circuit is extremely fundamental and has implications for numerous situations. Consider an I2C digital signal in which all drivers are not asserting the line low. In this case the signal trace has some parasitic capacitance to ground and a pullup resistor is responsible for pulling the line to a logic high state. This can be modelled as an RC circuit and consequently a real I2C signal showing states $0101010101$ in reality appear as follows on an oscilloscope:
+
+% DRAW PLOT : I2C signal with real rise time s
+
+Increasing the value of $R_{pullup}$ results in less power consumption, but slower rise times as $\tau = R \cdot C$. There is often a lower limit to the value of $R_{pullup}$ as drivers must be rated for the current to pull the line low. Selecting the value of $R_{pullup}$ is a careful consideration for design engineers with values commonly ranging from $1 k \Omega$ to $10 k \Omega$.
 
 \subsection{Circuit D: RC High Pass Filter}
 

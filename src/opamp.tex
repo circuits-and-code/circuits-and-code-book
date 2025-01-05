@@ -73,30 +73,30 @@ Ideal opamps (\textit{Operational Amplifier}) are active devices defined by $V_{
 \subsection{Solutions}
 Applying this knowledge of the virtual short assumption we see all configurations given in the question feature negative feedback so we can use in our analysis that $V_{+} = V_{-}$. 
 
-\subsubsection{Unity Gain Amplifier}
+\subsubsection{Circuit A: Unity Gain Amplifier}
 From the drawn circuit we see $V_{in} = V_{+}$ and $V_{out} = V_{-}$. For the opamp we can apply $V_{out} = A \cdot (V_{+} - V_{-}) = A \cdot (V_{in} - V_{out}) = A \cdot V_{in} - A \cdot V_{out}$ which can be rearranged into $V_{out} + A \cdot V_{out} = A \cdot V_{in}$, $V_{out} \cdot (1 + A) = A \cdot V_{in}$. Now to solve for the transfer function gives $\frac{V_{out}}{V_{in}} = \frac{A}{1+A}$. Recall that $A \approx \inf$ so the $1$ in the denominator becomes insignificant leading to $\frac{V_{out}}{V_{in}} = 1$ or $V_{out} = V_{in}$.
 
 This circuit can also be solved easily with the virtual short assumption, $V_{+} = V_{-}$, by substituting in $V_{in} = V_{+}$ and $V_{out} = V_{-}$, the solution is trivially $V_{out} = V_{in}$.
 
 This circuit acts as a current buffer. Because $I_{V_{+}} = 0$ and $V_{in} = V_{+}$ we see that $I_{V_{in}} = 0$ so the circuit doesn't load the input at all. However, the op amp is capable of providing however much current is required to any load! 
 
-\subsubsection{Inverting Amplifier}
+\subsubsection{Circuit B: Inverting Amplifier}
+From the circuit $V_{+} = 0$ and there is a current path $I$ from $V_{in}$ to $V_{out}$. Recall that $I_{in} = 0$ so no current goes into the opamp input pins. Analyzing the resistors gives $V_{in} - V_{-} = I \cdot R_i$ and $V_{-} - V_{out} = I \cdot R_f$. Note that the resistors could be solved with $I$ in the reverse direction as long as equations are internally consistent: $V_{out} - V_{-} = I \cdot R_f$ and $V_{-} - V_{in} = I \cdot R_i$. Next the resistor equations can be substituted into each other to cancel out $I$ so $\frac{V_{out} - V_{-}}{R_f} = \frac{V_{-} - V_{in}}{R_i}$. Simplifying this gives $V_{out} \cdot R_i - V_{-} \cdot R_i = V_{-} \cdot R_f - V_{in} \cdot R_f$. 
+
+Next $V_{out} = A \cdot (V_{+} - V_{-})$ can be applied where $V_{+} = 0$ from the circuit so $V_{out} = -A \cdot V_{-}$ and $V_{-} = -\frac{V_{out}}{A}$. This can be substituted into the resistor equation $V_{out} \cdot R_i - V_{-} \cdot R_i = V_{-} \cdot R_f - V_{in} \cdot R_f$ to get $V_{out} \cdot R_i - (-\frac{V_{out}}{A}) \cdot R_i = (-\frac{V_{out}}{A}) \cdot R_f - V_{in} \cdot R_f$. Next this can be rearranged to find the transfer function: $V_{out} \cdot R_i + \frac{V_{out} \cdot R_i}{A} = -\frac{V_{out} \cdot R_f}{A} - V_{in} \cdot R_f$, $V_{out} \cdot R_i \cdot A + V_{out} \cdot R_i = -V_{out} \cdot R_f - V_{in} \cdot R_f \cdot A$, $V_{out} \cdot R_i \cdot A + V_{out} \cdot R_i + V_{out} \cdot R_f = - V_{in} \cdot R_f \cdot A$, $V_{out} \cdot (R_i \cdot A + R_i + R_f) = - V_{in} \cdot R_f \cdot A$, and $\frac{V_{out}}{V_{in}} = \frac{-R_f \cdot A}{R_i \cdot A + R_i + R_f} = -\frac{R_f}{R_i + \frac{R_i}{A} + \frac{R_f}{A}}$. This can be simplified assuming $A \approx \inf$ so $\frac{1}{A} \approx 0$ resulting in $\frac{V_{out}}{V_{in}} = -\frac{R_f}{R_i}$. 
+
+Alternatively using the virtual short assumption, $V_{+} = V_{-}$, after seeing negative feedback in the circuit. From the circuit $V_{+} = 0$ so $V_{-} = V_{+} = 0$. Plugging this into the resistor equation gives $V_{out} \cdot R_i - 0 \cdot R_i = 0 \cdot R_f - V_{in} \cdot R_f$, $V_{out} \cdot R_i = - V_{in} \cdot R_f$, and $\frac{V_{out}}{V_{in}} = -\frac{R_f}{R_i}$. This approach is much simpler than solving the entire circuit with $A$ and will be used to solve the subsequent circuits as they also exhibit negative feedback.  
+
+\subsubsection{Circuit C: Non-inverting Amplifier}
+From the circuit $V_{in} = V_{+}$. From the resistors, $V_{out} - V_{-} = I \cdot R_f$ and $V_{-} - 0 = I \cdot R_i$. Using substitution to cancel out $I$ gives $\frac{V_{out} - V_{-}}{R_f} = \frac{V_{-}}{R_i}$ and $V_{out} \cdot R_i - V_{-} \cdot R_i = V_{-} \cdot R_f$.
+
+While this could be solved using $V_{out} = A \cdot (V_{+} - V_{-})$, this solution will jump to applying the virtual short assumption, $V_{+} = V_{-}$, because negative feedback is present in this configuration. This assumption gives $V_{-} = V_{+} = V_{in}$ which gives $V_{out} \cdot R_i - V_{in} \cdot R_i = V_{in} \cdot R_f$, $V_{out} \cdot R_i = V_{in} \cdot R_f + V_{in} \cdot R_i$, and $\frac{V_{out}}{V_{in}} = \frac{R_f + R_i}{R_i} = frac{R_f}{R_i} + \frac{R_i}{R_i} = 1 + \frac{R_f}{R_i}$. 
+
+Notice when $R_i = \inf \Omega$ and $R_f = 0 \Omega$ the non-inverting amplifier circuit becomes a unity gain amplifier circuit and the transfer function mathematically aligns with this conclusion as $\frac{R_f}{R_i} = \frac{0}{\inf} = 0$ so $\frac{V_{out}}{V_{in}} = 1$. 
+
+\subsubsection{Circuit D: Difference Amplifier}
 % TODO write
-
-% solve with A first then show how it can follow the virtual short assumption.
-
-\subsubsection{Non-inverting Amplifier}
-% TODO write
-
 % solve only with virtual short assumption. 
-
-Notice when $R_i = \inf \Omega$ and $R_f = 0 \Omega$ the non-inverting amplifier circuit becomes a unity gain amplifier circuit and the transfer function mathematically aligns with this conclusion.
-
-\subsubsection{Difference Amplifier}
-% TODO write
-
-% solve only with virtual short assumption. 
-
 
 \subsection{Non-idealities}
 While most interview questions focus on ideal opamps, real opamps suffer from numerous non-idealities. The most important of which should be understood to aid in circuit design questions and are described below. 
@@ -104,13 +104,13 @@ While most interview questions focus on ideal opamps, real opamps suffer from nu
 \subsubsection{Saturation}
 Saturation occurs when 
 For a rail to rail opamp, $V_{out}$ is bounded by the rails, $V_{ee}$ and $V_{cc}$, such that $V_{ee} < V_{out} < V_{cc}$. 
-% TODO write
+% TODO write explanation
 
 \subsubsection{Input Offset Voltage}
-% TODO write
+The input offset voltage is the minimum voltage difference that an amplifier can detect between $V_{+}$ and $V_{-}$ input pins. 
 
 \subsubsection{Input Bias Current}
-% TODO write
+Input bias current is current, $I_{in}$, into $V_{+}$ and $V_{-}$. This current is usually very small, but has an affect on the circuit! 
 
 \subsection{Follow-ups}
 \begin{itemize}
