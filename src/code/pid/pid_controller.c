@@ -1,6 +1,13 @@
 #include "pid_typedef.h"
 #include <stddef.h>
 
+void pid_init(pid_t *pid) {
+  if (pid != NULL) {
+    pid->integral = 0.0F;
+    pid->prev_error = 0.0F;
+  }
+}
+
 float pid_step(pid_t *pid, float setpoint, float measured_output, float dt) {
   float ret = 0.0F;
   // Check for NULL pointer and positive time step

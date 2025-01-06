@@ -31,9 +31,10 @@ Consider the code snippet in listing \ref{code:const-use-case} below. The variab
 \begin{lstlisting}[caption={Example use case of Const}, label={code:const-use-case}]
 #include <stdint.h>
 
-volatile const uint32_t* const UART_RECEIVE_REGISTER_READ_ONLY = (uint32_t*)0x12345678;
+volatile const uint8_t* const UART_RECEIVE_REGISTER_READ_ONLY = (uint32_t*)0x12345678;
 
 int main() {
+    uint8_t uart_receive_char = *UART_RECEIVE_REGISTER_READ_ONLY; // Valid C code!
     *UART_RECEIVE_REGISTER_READ_ONLY = 0xDEADBEEF; // Compiler error: assignment of read-only location
     return 0;
 }

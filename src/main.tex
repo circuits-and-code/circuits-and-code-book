@@ -78,43 +78,44 @@
 
 % One .tex per question (no limit to the number of questions, but let's keep it under 30 so we finish eventually lol)
 \newpage
-\subfile{keyword.tex}
-\newpage
-\subfile{mutex_vs_semaphore.tex}
-\newpage
-\subfile{pid.tex}
-\newpage
+
 \subfile{bitstream_parity.tex}
 \newpage
+\subfile{voltage_divider.tex}
+\newpage
+\subfile{interrupts.tex}
+\newpage
+\subfile{keyword.tex} % should come after interrupts
+\newpage
+\subfile{pid.tex}
+\newpage % @daniel hmm, I think we should take a look at the dependency of signalling and "I2C vs SPI" cause they have similar-ish content but I couldn't tell what is a dependency to what. Signalling q before I2C vs SPI I think makes sense for now?
 \subfile{signalling.tex}
 \newpage
 \subfile{compare-i2c-spi.tex}
 \newpage
+\subfile{spi-bitbang.tex} % needs to go after I2C vs SPI question
+\newpage
 \subfile{what-is-can.tex}
-\newpage
-\subfile{spi-bitbang.tex}
-\newpage
-\subfile{interrupts.tex}
-\newpage
-\subfile{voltage_divider.tex}
 \newpage
 \subfile{passives.tex} % place after voltage_divider.tex, oscilloscope.tex, signalling.tex
 \newpage
 \subfile{opamp.tex} % place after passives.tex
 \newpage
+\subfile{packet-parsing.tex} % this one is pretty softball and can go anywhere
+\newpage
 \subfile{led.tex}
 \newpage
 \subfile{current_sense.tex}
 \newpage
-\subfile{adc_init.tex}
+\subfile{adc_init.tex} 
 \newpage
 \subfile{transmission_lines.tex}
-\newpage
-\subfile{packet-parsing.tex}
 \newpage
 \subfile{64-bit-timer.tex}
 \newpage
 \subfile{stack-growth.tex}
+\newpage
+\subfile{mutex_vs_semaphore.tex}
 \newpage
 \subfile{buck_vs_ldo.tex}
 \newpage

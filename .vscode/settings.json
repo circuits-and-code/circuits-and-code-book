@@ -137,6 +137,7 @@
         "prescaler",
         "Sahil",
         "setpoint",
+        "timestep",
         "UART"
     ],
     "files.associations": {
