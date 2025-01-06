@@ -56,7 +56,17 @@
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american]
-            % DRAW: Difference amp
+            \draw (0, 0) node[left]{$V_{in+}$};
+            \draw (0, 0) to[resistor, l=$R_1$, i=$I_{1}$] (2, 0);
+            \draw (2, 0) node[op amp, anchor=-](opamp){};
+            \draw (2, 0) -- (2, 1);
+            \draw (2, 1) to[resistor, l=$R_3$] (4.5, 1);
+            \draw (4.5, 1) -- (4.5, -0.5);
+            \draw (opamp.out) to [short] ++ (0.5, 0) node[right]{$V_{out}$};
+            \draw (0, -1) node[left]{$V_{in-}$};
+            \draw (0, -1) to[resistor, l=$R_2$, i=$I_{2}$] (2, -1);
+            \draw (2, -1) to[resistor, l=$R_4$] (2, -3);
+            \draw (2, -3) node[ground]{};
             \label{fig:difference_amp}
         \end{circuitikz}
         \caption{Circuit D}
