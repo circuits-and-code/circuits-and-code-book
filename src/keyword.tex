@@ -35,7 +35,8 @@ volatile const uint8_t* const UART_RECEIVE_REGISTER_READ_ONLY = (uint32_t*)0x123
 
 int main() {
     uint8_t uart_receive_char = *UART_RECEIVE_REGISTER_READ_ONLY; // Valid C code!
-    *UART_RECEIVE_REGISTER_READ_ONLY = 0xDEADBEEF; // Compiler error: assignment of read-only location
+    *UART_RECEIVE_REGISTER_READ_ONLY = 0xEF; // Compiler error: assignment of read-only location
+    // ...
     return 0;
 }
 \end{lstlisting}
