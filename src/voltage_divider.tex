@@ -162,11 +162,43 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
 
 \noindent Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
 
-% DRAW : op-amp bufferred version
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (0.75, 1.5);
+            \draw (0.75,1.5) node[left]{} to[short] ++ (1,0)
+                node[op amp, noinv input up, anchor=+](opamp){}
+                (opamp.-) -- ++(0,-1) coordinate(FB)
+                (FB) to[short] (FB -| opamp.out) -- (opamp.out)
+                to [short] ++(1,0) node[right]{$V_{out}$};
+            \label{fig:bufferred_divider}
+        \end{circuitikz}
+        \caption{Opamp Bufferred Resistor Divider}
+    \end{center}
+\end{figure}
 
 Op-amps also have input bias current, however, we can compensate for it using the following circuit:
 
-% DRAW : op-amp bufferred version with compensation resistor. 
+\begin{figure}[h!]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (0.75, 1.5);
+            \draw (0.75,1.5) node[left]{} to[short] ++ (1,0)
+                node[op amp, noinv input up, anchor=+](opamp){}
+                (opamp.-) -- ++(0,-1) coordinate(FB)
+                (FB) to[R=$R_c$] (FB -| opamp.out) -- (opamp.out)
+                to [short] ++(1,0) node[right]{$V_{out}$};
+            \label{fig:bufferred_divider_comp}
+        \end{circuitikz}
+        \caption{Compensated Opamp Bufferred Resistor Divider}
+    \end{center}
+\end{figure}
 
 \subsection{Quiescent Current}
 Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
