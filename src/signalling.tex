@@ -40,7 +40,9 @@ The most common digital protocols in embedded systems are:
 \begin{figure}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
-        \hline & Abbreviation & Name & Type & Bus & Duplex & Driver & Synchronicity \\ \hline
+        \hline 
+        & Abbreviation & Name & Type & Bus & Duplex & Driver & Synchronicity \\ \hline
+        & PWM & Pulse Width Modulation & Single Ended & Point to Point & Half-Duplex / Uni-directional & Push Pull & Asynchronous \\ \hline
         
 
     \end{tabular}
@@ -53,18 +55,17 @@ Digital signals have discrete states defined by voltage thresholds. Using smalle
 % DRAW : single NCH FET logic level shifter 
 
 \subsection{Analog Signalling}
-% What is an analog signal
-
-Microcontrollers, the brains of embedded systems, compute digitally so analog signals are often overlooked, however, there are numerous reasons for relying on them including: 
+Analog signals are continuous is time and value. Microcontrollers, the brains of embedded systems, compute digitally so analog signals are often overlooked, however, there are numerous reasons for relying on them including: 
 \begin{itemize}
-    \item All signals from real sensors begin as "analog" values so for any IC (\textit{integrated circuit}) that outputs a digital value, when you pay for that IC, you're also paying for their onboard ADC.
-    \item Analog signals simple and cheap to implement. Microcontrollers often feature ADCs with numerous available input pins and external analog muxes (\textit{multiplexers}) are very cheap. This means it is easy to have a microcontroller sample numerous analog signals on a PCB for a low cost.
+    \item All signals from real sensors begin as "analog" values. Any IC (\textit{integrated circuit}) that outputs a digital value, when you pay for that IC, you're also paying for their onboard ADC. Because signals from sensors begin as analog, working with them as analog signals is often the simplest solution. 
+    \item Analog signals cheap to implement. Microcontrollers often feature ADCs with numerous available input pins and external analog muxes (\textit{multiplexers}) are very cheap. This means it is easy to have a microcontroller sample numerous analog signals on a PCB for a low cost. 
     \item Simple signal processing can be performed in hardware before digital computation is required. The most common example of analog signal processing in hardware is first order low pass filter. 
     \item More complex analog circuits are used in applications where higher bandwidth is needed in control loops. Analog feedback loops are very common in power electronics, but the flexibility and easy modification of 
 \end{itemize}
 
-% differential vs single ended analog signals, maybe some thermistor circuits 
+A drawback of analog signals is they are degraded by noise more significantly than digital signals. While a digital signal is tolerant to small amounts of noise without affecting the signal transmission at all, analog signals directly realize the effects of noise immediately. For this reason all long distance data transmission employs some form of digital transmission for reliability. 
 
-% Be sure to properly compare analog and digital signals, when would you want to use both of them
+Differential signalling is also an option in the analog world to compensate for common-mode noise for sensitive analog circuitry. This is extremely uncommon however as conversion to a digital protocol is often preferred when optimizing for noise immunity. 
+% This is my understanding, kind of hard to verify just googling around so yea, see what the reviewers think. 
 
 \end{document}
