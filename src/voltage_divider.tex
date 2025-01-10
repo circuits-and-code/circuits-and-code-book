@@ -2,10 +2,16 @@
 \begin{document}
 
 \section{How would you sense the voltage of a battery with a microcontroller?} 
-% Question is deliberately vague and short. The question is often asked in this manner in real interviews. The term "ADC" is not given in the question to test if an interviewer is familiar with the concept and also to bait interviewees into given excessively complex nonsensical solutions.
-Assume the nominal voltage of the battery is 24 V, and the maximum input voltage of any integrated circuit (IC) or microcontroller is 3.3 V.
+% Question is deliberately vague and short. The question is often asked in this manner in real interviews. 
+% The term "ADC" is not given in the question to test if an interviewer is familiar with the concept and also to bait interviewees into given excessively complex nonsensical solutions. 
+% An example of an excessively complex nonsenical solution an interviewee could propose is using an ADC that supports rlly high input voltages such as ADS125H01 https://www.ti.com/product/ADS125H01 . The question is meant to leave bait for something like that
+Assume the nominal voltage of the battery is 24 V.
 % This clarification is given to ensure interviewees understand the battery voltage is higher than a standard microcontroller's ADC maximum voltage without giving away too much of the solution while also being low enough to avoid high voltage considerations in the solution.
+% A maximum input voltage to microcontroller ADC is not given deliberately. Interviewees are expected to infer as a vast majority real microcontroller in the world don't feature a 24 V ADC. This is done to align with how the question is asked in real interviews.
+% 
 \spoilerline
+
+% TODO : explain why a separate high voltage ADC is stupid here
 
 \noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter (either external, or for analysis of the question, internal to the microcontroller) can sample the signal without exceeding the maximum input voltage threshold.
 
@@ -109,6 +115,50 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
 %     \label{eq:loaded_voltage_divider}
 % \end{equation}
 
+\noindent Using the circuit in Figure \ref{ct:voltage_divider_loaded} we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. \newline
+
+% Consider converting this into a follow-up
+\newnoindentpara Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (0.75, 1.5);
+            \draw (0.75,1.5) node[left]{} to[short] ++ (1,0)
+                node[op amp, noinv input up, anchor=+](opamp){}
+                (opamp.-) -- ++(0,-1) coordinate(FB)
+                (FB) to[short] (FB -| opamp.out) -- (opamp.out)
+                to [short] ++(1,0) node[right]{$V_{out}$};
+            \label{fig:bufferred_divider}
+        \end{circuitikz}
+        \caption{Opamp Bufferred Resistor Divider}
+    \end{center}
+\end{figure}
+
+Op-amps also have input bias current, however, we can compensate for it using the following circuit:
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
+            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
+            \draw (0, 0) node[ground]{};
+            \draw (0, 1.5) -- (0.75, 1.5);
+            \draw (0.75,1.5) node[left]{} to[short] ++ (1,0)
+                node[op amp, noinv input up, anchor=+](opamp){}
+                (opamp.-) -- ++(0,-1) coordinate(FB)
+                (FB) to[R=$R_c$] (FB -| opamp.out) -- (opamp.out)
+                to [short] ++(1,0) node[right]{$V_{out}$};
+            \label{fig:bufferred_divider_comp}
+        \end{circuitikz}
+        \caption{Compensated Opamp Bufferred Resistor Divider}
+    \end{center}
+\end{figure}
+
+
 \subsection{Pin Overvoltage}
 % I feel like this is better kept as a follow-up question rather than a part of the main answer, it doesn't build on top of itself in the scope of this answer (except for the tiny bit of a mention of bias current being added in). If you want to save the work perhaps consider a separate question for this topic?
 Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages outside of the permissible operating range. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
@@ -159,81 +209,45 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
     \end{center}
 \end{figure}
 
-\noindent Using the above circuit we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. \newline
-
-% IMO this should go to follow-up
-\newnoindentpara Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
-
-\begin{figure}[H]
-    \begin{center}
-        \begin{circuitikz}[american]
-            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
-            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
-            \draw (0, 0) node[ground]{};
-            \draw (0, 1.5) -- (0.75, 1.5);
-            \draw (0.75,1.5) node[left]{} to[short] ++ (1,0)
-                node[op amp, noinv input up, anchor=+](opamp){}
-                (opamp.-) -- ++(0,-1) coordinate(FB)
-                (FB) to[short] (FB -| opamp.out) -- (opamp.out)
-                to [short] ++(1,0) node[right]{$V_{out}$};
-            \label{fig:bufferred_divider}
-        \end{circuitikz}
-        \caption{Opamp Bufferred Resistor Divider}
-    \end{center}
-\end{figure}
-
-Op-amps also have input bias current, however, we can compensate for it using the following circuit:
-
-\begin{figure}[H]
-    \begin{center}
-        \begin{circuitikz}[american]
-            \draw (-0.5, 3.5) node[anchor=east] {$V_{in}$} -- (0, 3.5) -- (0, 3); 
-            \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
-            \draw (0, 0) node[ground]{};
-            \draw (0, 1.5) -- (0.75, 1.5);
-            \draw (0.75,1.5) node[left]{} to[short] ++ (1,0)
-                node[op amp, noinv input up, anchor=+](opamp){}
-                (opamp.-) -- ++(0,-1) coordinate(FB)
-                (FB) to[R=$R_c$] (FB -| opamp.out) -- (opamp.out)
-                to [short] ++(1,0) node[right]{$V_{out}$};
-            \label{fig:bufferred_divider_comp}
-        \end{circuitikz}
-        \caption{Compensated Opamp Bufferred Resistor Divider}
-    \end{center}
-\end{figure}
-
-\subsection{Quiescent Current}
-Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
-
-\begin{figure}[H]
-    \begin{center}
-        \begin{circuitikz}[american]
-            \draw(-1, 3.5) node[pigfete, bodydiode, rotate=90](q1){};
-            \draw (-4, 3.5) -- (q1.S);
-            \draw (-4, 3.5) node[anchor=east] {$V_{in}$};
-            \draw (q1.G) ++ (0, -1.75) node[nigfete, bodydiode](q2){};
-            \draw (-3, 3.5) to[resistor, l=$R_{pullup}$] (-3, 1.5);
-            \draw (-3, 1.5) -- (q2.D);
-            \draw (q2.S) node[ground]{};
-            \draw (q2.D) -- (q1.G);
-            \draw (-4, 0.5) node[anchor=east] {$V_{ctrl}$};
-            \draw (-4, 0.5) -- (q2.G);
-            \draw (-0.5, 3.5) -- (0.5, 3.5) -- (0.5, 3); 
-            \draw (0.5, 3) to[resistor, l=$R_t$] (0.5, 1.5) to[resistor, l=$R_b$] (0.5, 0);
-            \draw (0.5, 0) node[ground]{};
-            \draw (0.5, 1.5) -- (1.25, 1.5) node[right] {$V_{out}$};
-            \label{ct:voltage_divider_switched}
-        \end{circuitikz}
-        \caption{Switched Voltage Divider Circuit}
-    \end{center}
-\end{figure}
-% This circuit is also explained in https://electronics.stackexchange.com/questions/64490/low-current-battery-monitoring/64491#64491 & https://discord.com/channels/776618956638388305/779145203688013845/1199193108336889958 . It's fairly interesting so I figure it's worth including in the guide. In reality dual FETs in a single package can often be found for cheap so an NPN isn't usually used.
+% TODO : Consider moving to appendix? 
+% Moved to be a follow-up question instead for now. 
+% \subsection{Quiescent Current}
+% Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
+% \begin{figure}[h!]
+%     \begin{center}
+%         \begin{circuitikz}[american]
+%             \draw(-1, 3.5) node[pigfete, bodydiode, rotate=90](q1){};
+%             \draw (-4, 3.5) -- (q1.S);
+%             \draw (-4, 3.5) node[anchor=east] {$V_{in}$};
+%             \draw (q1.G) ++ (0, -1.75) node[nigfete, bodydiode](q2){};
+%             \draw (-3, 3.5) to[resistor, l=$R_{pullup}$] (-3, 1.5);
+%             \draw (-3, 1.5) -- (q2.D);
+%             \draw (q2.S) node[ground]{};
+%             \draw (q2.D) -- (q1.G);
+%             \draw (-4, 0.5) node[anchor=east] {$V_{ctrl}$};
+%             \draw (-4, 0.5) -- (q2.G);
+%             \draw (-0.5, 3.5) -- (0.5, 3.5) -- (0.5, 3); 
+%             \draw (0.5, 3) to[resistor, l=$R_t$] (0.5, 1.5) to[resistor, l=$R_b$] (0.5, 0);
+%             \draw (0.5, 0) node[ground]{};
+%             \draw (0.5, 1.5) -- (1.25, 1.5) node[right] {$V_{out}$};
+%             \label{ct:voltage_divider_switched}
+%         \end{circuitikz}
+%         \caption{Switched Voltage Divider Circuit}
+%     \end{center}
+% \end{figure}
+% comment, This circuit is also explained in https://electronics.stackexchange.com/questions/64490/low-current-battery-monitoring/64491#64491 & https://discord.com/channels/776618956638388305/779145203688013845/1199193108336889958 . It's fairly interesting so I figure it's worth including in the guide though it is a bit scope creep. In reality dual FETs in a single package can often be found for cheap so an NPN isn't usually used, thats why i drew it this way.
 
 \subsection{Layout Considerations}
 When placing a voltage divider circuit on a PCB, note that:
 \begin{itemize}
     \item The $V_{out}$ trace should be as short as possible to avoid noise from coupling into the signal. 
     \item The low pass capacitor should be placed near the ADC pin so it can filter out noise that couples into $V_{out}$ before the ADC samples it.
+\end{itemize}
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. Propose a simple circuit to disable current consumption when the voltage divider is not needed. 
+    \item 
 \end{itemize}
 
 \end{document}

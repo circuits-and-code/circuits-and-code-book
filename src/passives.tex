@@ -123,24 +123,43 @@
     \end{center}
 \end{figure}
 
+% Add in G but with series resistor after the L
+
 \spoilerline
 
 \noindent For a question like this, assuming ideal components is expected as further information has not been provided to aid in a more complex analysis. In a real interview you would likely be given just one of these circuits.
 % Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
 \subsection{Passives}
-Recall all ideal passives follow the definitions given in the following figure. Note that $\omega = 2 \cdot \pi \cdot f$ and the imaginary component of impedance, $Z = \frac{V}{I}$ represents reactance $X$ defining a phase shift. Resistors are not frequency or time dependent while inductors and capacitors are. 
+Ideal passives Figure \ref{fig:passive definitions}:
 \begin{figure}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|}
         \hline
          & Resistor & Capacitor & Inductor \\ \hline
         Time Domain & $V = I \cdot R$ & $I = C \cdot \frac{dv}{dt}$ & $V = L \cdot \frac{di}{dt}$ \\ \hline
-        Frequency Domain & $\frac{V}{I} = R$ & $\frac{V}{I} = \frac{1}{j \cdot \omega \cdot C}$ & $\frac{V}{I} = j \cdot \omega \cdot L$ \\ \hline
+        Frequency Domain & $Z = R$ & $Z = \frac{1}{j \cdot \omega \cdot C}$ & $Z = j \cdot \omega \cdot L$ \\ \hline
+        At $f \approx \inf$ & $Z = R$ & $Z \approx 0$ & $Z \approx \inf$ \\ \hline
+        At $f \approx 0$ & $Z = R$ & $Z \approx \inf$ & $Z \approx 0$ \\ \hline
+        Energy Stored & $E = 0$ & $E = \frac{1}{2} \cdot C \cdot V^{2}$ & $E = \frac{1}{2} \cdot L \cdot I^{2}$ \\ \hline
+        Real Power Dissipation & $P = I \cdot V$ & $P = 0$ & $P = 0$ \\ \hline
     \end{tabular}
     \caption{Passive Element Definitions}
     \label{fig:passive definitions}
 \end{figure}
+Keep in mind when interpreting Figure \ref{fig:passive definitions} that:
+\begin{itemize}
+    \item The relationship between angular frequency and frequency is given by: $\omega = 2 \cdot \pi \cdot f$.
+    \item $Z = \frac{V}{I}$ represents the impedance of a circuit. 
+    \item Impedance, $Z$, is frequency dependent for circuits with inductors and capacitors.
+    \item The imaginary component of impedance, $Z$, represents reactance $X$ which defines a phase shift between $V$ and $I$.
+    \item Resistors have no frequency dependence and do not store any energy.
+    \item An open circuit, nets that are completely isolated from each other, are represented as connected by $Z = \inf$.
+    \item A short circuit, nets that are at the same voltage potential, are represented as connected by $Z = 0$. 
+    \item For circuits, say $Z_1$, $Z_2$, ..., $Z_n$, in series the equivalent impedance is given by $Z = Z_1 + Z_2 + ... + Z_n$.
+    \item For circuits, say $Z_1$, $Z_2$, ..., $Z_n$, in parallel the equivalent impedance is given by $\frac{1}{Z} = \frac{1}{Z_1} + \frac{1}{Z_2} + ... + \frac{1}{Z_n}$.
+    \item For two circuits in parallel, say $Z_1$ and $Z_2$, $\frac{1}{Z} = \frac{1}{Z_1} + \frac{1}{Z_2}$ can be simplified into $Z = \frac{Z_1 \cdot Z_2}{Z_1 + Z_2}$ algebraically.  
+\end{itemize}
 
 \subsection{Step Response}
 Step response of a circuit is what the output waveform with respect to time looks like given a unit step function is applied to the input. Traditionally this means plotting $V_{out}$ waveform given 
@@ -153,7 +172,9 @@ Step response of a circuit is what the output waveform with respect to time look
     \end{cases}
 \]
 
-In the laplace domain the unit step function is given by $V_{in}(j \cdot \omega) = \frac{1}{j \cdot \omega}$. To determine the response of a circuit in the laplace domain, $V_{out}(j \cdot \omega) = V_{in}{j \cdot \omega} * H(j \cdot \omega)$ where $H(j \cdot \omega)$ defines the system transfer function. 
+In the laplace domain the unit step function is given by $V_{in}(j \cdot \omega) = \frac{1}{j \cdot \omega}$. To determine the response of a circuit in the laplace domain, $V_{out}(j \cdot \omega) = V_{in}{j \cdot \omega} * H(j \cdot \omega)$ where $H(j \cdot \omega)$ defines the system transfer function.
+
+% TODO Add a plot in the frequency domain showing the step response and explain implications to above passives
 
 \subsection{Circuit A: Series Resistor}
 In this circuit we note Ohm's law, $V = I \cdot R$, however, as there is no load, $I=0$ on the resistor in this circuit we note there is no voltage drop, $V=I \cdot R=0 \cdot R=0$, across the resistor, consequently $V_{in} = V_{out}$ for this circuit. 
@@ -181,6 +202,11 @@ This circuit is extremely fundamental and has implications for numerous situatio
 % DRAW PLOT : I2C signal with real rise time s
 
 Increasing the value of $R_{pullup}$ results in less power consumption, but slower rise times as $\tau = R \cdot C$. There is often a lower limit to the value of $R_{pullup}$ as drivers must be rated for the current to pull the line low. Selecting the value of $R_{pullup}$ is a careful consideration for design engineers with values commonly ranging from $1 k \Omega$ to $10 k \Omega$.
+% This is a really strong paragraph! I really want people to understand these tradeoffs! 
+
+% TODO : Add in a current plot for the RC step response as well, this is sometimes asked
+
+When answering a question like this a conceptual sanity check is also useful! As a capacitor behaves like an open circuit in DC it makes sense that as time approaches infinity, Circuit C begins to look like Circuit A! 
 
 \subsection{Circuit D: RC High Pass Filter}
 
@@ -189,7 +215,23 @@ Increasing the value of $R_{pullup}$ results in less power consumption, but slow
 \subsection{Circuit F: Series RC with Current Source}
 
 \subsection{Circuit G: Series Inductor with Shunt Capacitor}
+When analyzing this circuit, begin with considering what happens as $t \approx \inf$ and $t \approx 0$ as these are the simplest states. For all of $t \leq 0$ it is reasonable to assume there is no energy stored in the passives, $E_l = 0$ and $E_c = 0$, and consequently $V_{out} = 0$ is a valid initial condition. When $t \approx \inf$ it is known that $Z_l \approx \inf$ and $Z_c \approx \inf$ as time increases there are significantly less high frequency components present. This means as $t \approx \inf$ Circuit G begins to appear as Circuit A. 
+
+% TODO math proof quickly
+
+% Plot
+% label midpoint of oscillation as V_in
+% label max as 2*Vin and the min as 0 
+
+% TODO explain resonant frequency formula
+
+% TODO explain rise waveform is based on L and C values 
 
 \subsection{Circuit H: Series Inductor and Capacitor}
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item Given an unknown discrete capacitor find the capacitance? How would you determine the capacitance at a given DC bias voltage?
+\end{itemize}
 
 \end{document}

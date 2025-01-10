@@ -26,24 +26,23 @@ Digital signals represent data using discrete values. Digital protocols describe
 
 The most common digital protocols in embedded systems are:
 % \begin{itemize}
-%     \item PWM (\textit{Pulse Width Modulation})
-%     \item UART (\textit{Universal Asynchronous Receiver Transmitter}) is a single-ended serial
 %     \item RS-232
 %     \item RS-485 
 %     \item I2C (\textit{Inter-Interconnected Controller})
 %     \item SPI (\textit{Serial Peripheral Interface})
 %     \item CAN (\textit{Controller Area Network})
-%     \item Ethernet 
 %     \item USB (\textit{Universal Serial Bus})
+%     \item Ethernet 
+%     \item QSPI Quad SPI 
 % \end{itemize}
 % Convert into table below and remove the above 
 \begin{figure}[h!]
     \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
         \hline 
-        & Abbreviation & Name & Type & Bus & Duplex & Driver & Synchronicity \\ \hline
-        & PWM & Pulse Width Modulation & Single Ended & Point to Point & Half-Duplex / Uni-directional & Push Pull & Asynchronous \\ \hline
-        
+        & Abbreviation & Name & Type & Bus & Duplex & Driver & Synchronicity & Most Common Data Rate & Maximum Data Rate \\ \hline
+        & PWM & Pulse Width Modulation & Single Ended & Point to Point & Half-Duplex / Uni-directional & Push Pull & Asynchronous & 50 Hz & 200 Hz \\ \hline
+        & UART & Universal Asynchronous Receiver Transmitter & Single Ended & Point to Point & Full-Duplex & Push Pull & Asynchronous & 115.2 kHz & 921.6 kHz \\ \hline
 
     \end{tabular}
     \caption{Digital Protocol Definitions}

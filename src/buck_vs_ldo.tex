@@ -74,16 +74,20 @@ When a buck converter is working, the high side switch turns on, during $T_{on}$
 
 Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM $D_{on} = \frac{V_{out}}{V_{in}}$ holds ideally (under infinite switching frequency assumption) and is nearly true practically. 
 
-% DRAW : CCM Plotted Current Waveform
+% DRAW : CCM Plotted Current Waveform (I_L and V_sw)
 
 When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit enters DCM (\textit{Discontinuous Conduction Mode}) in which $I_L$ reaches $I_L = 0$.
 
-% DRAW : DCM Plotted Current Waveform
+% DRAW : DCM Plotted Current Waveform (I_L and V_sw)
+
+% TODO : explain that $I_L \approx 0$ and why the oscillation occurs
 
 \subsubsection{Switching}
 The switch depicted in Figure \ref{ct:buck_converter} is commonly referred to as a high side switch. In practice the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) which feature fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
 
 An asynchronous buck converter is depicted in Figure \ref{ct:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. Synchronous buck converters replace this diode with a MOSFET. 
+
+% Explain concept of deadtime and current flowing in the body diode of low side FET during dead time 
 
 \subsubsection{Losses}
 In a buck converter there are two major forms of loss: switching losses and conduction losses. Switching losses is power dissipated every time the FETs are switched and scale proportionally with switching frequency. Conduction losses are due to parasitic resistance of elements in the converter and consequently scale proportionally to load current. Buck converters have some quiescent current associated with their active control loop, however, these losses are negligible compared to switching and conduction losses and are not usually analyzed. 
