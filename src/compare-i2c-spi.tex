@@ -60,6 +60,7 @@ SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (
 \subsection{Comparison}
 \begin{itemize}
     \item \textbf{Bus Speed}: SPI is faster than I2C, with speeds in the MHz range compared to I2C's 400 kHz range due to the differences in drive type. As a result, SPI is often used in applications where the transfer speed is required to be high.
+    % @sahil can you add a common speed for SPI, maybe say like 24 MHz or 60 MHz ? I literally got asked this in an interview today :d, hmm im also adding common operating freqs to signalling.tex
     \item \textbf{Wiring Complexity}: I2C requires, at most, two wires, regardless of the number of devices on the bus owing to its addressing scheme. SPI requires at least four wires, plus an additional wire for each slave device.
     \item \textbf{Frame Format}: I2C has a more complex frame format than SPI, with start and stop conditions, address bytes, and acknowledge bits, which can assist in debugging unresponsive slave devices. However, SPI has a simpler frame format, with no addressing scheme and no acknowledge bits, which reduces the overhead of each transaction and affords more flexibility in the data format.
     % Comparison of I2C and SPI with analog signals is further elaborated on in signalling.tex
