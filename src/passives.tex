@@ -154,7 +154,7 @@
     \item Impedance, $Z$, is frequency dependent for circuits with inductors and capacitors.
     \item $Z = \frac{V}{I}$ represents the impedance of a circuit. 
     \item The imaginary component of impedance, $Z$, represents reactance $X$ which defines a phase shift between $V$ and $I$.
-    \item Resistors have no frequency dependence and do not store any energy.
+    \item Resistors have no frequency dependence and do not store any energy though they do dissipate power, $P = I \cdot V = I^{2} \cdot R = \frac{V^2}{R}$.
     \item An open circuit (nets that are completely isolated from each other) is represented as connected by an impedance of value $Z = \inf$.
     \item A short circuit (nets that are at the same voltage potential) is represented as connected by an impedance of value $Z = 0$. 
     \item For a series connection of impedances $Z_1$, $Z_2$, \dots, $Z_n$, the equivalent impedance is given by $Z = Z_1 + Z_2 + \cdots + Z_n$.
@@ -211,10 +211,13 @@ Increasing the value of $R_{pullup}$ results in less power consumption, but slow
 When answering a question like this a conceptual sanity check is also useful! As a capacitor behaves like an open circuit in DC it makes sense that as time approaches infinity, Circuit C begins to look like Circuit A! 
 
 \subsection{Circuit D: RC High Pass Filter}
+% TODO solve
 
 \subsection{Circuit E: Series Capacitor with Current Source}
+% TODO solve
 
 \subsection{Circuit F: Series RC with Current Source}
+% TODO solve
 
 \subsection{Circuit G: Series Inductor with Shunt Capacitor}
 When analyzing this circuit, we begin with considering what happens as $t \approx \infty$ and $t \approx 0$, as these are the simplest states. For all of $t \leq 0$ it is reasonable to assume there is no energy stored in the passives, $E_l = 0$ and $E_c = 0$, and consequently $V_{out} = 0$ is a valid initial condition. When $t \approx \infty$ it is known that $Z_l \approx \infty$ and $Z_c \approx \infty$ as time increases there are significantly less high frequency components present. This means as $t \approx \infty$ Circuit G begins to appear as Circuit A. 
@@ -231,9 +234,12 @@ When analyzing this circuit, we begin with considering what happens as $t \appro
 
 \subsection{Circuit H: Series Inductor and Capacitor}
 
+% TODO solve
+
 \subsection{Follow-ups}
 \begin{itemize}
-    \item Given an unknown discrete capacitor find the capacitance? How would you determine the capacitance at a given DC bias voltage?
+    \item Given an unknown discrete capacitor find the capacitance? How would you determine the capacitance at a given DC bias voltage? % First part is Circuit C. Second part a solution is use Circuit E with an initial condition on Vout as the bias and a very small Iin current.
+    \item For circuit C, does changing the value of R (assuming all else remains constant) change the total energy dissipated in the resistor? % Answer is no and requires an interesting integral to prove. Someone asked me this recently and I thought it was fun bc i had to do the proof live in fronta them lool. 
 \end{itemize}
 
 \end{document}
