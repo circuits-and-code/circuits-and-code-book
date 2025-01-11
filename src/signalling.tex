@@ -2,16 +2,16 @@
 \begin{document}
 
 \section{What type of signal would be best for transferring data from a sensor located 1 meter away to a microcontroller?} 
-The sensor is a temperature sensor and readings are needed at a rate of 100 Hz, with a precision of 0.1C and a temperature range of -40C to 125C. % My q: what is the output of the temperature sensor?
+The sensor is a temperature sensor and readings are needed at a rate of 100 Hz, with a precision of 0.1C and a temperature range of -40C to 125C. 
+% Not informing the interviewee what type of sensor is already used allows them to consider all possibilities (and baits them into giving incorrect nonsensical solutions). In real design engineering, selecting the sensor itself would be based on the considerations for what output protocol the sensor already supports natively.  
+% Interviewees are expected to assume this is not safety critical (we woulda stated that in question if it was).
 
 \spoilerline
-
-\noindent I2C or UART protocol should be selected in this case. %@daniel would recommend putting this at the bottom with some explaination. Also, confirming, is the scope of the question protocols or digital vs analog? The answer does an excellent job of the latter, but this one-liner answer seems to imply the former?   
 
 \subsection{Digital Signalling}
 Digital signals represent data using discrete values. Digital protocols describe the rules in which digital signals can be used to transfer data. Important attributes of these protocols include:
 \begin{itemize}
-    \item \textbf{Differential vs. Single Ended:} Single ended signals use a single wire and a reference ground to transmit data, while differential signals use two complementary wires (and optionally also use a reference ground). Differential signalling does not by itself offer higher noise immunity, but it allows for lower logic level voltages compared to single ended signals. % Clarification: I thought differential signal's primary advantage was by offering noise immunity?
+    \item \textbf{Differential vs. Single Ended:} Single ended signals use a single wire and a reference ground to transmit data, while differential signals use two complementary wires (and optionally also use a reference ground). Differential signalling does offers increased noise immunity for the same logic level voltages.
     \item \textbf{Network Topology:} Different network topologies connect devices in different ways. Point-to-point connections are the simplest, but more complex topologies, such as a \textit{Bus} allow for multiple devices to communicate over the same signal lines.
     \item \textbf{Full vs. Half Duplex:} \textit{Duplex} means that both devices are capable of transmitting data. Half-duplex means that only one device can transmit to another at a time, whereas full-duplex means both devices can simultaneously transmit at the same time. 
     \item \textbf{Push Pull vs. Open Drain (Drive Type):} Push-Pull drive means that the devices are capable of pushing the signal lines high and pulling the signal lines low. This is in contrast to an open drain protocol, where the devices are only capable of pulling the signal lines low and resistors are used to pull the line high when no drivers are asserting them. Typically, a protocol with an open drain drive type will have slower speeds than a push-pull protocol\footnote{This topic is further explained in \nameref{section:compare_i2c_spi}}.
@@ -25,17 +25,6 @@ Digital signals represent data using discrete values. Digital protocols describe
 \end{itemize}
 
 The some common digital protocols in embedded systems are:
-% \begin{itemize}
-%     \item RS-232
-%     \item RS-485 
-%     \item I2C (\textit{Inter-Interconnected Controller})
-%     \item SPI (\textit{Serial Peripheral Interface})
-%     \item CAN (\textit{Controller Area Network})
-%     \item USB (\textit{Universal Serial Bus})
-%     \item Ethernet 
-%     \item QSPI Quad SPI 
-% \end{itemize}
-% Convert into table below and remove the above 
 \begin{figure}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
@@ -43,6 +32,18 @@ The some common digital protocols in embedded systems are:
         & Abbreviation & Name & Type & Bus & Duplex & Driver & Synchronicity & Most Common Data Rate & Maximum Data Rate \\ \hline
         & PWM & Pulse Width Modulation & Single Ended & Point to Point & Half-Duplex / Uni-directional & Push Pull & Asynchronous & 50 Hz & 200 Hz \\ \hline
         & UART & Universal Asynchronous Receiver Transmitter & Single Ended & Point to Point & Full-Duplex & Push Pull & Asynchronous & 115.2 kHz & 921.6 kHz \\ \hline
+
+        % Add the following :
+        % & RS-232
+        % & RS-485 
+        % & I2C & Inter-Interconnected Controller
+        % & SPI & Serial Peripheral Interface
+        % & CAN & Controller Area Network
+        % & USB & Universal Serial Bus
+        % & Ethernet 
+
+        % The below commented ones aren't important enough to bring up in my opinion. I don't think I'm missing any obvious ones above. 
+        % & QSPI & Quad Serial Peripheral Interface
 
     \end{tabular}
     \caption{Digital Protocol Definitions}
@@ -59,13 +60,16 @@ Analog signals are continuous in both time and value (as compared to digital sig
     \item All signals from sensors begin as "analog" values. Any IC (\textit{integrated circuit}) that outputs a digital value is doing so because it features an on-board ADC (\textit{Analog to Digital Converter}). Because digital signals from sensors begin as analog signals, working only with analog signals can simplify the design process.
     \item Analog signalling circuitry is often cheap to implement in a variety of embedded system contexts. Microcontrollers often feature internal ADC's, and may only require a few additional components to directly interface with an analog sensor.
     \item Simple signal processing can be performed in hardware before digital computation is required. An example of analog signal processing in hardware is first order low pass filter. 
-    \item More complex analog circuits are used in applications where higher bandwidth is needed in control loops. Analog feedback loops are very common in power electronics, but the flexibility and easy modification of % @daniel think you forgot to complete this line lol 
+    \item More complex analog circuits are used in applications where higher bandwidth is needed in control loops. Analog feedback loops are very common in power electronics, but the flexibility and easy modification of digital control loops is becoming more common on highly integrated embedded systems.
 \end{itemize}
 
 \noindent A drawback of analog signalling techniques is that they are quite often less resilient when faced with noise compared to digital signalling techniques. While a digital signal is tolerant to small amounts of noise without affecting the signal transmission at all, analog signals directly realize the effects of noise. For this reason, virtually all long distance data transmission systems employ some form of digital transmission. \newline
 
-\newnoindentpara Differential signalling is also an option in the analog world to compensate for common-mode noise for sensitive analog circuitry. This is extremely uncommon however as conversion to a digital protocol is often preferred when optimizing for noise immunity. 
-% This is my understanding, kind of hard to verify just googling around so yea, see what the reviewers think. 
-%% sahil: at a startup i was at we used diff-analog signals for audio transmission over a short distance, was fairly cheap to get a diff-analog driver. 
+\newnoindentpara Differential signalling is also an option in the analog world to compensate for common-mode noise for cost optimized analog circuitry. This is uncommon however as conversion to a digital protocol is often preferred when optimizing for noise immunity. 
+% This is our understanding from what we've seen in industry, kind of hard to verify just googling around so yea, see what the reviewers think.
+
+\subsection{Conclusion}
+
+\noindent I2C or UART protocol should be selected in this case as they are the lowest cost digital protocols that easily meet the specifications for data-rate and accuracy. Other answers could of course by valid here, but the justification and comparison between protocol options is important in a full solution. 
 
 \end{document}
