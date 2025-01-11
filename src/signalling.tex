@@ -1,21 +1,21 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{You have a sensor positioned a meter away from a central controller, what type of signal would you use to transfer the data?}
-The sensor is a temperature sensor and readings are needed at a rate of 100 Hz with a precision of 0.1C and a temperature range of -40C to 125C.
+\section{What type of signal would be best for transferring data from a sensor located 1 meter away to a microcontroller?} 
+The sensor is a temperature sensor and readings are needed at a rate of 100 Hz, with a precision of 0.1C and a temperature range of -40C to 125C. % My q: what is the output of the temperature sensor?
 
 \spoilerline
 
-\noindent I2C or UART protocol should be selected in this case. 
+\noindent I2C or UART protocol should be selected in this case. %@daniel would recommend putting this at the bottom with some explaination. Also, confirming, is the scope of the question protocols or digital vs analog? The answer does an excellent job of the latter, but this one-liner answer seems to imply the former?   
 
 \subsection{Digital Signalling}
 Digital signals represent data using discrete values. Digital protocols describe the rules in which digital signals can be used to transfer data. Important attributes of these protocols include:
 \begin{itemize}
-    \item Differential vs. single ended: single ended signals use a single wire and a reference ground to transmit data while differential signals use two complementary wires and optionally use a reference ground. Differential signalling does not by itself offer higher noise immunity, but it allows for lower logic level voltages compared to single ended signals. 
-    \item Busses vs. point to point protocols: point to point protocols connect two devices together whereas bussed protocols allow multiple devices to communicate together on the same wires. 
-    \item Full-duplex vs. half-duplex: duplex means that both devices are capable of transmitting data. Half-duplex means that only one device can transmit at a time, whereas full-duplex is not bound by that requirement. 
-    \item Push pull vs. open drain: push-pull means that the drivers are capable of pulling the signal lines high and pulling the signal lines low. In an  open drain protocol the drivers are only capable of the signal lines low and resistors are used to pull the line high when no drivers are asserting them.
-    \item Synchronous vs. asynchronous: A synchronous protocol makes use of a clock signal to ensure the sender and receiver are synchronized together. Clock signals can be on their own dedicated wire or be encoded as a part of the data. Asynchronous protocols assume that the sender and receiver's unique clocks are close enough that data can still be received. This is a reasonable assumption for lower data-rates and protocols featuring pauses in transmission for re-alignment.
+    \item \textbf{Differential vs. Single Ended:} Single ended signals use a single wire and a reference ground to transmit data, while differential signals use two complementary wires (and optionally also use a reference ground). Differential signalling does not by itself offer higher noise immunity, but it allows for lower logic level voltages compared to single ended signals. % Clarification: I thought differential signal's primary advantage was by offering noise immunity?
+    \item \textbf{Network Topology:} Different network topologies connect devices in different ways. Point-to-point connections are the simplest, but more complex topologies, such as a \textit{Bus} allow for multiple devices to communicate over the same signal lines.
+    \item \textbf{Full vs. Half Duplex:} \textit{Duplex} means that both devices are capable of transmitting data. Half-duplex means that only one device can transmit to another at a time, whereas full-duplex means both devices can simultaneously transmit at the same time. 
+    \item \textbf{Push Pull vs. Open Drain (Drive Type):} Push-Pull drive means that the devices are capable of pushing the signal lines high and pulling the signal lines low. This is in contrast to an open drain protocol, where the devices are only capable of pulling the signal lines low and resistors are used to pull the line high when no drivers are asserting them. Typically, a protocol with an open drain drive type will have slower speeds than a push-pull protocol\footnote{This topic is further explained in \nameref{section:compare_i2c_spi}}.
+    \item \textbf{Synchronous vs. Asynchronous}: A synchronous protocol makes use of a clock signal to ensure the sender and receiver are synchronized together. Clock signals can be on their own dedicated wire or be encoded as a part of the data. Asynchronous protocols assume that the sender's and receiver's individual clocks are sufficiently synchronized to ensure successful data reception. This assumption holds for protocols with lower data rates or those that include transmission pauses for re-alignment; however, it can introduce errors in high data rate applications.
     % The below commented ones aren't important enough to bring up in my opinion. I don't think I'm missing any obvious ones above. 
     % \item Single-ended vs duplex 
     % \item Parallel vs Serial
@@ -24,7 +24,7 @@ Digital signals represent data using discrete values. Digital protocols describe
     % \item balanced vs unbalanced differential signals 
 \end{itemize}
 
-The most common digital protocols in embedded systems are:
+The some common digital protocols in embedded systems are:
 % \begin{itemize}
 %     \item RS-232
 %     \item RS-485 
@@ -49,22 +49,23 @@ The most common digital protocols in embedded systems are:
     \label{fig:digital_protocols}
 \end{figure}
 
-Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds consequently for them to communicate properly, logic level shifting the signal is required. For low speed single ended signals this can be implemented with a single transistor and for more complex cases there are often ICs available. 
+\noindent Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds. Consequently, for them to communicate properly, logic level shifting the signal between devices may required. For low speed, single-ended signals, this can be implemented with a single transistor - for more complex cases, there are often level-shifting ICs available. 
 
 % DRAW : single NCH FET logic level shifter 
 
 \subsection{Analog Signalling}
-Analog signals are continuous is time and value. Microcontrollers, the brains of embedded systems, compute digitally so analog signals are often overlooked, however, there are numerous reasons for relying on them including: 
+Analog signals are continuous in both time and value (as compared to digital signals, which typically only contain logical values, such as 0 or 1). While microcontrollers operate digitally, there are many reasons to rely on analog signals.
 \begin{itemize}
-    \item All signals from real sensors begin as "analog" values. Any IC (\textit{integrated circuit}) that outputs a digital value, when you pay for that IC, you're also paying for their onboard ADC. Because signals from sensors begin as analog, working with them as analog signals is often the simplest solution. 
-    \item Analog signals cheap to implement. Microcontrollers often feature ADCs with numerous available input pins and external analog muxes (\textit{multiplexers}) are very cheap. This means it is easy to have a microcontroller sample numerous analog signals on a PCB for a low cost. 
-    \item Simple signal processing can be performed in hardware before digital computation is required. The most common example of analog signal processing in hardware is first order low pass filter. 
-    \item More complex analog circuits are used in applications where higher bandwidth is needed in control loops. Analog feedback loops are very common in power electronics, but the flexibility and easy modification of 
+    \item All signals from sensors begin as "analog" values. Any IC (\textit{integrated circuit}) that outputs a digital value is doing so because it features an on-board ADC (\textit{Analog to Digital Converter}). Because digital signals from sensors begin as analog signals, working only with analog signals can simplify the design process.
+    \item Analog signalling circuitry is often cheap to implement in a variety of embedded system contexts. Microcontrollers often feature internal ADC's, and may only require a few additional components to directly interface with an analog sensor.
+    \item Simple signal processing can be performed in hardware before digital computation is required. An example of analog signal processing in hardware is first order low pass filter. 
+    \item More complex analog circuits are used in applications where higher bandwidth is needed in control loops. Analog feedback loops are very common in power electronics, but the flexibility and easy modification of % @daniel think you forgot to complete this line lol 
 \end{itemize}
 
-A drawback of analog signals is they are degraded by noise more significantly than digital signals. While a digital signal is tolerant to small amounts of noise without affecting the signal transmission at all, analog signals directly realize the effects of noise immediately. For this reason all long distance data transmission employs some form of digital transmission for reliability. 
+\noindent A drawback of analog signalling techniques is that they are quite often less resilient when faced with noise compared to digital signalling techniques. While a digital signal is tolerant to small amounts of noise without affecting the signal transmission at all, analog signals directly realize the effects of noise. For this reason, virtually all long distance data transmission systems employ some form of digital transmission. \newline
 
-Differential signalling is also an option in the analog world to compensate for common-mode noise for sensitive analog circuitry. This is extremely uncommon however as conversion to a digital protocol is often preferred when optimizing for noise immunity. 
+\newnoindentpara Differential signalling is also an option in the analog world to compensate for common-mode noise for sensitive analog circuitry. This is extremely uncommon however as conversion to a digital protocol is often preferred when optimizing for noise immunity. 
 % This is my understanding, kind of hard to verify just googling around so yea, see what the reviewers think. 
+%% sahil: at a startup i was at we used diff-analog signals for audio transmission over a short distance, was fairly cheap to get a diff-analog driver. 
 
 \end{document}
