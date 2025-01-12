@@ -14,7 +14,7 @@ The MythicalMicrocontroller is a microcontroller with a clock frequency of 8 MHz
 
 \paragraph{ADC Configuration Register (WRITE) - ADDR 0x4000007C}
 The ADC configuration register is used to configure the ADC module with the key system parameters. The ADC must be enabled and ready before any conversions can be performed.
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|c|p{10cm}|}
         \hline
@@ -30,7 +30,7 @@ The ADC configuration register is used to configure the ADC module with the key 
 
 \paragraph{ADC Status Register (READ) - ADDR 0x4000007D}
 The ADC status register is used to check the status of the ADC module. The ADC is ready to perform a conversion when the \texttt{ADC\_INITIALIZED} bit is set. The \texttt{ADC\_BUSY} bit is set when the ADC is performing a conversion, and cleared when the conversion is complete.
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|c|p{10cm}|}
         \hline
@@ -45,7 +45,7 @@ The ADC status register is used to check the status of the ADC module. The ADC i
 
 \paragraph{ADC Data HIGH Register (READ) - ADDR 0x4000007E}
 The ADC Data H register contains the upper 4 bits of the 12-bit ADC conversion result.
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|c|p{10cm}|}
         \hline
@@ -59,7 +59,7 @@ The ADC Data H register contains the upper 4 bits of the 12-bit ADC conversion r
 
 \paragraph{ADC Data LOW Register (READ) - ADDR 0x4000007F}
 The ADC Data L register contains the lower 8 bits of the 12-bit ADC conversion result.
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|c|p{10cm}|}
         \hline

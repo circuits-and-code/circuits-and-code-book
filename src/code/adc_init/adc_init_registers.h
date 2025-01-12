@@ -14,4 +14,5 @@ const uint8_t BITPOS_ADC_CONVERSION_INITIALIZED = 7;
 const uint8_t BITPOS_ADC_BUSY = 0;
 
 volatile uint8_t *const ADC_DATA_HIGH_REG = (uint8_t *)0x4000007E;
+const uint8_t ADC_DATA_HIGH_REG_MASK = 0x0F; // 0b00001111
 volatile uint8_t *const ADC_DATA_LOW_REG = (uint8_t *)0x4000007F;
