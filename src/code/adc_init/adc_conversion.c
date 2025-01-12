@@ -18,9 +18,9 @@ bool adc_read_channel_V(uint8_t channel, float *voltage) {
     // Wait for the conversion to complete
     while ((*ADC_STATUS_REG & (1 << BITPOS_ADC_BUSY)))
       ;
+    const uint16_t ADC_HIGH_VALUE = *ADC_DATA_HIGH_REG & ADC_DATA_HIGH_REG_MASK;
     // Read the ADC value.
-    const uint16_t adc_value =
-        ((uint16_t)(*ADC_DATA_HIGH_REG) << 8) | *ADC_DATA_LOW_REG;
+    const uint16_t adc_value = (ADC_HIGH_VALUE << 8) | *ADC_DATA_LOW_REG;
 
     const uint16_t ADC_MAX = 4095; // 2^12 - 1 for 12-bit ADC
     *voltage = (adc_value * V_REF) / (float)ADC_MAX;
