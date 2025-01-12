@@ -20,7 +20,7 @@ The ADC configuration register is used to configure the ADC module with the key 
         \hline
         \textbf{Name} & \textbf{Bits} & \textbf{Description} \\ \hline
         \texttt{ADC\_EN} & 7 & ADC Enable Bit - Write \texttt{1} to enable the ADC for conversion. \\ \hline
-        \texttt{ADC\_CONVERSION\_BEGIN} & 6 & Set bit to begin an ADC conversion. The \texttt{ADC\_READY} bit in the \texttt{ADC\_STATUS\_REGISTER} must be asserted before this bit is set. The bit clears automatically once a conversion finishes. \\ \hline
+        \texttt{ADC\_CONVERSION\_BEGIN} & 6 & Set bit to begin an ADC conversion. The \texttt{ADC\_INITIALIZED} bit in the \texttt{ADC\_STATUS\_REGISTER} must be asserted before this bit is set. This bit clears automatically once a conversion finishes. \\ \hline
         \texttt{ADC\_MUX\_SEL 1:0} & 5:4 & ADC multiplexer channel selection bits. \\ \hline
         \texttt{ADC\_CLK\_DIV 3:0} & 3:0 & ADC Clock prescaler. The ADC clock frequency is determined by the following equation:\newline$f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ \\ \hline
     \end{tabular}
