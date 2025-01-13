@@ -15,12 +15,12 @@ The weather sensor outputs a UART packet with the following format. A graphical 
     \textbf{Byte} & \textbf{Description} \\ \hline
     0 & Start of Frame (0x55) \\ \hline
     1 & Temperature data (Celsius) - Integer part + 32 ($T_{integer} = Byte_{1} - 32$)  \\ \hline
-    2 & Temperature data (Celsius) - Fractional part \\ \hline
+    2 & Temperature data (Celsius) - Fractional part (0-100) \\ \hline
     3 & Pressure data (Pa - Integer Part) - MSB \\ \hline
     4 & Pressure data (Pa - Integer Part) \\ \hline
     5 & Pressure data (Pa - Integer Part) \\ \hline
     6 & Pressure data (Pa - Integer Part) - LSB \\ \hline
-    7 & Checksum - Lowest byte of the sum of bytes 1-6 \\ \hline
+    7 & Checksum - Lowest byte of the sum of bytes 0-6 \\ \hline
     \end{tabular}
     \caption{Byte Descriptions for Weather Sensor UART Packet}
     \label{table:byte_description}
@@ -40,7 +40,7 @@ The weather sensor outputs a UART packet with the following format. A graphical 
 A packet parsing algorithm is a staple of embedded systems programming. Generally, an implementation of such an algorithm involves receiving a buffer (packet) of bytes (also referred to as a \textit{bytestream}), followed by iterating through the buffer and extracting relevant data. If present in the packet, a checksum is used to verify the integrity of the data.
 
 \subsubsection{Checksum}
-A checksum is a simple error-detection method\footnote{In real-world implementations, a more robust method, like a cyclic redundancy check (CRC) is usually used.} that involves summing the bytes of a packet and comparing the result to a predefined value. If the checksum is incorrect, the packet is considered corrupt. In this case, the checksum is the sum of bytes 1-6. A simple algorithm for checksum calculation is shown in listing \ref{code:checksum_ex}.
+A checksum is a simple error-detection method\footnote{In real-world implementations, a more robust method, like a cyclic redundancy check (CRC) is usually used.} that involves summing the bytes of a packet and comparing the result to a predefined value. If the checksum is incorrect, the packet is considered corrupt. In this case, the checksum is the sum of bytes 0-6. A simple algorithm for checksum calculation is shown in listing \ref{code:checksum_ex}.
 
 \lstinputlisting[caption={Checksum Calculation Example}, label={code:checksum_ex}]{code/packet_parsing/checksum_ex.c}
 

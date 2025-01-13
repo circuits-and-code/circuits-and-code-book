@@ -3,95 +3,112 @@
 
 \section{Give the transfer function for the following circuits.}
 
-\noindent In a real interview expect just one of these circuits.
+\noindent Note: in a real interview scenario, it's reasonable to only expect just one of these circuits.
 % Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \begin{center}
-        \begin{circuitikz}[american]
-            \draw (0,0) node[left]{$V_{in}$} to[short] ++ (1,0)
-                node[op amp, noinv input up, anchor=+](opamp){}
-                (opamp.-) -- ++(0,-1) coordinate(FB)
-                (FB) to[short] (FB -| opamp.out) -- (opamp.out)
-                to [short] ++(1,0) node[right]{$V_{out}$};
-            \label{fig:unity_amp}
-        \end{circuitikz}
-        \caption{Circuit A}
-    \end{center}
-\end{figure}
-
-\begin{figure}[h!]
-    \begin{center}
-        \begin{circuitikz}[american]
-            \draw (0, 0) node[left]{$V_{in}$};
-            \draw (0, 0) to[resistor, l=$R_i$] (2, 0);
-            \draw (2, 0) node[op amp, anchor=-](opamp){};
-            \draw (opamp.+) node[ground]{};
-            \draw (2, 0) -- (2, 1);
-            \draw (2, 1) to[resistor, l=$R_f$] (4.5, 1);
-            \draw (4.5, 1) -- (4.5, -0.5);
-            \draw (opamp.out) to [short] ++ (0.5, 0) node[right]{$V_{out}$};
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american]
+                \draw (0,0) node[left]{$V_{in}$} to[short] ++ (1,0)
+                    node[op amp, noinv input up, anchor=+](op-amp){}
+                    (op-amp.-) -- ++(0,-1) coordinate(FB)
+                    (FB) to[short] (FB -| op-amp.out) -- (op-amp.out)
+                    to [short] ++(1,0) node[right]{$V_{out}$};
+            \end{circuitikz}
+            \caption{Circuit A}
+            \label{fig:unity-amp}
+        \end{minipage}%
+        \hfill%
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american]
+                \draw (0, 0) node[left]{$V_{in}$};
+                \draw (0, 0) to[resistor, l=$R_i$] (2, 0);
+                \draw (2, 0) node[op amp, anchor=-](op-amp){};
+                \draw (op-amp.+) node[ground]{};
+                \draw (2, 0) -- (2, 1);
+                \draw (2, 1) to[resistor, l=$R_f$] (4.5, 1);
+                \draw (4.5, 1) -- (4.5, -0.5);
+                \draw (op-amp.out) to [short] ++ (0.5, 0) node[right]{$V_{out}$};
+            \end{circuitikz}
+            \caption{Circuit B}
             \label{fig:inverting_amp}
-        \end{circuitikz}
-        \caption{Circuit B}
+        \end{minipage}
     \end{center}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \begin{center}
-        \begin{circuitikz}[american, transform shape]
-            \draw (0,0) node[left]{$V_{in}$} to[short] ++ (1,0)
-                node[op amp, noinv input up, anchor=+](opamp){}
-                (opamp.-) -- ++(0,-1) coordinate(FB)
-                to[R=$R_i$] ++(0,-2) node[ground]{}
-                (FB) to[R=$R_f$] (FB -| opamp.out) -- (opamp.out)
-                to [short] ++(1,0) node[right]{$V_{out}$};
-            % Drawing very similar to "CircuiTikZ 1.7.0 Manual Page 23"
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american, transform shape]
+                \draw (0,0) node[left]{$V_{in}$} to[short] ++ (1,0)
+                    node[op amp, noinv input up, anchor=+](op-amp){}
+                    (op-amp.-) -- ++(0,-1) coordinate(FB)
+                    to[R=$R_i$] ++(0,-2) node[ground]{}
+                    (FB) to[R=$R_f$] (FB -| op-amp.out) -- (op-amp.out)
+                    to [short] ++(1,0) node[right]{$V_{out}$};
+            \end{circuitikz}
+            \caption{Circuit C}
             \label{fig:non_inverting_amp}
-        \end{circuitikz}
-        \caption{Circuit C}
+        \end{minipage}%
+        \hfill%
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american]
+                \draw (0, 0) node[left]{$V_{in+}$};
+                \draw (0, 0) to[resistor, l=$R_1$, i=$I_{1}$] (2, 0);
+                \draw (2, 0) node[op amp, anchor=-](op-amp){};
+                \draw (2, 0) -- (2, 1);
+                \draw (2, 1) to[resistor, l=$R_3$] (4.5, 1);
+                \draw (4.5, 1) -- (4.5, -0.5);
+                \draw (op-amp.out) to [short] ++ (0.5, 0) node[right]{$V_{out}$};
+                \draw (0, -1) node[left]{$V_{in-}$};
+                \draw (0, -1) to[resistor, l=$R_2$, i=$I_{2}$] (2, -1);
+                \draw (2, -1) to[resistor, l=$R_4$] (2, -3);
+                \draw (2, -3) node[ground]{};
+            \end{circuitikz}
+            \caption{Circuit D}
+            \label{fig:difference_amp}
+        \end{minipage}
     \end{center}
 \end{figure}
 
-\begin{figure}[h!]
-    \begin{center}
-        \begin{circuitikz}[american]
-            \draw (0, 0) node[left]{$V_{in+}$};
-            \draw (0, 0) to[resistor, l=$R_1$, i=$I_{1}$] (2, 0);
-            \draw (2, 0) node[op amp, anchor=-](opamp){};
-            \draw (2, 0) -- (2, 1);
-            \draw (2, 1) to[resistor, l=$R_3$] (4.5, 1);
-            \draw (4.5, 1) -- (4.5, -0.5);
-            \draw (opamp.out) to [short] ++ (0.5, 0) node[right]{$V_{out}$};
-            \draw (0, -1) node[left]{$V_{in-}$};
-            \draw (0, -1) to[resistor, l=$R_2$, i=$I_{2}$] (2, -1);
-            \draw (2, -1) to[resistor, l=$R_4$] (2, -3);
-            \draw (2, -3) node[ground]{};
-            \label{fig:difference_amp}
-        \end{circuitikz}
-        \caption{Circuit D}
-    \end{center}
-\end{figure}
 
 \spoilerline
 
 \subsection{Operational Amplifiers}
-Ideal opamps (\textit{Operational Amplifier}) are active devices defined by $V_{out} = A \cdot (V_{+} - V_{-})$ and $I_{V_{+}} = I_{V_{-}} = 0$ where $A \approx \inf$. When an opamp is connected in a negative feedback configuration, the inputs, $V_{+}$ and $V_{-}$, are considered "virtually shorted", $V_{+} = V_{-}$. Negative feedback in an opamp circuit means there is a current path from it's output, $V_{out}$, to it's inverting terminal, $V_{-}$.
+Ideal operational amplifiers (\textit{op-amps}) are active devices characterized by the following equations:
 
-% consider drawing an opamp with terminals labelled. maybe unnecessary
+\begin{equation}
+    \begin{aligned}
+        V_{out} &= A \cdot (V_{+} - V_{-}) \quad \text{where} \quad A \to \infty, \\
+        I_{+} &= I_{-} = 0.
+    \end{aligned}
+    \label{eq:op-amp-governing-equations}
+\end{equation}
+
+% DRAW : op-amp with terminals labelled
+
+\noindent When an op-amp is connected in a negative feedback configuration, the inputs ($V_{+}$ and $V_{-}$) are considered "virtually shorted", meaning $V_{+} = V_{-}$. Negative feedback in an op-amp circuit means there is a current path from it's output, $V_{out}$, to it's inverting terminal, $V_{-}$.
 
 \subsection{Solutions}
-Applying this knowledge of the virtual short assumption we see all configurations given in the question feature negative feedback so we can use in our analysis that $V_{+} = V_{-}$. 
+Given all of the circuit configurations feature negative feedback, the virtual short assumption can be applied to simplify the analysis (that is, $V_{+} = V_{-}$).
+
+% the text interleaved with math is quite hard to read, consider a better approach
+% TODO use appendix if I want to do extra proofs and stuff 
 
 \subsubsection{Circuit A: Unity Gain Amplifier}
-From the drawn circuit we see $V_{in} = V_{+}$ and $V_{out} = V_{-}$. For the opamp we can apply $V_{out} = A \cdot (V_{+} - V_{-}) = A \cdot (V_{in} - V_{out}) = A \cdot V_{in} - A \cdot V_{out}$ which can be rearranged into $V_{out} + A \cdot V_{out} = A \cdot V_{in}$, $V_{out} \cdot (1 + A) = A \cdot V_{in}$. Now to solve for the transfer function gives $\frac{V_{out}}{V_{in}} = \frac{A}{1+A}$. Recall that $A \approx \inf$ so the $1$ in the denominator becomes insignificant leading to $\frac{V_{out}}{V_{in}} = 1$ or $V_{out} = V_{in}$.
+From the drawn circuit we see $V_{in} = V_{+}$ and $V_{out} = V_{-}$. For the op-amp we can apply $V_{out} = A \cdot (V_{+} - V_{-}) = A \cdot (V_{in} - V_{out}) = A \cdot V_{in} - A \cdot V_{out}$ which can be rearranged into $V_{out} + A \cdot V_{out} = A \cdot V_{in}$, $V_{out} \cdot (1 + A) = A \cdot V_{in}$. Now to solve for the transfer function gives $\frac{V_{out}}{V_{in}} = \frac{A}{1+A}$. Recall that $A \approx \inf$ so the $1$ in the denominator becomes insignificant leading to $\frac{V_{out}}{V_{in}} = 1$ or $V_{out} = V_{in}$.
 
 This circuit can also be solved easily with the virtual short assumption, $V_{+} = V_{-}$, by substituting in $V_{in} = V_{+}$ and $V_{out} = V_{-}$, the solution is trivially $V_{out} = V_{in}$.
 
 This circuit acts as a current buffer. Because $I_{V_{+}} = 0$ and $V_{in} = V_{+}$ we see that $I_{V_{in}} = 0$ so the circuit doesn't load the input at all. However, the op amp is capable of providing however much current is required to any load! 
 
 \subsubsection{Circuit B: Inverting Amplifier}
-From the circuit $V_{+} = 0$ and there is a current path $I$ from $V_{in}$ to $V_{out}$. Recall that $I_{in} = 0$ so no current goes into the opamp input pins. Analyzing the resistors gives $V_{in} - V_{-} = I \cdot R_i$ and $V_{-} - V_{out} = I \cdot R_f$. Note that the resistors could be solved with $I$ in the reverse direction as long as equations are internally consistent: $V_{out} - V_{-} = I \cdot R_f$ and $V_{-} - V_{in} = I \cdot R_i$. Next the resistor equations can be substituted into each other to cancel out $I$ so $\frac{V_{out} - V_{-}}{R_f} = \frac{V_{-} - V_{in}}{R_i}$. Simplifying this gives $V_{out} \cdot R_i - V_{-} \cdot R_i = V_{-} \cdot R_f - V_{in} \cdot R_f$. 
+From the circuit $V_{+} = 0$ and there is a current path $I$ from $V_{in}$ to $V_{out}$. Recall that $I_{in} = 0$ so no current goes into the op-amp input pins. Analyzing the resistors gives $V_{in} - V_{-} = I \cdot R_i$ and $V_{-} - V_{out} = I \cdot R_f$. Note that the resistors could be solved with $I$ in the reverse direction as long as equations are internally consistent: $V_{out} - V_{-} = I \cdot R_f$ and $V_{-} - V_{in} = I \cdot R_i$. Next the resistor equations can be substituted into each other to cancel out $I$ so $\frac{V_{out} - V_{-}}{R_f} = \frac{V_{-} - V_{in}}{R_i}$. Simplifying this gives $V_{out} \cdot R_i - V_{-} \cdot R_i = V_{-} \cdot R_f - V_{in} \cdot R_f$. 
 
 Next $V_{out} = A \cdot (V_{+} - V_{-})$ can be applied where $V_{+} = 0$ from the circuit so $V_{out} = -A \cdot V_{-}$ and $V_{-} = -\frac{V_{out}}{A}$. This can be substituted into the resistor equation $V_{out} \cdot R_i - V_{-} \cdot R_i = V_{-} \cdot R_f - V_{in} \cdot R_f$ to get $V_{out} \cdot R_i - (-\frac{V_{out}}{A}) \cdot R_i = (-\frac{V_{out}}{A}) \cdot R_f - V_{in} \cdot R_f$. Next this can be rearranged to find the transfer function: $V_{out} \cdot R_i + \frac{V_{out} \cdot R_i}{A} = -\frac{V_{out} \cdot R_f}{A} - V_{in} \cdot R_f$, $V_{out} \cdot R_i \cdot A + V_{out} \cdot R_i = -V_{out} \cdot R_f - V_{in} \cdot R_f \cdot A$, $V_{out} \cdot R_i \cdot A + V_{out} \cdot R_i + V_{out} \cdot R_f = - V_{in} \cdot R_f \cdot A$, $V_{out} \cdot (R_i \cdot A + R_i + R_f) = - V_{in} \cdot R_f \cdot A$, and $\frac{V_{out}}{V_{in}} = \frac{-R_f \cdot A}{R_i \cdot A + R_i + R_f} = -\frac{R_f}{R_i + \frac{R_i}{A} + \frac{R_f}{A}}$. This can be simplified assuming $A \approx \inf$ so $\frac{1}{A} \approx 0$ resulting in $\frac{V_{out}}{V_{in}} = -\frac{R_f}{R_i}$. 
 
@@ -111,11 +128,11 @@ Notice when $R_i = \inf \Omega$ and $R_f = 0 \Omega$ the non-inverting amplifier
 % consider speacil case of resistors that simplifies things
 
 \subsection{Non-idealities}
-While most interview questions focus on ideal opamps, real opamps suffer from numerous non-idealities. The most important of which should be understood to aid in circuit design questions and are described below. 
+While most interview questions focus on ideal op-amps, real op-amps suffer from numerous non-idealities. The most important of which should be understood to aid in circuit design questions and are described below. 
 
 \subsubsection{Saturation}
 Saturation occurs when 
-For a rail to rail opamp, $V_{out}$ is bounded by the rails, $V_{ee}$ and $V_{cc}$, such that $V_{ee} < V_{out} < V_{cc}$. 
+For a rail to rail op-amp, $V_{out}$ is bounded by the rails, $V_{ee}$ and $V_{cc}$, such that $V_{ee} < V_{out} < V_{cc}$. 
 % TODO write explanation
 
 \subsubsection{Input Offset Voltage}

@@ -70,6 +70,8 @@ Analog signals are continuous in both time and value (as compared to digital sig
 
 \subsection{Conclusion}
 
-\noindent I2C or UART protocol should be selected in this case as they are the lowest cost digital protocols that easily meet the specifications for data-rate and accuracy. Other answers could of course by valid here, but the justification and comparison between protocol options is important in a full solution. 
+\noindent For a sensor located 1 meter away from a microcontroller, a digital signal would likely be the best candidate for transferring data as it is less susceptible to noise over long distances, while likely offering a simpler implementation on the microcontroller due to the availability of on-board digital protocol peripherals. The high data-rate requirement of 100 Hz is easily achievable with most digital protocols, and the precision requirement of 0.1C is usually achievable with most digital sensors. A protocol like UART or I2C would likely be suitable for this application. \newline
+
+\newnoindentpara \textit{It's important to keep in mind that when asked about the best type of (something) for a given application, the best answer is often "it depends". The interviewer is looking for you to weigh the pros and cons of different solutions and make a recommendation based on the information given. For this problem, many solutions could be valid depending on the specific circumstances of the application.}
 
 \end{document}
