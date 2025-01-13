@@ -3,8 +3,7 @@
 
 \section{How would you sense how much current is flowing through a PCB to a load?}
 
-% The source is roughly 12V and the load consumes 10 A max. 
-% Choosing not to give any extra information to keep the question vague and conceptual, It could be more specific I guess, hmm 
+% Choosing not to give any extra information to keep the question vague and conceptual. Not stating "The source is roughly 12V and the load consumes 10 A max."
 
 \spoilerline
 
@@ -17,7 +16,8 @@ Embedded systems often need to track current consumption of loads for a variety 
     \item Determine battery state of charge by integrating the power ($P = I \cdot V$) the battery has been charged and/or discharged with over time.
 \end{itemize}
 
-\noindent Note that Power sensing is a related concept that can be done by multiplying the current and voltage sensed across a load. Previous questions have covered voltage sensing, so this question will focus on current sensing - combining both techniques allow for power sensing.
+\noindent Note that power sensing is a related concept that can be done by multiplying the current and voltage sensed across a load (as $P=I \cdot V$). Previous questions have covered voltage sensing, so this question will focus on current sensing - combining both techniques allow for power sensing.
+% I want to include the power formula again here to drill that into people's brains. 
 
 \subsection{Resistive Current Sensing}
 The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Because the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$. This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
@@ -25,7 +25,7 @@ The simplest method of current sensing in embedded systems is the \textit{resist
 % DRAW : high side resistive current sense 
 
 \subsubsection{Resistor Selection}
-An important design decision for engineers is selecting the resistor to use as $R$ when employing resistive current-sensing. If the value of $R$ is too large, then the resistor will dissipate excessive power - this is shown when Ohm's Law, $V=I \cdot R$, is substituted into $P=I \cdot V$ to get $P=I^{2} \cdot R$. Another issue that arises with a large $R$ value is that loads are often designed to operate with a fixed input voltage - the larger $R$ is, the larger the voltage drop induced by the series sense resistor due Ohm's Law, and by doing so, reduces the voltage across the load. \newline
+An important design decision for engineers is selecting the resistor to use as $R$ when employing resistive current-sensing. If the value of $R$ is too large, then the resistor will dissipate excessive power - this is shown when Ohm's Law, $V=I \cdot R$, is substituted into $P=I \cdot V$ to get $P=I^{2} \cdot R$. Another issue that arises with a large $R$ value is that loads are often designed to operate with a fixed input voltage - the larger $R$ is, the larger the voltage drop induced by the series sense resistor due Ohm's Law, and by doing so, reduces the voltage across the load proportionally to the load current. \newline
 
 \newnoindentpara On the other hand, if $R$ is too small, then the induced voltage drop across the resistor will be so small that it becomes difficult to measure. Common resistances employed in this technique include values ranging from 0.1 m$\Omega$ to 100 m$\Omega$, depending on the current range being measured and allowable power dissipation.
 
