@@ -19,7 +19,7 @@ bool bitstream_parity_valid(uint8_t *bitstream, uint32_t length,
     expected_parity = (number_of_ones_is_odd) == false;
     break;
   default:
-    // No other parity schemes are supported
+    return false;
     break;
   }
 
