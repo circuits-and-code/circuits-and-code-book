@@ -3,47 +3,48 @@
 
 \section{How would you sense how much current is flowing through a PCB to a load?}
 
-% The source is roughly 12V and the load consumes 10 A max. 
-% Choosing not to give any extra information to keep the question vague and conceptual, It could be more specific I guess, hmm 
+% Choosing not to give any extra information to keep the question vague and conceptual. Not stating "The source is roughly 12V and the load consumes 10 A max."
 
 \spoilerline
 
 \subsection{Motivation}
-Embedded systems often need to track power and current consumption of loads to:
+Embedded systems often need to track current consumption of loads for a variety of reasons, including:
 \begin{itemize}
-    \item Determine battery state of charge by integrating the power the battery has been charged and discharged with over time.
-    \item Detect if a load is drawing an excessive amount of power indicating it has failed or an anomaly is occurring. 
-    \item Ensure the system does not overload a source power supply which could cause the entire system to lose power. 
-    \item Ensure a load is connected nominally.
+    \item Detect if a load is drawing an excessive amount of power, indicating it has failed or an anomaly is occurring. 
+    \item Ensuring a system does not overload a source power supply as it could cause the entire system to lose power. 
+    \item Ensuring a load is connected nominally.
+    \item Determine battery state of charge by integrating the power ($P = I \cdot V$) the battery has been charged and/or discharged with over time.
 \end{itemize}
-Power and current are electrically related by $P = I \cdot V$. We've already seen how sense microcontroller's can sense voltages, $V$, so now we will explore current, $I$, sensing which is related to power electrically where $P = I \cdot V$.
+
+\noindent Note that power sensing is a related concept that can be done by multiplying the current and voltage sensed across a load (as $P=I \cdot V$). Previous questions have covered voltage sensing, so this question will focus on current sensing - combining both techniques allow for power sensing.
+% I want to include the power formula again here to drill that into people's brains. 
 
 \subsection{Resistive Current Sensing}
-The simplest and most commonly used method of current sense in embedded systems is resistive current sense which leverages Ohm's Law, $I = \frac{V}{R}$, to sense the voltage drop across a known resistor value in series with the load to determine the amount of current flowing. Note that because resistors are not time or frequency dependent, resistive current sense can sense DC and AC currents. 
+The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Because the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$. This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
 
 % DRAW : high side resistive current sense 
 
 \subsubsection{Resistor Selection}
-An important design decision for engineers is selecting the resistor to use as $R$ in this case. First we need to choose the resistance of the resistor. If the value of $R$ is too large than the resistor will dissipate excessive power as we can substitute Ohm's Law, $V=I \cdot R$, into $P=I \cdot V$ to get $P=I^{2} \cdot R$. Another issue that arises with a large $R$ value is that loads are often designed to operate with a fixed input voltage and the larger $R$ is, the larger the voltage drop induced by the series sense resistor due Ohm's Law. On the other hand, if $R$ is too small then the induced voltage drop will be so small that it becomes difficult to measure and thus precision of the current sensing can be lost. In reality values ranging from 0.1m ohm to 100 m ohm are commonly used to sense up to 100 A to 1 A of current respectively.
+An important design decision for engineers is selecting the resistor to use as $R$ when employing resistive current-sensing. If the value of $R$ is too large, then the resistor will dissipate excessive power - this is shown when Ohm's Law, $V=I \cdot R$, is substituted into $P=I \cdot V$ to get $P=I^{2} \cdot R$. Another issue that arises with a large $R$ value is that loads are often designed to operate with a fixed input voltage - the larger $R$ is, the larger the voltage drop induced by the series sense resistor due Ohm's Law, and by doing so, reduces the voltage across the load proportionally to the load current. \newline
+
+\newnoindentpara On the other hand, if $R$ is too small, then the induced voltage drop across the resistor will be so small that it becomes difficult to measure. Common resistances employed in this technique include values ranging from 0.1 m$\Omega$ to 100 m$\Omega$, depending on the current range being measured and allowable power dissipation.
 
 \subsubsection{Low Side vs High Side Sensing}
 Figure x demonstrates high side current sensing, however, low side current sensing is also possible as shown in Figure y.
 
 % DRAW: low side resistive current sense 
 
-Low side current sensing has the advantage that regardless of the supply voltage to the load, one end of the resistor is ground so in theory only a single ended amplifier is needed. In contrast when high side sensing is used the amplifier has a variable common-mode offset and needs to amplify the differential voltage difference across the sense resistor. In reality when sensing very small voltages and high precision is required in current sensing, differential amplifiers can be used even for low side applications.
+\noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor since the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the load. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required. 
+% A second edition of this book could cover low side vs high side as it's own question.
+% TODO : add a link to further reading on this topic
 
 \subsubsection{Current Sense Amplifiers}
-As the voltage drops across sense resistors are usually in the low mV range, amplifiers are commonly used to make the small voltage difference across the resistor much larger so a microcontroller ADC can sample it with precision. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits}) that implement op-amp based circuits. 
-% Some common examples are: INA180, INA240
+Since the voltage drop across a sense resistor is typically in the low millivolt range, amplifiers are often used to increase this small voltage difference, making it large enough for a microcontroller's ADC to sample accurately, improving the precision of current measurement. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits})\footnote{Common examples of amplifiers include part numbers INA180 and INA240} that implement op-amp based circuits.\footnote{Some ICs have current sense amplifiers (\textit{CSAs}) implemented along with other functionality, such as the INA226.} 
 
-Some ICs have current sense amplifiers (\textit{CSAs}) implemented along with other functionality. 
-% An example is the INA226 current sense amplifier with an ADC and I2C interface integrated in a single chip.
-
-When selecting an amplifier, ensure it is rated for the common mode offset you intend to use it at. Additionally, amplifiers usually come with a fixed voltage gain that must be selected based on the maximum input voltage difference, $V_{id_{max}}$, and maximum ADC voltage, $V_{adc_{max}}$. 
+\noindent When selecting an amplifier, ensure it is rated for the common mode offset that it will be used at. Additionally, amplifiers usually come with a fixed voltage gain that must be selected based on the maximum input voltage difference, $V_{ID_{max}}$, and maximum ADC voltage, $V_{ADC_{max}}$. 
 
 \subsection{Magnetic Sensing}
-When current flows through a wire it creates a magnetic field around it. This magnetic field can be sensed as a way to determine the current flowing. There are numerous methods of doing this that all come with different names! A simple method implemented by current clamps 
+When current flows through a wire, it creates a magnetic field around it that is proportional to the current flowing through the wire (known as \textit{Ampere's Law}). There are numerous methods of doing this that all come with different names. A simple method implemented by current clamps 
 % TODO : write
 
 \subsection{Follow-ups}
