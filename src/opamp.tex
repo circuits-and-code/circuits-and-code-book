@@ -90,15 +90,15 @@ Ideal operational amplifiers (\textit{op-amps}) are active devices characterized
     \label{eq:op-amp-governing-equations}
 \end{equation}
 
-\noindent When an op-amp is connected in a negative feedback configuration, the inputs ($V_{+}$ and $V_{-}$) are considered "virtually shorted", meaning $V_{+} = V_{-}$. Negative feedback in an op-amp circuit means there is a current path from it's output, $V_{out}$, to it's inverting terminal, $V_{-}$.
+% DRAW : op-amp with terminals labelled
 
-% consider drawing an op-amp with terminals labelled. maybe unnecessary
+\noindent When an op-amp is connected in a negative feedback configuration, the inputs ($V_{+}$ and $V_{-}$) are considered "virtually shorted", meaning $V_{+} = V_{-}$. Negative feedback in an op-amp circuit means there is a current path from it's output, $V_{out}$, to it's inverting terminal, $V_{-}$.
 
 \subsection{Solutions}
 Given all of the circuit configurations feature negative feedback, the virtual short assumption can be applied to simplify the analysis (that is, $V_{+} = V_{-}$).
 
-% similar comment to one I made in another edits, the text interleaved with math is quite hard to read. I would also recommend sticking to one method of solving the problem (and footnoting another one if noteworthy). 
-
+% the text interleaved with math is quite hard to read, consider a better approach
+% TODO use appendix if I want to do extra proofs and stuff 
 
 \subsubsection{Circuit A: Unity Gain Amplifier}
 From the drawn circuit we see $V_{in} = V_{+}$ and $V_{out} = V_{-}$. For the op-amp we can apply $V_{out} = A \cdot (V_{+} - V_{-}) = A \cdot (V_{in} - V_{out}) = A \cdot V_{in} - A \cdot V_{out}$ which can be rearranged into $V_{out} + A \cdot V_{out} = A \cdot V_{in}$, $V_{out} \cdot (1 + A) = A \cdot V_{in}$. Now to solve for the transfer function gives $\frac{V_{out}}{V_{in}} = \frac{A}{1+A}$. Recall that $A \approx \inf$ so the $1$ in the denominator becomes insignificant leading to $\frac{V_{out}}{V_{in}} = 1$ or $V_{out} = V_{in}$.
