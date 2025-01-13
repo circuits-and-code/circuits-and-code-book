@@ -34,7 +34,7 @@ Figure x demonstrates high side current sensing, however, low side current sensi
 Low side current sensing has the advantage that regardless of the supply voltage to the load, one end of the resistor is ground so in theory only a single ended amplifier is needed. In contrast when high side sensing is used the amplifier has a variable common-mode offset and needs to amplify the differential voltage difference across the sense resistor. In reality when sensing very small voltages and high precision is required in current sensing, differential amplifiers can be used even for low side applications.
 
 \subsubsection{Current Sense Amplifiers}
-As the voltage drops across sense resistors are usually in the low mV range, amplifiers are commonly used to make the small voltage difference across the resistor much larger so a microcontroller ADC can sample it with precision. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits}) that implement opamp based circuits. 
+As the voltage drops across sense resistors are usually in the low mV range, amplifiers are commonly used to make the small voltage difference across the resistor much larger so a microcontroller ADC can sample it with precision. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits}) that implement op-amp based circuits. 
 % Some common examples are: INA180, INA240
 
 Some ICs have current sense amplifiers (\textit{CSAs}) implemented along with other functionality. 
