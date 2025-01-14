@@ -74,7 +74,12 @@ When a buck converter is working, the high side switch turns on, during $T_{on}$
 
 Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM $D_{on} = \frac{V_{out}}{V_{in}}$ holds ideally (under infinite switching frequency assumption) and is nearly true practically. 
 
-% DRAW : CCM Plotted Current Waveform (I_L and V_sw)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{generated_images/buck_ccm.png}
+    \caption{Buck Converter in Continuous Conduction Mode}
+    \label{fig:buck-ccm}
+\end{figure}
 
 When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit enters DCM (\textit{Discontinuous Conduction Mode}) in which $I_L$ reaches $I_L = 0$.
 
