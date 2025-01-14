@@ -1,7 +1,8 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
+
+# fmt: off
 
 TITLE = "Buck Converter in Continuous Conduction Mode"
 
@@ -58,3 +59,5 @@ if __name__ == "__main__":
         plt.savefig(args.output_path)
     else:
         plt.show()
+
+# fmt: on
