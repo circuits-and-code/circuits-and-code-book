@@ -1,23 +1,24 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 
 TITLE = "Unknown Plot Title"
 
+
 def plotter():
 
-    # Draw ! 
+    # Draw !
 
     plt.figure(figsize=(10, 6))
 
-    # Draw ! 
+    # Draw !
 
     plt.title(f"{TITLE}")
     plt.xlabel("")
     plt.ylabel("")
     plt.legend()
     plt.grid(True)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(f"{TITLE} Plotter")
