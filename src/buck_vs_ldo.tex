@@ -29,19 +29,16 @@ LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{In
 \end{figure}
 
 \subsubsection{Selection}
-When selecting an LDO for a given application, consider: 
+When selecting an LDO for a given application, consider optimizing the following parameters in component selection to save board space and cost while ensuring functionality. 
 \begin{itemize}
     \item \textbf{Dropout Voltage:} To maintain a stable output voltage, the LDO requires sufficient input voltage. Mathematically, this is expressed as $V_{\text{in}} > V_{\text{out}} + V_{\text{dropout}}$. The $V_{\text{dropout}}$ varies between components but is usually around 0.5 V.
     \item \textbf{Maximum Input Voltage:} The semiconductor pass element inside the transistor is rated to handle a specific maximum input voltage.
-    \item \textbf{Maximum Output Current:} The pass element semiconductor has a specific limit to the maximum output current it can provide. Exceeding this limit can lead to overheating or failure.
-    \item \textbf{Maximum Power Dissipation:} TODO
+    \item \textbf{Maximum Output Current:} The pass element semiconductor has a specific limit to the maximum output current it can provide. Exceeding this limit can lead to overheating or failure. This relates to the maximum power dissipation of the package as there is a limit to the amount of heat that can be dissipated into the environment. 
     \item \textbf{Output Voltage:} Some LDOs feature adjustable output voltages with a feedback pin, while others have fixed output voltages.
 \end{itemize}
 
-Optimizing these parameters in component selection to save board space and cost while ensuring functionality. % maybe this is a todo but this sentence is islanded?
-
 \subsubsection{Losses}
-In an LDO, the pass element transistor (usually implemented as a PMOS FET or NPN BJT) acting similarly to a variable resistor is actively controlled to maintain a fixed output voltage, regardless of changes to input voltage, load current, and temperature. This variable resistance gives rise to \textit{conduction losses} within this type of regulator. Assuming a fixed input voltage and load current, the power losses in an LDO can be calculated as $P = V_{drop} * I_{out} = (V_{in} - V_{out}) * I_{out}$. Note that the power is dissipated as heat in the pass element - this is why LDOs are often equipped with a heat sink, and attention may be required to the thermal limitations of the chosen LDO. \newline
+In an LDO, the pass element transistor (usually implemented as a PMOS FET or NPN BJT) acting similarly to a variable resistor is actively controlled to maintain a fixed output voltage, regardless of changes to input voltage, load current, and temperature. This variable resistance gives rise to \textit{conduction losses} within this type of regulator. Assuming a fixed input voltage and load current, the power losses in an LDO can be calculated as $P = V_{drop} \cdot I_{out} = (V_{in} - V_{out}) \cdot I_{out}$. Note that the power is dissipated as heat in the pass element - this is why LDOs are often equipped with a heat sink, and attention may be required to the thermal limitations of the chosen LDO. \newline
 
 \noindent Another source of losses in an LDO is quiescent losses - the LDO requires a small amount of current to operate, even when the load current $I_{out} = 0$. This is known as the quiescent current, and is usually negligible compared to conduction losses.
 
@@ -73,7 +70,7 @@ When a buck converter is operational, the high side switch turns on during $T_{o
 
 % DRAW : Buck Circuit Current Path HS OFF
 
-\noindent Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM, $D_{on} = \frac{V_{out}}{V_{in}}$ holds ideally (under infinite switching frequency assumption) and is nearly true practically. % @daniel this last sentence lost me a bit, maybe rephrase? 
+\noindent Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM, $D_{on} = \frac{V_{out}}{V_{in}} = \frac{T_{on}}{T_{on} + T_{off}}$, describes the duty cycles of an ideal buck converter as shown in the following figure.
 
 % DRAW : CCM Plotted Current Waveform (I_L and V_sw)
 
