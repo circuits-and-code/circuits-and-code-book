@@ -28,3 +28,4 @@ FW/HW Interview Question Guide
 
 ## Notes
 https://docs.google.com/document/d/1Akp2vB-8zvOjKRvKKtQ4xRd1HW5HwOgYOPMeZlsEUBo/edit
+Tracking Sheet: https://docs.google.com/spreadsheets/d/1r3ARHjxrXqaiC7ljZWcs_fc2r5LI8fe7ycGm_sgxs3k/edit?gid=0#gid=0
