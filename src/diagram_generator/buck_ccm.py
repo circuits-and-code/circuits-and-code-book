@@ -8,20 +8,24 @@ TITLE = "Buck Converter in Continuous Conduction Mode"
 
 def plotter() :
     NUM_POINTS = 1000
-    SWITCHING_FREQUENCY = 3 
+    SWITCHING_FREQUENCY = 3 # number of switching cycles to show 
     VIN = 12.0
     VOUT = 3.3
+    assert VIN > VOUT # just cuz it'll kill my formulas otherwise 
+    IOUT_AVG = 2.5
+    IOUT_RIPPLE_RATIO = 0.3 # 30% is a common value 
 
     duty_cycle = VOUT / VIN
     negative_duty_cycle = 1.0 - duty_cycle
     period = 1.0 / SWITCHING_FREQUENCY
     on_time = duty_cycle * period
     off_time = (1 - duty_cycle) * period
+    iout_max = IOUT_AVG * (1+(IOUT_RIPPLE_RATIO/2))
 
-    t = np.linspace(0, 1, NUM_POINTS) # time vector
+    t = np.linspace(0, 1, NUM_POINTS)
 
     square_wave =  ((t * SWITCHING_FREQUENCY % 1) < (duty_cycle)).astype(float)
-    v_sw = VIN * square_wave + 0
+    v_sw = VIN * square_wave
 
     triangle_wave = np.mod(t * SWITCHING_FREQUENCY, 1)
     triangle_wave = np.where(
@@ -29,23 +33,25 @@ def plotter() :
         2 * triangle_wave / duty_cycle,  # Rising part
         2 * (1 - triangle_wave) / (1 - duty_cycle)  # Falling part
     )
-    i_l = 1 * triangle_wave + 4
+    i_l = (IOUT_RIPPLE_RATIO / 2) * triangle_wave + (IOUT_AVG - (IOUT_RIPPLE_RATIO / 2))
 
-    plt.figure(figsize=(10, 6))
+    fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 
-    plt.plot(t, v_sw, label="V_sw")
-    plt.plot(t, i_l, label="I_l")
-    # plt.plot(t, ) # i_in
-    plt.axhline(y=VIN, color='r', linestyle='--', label=f"V_in")
-    plt.axhline(y=VOUT, color='r', linestyle='--', label=f"V_out")
+    ax[0].plot(t, v_sw, label="Vsw")
+    ax[0].axhline(y=VIN, color='r', linestyle='--', label=f"Vin")
+    ax[0].axhline(y=VOUT, color='r', linestyle='--', label=f"Vout")
+    ax[0].set_title(f"{TITLE}")
+    ax[0].set_ylim(0, VIN*1.1) 
+    ax[0].set_xlabel("Time")
+    ax[0].set_ylabel("Voltage")
+    ax[0].legend()
 
-    plt.title(f"{TITLE}")
-    plt.gca().axes.get_xaxis().set_visible(False)
-    plt.xlabel("Time")
-    # plt.ylabel("")
-    # plt.legend()
-    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-    plt.grid(True)
+    ax[1].plot(t, i_l, label="Il")
+    ax[1].axhline(y=IOUT_AVG, color='r', linestyle='--', label=f"Ioutavg")
+    ax[1].set_ylim(0, iout_max*1.1) 
+    ax[1].set_xlabel("Time")
+    ax[1].set_ylabel("Current")
+    ax[1].legend()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(f"{TITLE} Plotter")
