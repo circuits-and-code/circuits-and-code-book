@@ -22,7 +22,7 @@ Assume the nominal voltage of the battery is 24 V.
             \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
             \draw (0, 0) node[ground]{};
             \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
-            \label{figure:voltage_divider}
+            \label{fig:voltage_divider}
         \end{circuitikz}
         % \setlength{\belowcaptionskip}{-10pt} % TODO : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
         \caption{Voltage Divider Circuit}
@@ -91,7 +91,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
             \draw (0, 1.5) -- (2.5, 1.5) node[right] {$V_{out}$};
             \draw (1.5, 1.5) to[isource, l=$I_{bias}$] (1.5, 0);
             \draw (1.5, 0) node[ground]{};
-            \label{figure:voltage_divider_loaded}
+            \label{fig:voltage_divider_loaded}
         \end{circuitikz}
         % TODO : remove extra space after figure
         \caption{Voltage Divider Circuit with Loading}
@@ -115,7 +115,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
 %     \label{eq:loaded_voltage_divider}
 % \end{equation}
 
-\noindent Using the circuit in Figure \ref{figure:voltage_divider_loaded} we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. \newline
+\noindent Using the circuit in Figure \ref{fig:voltage_divider_loaded} we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. \newline
 
 % Consider converting this into a follow-up
 \newnoindentpara Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
@@ -175,14 +175,14 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
             \draw (-2, 1.5) node[anchor=east] {IO Pin};
             \draw[thick] (-1, 4.5) rectangle (3, -1);
             \draw (1, 4) node[]{Microcontroller};
-            \label{figure:clamping_diodes}
+            \label{fig:clamping_diodes}
         \end{circuitikz}
         % TODO : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
         \caption{Microcontroller Pin with Clamping Diodes}
     \end{center}
 \end{figure}
 
-\noindent These clamping diodes, shown in Figure \ref{figure:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when an ADC pin is overvolted, accurate ADC readings cannot be expected. \newline
+\noindent These clamping diodes, shown in Figure \ref{fig:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when an ADC pin is overvolted, accurate ADC readings cannot be expected. \newline
 
 \newnoindentpara External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
@@ -202,7 +202,7 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
             \draw (0, 1.5) -- (2.5, 1.5) node[right] {$V_{out}$};
             \draw (1.5, 1.5) to[capacitor, l=$C$] (1.5, 0);
             \draw (1.5, 0) node[ground]{};
-            \label{figure:voltage_divider_low_passed}
+            \label{fig:voltage_divider_low_passed}
         \end{circuitikz}
         % \setlength{\belowcaptionskip}{-10pt} % TODO : remove extra space after figure
         \caption{Voltage Divider Circuit with Anti-Aliasing Capacitor}
@@ -230,7 +230,7 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
 %             \draw (0.5, 3) to[resistor, l=$R_t$] (0.5, 1.5) to[resistor, l=$R_b$] (0.5, 0);
 %             \draw (0.5, 0) node[ground]{};
 %             \draw (0.5, 1.5) -- (1.25, 1.5) node[right] {$V_{out}$};
-%             \label{figure:voltage_divider_switched}
+%             \label{fig:voltage_divider_switched}
 %         \end{circuitikz}
 %         \caption{Switched Voltage Divider Circuit}
 %     \end{center}

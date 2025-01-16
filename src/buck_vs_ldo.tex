@@ -6,7 +6,7 @@
 \spoilerline
 
 \subsection{Low Dropout Regulator}
-LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{Integrated Circuits}). LDOs are most commonly used as a voltage source for circuits that are characterized by requiring low voltage low current, and high stability, such as microcontrollers and analog circuitry. They are also ideal in space constrained applications as they can be extremely small. A schematic representation of an LDO is shown in figure \ref{figure:low_dropout_regulator}.
+LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{Integrated Circuits}). LDOs are most commonly used as a voltage source for circuits that are characterized by requiring low voltage low current, and high stability, such as microcontrollers and analog circuitry. They are also ideal in space constrained applications as they can be extremely small. A schematic representation of an LDO is shown in figure \ref{fig:low_dropout_regulator}.
 
 \begin{figure}[H]
     \begin{center}
@@ -22,7 +22,7 @@ LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{In
                 (opamp.+) node[right] {$V_{ref}$}
                 (opamp.-) to[short] (5.5, 2);
             \draw (opamp.out) -- (1.5, 1.6) -- (npn.B);
-            \label{figure:low_dropout_regulator}
+            \label{fig:low_dropout_regulator}
         \end{circuitikz}
     \end{center}
     \caption{Low Dropout Regulator Conceptual Schematic}
@@ -43,7 +43,7 @@ In an LDO, the pass element transistor (usually implemented as a PMOS FET or NPN
 \noindent Another source of losses in an LDO is quiescent losses - the LDO requires a small amount of current to operate, even when the load current $I_{out} = 0$. This is known as the quiescent current, and is usually negligible compared to conduction losses.
 
 \subsection{Buck Converter}
-The buck converter is a simple yet fundamental circuit in power electronics. It is a \textit{Switched-Mode Power Supply} (SMPS) that converts a higher input voltage to a lower output voltage. Note that buck converters and associated topics are frequently covered in electrical engineering interviews. An example of a buck converter is shown in figure \ref{figure:buck_converter}.
+The buck converter is a simple yet fundamental circuit in power electronics. It is a \textit{Switched-Mode Power Supply} (SMPS) that converts a higher input voltage to a lower output voltage. Note that buck converters and associated topics are frequently covered in electrical engineering interviews. An example of a buck converter is shown in figure \ref{fig:buck_converter}.
 
 \begin{figure}[H]
     \begin{center}
@@ -56,7 +56,7 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
             \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
             \draw (-0.5, 2) -- (5.5, 2);
             \draw (3, 2) node[ground]{};
-            \label{figure:buck_converter}
+            \label{fig:buck_converter}
         \end{circuitikz}
     \end{center}
     % TODO : it adds a very large new line after the figure, figure out how to fix this
@@ -86,9 +86,9 @@ When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit en
 % TODO : explain that $I_L \approx 0$ and why the oscillation occurs
 
 \subsubsection{Switching}
-The switch depicted in figure \ref{figure:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
+The switch depicted in figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
 
-\noindent An asynchronous buck converter is depicted in Figure \ref{figure:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. Synchronous buck converters replace this diode with a MOSFET. 
+\noindent An asynchronous buck converter is depicted in Figure \ref{fig:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. Synchronous buck converters replace this diode with a MOSFET. 
 
 % Explain concept of deadtime and current flowing in the body diode of low side FET during dead time 
 
