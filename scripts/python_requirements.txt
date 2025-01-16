@@ -4,3 +4,4 @@ click
 numpy
 cairosvg
 pillow
+control
