@@ -32,11 +32,12 @@ This means if you probe a 10 MHz signal with an oscilloscope with 10 MHz bandwid
 Oscilloscopes and measurement probes each have their own bandwidth specifications. Whichever has the lowest bandwidth will be the bandwidth for your measurements.
 
 \subsection{Sample Rate}
-Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope.
+A common rule of thumb is that sample rate should exceed the bandwidth by at least three times. Oscilloscope manufacturers deliberately ensure products are designed this way to avoid aliasing.
 
-% TODO explain better sample rate implications when selecting a scope
+\subsection{Memory}
+Sampling generates a lot of discrete data-points very quickly that need to be stored quickly for analysis later. When a high sample rate and long time period of sampling is needed to analyze a signal, more memory is important, and can become costly due to the speed requirements of oscilloscope memory.
 
-A common rule of thumb is that sample rate should exceed the bandwidth by at least three times. 
-
+\subsection{DMM}
+Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean square of a signal which allows the measurement of AC signal amplitude and PWM duty cycle.
 
 \end{document}
