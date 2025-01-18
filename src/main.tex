@@ -88,10 +88,12 @@
 \subfile{keyword.tex} % place after interrupts.tex
 \newpage
 \subfile{pid.tex}
-\newpage % @daniel hmm, I think we should take a look at the dependency of signalling and "I2C vs SPI" cause they have similar-ish content but I couldn't tell what is a dependency to what. Signalling q before I2C vs SPI I think makes sense for now?
+\newpage
+\subfile{oscilloscope.tex} % place after voltage_divider.tex
+\newpage
 \subfile{signalling.tex}
 \newpage
-\subfile{compare-i2c-spi.tex}
+\subfile{compare-i2c-spi.tex} % place after signalling.tex
 \newpage
 \subfile{spi-bitbang.tex} % place after compare-i2c-spi.tex
 \newpage
@@ -101,11 +103,9 @@
 \newpage
 \subfile{opamp.tex} % place after passives.tex
 \newpage
-\subfile{packet-parsing.tex} % this one is pretty softball and can go anywhere
+\subfile{packet-parsing.tex}
 \newpage
 \subfile{led.tex}
-\newpage
-\subfile{current_sense.tex}
 \newpage
 \subfile{adc_init.tex} 
 \newpage
@@ -117,7 +117,7 @@
 \newpage
 \subfile{buck_vs_ldo.tex} % place after passives.tex, opamp.tex
 \newpage
-\subfile{oscilloscope.tex} % place after voltage_divider.tex
+\subfile{current_sense.tex} % place after buck_vs_ldo.tex
 
 % Conclusion 
 \newpage
