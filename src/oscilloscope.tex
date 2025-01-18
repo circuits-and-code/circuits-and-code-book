@@ -14,7 +14,7 @@ The most common form of trigger is known as edge triggering. When rising edge tr
 Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.  
 
 \subsection{Probes}
-The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally. 
+The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally\footnote{In reality, probes often specify the capacitance the probe will add when it is connected to a circuit. This capacitance may have a noticeable impact on the circuit, especially at higher frequencies.}.
 
 These basic probes usually feature a slider for 1x and 10x operating modes. Note that more advanced probes may feature different multiplications and simpler probes may be fixed at a single multiplication. These multiplications scale the voltage the probe is receiving before it enters the oscilloscope. At 1x mode the sampled voltage is directly passed to the oscilloscope. At higher multiplications, a voltage divider inside the probe is used to scale down the probed voltage before the oscilloscope. At multiplications lower than 1x the probe is an active probe and contains some sort of amplifier internally, this is very uncommon. Oscilloscopes have a maximum input voltage on their analog to digital converters which makes using 10x or 100x probes sometimes required. Another advantage of using 10x mode instead of 1x mode is higher bandwidth is offered. Oscilloscopes in their channel configuration menus allow you to software compensate for these scaling factors so the oscilloscope display shows the real voltage being probed rather than the voltage being sampled.
 
@@ -24,14 +24,19 @@ Current clamps are another type of probe that are used to measure current by out
 
 Oscilloscopes feature a sample waveform output, usually a 1 kHz square wave. This is intended for verifying probes are functional and the oscilloscope is setup correctly.
 
-\subsection{Sample Rate}
-Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope.
-% TODO sample rate implications when selecting a scope
-
 \subsection{Bandwidth}
 The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. In the context of wide-band measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.
 
-Oscilloscopes and measurement probes each have their own bandwidth specifications. 
-% TODO elaborate
+This means if you probe a 10 MHz signal with an oscilloscope with 10 MHz bandwidth, you will be seeing $\frac{1}{\sqrt{2}}$ of the voltage! A common rule of thumb is your oscilloscope bandwidth should be a few times higher than the frequency you are trying to measure to ensure an accurate illustration.
+
+Oscilloscopes and measurement probes each have their own bandwidth specifications. Whichever has the lowest bandwidth will be the bandwidth for your measurements.
+
+\subsection{Sample Rate}
+Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope.
+
+% TODO explain better sample rate implications when selecting a scope
+
+A common rule of thumb is that sample rate should exceed the bandwidth by at least three times. 
+
 
 \end{document}
