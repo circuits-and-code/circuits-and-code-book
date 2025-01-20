@@ -17,11 +17,11 @@ Digital signals represent data using discrete values. Digital protocols describe
     \item \textbf{Push Pull vs. Open Drain (Drive Type):} Push-Pull drive means that the devices are capable of pushing the signal lines high and pulling the signal lines low. This is in contrast to an open drain protocol, where the devices are only capable of pulling the signal lines low and resistors are used to pull the line high when no drivers are asserting them. Typically, a protocol with an open drain drive type will have slower speeds than a push-pull protocol\footnote{This topic is further explained in \nameref{section:compare_i2c_spi}}.
     \item \textbf{Synchronous vs. Asynchronous}: A synchronous protocol makes use of a clock signal to ensure the sender and receiver are synchronized together. Clock signals can be on their own dedicated wire or be encoded as a part of the data. Asynchronous protocols assume that the sender's and receiver's individual clocks are sufficiently synchronized to ensure successful data reception. This assumption holds for protocols with lower data rates or those that include transmission pauses for re-alignment; however, it can introduce errors in high data rate applications.
     % The below commented ones aren't important enough to bring up in my opinion. I don't think I'm missing any obvious ones above. 
-    % \item Single-ended vs duplex 
-    % \item Parallel vs Serial
-    % \item Isolated vs Non-Isolated
-    % \item Unidirectional vs bidirectional 
-    % \item balanced vs unbalanced differential signals 
+    % \item Single-ended vs. duplex 
+    % \item Parallel vs. Serial
+    % \item Isolated vs. Non-Isolated
+    % \item Unidirectional vs. bidirectional 
+    % \item balanced vs. unbalanced differential signals 
 \end{itemize}
 
 The some common digital protocols in embedded systems are:
