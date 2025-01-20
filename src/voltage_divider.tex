@@ -184,7 +184,7 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
 
 \noindent These clamping diodes, shown in Figure \ref{fig:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when an ADC pin is overvolted, accurate ADC readings cannot be expected. \newline
 
-\newnoindentpara External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
+\newnoindentpara External Tvs. diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
 \subsection{Analog to Digital}
 An ADC (\textit{Analog to Digital Converter}) is a component that, as the name implies, converts an analog value into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory. \newline
@@ -213,7 +213,7 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
 % Moved to be a follow-up question instead for now. 
 % \subsection{Quiescent Current}
 % Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
-% \begin{figure}[h!]
+% \begin{figure}[H!]
 %     \begin{center}
 %         \begin{circuitikz}[american]
 %             \draw(-1, 3.5) node[pigfete, bodydiode, rotate=90](q1){};

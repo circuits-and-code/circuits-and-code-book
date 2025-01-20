@@ -1,10 +1,12 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{How would you select an oscilloscope and probe if you wanted to analyze the signal integrity of a 40 mbps SPI signal on a PCB?}
+\section{How would you select an oscilloscope and probe to analyze the signal integrity of a 40 mbps SPI signal on a PCB?}
+
+\spoilerline
 
 \subsection{Oscilloscopes}
-An oscilloscope is a device that plots voltage vs time in a two dimensional graph. It does this by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a continuous time continuous value signal into quantized samples that can be plotted on a monitor. Consequently the oscilloscope can perform many digital logic operations on the signal offering a plethora of features for engineers. 
+An oscilloscope is a device that plots voltage vs. time in a two dimensional graph. It does this by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a continuous time continuous value signal into quantized samples that can be plotted on a monitor. Consequently the oscilloscope can perform many digital logic operations on the signal offering a plethora of features for engineers. 
 
 \subsection{Triggering}
 As the signals we are usually analyzing in electronics are far faster than humans can process\footnote{Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope making them less insightful.}, oscilloscopes use the concept of triggering to set a $t=0s$ point from a signal. This allows a periodic high frequency signal to appear stationary on the oscilloscope screen when the trigger is set correctly. 
@@ -14,7 +16,7 @@ The most common form of trigger is known as edge triggering. When rising edge tr
 Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.  
 
 \subsection{Probes}
-The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally. 
+The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally\footnote{In reality, probes often specify the capacitance the probe will add when it is connected to a circuit. This capacitance may have a noticeable impact on the circuit, especially at higher frequencies.}.
 
 These basic probes usually feature a slider for 1x and 10x operating modes. Note that more advanced probes may feature different multiplications and simpler probes may be fixed at a single multiplication. These multiplications scale the voltage the probe is receiving before it enters the oscilloscope. At 1x mode the sampled voltage is directly passed to the oscilloscope. At higher multiplications, a voltage divider inside the probe is used to scale down the probed voltage before the oscilloscope. At multiplications lower than 1x the probe is an active probe and contains some sort of amplifier internally, this is very uncommon. Oscilloscopes have a maximum input voltage on their analog to digital converters which makes using 10x or 100x probes sometimes required. Another advantage of using 10x mode instead of 1x mode is higher bandwidth is offered. Oscilloscopes in their channel configuration menus allow you to software compensate for these scaling factors so the oscilloscope display shows the real voltage being probed rather than the voltage being sampled.
 
@@ -27,8 +29,18 @@ Oscilloscopes feature a sample waveform output, usually a 1 kHz square wave. Thi
 \subsection{Bandwidth}
 The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. In the context of wide-band measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.
 
-Oscilloscopes and measurement probes each have their own bandwidth specifications. 
-% TODO elaborate
+This means if you probe a 10 MHz signal with an oscilloscope with 10 MHz bandwidth, you will be seeing $\frac{1}{\sqrt{2}}$ of the voltage! A common rule of thumb is your oscilloscope bandwidth should be a few times higher than the frequency you are trying to measure to ensure an accurate illustration.
+
+Oscilloscopes and measurement probes each have their own bandwidth specifications. Whichever has the lowest bandwidth will be the bandwidth for your measurements.
+
+\subsection{Sample Rate}
+A common rule of thumb is that sample rate should exceed the bandwidth by at least three times. Oscilloscope manufacturers deliberately ensure products are designed this way to avoid aliasing.
+
+\subsection{Memory}
+Sampling generates a lot of discrete data-points very quickly that need to be stored quickly for analysis later. When a high sample rate and long time period of sampling is needed to analyze a signal, more memory is important, and can become costly due to the speed requirements of oscilloscope memory.
+
+\subsection{DMM}
+Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean square of a signal which allows the measurement of AC signal amplitude and PWM duty cycle.
 
 \subsection{Sample Rate}
 

@@ -122,10 +122,29 @@ While this could be solved using $V_{out} = A \cdot (V_{+} - V_{-})$, this solut
 Notice when $R_i = \inf \Omega$ and $R_f = 0 \Omega$ the non-inverting amplifier circuit becomes a unity gain amplifier circuit and the transfer function mathematically aligns with this conclusion as $\frac{R_f}{R_i} = \frac{0}{\inf} = 0$ so $\frac{V_{out}}{V_{in}} = 1$. 
 
 \subsubsection{Circuit D: Difference Amplifier}
-% TODO write
-% solve only with virtual short assumption. 
+Each resistor can be analyzed using Ohm's law: 
+\begin{itemize}
+    \item $V_{in+} - V_{-} = I_1 \cdot R_1$
+    \item $V_{-} - V_{out} = I_1 \cdot R_3$
+    \item $V_{in-} - V_{+} = I_2 \cdot R_2$
+    \item $V_{+} - 0 = I_2 \cdot R_4$
+\end{itemize}
+Substituting to cancel $I_1$ and $I_2$ gives:
+\begin{itemize}
+    \item $\frac{V_{in+} - V_{-}}{R_1} = \frac{V_{-} - V_{out}}{R_3}$
+    \item $\frac{V_{in-} - V_{+}}{R_2} = \frac{V_{+}}{R_4}$
+\end{itemize}
+As negative feedback is depicted via $R_3$ connecting $V_{out}$ and $V_{-}$ the virtual short assumption holds for this circuit so $V_{+} = V_{-}$. 
+\begin{itemize}
+    \item $(V_{in+} - V_{+}) \cdot R_3 = (V_{+} - V_{out}) \cdot R_1$
+    \item $(V_{in-} - V_{+}) \cdot R_4 = V_{+} \cdot R_2$
+\end{itemize}
+Now these can be substituted into eachother to cancel out $V_{+}$. 
 
-% consider speacil case of resistors that simplifies things
+% TODO continue solution
+
+% consider speacil case of resistors that simplifies things into the other cases above
+% consider only doing diff amp circuit then discussing the special cases? Could make it even simpler and only do 
 
 \subsection{Non-idealities}
 While most interview questions focus on ideal op-amps, real op-amps suffer from numerous non-idealities. The most important of which should be understood to aid in circuit design questions and are described below. 
