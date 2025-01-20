@@ -140,8 +140,10 @@
         "Reflectometry",
         "Sahil",
         "setpoint",
-        "timestep",
-        "UART"
+        "timestep", // shouldn't we just "time step"?
+        "UART",
+        "QPPI",
+        "MOSFET"
     ],
     "files.associations": {
         "bitbang_ex.h": "c",

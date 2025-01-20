@@ -7,7 +7,7 @@
 An oscilloscope is a device that plots voltage vs time in a two dimensional graph. It does this by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a continuous time continuous value signal into quantized samples that can be plotted on a monitor. Consequently the oscilloscope can perform many digital logic operations on the signal offering a plethora of features for engineers. 
 
 \subsection{Triggering}
-As the signals we are usually analyzing in electronics are far faster than humans can process, oscilloscopes use the concept of triggering to set a $t=0s$ point from a signal. This allows a periodic high frequency signal to appear stationary on the oscilloscope screen when the trigger is set correctly. 
+As the signals we are usually analyzing in electronics are far faster than humans can process\footnote{Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope making them less insightful.}, oscilloscopes use the concept of triggering to set a $t=0s$ point from a signal. This allows a periodic high frequency signal to appear stationary on the oscilloscope screen when the trigger is set correctly. 
 
 The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0s$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. 
 
@@ -24,14 +24,15 @@ Current clamps are another type of probe that are used to measure current by out
 
 Oscilloscopes feature a sample waveform output, usually a 1 kHz square wave. This is intended for verifying probes are functional and the oscilloscope is setup correctly.
 
-\subsection{Sample Rate}
-Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope.
-% TODO sample rate implications when selecting a scope
-
 \subsection{Bandwidth}
 The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. In the context of wide-band measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.
 
 Oscilloscopes and measurement probes each have their own bandwidth specifications. 
 % TODO elaborate
+
+\subsection{Sample Rate}
+
+% TODO sample rate implications when selecting a scope
+
 
 \end{document}
