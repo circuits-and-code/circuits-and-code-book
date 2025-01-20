@@ -29,13 +29,13 @@ An important design decision for engineers is selecting the resistor to use as $
 
 \newnoindentpara On the other hand, if $R$ is too small, then the induced voltage drop across the resistor will be so small that it becomes difficult to measure. Common resistances employed in this technique include values ranging from 0.1 m$\Omega$ to 100 m$\Omega$, depending on the current range being measured and allowable power dissipation.
 
-\subsubsection{Low Side vs High Side Sensing}
+\subsubsection{Low Side vs. High Side Sensing}
 Figure x demonstrates high side current sensing, however, low side current sensing is also possible as shown in Figure y.
 
 % DRAW: low side resistive current sense 
 
 \noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor since the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the load. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required. 
-% A second edition of this book could cover low side vs high side as it's own question.
+% A second edition of this book could cover low side vs. high side as it's own question.
 % TODO : add a link to further reading on this topic
 
 \subsubsection{Current Sense Amplifiers}
