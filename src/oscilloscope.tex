@@ -1,44 +1,50 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{How would you select an oscilloscope and probe to analyze the signal integrity of a 40 mbps SPI signal on a PCB?}
+\section{Describe how to use an oscilloscope to measure a signal.}
+
+Include the following in your response:
+\begin {itemize}
+    \item Use of triggering
+    \item Bandwidth considerations
+    \item When the use of probe multiplication is warranted
+\end {itemize}
 
 \spoilerline
 
 \subsection{Oscilloscopes}
-An oscilloscope is a device that plots voltage vs. time in a two dimensional graph. It does this by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a continuous time continuous value signal into quantized samples that can be plotted on a monitor. Consequently the oscilloscope can perform many digital logic operations on the signal offering a plethora of features for engineers. 
+An oscilloscope (in shorthand, just \textit{scope}) is a device that plots the voltage of a probed signal with respect to time. It does so by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a the signal into quantized samples that can be plotted on a monitor. As a result, the oscilloscope can perform many digital logic operations on the probed signal and offers a variety of features for engineers (such as logic analysis, protocol decryption, and frequency domain analysis).
 
 \subsection{Triggering}
-As the signals we are usually analyzing in electronics are far faster than humans can process, oscilloscopes use the concept of triggering to set a $t=0s$ point from a signal. This allows a periodic high frequency signal to appear stationary on the oscilloscope screen when the trigger is set correctly. 
+Since the signals being analyzed typically operate at frequencies much higher than humans can process (e.g., in the MHz range), oscilloscopes provide a 'trigger' function that establishes a \( t = 0 \, \text{s} \) reference point based on a specific signal event. \newline
 
-The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0s$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. 
+\newnoindentpara The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0s$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. \footnote {Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.} % footnoting since this since it's not directly related to the question.
 
-Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.  
+% Should include a plot of a signal with a trigger point...?
 
 \subsection{Probes}
-The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally\footnote{In reality, probes often specify the capacitance the probe will add when it is connected to a circuit. This capacitance may have a noticeable impact on the circuit, especially at higher frequencies.}.
+The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally\footnote{In reality, probes often specify the capacitance the probe will add when it is connected to a circuit. This capacitance may have a noticeable impact on the circuit, especially at higher frequencies.}. \newline
 
-These basic probes usually feature a slider for 1x and 10x operating modes. Note that more advanced probes may feature different multiplications and simpler probes may be fixed at a single multiplication. These multiplications scale the voltage the probe is receiving before it enters the oscilloscope. At 1x mode the sampled voltage is directly passed to the oscilloscope. At higher multiplications, a voltage divider inside the probe is used to scale down the probed voltage before the oscilloscope. At multiplications lower than 1x the probe is an active probe and contains some sort of amplifier internally, this is very uncommon. Oscilloscopes have a maximum input voltage on their analog to digital converters which makes using 10x or 100x probes sometimes required. Another advantage of using 10x mode instead of 1x mode is higher bandwidth is offered. Oscilloscopes in their channel configuration menus allow you to software compensate for these scaling factors so the oscilloscope display shows the real voltage being probed rather than the voltage being sampled.
+\subsubsection{Probe Multipliers}
+\newnoindentpara Often, it's desired to measure voltages outside of the input voltage range of the oscilloscope. As a result, probes often have a "probe multiplication" setting (commonly, a 1x or 10x switch) that scales the voltage being probed to a safe level before it enters the oscilloscope. For example, a 10x probe will scale the voltage by a factor of 10 before it enters the oscilloscope. Another advantage of using a higher probe multiplication is that the bandwidth of the probe is increased - this is because a lower voltage signal means less energy is required to overcome the parasitic capacitance and inductance within the probe, allowing high-frequency signals to propagate more effectively without being attenuated or distorted. % @daniel can you find better words for this? this feels low key wrong, but I can't put my finger on it, this seems right though
 
-Simple probes have a ground connection that is required to have a quality signal. Ground on each scope probe are shorted together and  are shorted to earth ground by the oscilloscope. This is done for safety, but can make differential voltage measurements difficult. Consider attempting to measure the voltage drop across a resistor in which neither end is connected to ground. To do this with single ended probes two probes must be used; one on each end of the resistor, each referenced to the same ground. Then the oscilloscope can mathematically compute the difference between each sampled signal. This gives rise to differential voltage probes which provide isolation. In this scenario a single differential probe can be used to probe the drop across the resistor.
+\subsubsection{Other Types of Probes}
+Simple probes typically have a ground connection that is required to have a quality measurement. The ground connection on each scope probe are shorted together internally by the oscilloscope (and is also shorted to earth ground) for safety reasons. However, this can make differential voltage measurements difficult. Consider attempting to measure the voltage drop across a resistor in which neither end is connected to ground. To do this with single ended probes, two probes must be used; one on each end of the resistor, each referenced to the same ground. Then, the oscilloscope can mathematically compute the difference between each sampled signal to provide a differential voltage measurement. Instead, a differential voltage probe can be used, which provides a single output that is the difference between the two inputs; the primary advantage in this scenario being that it no longer requires 2 oscilloscope channels to measure a single differential signal. \newline 
 
-Current clamps are another type of probe that are used to measure current by outputting a voltage which can be connected to an oscilloscope. Oscilloscopes have the mathematical functionality to do this conversion in software. Current clamps work on the principle of magnetic current sensing and have active amplifier in them.
+\newnoindentpara A current clamp is another type of probe that can be used to measure the current going through a wire - it works by outputting a voltage that is proportional to the current going through the wire. When a current clamp is connected to an oscilloscope, the oscilloscope can mathematically convert the voltage output by the current clamp to a current measurement. Current clamps work on the principle of magnetic current sensing and have an active amplifier in them.
 
-Oscilloscopes feature a sample waveform output, usually a 1 kHz square wave. This is intended for verifying probes are functional and the oscilloscope is setup correctly.
+Oscilloscopes feature a sample waveform output, usually a 1 kHz square wave. This is intended for verifying probes are functional and the oscilloscope is setup correctly. % @daniel can we nuke this? 
 
 \subsection{Bandwidth}
-The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. In the context of wide-band measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.
+The bandwidth of a low pass filter is defined by the frequency in which half the power, or $\frac{1}{\sqrt{2}}$ of the voltage, of an input signal passes to the output signal. \footnote{In the context of wide-band measurements and oscilloscopes, the bandwidth of the circuits is always discussed in this regard though broader definitions of bandwidth are used in analyzing more complex circuitry.}
+This means if you probe a 10 MHz signal with an oscilloscope with 10 MHz bandwidth, you will be seeing $\frac{1}{\sqrt{2}}$ of the voltage! A common rule of thumb used to ensure accurate measurements is that the oscilloscope bandwidth should a few times higher than the highest frequency needing to be measured. Oscilloscopes and measurement probes each have their own bandwidth specifications - the lower of these values should be used as the bandwidth for comparison. \newline
 
-This means if you probe a 10 MHz signal with an oscilloscope with 10 MHz bandwidth, you will be seeing $\frac{1}{\sqrt{2}}$ of the voltage! A common rule of thumb is your oscilloscope bandwidth should be a few times higher than the frequency you are trying to measure to ensure an accurate illustration.
+\newnoindentpara Similarly, a common rule of thumb is that sample rate should exceed the bandwidth by at least three times. Oscilloscope manufacturers deliberately ensure products are designed this way to avoid aliasing. 
 
-Oscilloscopes and measurement probes each have their own bandwidth specifications. Whichever has the lowest bandwidth will be the bandwidth for your measurements.
-
-\subsection{Sample Rate}
-A common rule of thumb is that sample rate should exceed the bandwidth by at least three times. Oscilloscope manufacturers deliberately ensure products are designed this way to avoid aliasing.
-
+% I feel like this can be removed...
 \subsection{Memory}
 Sampling generates a lot of discrete data-points very quickly that need to be stored quickly for analysis later. When a high sample rate and long time period of sampling is needed to analyze a signal, more memory is important, and can become costly due to the speed requirements of oscilloscope memory.
-
+% this also I feel like is not really related to the question and should be removed...  
 \subsection{DMM}
 Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean square of a signal which allows the measurement of AC signal amplitude and PWM duty cycle.
 
