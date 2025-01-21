@@ -48,25 +48,22 @@ The some common digital protocols in embedded systems are:
     \label{tab:digital_protocols}
 \end{table}
 
-\noindent Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds. Consequently, for them to communicate properly, logic level shifting the signal between devices may required. For low speed, single-ended signals, this can be implemented with a single transistor - for more complex cases, there are often level-shifting ICs available. 
+\noindent Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds. Consequently, for them to communicate properly, logic level shifting the signal between devices may required. For low speed, single-ended signals, this can be implemented with a single transistor as shown in figure \ref{fig:nch_logic_shifter} - for more complex cases, there are often level-shifting ICs available. 
 
 \begin{figure}[H]
     \begin{center}
         \begin{circuitikz}[american]
             \draw (0, 0) node[nigfete, rotate=270](fet){};
-            \draw (fet.G) ++ -- (0, 1) node[vcc]{+3V3};
-
+            \draw (fet.G) -- ++ (0, 1) node[vcc]{+3V3};
             \draw (fet.S) -- ++ (-2, 0) node[anchor=east]{A};
             \draw (fet.S) ++ (-1, 0) to[resistor] ++ (0, 2) node[vcc]{+3V3};
-            
-            % TODO : draw drain side
-
+            \draw (fet.D) -- ++ (2, 0) node[anchor=west]{B};
+            \draw (fet.D) ++ (1, 0) to[resistor] ++ (0, 2) node[vcc]{+5V0};
             \label{fig:nch_logic_shifter}
         \end{circuitikz}
         \caption{Single N-Channel MOSFET Logic Level Shifter}
     \end{center}
 \end{figure}
-
 
 \subsection{Analog Signalling}
 Analog signals are continuous in both time and value (as compared to digital signals, which typically only contain logical values, such as 0 or 1). While microcontrollers operate digitally, there are many reasons to rely on analog signals.
