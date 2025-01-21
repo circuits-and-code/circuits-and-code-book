@@ -9,7 +9,7 @@
 An oscilloscope is a device that plots voltage vs. time in a two dimensional graph. It does this by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a continuous time continuous value signal into quantized samples that can be plotted on a monitor. Consequently the oscilloscope can perform many digital logic operations on the signal offering a plethora of features for engineers. 
 
 \subsection{Triggering}
-As the signals we are usually analyzing in electronics are far faster than humans can process, oscilloscopes use the concept of triggering to set a $t=0s$ point from a signal. This allows a periodic high frequency signal to appear stationary on the oscilloscope screen when the trigger is set correctly. 
+As the signals we are usually analyzing in electronics are far faster than humans can process\footnote{Digital multi-meters (\textit{DMMs}) also sample voltage with respect to time, however, their sample rate is significantly lower than that of an oscilloscope making them less insightful.}, oscilloscopes use the concept of triggering to set a $t=0s$ point from a signal. This allows a periodic high frequency signal to appear stationary on the oscilloscope screen when the trigger is set correctly. 
 
 The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0s$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. 
 
@@ -41,5 +41,10 @@ Sampling generates a lot of discrete data-points very quickly that need to be st
 
 \subsection{DMM}
 Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean square of a signal which allows the measurement of AC signal amplitude and PWM duty cycle.
+
+\subsection{Sample Rate}
+
+% TODO sample rate implications when selecting a scope
+
 
 \end{document}
