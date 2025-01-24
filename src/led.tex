@@ -76,24 +76,26 @@ Transistors are three terminal, electronically-controlled switches in which one 
 \begin{figure}[h!]
     \begin{center}
         \begin{circuitikz}[american, scale=0.8]
-            \draw (0, 6) node[vcc] () {$+3.3V$};
-            \draw (0, 6) to[empty led] (0, 4.5);
-            \draw (0, 4.5) to[resistor, l=$R_l$] (0, 3);
-            \draw (0, 3) -- (0, 2.5);
+            \draw (0, 7) node[vcc] () {$+3.3V$};
+            \draw (0, 7) to[empty led, v=$V_f$] (0, 5.5);
+            \draw (0, 5.5) to[resistor, l=$R_l$] (0, 4);
+            \draw (0, 4) to[short, i=$I_C$] (0, 2.5);
+            \draw (0, 3.25) node[anchor=east]{$V_c$};
             \draw (0, 2) node[npn, xscale=-1] (q1) {};
             \draw (q1.E) node[ground]{};
-            \draw (q1.B) to[resistor, l=$R_b$] ++ (2.2, 0);
-            \draw[thick] (3, 3) rectangle (5, 1) node[pos=0.5]{GPIO};
+            \draw (q1.B) to[resistor, l=$R_b$] ++ (2.2, 0) -- ++ (1.2, 0) to[short, i=$I_B$] ++ (-1.2, 0);
+            \draw (q1.B) ++ (2.8, 0) node[anchor=south]{$V_{gpio}$};
+            \draw (q1.B) node[anchor=south]{$V_b$};
+            \draw[thick] (4.5, 3) rectangle (6.5, 1) node[pos=0.5]{GPIO};
             \label{fig:led_circuit}
         \end{circuitikz}
         \caption{GPIO driving an LED}
     \end{center}
-\end{figure} % TODO: Add Vgpio, Vc, Vb, and Ve to the diagram
+\end{figure}
 
-\newnoindentpara An NPN BJT is used to switch the LED on and off. This type of transistor has the governing equation: $I_C = I_B \cdot \beta$. $I_C$ represents current into the collector pin, $I_B$ represents current into the base pin, current out of the emitter, $I_E$, is given by $I_E = I_B + I_C$. Common parameters for this BJT are $V_{BE} \approx 0.7 V$, $\beta \approx 100$, where $V_{BE}$ is the forward voltage drop from the base to the emitter, and $\beta$ is the current gain of the transistor. Note that these are approximations and vary based on the part number selected. \newline
+\newnoindentpara An NPN BJT is used to switch the LED on and off. This type of transistor has the governing equation: $I_C = I_B \cdot \beta$. $I_C$ represents current into the collector pin, $I_B$ represents current into the base pin, current out of the emitter, $I_E$, is given by $I_E = I_B + I_C$. Common parameters for this BJT are $V_{BE} \approx 0.7 V$, $\beta \approx 100$, where $V_{BE}$ is the forward voltage drop from the base to the emitter, and $\beta$ is the current gain of the transistor. From this circuit drawing, the emitter voltage (\( V_E \)) is connected to ground so (\( V_E = 0 V\)) meanning $V_{BE} = V_B$. Note that these are approximations and vary based on the part number selected. \newline
 
-
-\noindent When the GPIO pin is at logic low (\( V_{gpio} = 0\,\text{V} \)), the base voltage (\( V_B \)) and emitter voltage (\( V_E \)) are approximately \( 0\,\text{V} \). Consequently, the base current (\( I_B \)) and collector current (\( I_C \)) are both \( 0\,\text{A} \), and the LED remains off. When the GPIO pin is at logic high (\( V_{gpio} = 3.3\,\text{V} \)), the goal is to fully enable the transistor and allow more than \( 10\,\text{mA} \) of current through the collector (\( I_C \)). To achieve this, the base current is selected as \( I_B \approx \frac{I_{B_{max}}}{2} = 5 \ \text{mA}/2 = 2.5\,\text{mA} \), which allows a maximum collector current of \( I_C = 2.5\,\text{mA} \cdot 100 = 250\,\text{mA} \). Since \( 250\,\text{mA} \gg 10\,\text{mA} \), the LED will turn on, and the collector voltage (\( V_C \)) will approach \( 0\,\text{V} \). Note that the current flowing through the LED can be adjusted by setting \( R_l \) to an appropriate value, as discussed earlier. \newline
+\noindent When the GPIO pin is at logic low (\( V_{gpio} = 0\,\text{V} \)), the base voltage (\( V_B \)) is approximately \( 0\,\text{V} \). Consequently, the base current (\( I_B \)) and collector current (\( I_C \)) are both \( 0\,\text{A} \), and the LED remains off. When the GPIO pin is at logic high (\( V_{gpio} = 3.3\,\text{V} \)), the goal is to fully enable the transistor and allow more than \( 10\,\text{mA} \) of current through the collector (\( I_C \)). To achieve this, the base current is selected as \( I_B \approx \frac{I_{B_{max}}}{2} = 5 \ \text{mA}/2 = 2.5\,\text{mA} \), which allows a maximum collector current of \( I_C = 2.5\,\text{mA} \cdot 100 = 250\,\text{mA} \). Since \( 250\,\text{mA} \gg 10\,\text{mA} \), the LED will turn on, and the collector voltage (\( V_C \)) will approach \( 0\,\text{V} \). Note that the current flowing through the LED can be adjusted by setting \( R_l \) to an appropriate value, as discussed earlier. \newline
 
 \newnoindentpara The value of $R_b$ can be solved by using Ohm's law where $V_{gpio} - V_B = I_b \cdot R_b$. For this circuit, $V_B = V_{BE}$ - therefore, the equation becomes $R_b = \frac{V_{gpio} - V_B}{I_b} = \frac{3.3V-0.7V}{2.5mA} = 1040 \Omega$. Rounding to commonly available resistor values gives  $R_b = 1 k \Omega$ as a potential solution. \newline
 
