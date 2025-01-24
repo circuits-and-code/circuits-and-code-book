@@ -27,5 +27,7 @@ FW/HW Interview Question Guide
 - Install `Code Spell Checker` from VSCode Extension Marketplace
 - Install `LaTeX Workshop` from VSCode Extension Marketplace
 - Install `scripts/python_requirements.txt`
+- Ensure "python3" is in PATH and works
 - Run `scripts/build_book.py` script to build
 - Use the build button in VSCode on `main.tex` to compile the entire directory 
+- Install GTK gvsbuild for use with CairoSVG and add it to PATH to build svg images
