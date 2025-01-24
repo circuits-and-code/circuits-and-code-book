@@ -1,14 +1,14 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{Implement a C bytestream parsing function for a weather data sensor}
+\section{Implement a C bytestream parsing function for a weather data sensor} % Intended as an easier question without knowledge dependence on any other questions.
 Use the header in listing \ref{code:bytestream-header}. Note that within the \texttt{weather\_data\_t} structure, the temperature is stored as a float with units of degrees Celsius, while the pressure is stored as a float with units of \textbf{kilopascals}. The function will only be called on a complete packet (i.e. the entire packet is received before the function is called).
 
 \lstinputlisting[caption={Bytestream Parsing Header}, label={code:bytestream-header}]{code/packet_parsing/packet_parsing_header.h}
 
 \subsection{Sample Datasheet}
 The weather sensor outputs a UART packet with the following format. A graphical version of the packet format is shown in figure \ref{fig:packet-data}.
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|l|}
     \hline

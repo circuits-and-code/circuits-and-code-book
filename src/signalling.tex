@@ -17,11 +17,11 @@ Digital signals represent data using discrete values. Digital protocols describe
     \item \textbf{Push Pull vs. Open Drain (Drive Type):} Push-Pull drive means that the devices are capable of pushing the signal lines high and pulling the signal lines low. This is in contrast to an open drain protocol, where the devices are only capable of pulling the signal lines low and resistors are used to pull the line high when no drivers are asserting them. Typically, a protocol with an open drain drive type will have slower speeds than a push-pull protocol\footnote{This topic is further explained in \nameref{section:compare_i2c_spi}}.
     \item \textbf{Synchronous vs. Asynchronous}: A synchronous protocol makes use of a clock signal to ensure the sender and receiver are synchronized together. Clock signals can be on their own dedicated wire or be encoded as a part of the data. Asynchronous protocols assume that the sender's and receiver's individual clocks are sufficiently synchronized to ensure successful data reception. This assumption holds for protocols with lower data rates or those that include transmission pauses for re-alignment; however, it can introduce errors in high data rate applications.
     % The below commented ones aren't important enough to bring up in my opinion. I don't think I'm missing any obvious ones above. 
-    % \item Single-ended vs duplex 
-    % \item Parallel vs Serial
-    % \item Isolated vs Non-Isolated
-    % \item Unidirectional vs bidirectional 
-    % \item balanced vs unbalanced differential signals 
+    % \item Single-ended vs. duplex 
+    % \item Parallel vs. Serial
+    % \item Isolated vs. Non-Isolated
+    % \item Unidirectional vs. bidirectional 
+    % \item balanced vs. unbalanced differential signals 
 \end{itemize}
 
 The some common digital protocols in embedded systems are:
@@ -36,22 +36,34 @@ The some common digital protocols in embedded systems are:
             & I2C & Inter-Interconnected Controller & Single Ended & Bus & Half-Duplex & Open Drain & Synchronous & 400 kHz & 1 MHz \\ \hline
             & SPI & Serial Peripheral Interface & Single Ended & Bus & Full-Duplex & Push Pull & Synchronous & 24 MHz & 60 MHz \\ \hline
             & CAN & Controller Area Network & Differential Pair & Bus & Half-Duplex & Open Drain & Asynchronous & 1 mbps & 8 mbps \\ \hline
+            % The below commented ones aren't important enough to bring up in my opinion. I don't think I'm missing any obvious ones above. 
+            % & QSPI & Quad Serial Peripheral Interface
+            % & USB & Universal Serial Bus
+            % & Ethernet 
+            % & RS-232
+            % & RS-485 
         \end{tabular}
     }
     \caption{Digital Protocol Definitions}
     \label{tab:digital_protocols}
 \end{table}
 
-% The below commented ones aren't important enough to bring up in my opinion. I don't think I'm missing any obvious ones above. 
-% & QSPI & Quad Serial Peripheral Interface
-% & USB & Universal Serial Bus
-% & Ethernet 
-% & RS-232
-% & RS-485 
+\noindent Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds. Consequently, for them to communicate properly, logic level shifting the signal between devices may required. For low speed, single-ended signals, this can be implemented with a single transistor as shown in figure \ref{fig:nch_logic_shifter} - for more complex cases, there are often level-shifting ICs available. 
 
-\noindent Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds. Consequently, for them to communicate properly, logic level shifting the signal between devices may required. For low speed, single-ended signals, this can be implemented with a single transistor - for more complex cases, there are often level-shifting ICs available. 
-
-% DRAW : single NCH FET logic level shifter 
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 0) node[nigfete, rotate=270](fet){};
+            \draw (fet.G) -- ++ (0, 1) node[vcc]{+3V3};
+            \draw (fet.S) -- ++ (-2, 0) node[anchor=east]{A};
+            \draw (fet.S) ++ (-1, 0) to[resistor] ++ (0, 2) node[vcc]{+3V3};
+            \draw (fet.D) -- ++ (2, 0) node[anchor=west]{B};
+            \draw (fet.D) ++ (1, 0) to[resistor] ++ (0, 2) node[vcc]{+5V0};
+            \label{fig:nch_logic_shifter}
+        \end{circuitikz}
+        \caption{Single N-Channel MOSFET Logic Level Shifter}
+    \end{center}
+\end{figure}
 
 \subsection{Analog Signalling}
 Analog signals are continuous in both time and value (as compared to digital signals, which typically only contain logical values, such as 0 or 1). While microcontrollers operate digitally, there are many reasons to rely on analog signals.

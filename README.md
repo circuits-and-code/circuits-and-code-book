@@ -1,6 +1,11 @@
 # fw-hw-questions
 FW/HW Interview Question Guide
 
+## Notes
+- Questions Scheming: https://docs.google.com/document/d/1Akp2vB-8zvOjKRvKKtQ4xRd1HW5HwOgYOPMeZlsEUBo/edit
+- Progress Tracking Sheet: https://docs.google.com/spreadsheets/d/1r3ARHjxrXqaiC7ljZWcs_fc2r5LI8fe7ycGm_sgxs3k/edit?gid=0#gid=0
+- Splitwise Finance: https://secure.splitwise.com/#/groups/76688172 
+
 ## Development Instructions
 
 ### CLI Approach:
@@ -24,8 +29,3 @@ FW/HW Interview Question Guide
 - Install `scripts/python_requirements.txt`
 - Run `scripts/build_book.py` script to build
 - Use the build button in VSCode on `main.tex` to compile the entire directory 
-
-
-## Notes
-https://docs.google.com/document/d/1Akp2vB-8zvOjKRvKKtQ4xRd1HW5HwOgYOPMeZlsEUBo/edit
-Tracking Sheet: https://docs.google.com/spreadsheets/d/1r3ARHjxrXqaiC7ljZWcs_fc2r5LI8fe7ycGm_sgxs3k/edit?gid=0#gid=0

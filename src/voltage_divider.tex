@@ -4,16 +4,16 @@
 \section{How would you sense the voltage of a battery with a microcontroller?} \label{sec:voltage_divider} 
 % Question is deliberately vague and short. The question is often asked in this manner in real interviews. 
 % The term "ADC" is not given in the question to test if an interviewer is familiar with the concept and also to bait interviewees into given excessively complex nonsensical solutions. 
-% An example of an excessively complex nonsenical solution an interviewee could propose is using an ADC that supports rlly high input voltages such as ADS125H01 https://www.ti.com/product/ADS125H01 . The question is meant to leave bait for something like that
-Assume the nominal voltage of the battery is 24 V.
+% An example of an excessively complex non-senical solution an interviewee could propose is using an ADC that supports really high input voltages such as ADS125H01 https://www.ti.com/product/ADS125H01 . The question is meant to leave bait for something like that and the first paragraph is intended to dispel this pitfall. 
+The nominal voltage of the battery is 24 volts.
 % This clarification is given to ensure interviewees understand the battery voltage is higher than a standard microcontroller's ADC maximum voltage without giving away too much of the solution while also being low enough to avoid high voltage considerations in the solution.
 % A maximum input voltage to microcontroller ADC is not given deliberately. Interviewees are expected to infer as a vast majority real microcontroller in the world don't feature a 24 V ADC. This is done to align with how the question is asked in real interviews.
 % 
 \spoilerline
 
-% TODO : explain why a separate high voltage ADC is stupid here
+\noindent At first glance, an analog-to-digital converter (\textit{ADC}) could directly sample the battery voltage. While this is a valid solution, it is not commonly done as high voltage ADCs are less commonly included in microcontrollers and are more expensive to implement discretely. For this reason, the use of a low voltage ADC commonly found in microcontrollers is preferred. \newline
 
-\noindent A voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that an analog-to-digital converter (either external, or for analysis of the question, internal to the microcontroller) can sample the signal without exceeding the maximum input voltage threshold.
+\newnoindentpara To do this, a voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that the ADC can sample the signal without exceeding the maximum input voltage threshold.
 
 \begin{figure}[H]
     \begin{center}
@@ -24,7 +24,8 @@ Assume the nominal voltage of the battery is 24 V.
             \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
             \label{fig:voltage_divider}
         \end{circuitikz}
-        % \setlength{\belowcaptionskip}{-10pt} % TODO : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
+        % TODO : remove weird space after figure before next section, idk how to do this correctly, need to figure it out eventually to save space on the page. Alternatively could put voltage divider off to the side of text. 
+        % Do not rotate voltage divider, resistors are vertical deliberately for common drawing method.
         \caption{Voltage Divider Circuit}
     \end{center}
 \end{figure}
@@ -98,24 +99,25 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
     \end{center}
 \end{figure}
 
-% TODO : finish proof below and update subsequent paragraph
+\begin{equation}
+    \begin{aligned}[b]
+        % Commented out on purpose I just want to be sure I didn't mess up the solution
+        % I_{R_t} &= I_{R_b} + I_{load} \\
+        % I_{R_b} &= \frac{V_{out}}{R_b} \\
+        % I_{R_t} &= \frac{V_{in} - V_{out}}{R_t} \\
+        % \frac{V_{out}}{R_b} + I_{load} &= \frac{V_{in} - V_{out}}{R_t} \\
+        % V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot (V_{in} - V_{out}) \\
+        % V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot V_{in} - R_b \cdot V_{out} \\
+        % V_{out} \cdot R_t + R_b \cdot V_{out} &= R_b \cdot V_{in} - I_{load} \cdot R_t \cdot R_b \\
+        % V_{out} \cdot (R_t + R_b) &= V_{in} \cdot (R_b - \frac{I_{load} \cdot R_t \cdot R_b}{V_{in}}) \\
+        % \frac{V_{out}}{V_{in}} &= \frac{R_b - \frac{I_{load} \cdot R_t \cdot R_b}{V_{in}}}{R_t + R_b} \\
+        % \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_t + R_b} - \frac{I_{load} \cdot R_t \cdot R_b}{(R_t + R_b) \cdot V_{in}} \\
+        \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_t + R_b} - \frac{I_{load}}{V_{in}} \cdot \frac{R_t \cdot R_b}{R_t + R_b}
+    \end{aligned}
+    \label{eq:loaded_voltage_divider}
+\end{equation}
 
-% Commented out on purpose I just want to be sure I didn't mess up the solution
-% \begin{equation}
-%     \begin{aligned}[b]
-%         I_{R_t} &= I_{R_b} + I_{load} \\
-%         I_{R_b} &= \frac{V_{out}}{R_b} \\
-%         I_{R_t} &= \frac{V_{in} - V_{out}}{R_t} \\
-%         \frac{V_{out}}{R_b} + I_{load} &= \frac{V_{in} - V_{out}}{R_t} \\
-%         V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot (V_{in} - V_{out}) \\
-%         V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot V_{in} - R_b \cdot V_{out} \\
-%         
-%         \frac{V_{out}}{V_{in}} &= 
-%     \end{aligned}
-%     \label{eq:loaded_voltage_divider}
-% \end{equation}
-
-\noindent Using the circuit in Figure \ref{fig:voltage_divider_loaded} we can solve for a new equation for $V_{out}$ shown in xxx. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum}$ to increase $I_{R_t}$. \newline
+\noindent Using the circuit in figure \ref{fig:voltage_divider_loaded} results in an adjusted transfer function shown in figure \ref{eq:loaded_voltage_divider}. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum} = R_t + R_b$ which increases $R_t || R_b = \frac{R_t \cdot R_b}{R_t + R_b}$ and decreases the entire second term of figure \ref{eq:loaded_voltage_divider}. \newline
 
 % Consider converting this into a follow-up
 \newnoindentpara Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
@@ -134,11 +136,11 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
                 to [short] ++(1,0) node[right]{$V_{out}$};
             \label{fig:bufferred_divider}
         \end{circuitikz}
-        \caption{Op-amp Bufferred Resistor Divider}
+        \caption{Op-amp Buffered Resistor Divider}
     \end{center}
 \end{figure}
 
-Op-amps also have input bias current, however, we can compensate for it using the following circuit:
+Op-amps also have input bias current, however, we can compensate for it using the circuit in figure \ref{fig:bufferred_divider_comp} where $R_c = R_t || R_b$.
 
 \begin{figure}[H]
     \begin{center}
@@ -160,7 +162,8 @@ Op-amps also have input bias current, however, we can compensate for it using th
 
 
 \subsection{Pin Overvoltage}
-% I feel like this is better kept as a follow-up question rather than a part of the main answer, it doesn't build on top of itself in the scope of this answer (except for the tiny bit of a mention of bias current being added in). If you want to save the work perhaps consider a separate question for this topic?
+% @sahil : I feel like this is better kept as a follow-up question rather than a part of the main answer, it doesn't build on top of itself in the scope of this answer (except for the tiny bit of a mention of bias current being added in). If you want to save the work perhaps consider a separate question for this topic?
+% @daniel : im not worried about saving my work, whatever, writing this is good experience as I learn. while this isn't a part of the question, it is really good to know and I usually talk about what happens if battery has a voltage higher than we expect when answering this question in interviews so I figured I would include it. We could expand the question to state "describe how this circuit deals with voltage fluctuations from the battery" as a method of baitting people into describing the low pass capacitor and voltage clamping methods (kill 2 birds with one stone here)
 Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages outside of the permissible operating range. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
 
 \begin{figure}[H]
@@ -184,7 +187,7 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
 
 \noindent These clamping diodes, shown in Figure \ref{fig:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when an ADC pin is overvolted, accurate ADC readings cannot be expected. \newline
 
-\newnoindentpara External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
+\newnoindentpara External Tvs. diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
 \subsection{Analog to Digital}
 An ADC (\textit{Analog to Digital Converter}) is a component that, as the name implies, converts an analog value into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory. \newline
@@ -210,10 +213,10 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
 \end{figure}
 
 % TODO : Consider moving to appendix? 
-% Moved to be a follow-up question instead for now. 
+% Moved to be a follow-up question instead for now, but could be appendixed in the future. This is a really important concept for low power systems but not going to worry about it for now due to it's complexity.
 % \subsection{Quiescent Current}
 % Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  
-% \begin{figure}[h!]
+% \begin{figure}[H!]
 %     \begin{center}
 %         \begin{circuitikz}[american]
 %             \draw(-1, 3.5) node[pigfete, bodydiode, rotate=90](q1){};
@@ -238,7 +241,7 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
 % comment, This circuit is also explained in https://electronics.stackexchange.com/questions/64490/low-current-battery-monitoring/64491#64491 & https://discord.com/channels/776618956638388305/779145203688013845/1199193108336889958 . It's fairly interesting so I figure it's worth including in the guide though it is a bit scope creep. In reality dual FETs in a single package can often be found for cheap so an NPN isn't usually used, thats why i drew it this way.
 
 \subsection{Layout Considerations}
-When placing a voltage divider circuit on a PCB, note that:
+When placing a voltage divider circuit on a PCB, consider:
 \begin{itemize}
     \item The $V_{out}$ trace should be as short as possible to avoid noise from coupling into the signal. 
     \item The low pass capacitor should be placed near the ADC pin so it can filter out noise that couples into $V_{out}$ before the ADC samples it.
@@ -246,8 +249,8 @@ When placing a voltage divider circuit on a PCB, note that:
 
 \subsection{Follow-ups}
 \begin{itemize}
-    \item Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. Propose a simple circuit to disable current consumption when the voltage divider is not needed. 
-    \item 
+    \item Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. Propose a simple circuit to disable current consumption when the voltage divider is not needed. % \ref{fig:voltage_divider_switched}
+    \item What if all analog input pins of the microcontroller are already in use? % analog mux, extremely cheap 
 \end{itemize}
 
 \end{document}

@@ -83,7 +83,7 @@ When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit en
 
 % DRAW : DCM Plotted Current Waveform (I_L and V_sw)
 
-% TODO : explain that $I_L \approx 0$ and why the oscillation occurs
+When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with a peak of $\approx V_{out} \cdot 2$ converging towards $V_{out}$. This is because when $I_L \approx 0$, $V_{sw} = 0$, however, the output node is not at zero, $V_{out} \neq 0$ which means current will begin to flow through the inductor into the parasitic capacitance, $C_{parasitic}$ that exists between $V_{sw}$ and ground. This small resonant current, $I_L$, results in a noticable voltage fluctuation on $V_{sw}$, but not on $V_{out}$ because $C_{out} >> C_{parasitic}$ where $C_{out}$ is the output capacitance of the buck converter. 
 
 \subsubsection{Switching}
 The switch depicted in figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
@@ -118,6 +118,7 @@ Consider a hypothetical controller in an automobile mobile controller tasked wit
     \item Why are input capacitors required? What happens if you do not have input capacitors? % Parasitic Inductance & Filtering, oscillations occur on switch node can overvolt low-side FET. 
     \item What are some considerations when selecting output capacitors? % Ripple & Stability
     \item What are key considerations for measuring efficiency of a buck converter? What does the test setup look like? % Efficiency load current dependence, probing voltage directly at input and output but current can be anywehre, etc.
+    % So many good follow-ups to this buck converter question that get asked! LDOs are much simpler but yea.
 \end{itemize}
 
 \end{document}
