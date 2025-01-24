@@ -1,11 +1,13 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{Draw a circuit to control a green LED from a microcontroller GPIO pin.}
+\section{Draw a circuit to control a LED from a microcontroller GPIO pin.}
 
-It is desired to operate the LED at a forward current of 10mA. Assume that the LED has a forward voltage drop of 2V at the desired forward current. The microcontroller GPIO pin can source a maximum of 5mA, and operates at 3.3V.
+It is desired to operate the LED at a forward current of 10mA. Assume that the LED has a forward voltage drop of 2V at the desired forward current. The microcontroller GPIO pin can source and sink a maximum of 5mA, and operates at 3.3V.
+% As we're giving the a forward voltage drop there is no need to specify the LED color. A more complex question would be to have interviewee guess the forward drop based on the color (which I have been asked to do in a real interview lol).
 
 \spoilerline
+
 \subsection{Context}
 Discrete LEDs (\textit{Light Emitting Diodes}) are often used on circuit boards indicators to end users and firmware developers about the state of an embedded system\footnote{LEDs can also be a primary feature of a device - an example case is high power LEDs, such as automobile headlights, which require more complex circuitry to drive. This question will address only the simpler case of lower power LEDs.}. A common first program executed during board bring-up by firmware developers is to blink the onboard LEDs as an indicator the microcontroller is alive and functional. For end users, it is very common to use LEDs to indicate that the embedded system is powered on and operating nominally. Often, in electronic circuits, an LED is connected in some fashion to a microcontroller GPIO (\textit{General Purpose Input / Output}) pin in order to turn it on and off via firmware. 
 
@@ -111,6 +113,6 @@ When controlling an LED from a microcontroller, the brightness of the LED can be
     \label{fig:pwm_waveform}
 \end{figure}
 
-\noindent Note that PWM's application is not limited to LEDs - in general, PWM can be thought of as a way to control the average voltage across a load, and is used in motor control, power supplies, and more.
+\noindent Note that PWM's application is not limited to LEDs - in general, PWM can be thought of as a way to control the average voltage across a load, and is used in motor control, power supplies, and more. % "control the average voltage" is maybe a bit deceptive way of phrasing it, technically accurate im just no a big fan -daniel
 
 \end{document}
