@@ -16,40 +16,85 @@ Embedded systems often need to track current consumption of loads for a variety 
     \item Determine battery state of charge by integrating the power ($P = I \cdot V$) the battery has been charged and/or discharged with over time.
 \end{itemize}
 
-\noindent Note that power sensing is a related concept that can be done by multiplying the current and voltage sensed across a load (as $P=I \cdot V$). Previous questions have covered voltage sensing, so this question will focus on current sensing - combining both techniques allow for power sensing.
+\noindent Note that power sensing is a related concept that can be done by multiplying the current and voltage sensed across a load (as $P = I \cdot V$). Previous questions have covered voltage sensing, so this question will focus on current sensing - combining both techniques allow for power sensing.
 % I want to include the power formula again here to drill that into people's brains. 
 
 \subsection{Resistive Current Sensing}
-The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Because the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$. This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
+The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load as shown in figure \ref{fig:high_side_current_sense}, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Because the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$. This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
 
-% DRAW : high side resistive current sense 
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}
+            \draw (-1, 4) node[vcc]{$V_{source}$};
+            \draw (-3, 4) -- (1, 4);
+            \draw (1, 4) to[resistor, l=$R_s$] (2, 4);
+            \draw (2, 4) -- (4, 4);
+            \draw (3, 4) node[vcc]{$V_{load}$};
+            \draw (-0.5, 3) node[op amp, rotate=180, scale=0.8] (opamp) {};
+            \draw (opamp.+) -- ++ (0, 0.6);
+            \draw (opamp.-) -- ++ (2, 0) -- ++ (0, 1.4);
+            \draw (opamp.out) node[left]{$V_{sns}$};
+            \draw[thick] (-3, 4.5) rectangle (-5, 1);
+            \draw (-4, 3.5) node[]{Source};
+            \draw[thick] (4, 4.5) rectangle (6, 1);
+            \draw (5, 3.5) node[]{Load};
+            \draw (-3, 1.5) -- (4, 1.5);
+            \draw (0.5, 1.5) node[ground]{};
+            \label{fig:high_side_current_sense}
+        \end{circuitikz}
+    \end{center}
+    \caption{High Side Current Sensing}
+\end{figure}
 
 \subsubsection{Resistor Selection}
 An important design decision for engineers is selecting the resistor to use as $R$ when employing resistive current-sensing. If the value of $R$ is too large, then the resistor will dissipate excessive power - this is shown when Ohm's Law, $V=I \cdot R$, is substituted into $P=I \cdot V$ to get $P=I^{2} \cdot R$. Another issue that arises with a large $R$ value is that loads are often designed to operate with a fixed input voltage - the larger $R$ is, the larger the voltage drop induced by the series sense resistor due Ohm's Law, and by doing so, reduces the voltage across the load proportionally to the load current. \newline
 
 \newnoindentpara On the other hand, if $R$ is too small, then the induced voltage drop across the resistor will be so small that it becomes difficult to measure. Common resistances employed in this technique include values ranging from 0.1 m$\Omega$ to 100 m$\Omega$, depending on the current range being measured and allowable power dissipation.
 
-\subsubsection{Low Side vs. High Side Sensing}
-Figure x demonstrates high side current sensing, however, low side current sensing is also possible as shown in Figure y.
-
-% DRAW: low side resistive current sense 
-
-\noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor since the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the load. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required. 
-% A second edition of this book could cover low side vs. high side as it's own question.
-% TODO : add a link to further reading on this topic
-
 \subsubsection{Current Sense Amplifiers}
-Since the voltage drop across a sense resistor is typically in the low millivolt range, amplifiers are often used to increase this small voltage difference, making it large enough for a microcontroller's ADC to sample accurately, improving the precision of current measurement. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits})\footnote{Common examples of amplifiers include part numbers INA180 and INA240} that implement op-amp based circuits.\footnote{Some ICs have current sense amplifiers (\textit{CSAs}) implemented along with other functionality, such as the INA226.} 
+Since the voltage drop across a sense resistor is typically in the low millivolt range, amplifiers are often used to increase this small voltage difference, making it large enough for a microcontroller's ADC to sample accurately, improving the precision of current measurement. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits})\footnote{Common examples of simple amplifiers are INA180 and INA240 though numerous options exist for varying applications.} that implement op-amp based circuits.\footnote{Some ICs have current sense amplifiers (\textit{CSAs}) implemented along with other functionality, such as the INA226.} 
 
 \noindent When selecting an amplifier, ensure it is rated for the common mode offset that it will be used at. Additionally, amplifiers usually come with a fixed voltage gain that must be selected based on the maximum input voltage difference, $V_{ID_{max}}$, and maximum ADC voltage, $V_{ADC_{max}}$. 
 
+\subsubsection{Low Side vs. High Side Sensing}
+Figure \ref{fig:high_side_current_sense} demonstrates high side current sensing, however, low side current sensing is also possible as shown in figure \ref{fig:low_side_current_sense}.
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}
+            \draw[thick] (-3, 4.5) rectangle (-5, 1);
+            \draw (-4, 3.5) node[]{Source};
+            \draw[thick] (4, 4.5) rectangle (6, 1);
+            \draw (5, 3.5) node[]{Load};
+            \draw (-3, 4) -- (4, 4);
+            \draw (0.5, 4) node[vcc]{};
+            \draw (-3, 1.5) -- (1, 1.5);
+            \draw (1, 1.5) to[resistor, l=$R_s$] (2, 1.5);
+            \draw (2, 1.5) -- (4, 1.5);
+            \draw (-1, 1.5) node[ground]{};
+            \draw (-0.5, 2.5) node[op amp, rotate=180, scale=0.8] (opamp) {};
+            \draw (opamp.-) -- ++ (0, -0.6);
+            \draw (opamp.+) -- ++ (2, 0) -- ++ (0, -1.4);
+            \draw (opamp.out) node[left]{$V_{sns}$};
+            \label{fig:low_side_current_sense}
+        \end{circuitikz}
+    \end{center}
+    \caption{Low Side Current Sensing}
+\end{figure}
+
+\noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor where the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the loads high side. This means the CSA's input pins have a common-mode offset which the device must be rated to handle. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required. 
+% A second edition of this book could cover low side vs. high side as it's own question. Would probably be more focussed on switching rather than sensing, but similar concepts! 
+% TODO FIND : add a link to further reading on this topic
+
 \subsection{Magnetic Sensing}
-When current flows through a wire, it creates a magnetic field around it that is proportional to the current flowing through the wire (known as \textit{Ampere's Law}). There are numerous methods of doing this that all come with different names. A simple method implemented by current clamps 
-% TODO : write
+When current flows through a wire, it creates a magnetic field around it that is proportional to the current flowing through the wire. This phenomenon is known as \textit{Ampere's Law} and gives rise to numerous methods of current sensing. A simple method implemented by current clamps 
+
+% TODO : explain how current clamps work, i need to google this to get a good explanation, but make it really brief to keep this doc simple, don't fill the entire third page. 
 
 \subsection{Follow-ups}
 \begin{itemize}
-    \item What is kelvin sense?
+    \item What is kelvin sense? 
+    \item What are four-wire digital multi-meter probes and why would you use them?
     \item What is a hall effect sensor?
     \item How would you sense the inductor current in a buck converter?
     \item What is common mode rejection ratio for a differential amplifier?

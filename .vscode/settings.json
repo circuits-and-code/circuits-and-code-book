@@ -131,19 +131,25 @@
         "behaviour",
         "bytestream",
         "deasserted",
-        "Kernighan's",
         "malloc",
         "microcontroller",
         "microcontrollers",
         "op-amp",
         "prescaler",
         "reflectometry",
-        "Sahil",
         "setpoint",
         "timestep", // shouldn't we just "time step"?
+
         "UART",
         "QPPI",
-        "MOSFET"
+        "MOSFET",
+        "Kernighan's",
+
+        "Sahil",
+        "Puratich",
+        "Anduril",
+        "Skydio",
+        "WARG",
     ],
     "files.associations": {
         "bitbang_ex.h": "c",
