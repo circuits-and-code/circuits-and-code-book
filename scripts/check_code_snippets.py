@@ -78,6 +78,14 @@ def run_code_snippet(wd_path):
 
 
 def check_all_code_snippets():
+
+    # In theory the above commands in CMD could be modified for Windows, but it's probably not worth the effort.
+    # This check allows the build_book.py script to pass without erroring out when executed on Windows as a band aid fix. 
+    if os.name == 'nt':
+        current_file_path = os.path.abspath(__file__)
+        click.secho(f"Not executing {current_file_path} due to lack of Windows support.", fg="yellow")
+        return
+
     for path in CODE_SNIPPET_PATHS:
         path = os.path.abspath(path)
         if not check_code_snippet(path):
