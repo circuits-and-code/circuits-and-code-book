@@ -52,10 +52,15 @@
     \textcolor{blue}{\underline{\href{#1}{#2}}}%
 }
 
-\newcommand{\spoilerline}{%
+\newcommand{\spoilerlineraw}{%
     \begin{center}
         ------------ \textbf{Answers Ahead} ------------
     \end{center}
+    \newpage % ensure answers aren't visible until the next page so you can't instantly see the solution
+}
+
+\newcommand{\spoilerline}{%
+    \spoilerlineraw
     \newpage % ensure answers aren't visible until the next page so you can't instantly see the solution
 }
 
@@ -79,15 +84,9 @@
 \tableofcontents
 \newpage
 
-% Preamble
-\renewcommand{\thesection}{\Roman{section}} % roman numerals for preamble.tex only
+% One .tex per question (first edition is twenty questions, roughly three pages of solution each and one page for the question)
 \subfile{preamble.tex}
 \newpage
-\renewcommand{\thesection}{\arabic{section}} % Reset to Arabic numerals for the remainning sections
-\setcounter{section}{0} % Reset section numbering after preamble
-
-% Questions: one .tex per question
-% first edition is twenty questions, roughly three pages of solution each and one page for the question
 \subfile{bitstream_parity.tex}
 \newpage
 \subfile{voltage_divider.tex}
