@@ -32,3 +32,15 @@ FW/HW Interview Question Guide
 - Restart computer 
 - Run `scripts/build_book.py` script to build
 - Use the build button in VSCode on `main.tex` to compile the entire directory 
+
+## WSL Approach:
+- Run WSL
+- Setup sshkey
+- Clone repo
+- Run `code .` in VsCode to open the repo in WSL
+- Install latex workshop for wsl
+- Install python `venv` if this isn't already done (it might be in later versions of wsl)
+- Use a `venv` environment for this project, `source name/bin/activate`
+- Run `scripts/setup.py` to install everything required for building 
+
+
