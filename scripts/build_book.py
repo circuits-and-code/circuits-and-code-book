@@ -7,7 +7,6 @@ import argparse
 
 # Constants
 OUTPUT_DIR = "output"
-MAIN_TEX_PATH = "main.tex"
 GENERATED_IMAGES_DIR = os.path.abspath("src/generated_images")
 IMAGE_GENERATION_COMMANDS = [
     f"python3 src/diagram_generator/rtos_task_diagram.py src/diagram_generator/priority_inversion_input.json --output_path={GENERATED_IMAGES_DIR}/priority_inversion.png",
@@ -59,12 +58,10 @@ def generate_images():
 
 def execute_latex_build(tex_path):
     """Compile the LaTeX document using latexmk."""
-    remove_and_create_dir(OUTPUT_DIR)
     output_dir = os.path.abspath(OUTPUT_DIR)
-
     latexmk_command = (
         f"latexmk -pdf -pdflatex=pdflatex -interaction=nonstopmode "
-        f"-synctex=1 -output-directory={output_dir} {MAIN_TEX_PATH}"
+        f"-synctex=1 -output-directory={output_dir} {tex_path}"
     )
 
     os.chdir("src")  # Change to the source directory
@@ -80,6 +77,7 @@ def execute_latex_build(tex_path):
 
 def main(tex_paths_to_build=None):
     """Main entry point of the script."""
+    remove_and_create_dir(OUTPUT_DIR)
     generate_images()
     for tex_path in tex_paths_to_build:
         execute_latex_build(tex_path)
@@ -97,8 +95,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    tex_paths = [MAIN_TEX_PATH]
+    tex_paths = ["main.tex"]
     if args.build_teaser:
         tex_paths.append("teaser.tex")
-
     main(tex_paths)
