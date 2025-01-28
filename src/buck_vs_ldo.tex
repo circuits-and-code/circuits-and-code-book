@@ -66,9 +66,9 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
 \subsubsection{Operation}
 When a buck converter is operational, the high side switch turns on during $T_{on}$ and off during $T_{off}$. The duty cycle of a buck converter is defined as $D_{on} = \frac{T_{on}}{T_{on} + T_{off}}$. The switching frequency of a buck converter is given by $f_{SW} = \frac{1}{T_{on} + T_{off}}$. Buck converters generally operate under a roughly constant switching frequency, but modulate their duty cycle with an active control loop to produce a stable output voltage. The current paths for each state of the circuit are depicted below. 
 
-% DRAW : Buck Circuit Current Path HS ON
+% TODO DRAW : Buck Circuit Current Path HS ON
 
-% DRAW : Buck Circuit Current Path HS OFF
+% TODO DRAW : Buck Circuit Current Path HS OFF
 
 \noindent Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM, $D_{on} = \frac{V_{out}}{V_{in}} = \frac{T_{on}}{T_{on} + T_{off}}$, describes the duty cycles of an ideal buck converter as shown in the following figure.
 
@@ -88,9 +88,10 @@ When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with 
 \subsubsection{Switching}
 The switch depicted in figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
 
-\noindent An asynchronous buck converter is depicted in Figure \ref{fig:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. Synchronous buck converters replace this diode with a MOSFET. 
+\noindent An asynchronous buck converter is depicted in Figure \ref{fig:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. 
 
-% Explain concept of deadtime and current flowing in the body diode of low side FET during dead time 
+\noindent Synchronous buck converters replace this low side diode with a MOSFET. In order to avoid shorting out the input voltage source dead-time, a short period of time in which both high side and low side transistors are off, is inserted into the control loop. During the dead-time, current continues to flow through the body diode of the low side MOSFET. 
+% May seem a bit out of scope of the question, but I find it fairly important, maybe this can be explained better?
 
 \subsubsection{Losses}
 In a buck converter there are two major forms of loss: switching losses and conduction losses. Switching losses is power dissipated every time the FETs are switched (transitioned from off to on, or vice-versa) and scale proportionally with switching frequency. Conduction losses are due to parasitic resistance of elements in the converter and consequently scale proportionally to load current. Buck converters have some quiescent current associated with their active control loop, however, these losses are negligible compared to switching and conduction losses and are not usually analyzed. 
