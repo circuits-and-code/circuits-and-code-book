@@ -22,7 +22,7 @@ jobs:
 
     # Step 2: Build the book
     - name: Build the book
-      run: python3 scripts/build_book.py
+      run: python3 scripts/build_book.py --build_teaser
 
     # Step 3: Archive the built book
     - name: Archive built book

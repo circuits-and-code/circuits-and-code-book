@@ -8,7 +8,7 @@ NUM_POINTS = 4
 def plot_sine_and_derivative_comparison(NUM_POINTS=20):
     # Time range
     T_start = 0.0 * np.pi
-    T_end = 1.0 * np.pi 
+    T_end = 1.0 * np.pi
     dt = T_end / NUM_POINTS  # Time step based on the number of points
     t = np.linspace(T_start, T_end, 1000)  # Continuous time for the sine wave
 

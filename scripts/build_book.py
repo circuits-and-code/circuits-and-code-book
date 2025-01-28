@@ -3,6 +3,7 @@ import os
 import shutil
 import click
 import check_code_snippets
+import argparse
 
 # Constants
 OUTPUT_DIR = "output"
@@ -56,7 +57,7 @@ def generate_images():
         run_command(command)
 
 
-def execute_latex_build():
+def execute_latex_build(tex_path):
     """Compile the LaTeX document using latexmk."""
     remove_and_create_dir(OUTPUT_DIR)
     output_dir = os.path.abspath(OUTPUT_DIR)
@@ -77,12 +78,27 @@ def execute_latex_build():
         os.chdir("..")  # Return to the original directory
 
 
-def main():
+def main(tex_paths_to_build=None):
     """Main entry point of the script."""
     generate_images()
-    execute_latex_build()
+    for tex_path in tex_paths_to_build:
+        execute_latex_build(tex_path)
     check_code_snippets.check_all_code_snippets()
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Build the book")
+    parser.add_argument(
+        "--build_teaser",
+        action="store_true",
+        help="Build the teaser PDF",
+        default=False,
+    )
+
+    args = parser.parse_args()
+
+    tex_paths = [MAIN_TEX_PATH]
+    if args.build_teaser:
+        tex_paths.append("teaser.tex")
+
+    main(tex_paths)
