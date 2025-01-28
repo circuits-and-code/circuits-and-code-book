@@ -32,7 +32,7 @@ As a review, the form of a PID controller is given by equation \eqref{eq:pid_con
         \label{fig:pid-backward-euler-integral}
     \end{figure}
 
-    \item The derivative term is the rate of change of the error, and can help reduce overshoot. To approximate this derivative, we use the Backward Euler method, which calculates the derivative (slope) as the difference between the current error and the previous error, divided by the timestep (i.e. rise/run). See figure \ref{fig:pid-backward-euler-derivative} for a visual representation of the Backward Euler method.
+    \item The derivative term is the rate of change of the error, and can help reduce overshoot. To approximate this derivative, we use the Backward Euler method, which calculates the derivative (slope) as the difference between the current error and the previous error, divided by the timestep ($slope =  \frac{rise}{run}$). See figure \ref{fig:pid-backward-euler-derivative} for a visual representation of the Backward Euler method.
     \newline
     \texttt{const float d\_term = pid->K\_d * ((error - pid->prev\_error) / dt);}.
     \begin{figure}[H]
