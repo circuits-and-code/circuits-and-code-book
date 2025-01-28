@@ -198,11 +198,9 @@ This circuit is a voltage divider depicted slightly differently than in a previo
     \label{fig:step-response-voltage-divider}
 \end{figure}
 
-
-
 \subsection{Circuit C: RC Low Pass Filter}
-Circuits with inductors and capacitors are dependent on time and frequency and can be analyzed in either domain. For the circuit in Figure \ref{fig:rc_low_pass_filter} analysis in both domains will be done for example, but only one is sufficient to produce a valid solution. This concept applies to subsequent circuits as well though only the simplest method will be used for those solutions.
-% Philosophy if we include a lot of circuits in this question: I wanna give the full answer to simple circuits (like this RC low pass) and then kinda skip to solution for more complex ones assuming readers will be primed to acquire knowledge if they are so inclined. 
+Circuits with inductors and capacitors are dependent on time and frequency and can be analyzed in either domain. For the circuit in Figure \ref{fig:rc_low_pass_filter} analysis will be performed in the time domain. 
+% Philosophy: the subsequent question uses frequency domain. Appendix questions allow readers to explore to their hearts desire either approach. 
 
 % Solving this circuit fully in time domain because it is conceptually simple even though mathematically complex.
 From the two elements in the circuit we get in the time domain $I = C \cdot \frac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I \cdot R$. Cancelling out $I$ which is equivalent in both elements we get $V_{in} - V_{out} = R \cdot C \cdot \frac{dV_{out}}{dt}$ which can be algebraically manipulated into $-\frac{dV_{out}}{V_{out}-V_{in}} = -\frac{dt}{R \cdot C}$ then performing the integral on each side revealing $\ln{\frac{V_{out}-V_{in}}{V_out}}=-\frac{t}{R \cdot C}$ which can be algebraically manipulated into $V_{out}=V_{in} \cdot (1-e^{\frac{-t}{R \cdot C}})$. Note when analyzing this circuit, a constant $\tau = R \cdot C$ is defined as the time constant of the RC circuit which represents the time it takes $1-e^{-1}$ or ~63 percent of the step size. As the question allows us to choose component values for the components I will assume $R$ and $C$ are chosen such that $\tau = R \cdot C = 1$ for simplicity.
@@ -215,11 +213,11 @@ From the two elements in the circuit we get in the time domain $I = C \cdot \fra
     \label{fig:step-response-low-pass-filter}
 \end{figure}
 
+% Do not analyze in frequency domain though maybe worth including in the appendix because I did write it?
 % This circuit can also be analyzed in the frequency domain. In this case for the capacitor $Z_c = \frac{1}{j \cdot \omega \cdot c}$ and for the resistor $Z_r = R$. For the voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_2}{R_1 + R_2}$, can be extrapolated into $\frac{V_{out}}{V_{in}} = \frac{Z_2}{Z_1 + Z_2}$ so by substituting in the values for this circuit $H = \frac{V_{out}}{V_{in}} = \frac{Z_c}{Z_r + Z_c} = \frac{\frac{1}{j \cdot \omega \cdot c}}{R + \frac{1}{j \cdot \omega \cdot c}} = \frac{1}{1 + j \cdot \omega \cdot c \cdot R} = \frac{1}{1+\frac{j \cdot \omega}{\omega_{0}}}$ where $\omega_{0} = \frac{1}{R \cdot C}$ is defined is a pole of the system transfer function $H$. Plotting this single pole low pass filter reveals:
-
-% if I keep this analysis frequency then do a freq domain plot of this circuit in log log scale 
-
 % To find the step response using the Laplace domain $V_{out}(j \cdot \omega) = H(j \cdot \omega) \cdot \frac{1}{j \cdot w}$ is applied and then an inverse laplace transformation reveals an identical solution to the time domain solution.
+
+% consider appendix item : add in a current plot for the RC step response as well, this is sometimes asked as well but much rarer even though conceptually fairly easy
 
 \subsubsection{Connection to I2C} 
 % Connecting the RC circuit to I2C is really important and should go somewhere in the book imo, maybe not in this section I guess.
@@ -232,12 +230,13 @@ Increasing the value of $R_{pullup}$ results in less power consumption, but slow
 
 % DRAW PLOT : I2C signal same as above but show a smaller R_pullup and a larger R_pullup as well for comparison
 
-% consider appendix item : add in a current plot for the RC step response as well, this is sometimes asked as well but much rarer even though conceptually fairly easy
-
 When answering a question like this a conceptual sanity check is also useful! As a capacitor behaves like an open circuit in DC it makes sense that as time approaches infinity, Circuit C begins to look like Circuit A! 
 
 \subsection{Circuit D: RC High Pass Filter}
-% TODO solve using frequency domain - confirm solve with freq domain and complex impedances, compare it to voltage divider 
+For this question a complex impedance approach will be used rather than time domain analysis though both will produce the correct solution. For a voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_b}{R_t + R_b}$, this can be extrapolated to impedance values so $\frac{V_{out}}{V_{in}} = \frac{Z_b}{Z_t + Z_b}$ making it applicable in this question. For this circuit $Z_b = Z_r = R$ and $Z_t = Z_c = \frac{1}{j \cdot \omega \cdot C}$ can be substituted in to get $\frac{V_{out}}{V_{in}} = \frac{R}{\frac{1}{j \cdot \omega \cdot C} + R}$.
+% TODO : finish the math proof and explain this 
+
+% DRAW quick bode plot ? 
 
 \begin{figure}[H]
     \centering

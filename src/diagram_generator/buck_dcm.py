@@ -8,32 +8,61 @@ from math import sqrt
 TITLE = "Buck Converter in Discontinuous Conduction Mode"
 
 def plotter() :
-    NUM_POINTS = 1000
-    SWITCHING_FREQUENCY = 3 # number of switching cycles to show 
-    VIN = 12.0 # aligns with buck_ccm.py so plots will look nice when placed side by side 
-    VOUT = 3.3
-    assert VIN > VOUT # just cuz it'll kill my formulas otherwise 
-    IOUT_AVG = 10 * 10 **-3 # 10mA is low enough to be reasonable for DCM for most bucks, especially this high step down ratio
+    VIN = 12          # Input voltage (V)
+    VOUT = 3.3        # vout   
+    IOUT_AVG = 0.1 # for inductor curr plot only 
+    IOUT_RIPPLE_RATIO = 0.2
+    iout_max = IOUT_AVG * (1+(IOUT_RIPPLE_RATIO/2))
+    D = 0.4            # Duty cycle
+    T_s = 10e-6        # Switching period (s)
+    f_sw = 1.0 / T_s
+    L = 100e-6         # Inductance (H)
+    C_parasitic = 100e-12 # Parasitic capacitance at the switch node (F)
+    k = 1000
+    R_damping = 20*k    # Effective damping resistance (Ohm)
+    f_res = 1 / (2 * np.pi * np.sqrt(L * C_parasitic))  # Resonant frequency (Hz)
+    f_res = f_res / 2
+    omega_res = 2 * np.pi * f_res                      # Angular resonant frequency
+    t_on = (D - 0.15) * T_s                                     # Switch ON time
+    t_off = (1 - D - 0.3) * T_s                              # Switch OFF time before resonance
 
-    t = np.linspace(0, 1, NUM_POINTS)
+    t = np.linspace(0, 3 * T_s, 5000)  # High resolution for smooth waveform
 
-    # D = (Vout / Vin) * sqrt(2 * L * f / (R * (Vin - Vout))) 
-    duty_cycle = 0.2
-    square_wave =  ((t * SWITCHING_FREQUENCY % 1) < (duty_cycle)).astype(float)
-    v_sw = VIN * square_wave
+    def switch_node_voltage(time):
+        v_s = np.zeros_like(time)
+        for i, t_i in enumerate(time):
+            cycle_pos = t_i % T_s  # Time within each cycle
+            if cycle_pos < t_on:
+                v_s[i] = VIN  # Switch ON
+            elif cycle_pos < t_on + t_off:
+                v_s[i] = 0  # Diode conduction
+            else:
+                # Resonance after diode conduction ends
+                t_res = cycle_pos - (t_on + t_off)
+                v_s[i] = (VOUT) * np.cos(omega_res * t_res - (np.pi)) * np.exp(-t_res / (R_damping * C_parasitic)) + (VOUT)
+        return v_s
+    v_sw = switch_node_voltage(t)
 
-    # Draw !
+    # TODO : Add in the inductor current plot 
+    i_l = np.ones(5000)
 
-    plt.figure(figsize=(10, 6))
+    fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 
-    # Draw !
+    ax[0].plot(t, v_sw, label="Vsw")
+    ax[0].axhline(y=VIN, color='r', linestyle='--', label=f"Vin")
+    ax[0].axhline(y=VOUT, color='r', linestyle='--', label=f"Vout")
+    ax[0].set_title(f"{TITLE}")
+    ax[0].set_ylim(0, VIN*1.1) 
+    ax[0].set_xlabel("Time")
+    ax[0].set_ylabel("Voltage")
+    ax[0].legend()
 
-    plt.title(f"{TITLE}")
-    plt.xlabel("")
-    plt.ylabel("")
-    plt.legend()
-    plt.grid(True)
-
+    ax[1].plot(t, i_l, label="Il")
+    ax[1].axhline(y=IOUT_AVG, color='r', linestyle='--', label=f"Ioutavg")
+    ax[1].set_ylim(0, iout_max*1.1) 
+    ax[1].set_xlabel("Time")
+    ax[1].set_ylabel("Current")
+    ax[1].legend()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(f"{TITLE} Plotter")
