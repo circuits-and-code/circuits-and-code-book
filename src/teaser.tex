@@ -1,0 +1,110 @@
+\documentclass[letterpaper,11pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{subfiles}
+\usepackage[T1]{fontenc}
+\usepackage[sfdefault]{cabin}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage[utf8]{inputenc} % For UTF-8 encoding
+\usepackage{amsmath}        % For mathematical typesetting
+\usepackage{graphicx}       % For images
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{references.bib}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{nameref}
+\usepackage{circuitikz} % https://mirrors.ibiblio.org/CTAN/graphics/pgf/contrib/circuitikz/doc/circuitikzmanual.pdf
+\usepackage{wrapfig} 
+\usepackage{titling}
+
+% Listings settings for C language
+\lstdefinestyle{modernC}{
+    language=C,
+    basicstyle=\ttfamily\small, % Use modern monospaced font
+    keywordstyle=\color{blue}\bfseries,
+    identifierstyle=\color{black},
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{teal},
+    numberstyle=\tiny\color{gray},
+    numbers=left, 
+    numbersep=8pt,
+    backgroundcolor=\color{gray!10}, % Light gray background
+    frame=single,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    showstringspaces=false,
+    escapeinside={\%*}{*)}, % Escaping for inline LaTeX
+    morekeywords={uint8_t, uint16_t, uint32_t} % Custom keywords
+}
+
+% Set the style
+\lstset{style=modernC}
+
+\newcommand{\bluehref}[2]{%
+    \textcolor{blue}{\underline{\href{#1}{#2}}}%
+}
+
+\newcommand{\spoilerlineraw}{%
+    \begin{center}
+        ------------ \textbf{Answers Ahead} ------------
+    \end{center}
+}
+
+\newcommand{\spoilerline}{%
+    \spoilerlineraw
+}
+
+\newcommand{\newnoindentpara}{
+    \par
+    \noindent
+}
+
+
+\begin{document}
+
+% Title Page
+\title{Circuits \& Code: Mastering Embedded Co-op Interviews \newline Book Teaser}
+\author{\textcopyright \ Sahil Kale, Daniel Puratich}
+% \date{} % By leaving this blank it defaults to the build date
+\setlength{\droptitle}{0.3\textheight} % Moves the text down from the top
+\maketitle % displays title, author, and build date field
+\thispagestyle{empty} % Removes the page number on the title page
+\newpage
+
+\tableofcontents
+\newpage
+
+% teaser preamble
+\section{Book Introduction}
+Circuits and Code offers over 20 interview-style questions and answers designed for embedded software and electrical engineering interns. Written by two authors with experience hiring and mentoring interns for embedded software and electrical engineering roles, it draws on their academic background and industry expertise to focus on the concepts that matter most to interviewers. \newline
+
+\newnoindentpara With clear, concise explanations, coding snippets, and sample circuit diagrams, this guide provides a practical resource for motivated students preparing for co-op interviews. The complete, thoughtfully designed questions are ideal for interview practice, helping you build confidence in areas like firmware development, control systems, and hardware design. Whether you’re tackling your first technical interview or refining your skills, this book offers you the tools to succeed.
+
+\subsection{Interested in purchasing the full book?}
+\textbf{This PDF is just a teaser - the full book contains 20+ questions and answers, as well as additional content.} Head on over to \bluehref{https://circuits-and-code.github.io/website}{the book's website}!
+
+\subsection{Disclaimer}
+This book is designed to be an educational resource, drawing from the authors' experiences and research. While we've done our best to ensure accuracy, readers are encouraged to use their own judgment and explore additional resources as needed. The authors and publisher are not responsible for any errors or omissions. Please note, the content is for informational purposes only and is not intended as professional advice. \newline
+
+\newpage
+
+\subfile{led.tex}
+\newpage
+\subfile{pid.tex}
+\newpage
+\subfile{compare-i2c-spi.tex}
+\newpage
+
+
+% Bibliography
+\printbibliography
+
+\end{document}
