@@ -30,6 +30,7 @@ jobs:
       run: |
         mkdir -p artifacts
         cp output/main.pdf artifacts/
+        cp output/teaser.pdf artifacts/
 
     # Step 4: Upload artifact
     - name: Upload artifact
