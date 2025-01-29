@@ -24,6 +24,22 @@
 \usepackage{wrapfig} 
 \usepackage{titling}
 
+\usepackage{fancyhdr}  % For headers and footers
+\pagestyle{fancy}      % Use fancy style
+
+% Define header and footer
+\fancyhead[L]{}    % Left header
+\fancyhead[C]{Circuits \& Code: Mastering Embedded Co-op Interviews}  % Center header (optional)
+\fancyhead[R]{}   % Right header
+
+\fancyfoot[L]{Teaser Preview Copy}    % Left footer (optional)
+\fancyfoot[C]{Page \thepage}       % Page number in center footer
+
+% Remove default header/footer rule lines if needed
+\renewcommand{\headrulewidth}{0.4pt}  % Header line thickness (0pt removes it)
+\renewcommand{\footrulewidth}{0.4pt}  % Footer line thickness (0pt removes it)
+
+
 % Listings settings for C language
 \lstdefinestyle{modernC}{
     language=C,
