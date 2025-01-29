@@ -23,7 +23,7 @@ The physical layer of I2C consists of two wires: SDA (Serial Data) and SCL (Seri
 % More information about RC circuit diagram is not given here as it will be covered in "passive_circuits.tex"
 
 \subsubsection{Data Format}
-The data format of I2C features the following components, and is shown graphically in figure \ref{fig:i2c_data_format}:
+The data format of I2C features the following components, and is shown graphically in Figure \ref{fig:i2c_data_format}:
 \begin{enumerate}
     \item \textbf{Start Condition}: The master device initiates communication by pulling the SDA line low while the SCL line is high, signalling the beginning of a transfer.
     \item \textbf{Address (7 bits)}: A 7-bit address is transmitted on the SDA line to indicate which slave device the master wishes to communicate with.
@@ -41,7 +41,7 @@ The data format of I2C features the following components, and is shown graphical
 \end{figure}
 
 \subsection{SPI}
-SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (simultaneous transmit and receive) synchronous serial communication protocol. It is commonly used in embedded systems to communicate between a master device and one or more slave devices. SPI is a \textit{four-wire} protocol, consisting of the following signals: MISO (Master In Slave Out), MOSI (Master Out Slave In), SCLK, and CS (Chip Select). A timing diagram of a 1-byte SPI transaction is shown in figure \ref{fig:spi_timing}.
+SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (simultaneous transmit and receive) synchronous serial communication protocol. It is commonly used in embedded systems to communicate between a master device and one or more slave devices. SPI is a \textit{four-wire} protocol, consisting of the following signals: MISO (Master In Slave Out), MOSI (Master Out Slave In), SCLK, and CS (Chip Select). A timing diagram of a 1-byte SPI transaction is shown in Figure \ref{fig:spi_timing}.
 
 \begin{figure}[H]
     \centering

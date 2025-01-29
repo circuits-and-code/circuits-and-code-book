@@ -73,7 +73,7 @@ Transistors are three terminal, electronically-controlled switches in which one 
 
 \subsection{Controlling the LED from a Microcontroller}
 
-\noindent The microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired so an external transistor is required to buffer the signal from the microcontroller. The following circuit in figure \ref{fig:led_circuit} demonstrates a simple cost optimized solution to this question. \newline
+\noindent The microcontroller GPIO (\textit{General Purpose Input / Output}) pin is not capable of providing enough current to drive the LED (\textit{Light Emitting Diode}) as desired so an external transistor is required to buffer the signal from the microcontroller. The following circuit in Figure \ref{fig:led_circuit} demonstrates a simple cost optimized solution to this question. \newline
 
 \begin{figure}[h!]
     \begin{center}
@@ -105,7 +105,7 @@ Transistors are three terminal, electronically-controlled switches in which one 
 \newnoindentpara The forward voltage drop of a green LED, $V_f$, is roughly 2 V, so Ohm's law can be used to solve for the value of $R_l$. Ohm's Law gives $V_s - V_f = I_f \cdot R_l$ which can be rearranged into $R_l = \frac{V_s - V_f}{I_f} = \frac{3.3V-2V}{10m} = 130 \Omega$. This resistor can be found in the E24 resistor series as a common resistor value, so no rounding is needed. 
 
 \subsection{Pulse Width Modulation}
-When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. PWM implementations are usually done in hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted to control the brightness. An example of a PWM waveform with a duty cycle of 80\% is shown in figure \ref{fig:pwm_waveform}.
+When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. PWM implementations are usually done in hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted to control the brightness. An example of a PWM waveform with a duty cycle of 80\% is shown in Figure \ref{fig:pwm_waveform}.
 
 \begin{figure}[H]
     \centering

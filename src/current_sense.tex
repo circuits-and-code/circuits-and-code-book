@@ -20,7 +20,7 @@ Embedded systems often need to track current consumption of loads for a variety 
 % I want to include the power formula again here to drill that into people's brains. 
 
 \subsection{Resistive Current Sensing}
-The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load as shown in figure \ref{fig:high_side_current_sense}, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Because the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$. This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
+The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load as shown in Figure \ref{fig:high_side_current_sense}, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Because the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$. This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
 
 \begin{figure}[H]
     \begin{center}
@@ -57,7 +57,7 @@ Since the voltage drop across a sense resistor is typically in the low millivolt
 \noindent When selecting an amplifier, ensure it is rated for the common mode offset that it will be used at. Additionally, amplifiers usually come with a fixed voltage gain that must be selected based on the maximum input voltage difference, $V_{ID_{max}}$, and maximum ADC voltage, $V_{ADC_{max}}$. 
 
 \subsubsection{Low Side vs. High Side Sensing}
-Figure \ref{fig:high_side_current_sense} demonstrates high side current sensing, however, low side current sensing is also possible as shown in figure \ref{fig:low_side_current_sense}.
+Figure \ref{fig:high_side_current_sense} demonstrates high side current sensing, however, low side current sensing is also possible as shown in Figure \ref{fig:low_side_current_sense}.
 
 \begin{figure}[H]
     \begin{center}

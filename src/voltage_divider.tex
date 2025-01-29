@@ -117,7 +117,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
     \label{eq:loaded_voltage_divider}
 \end{equation}
 
-\noindent Using the circuit in figure \ref{fig:voltage_divider_loaded} results in an adjusted transfer function shown in figure \ref{eq:loaded_voltage_divider}. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum} = R_t + R_b$ which increases $R_t || R_b = \frac{R_t \cdot R_b}{R_t + R_b}$ and decreases the entire second term of figure \ref{eq:loaded_voltage_divider}. \newline
+\noindent Using the circuit in Figure \ref{fig:voltage_divider_loaded} results in an adjusted transfer function shown in Figure \ref{eq:loaded_voltage_divider}. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum} = R_t + R_b$ which increases $R_t || R_b = \frac{R_t \cdot R_b}{R_t + R_b}$ and decreases the entire second term of Figure \ref{eq:loaded_voltage_divider}. \newline
 
 % Consider converting this into a follow-up
 \newnoindentpara Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
@@ -140,7 +140,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
     \end{center}
 \end{figure}
 
-Op-amps also have input bias current, however, we can compensate for it using the circuit in figure \ref{fig:bufferred_divider_comp} where $R_c = R_t || R_b$.
+Op-amps also have input bias current, however, we can compensate for it using the circuit in Figure \ref{fig:bufferred_divider_comp} where $R_c = R_t || R_b$.
 
 \begin{figure}[H]
     \begin{center}
