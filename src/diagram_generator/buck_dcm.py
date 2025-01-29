@@ -11,7 +11,7 @@ def plotter() :
     VIN = 12          # Input voltage (V)
     VOUT = 3.3        # vout   
     IOUT_AVG = 0.1 # for inductor curr plot only 
-    IOUT_RIPPLE_RATIO = 0.2
+    IOUT_RIPPLE_RATIO = 0.3
     iout_max = IOUT_AVG * (1+(IOUT_RIPPLE_RATIO/2))
     D = 0.4            # Duty cycle
     T_s = 10e-6        # Switching period (s)
@@ -43,14 +43,21 @@ def plotter() :
         return v_s
     v_sw = switch_node_voltage(t)
 
-    # TODO : Add in the inductor current plot 
-    i_l = np.ones(5000)
+    # TODO DRAW PLOT : @daniel fix the inductor current plot 
+    triangle_wave = np.mod(t * f_sw, 1)
+    triangle_wave = np.where(
+        triangle_wave < D,
+        2 * triangle_wave / D,  # Rising part
+        2 * (1 - triangle_wave) / (1 - D)  # Falling part
+    )
+    i_l = (IOUT_RIPPLE_RATIO / 2) * triangle_wave + (IOUT_AVG - (IOUT_RIPPLE_RATIO / 2))
 
     fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 
     ax[0].plot(t, v_sw, label="Vsw")
-    ax[0].axhline(y=VIN, color='r', linestyle='--', label=f"Vin")
+    ax[0].axhline(y=VIN, color='g', linestyle='--', label=f"Vin")
     ax[0].axhline(y=VOUT, color='r', linestyle='--', label=f"Vout")
+    ax[0].axhline(y=VOUT*2, color='y', linestyle='--', label=f"Vout*2")
     ax[0].set_title(f"{TITLE}")
     ax[0].set_ylim(0, VIN*1.1) 
     ax[0].set_xlabel("Time")

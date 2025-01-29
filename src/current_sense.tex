@@ -83,7 +83,7 @@ Figure \ref{fig:high_side_current_sense} demonstrates high side current sensing,
 \end{figure}
 
 \noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor where the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the loads high side. This means the CSA's input pins have a common-mode offset which the device must be rated to handle. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required. More information can be found in \bluehref{https://www.ti.com/lit/ta/sszta51/sszta51.pdf}{Texas Instruments "System Trade-offs for High- and Low-side Current
-Measurements"}. % TODO : fix this overrunning the page, weird formatting
+Measurements"}. % TODO FORMATTING : fix this overrunning the page
 % A second edition of this book could cover low side vs. high side as it's own question. Would probably be more focussed on switching rather than sensing, but similar concepts! TI's doc I linked here really is very short and hits really similar content. 
 
 \subsection{Magnetic Sensing}
