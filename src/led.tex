@@ -1,7 +1,7 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{Draw a circuit to control a LED from a microcontroller GPIO pin.}
+\section{Draw a circuit to control a LED from a microcontroller GPIO pin} \label{section:led} 
 
 It is desired to operate the LED at a forward current of 10mA. Assume that the LED has a forward voltage drop of 2V at the desired forward current. The microcontroller GPIO pin can source and sink a maximum of 5mA, and operates at 3.3V.
 % As we're giving the a forward voltage drop there is no need to specify the LED color. A more complex question would be to have interviewee guess the forward drop based on the color (which I have been asked to do in a real interview lol).
@@ -26,7 +26,7 @@ Discrete LEDs (\textit{Light Emitting Diodes}) are often used on circuit boards 
     \label{fig:led_circuit_simple}
 \end{wrapfigure}
 
-\noindent The circuit can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and applying Ohms Law to solve for solve for $R_l$, as shown in equation \eqref{eq:led_current_limitting_resistor_math}:
+\noindent The circuit can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and applying Ohm's Law to solve for solve for $R_l$, as shown in equation \eqref{eq:led_current_limitting_resistor_math}:
 
 \begin{equation}
     \begin{aligned}[b]
@@ -98,10 +98,11 @@ Transistors are three terminal, electronically-controlled switches in which one 
 \newnoindentpara An NPN BJT is used to switch the LED on and off. This type of transistor has the governing equation: $I_C = I_B \cdot \beta$. $I_C$ represents current into the collector pin, $I_B$ represents current into the base pin, current out of the emitter, $I_E$, is given by $I_E = I_B + I_C$. Common parameters for this BJT are $V_{BE} \approx 0.7 V$, $\beta \approx 100$, where $V_{BE}$ is the forward voltage drop from the base to the emitter, and $\beta$ is the current gain of the transistor. From this circuit drawing, the emitter voltage (\( V_E \)) is connected to ground so \( V_E = 0 V\) meaning $V_{BE} = V_B$. Note that these are approximations and vary based on the part number selected. \newline
 
 \noindent When the GPIO pin is at logic low (\( V_{gpio} = 0\,\text{V} \)), the base voltage (\( V_B \)) is approximately \( 0\,\text{V} \). Consequently, the base current (\( I_B \)) and collector current (\( I_C \)) are both \( 0\,\text{A} \), and the LED remains off. When the GPIO pin is at logic high (\( V_{gpio} = 3.3\,\text{V} \)), the goal is to fully enable the transistor and allow more than \( 10\,\text{mA} \) of current through the collector (\( I_C \)). To achieve this, the base current is selected as \( I_B \approx \frac{I_{B_{max}}}{2} = 5 \ \text{mA}/2 = 2.5\,\text{mA} \), which allows a maximum collector current of \( I_C = 2.5\,\text{mA} \cdot 100 = 250\,\text{mA} \). Since \( 250\,\text{mA} \gg 10\,\text{mA} \), the LED will turn on, and the collector voltage (\( V_C \)) will approach \( 0\,\text{V} \). Note that the current flowing through the LED can be adjusted by setting \( R_l \) to an appropriate value, as discussed earlier. \newline
+% TODO : I think the way mA is drawn here looks weird in some of the fractions, ima see if i can fix this somehow
 
 \newnoindentpara The value of $R_b$ can be solved by using Ohm's law where $V_{gpio} - V_B = I_b \cdot R_b$. For this circuit, $V_B = V_{BE}$ - therefore, the equation becomes $R_b = \frac{V_{gpio} - V_B}{I_b} = \frac{3.3V-0.7V}{2.5mA} = 1040 \Omega$. Rounding to commonly available resistor values gives  $R_b = 1 k \Omega$ as a potential solution. \newline
 
-\newnoindentpara The forward voltage drop of a green LED, $V_f$, is roughly 2 V, so Ohms law can be used to solve for the value of $R_l$. Ohms Law gives $V_s - V_f = I_f \cdot R_l$ which can be rearranged into $R_l = \frac{V_s - V_f}{I_f} = \frac{3.3V-2V}{10m} = 130 \Omega$. This resistor can be found in the E24 resistor series as a common resistor value, so no rounding is needed. 
+\newnoindentpara The forward voltage drop of a green LED, $V_f$, is roughly 2 V, so Ohm's law can be used to solve for the value of $R_l$. Ohm's Law gives $V_s - V_f = I_f \cdot R_l$ which can be rearranged into $R_l = \frac{V_s - V_f}{I_f} = \frac{3.3V-2V}{10m} = 130 \Omega$. This resistor can be found in the E24 resistor series as a common resistor value, so no rounding is needed. 
 
 \subsection{Pulse Width Modulation}
 When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. PWM implementations are usually done in hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted to control the brightness. An example of a PWM waveform with a duty cycle of 80\% is shown in figure \ref{fig:pwm_waveform}.
