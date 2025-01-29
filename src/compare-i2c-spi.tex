@@ -7,7 +7,7 @@
 \subsection{I2C}
 I2C is a \textit{half-duplex} (can either transmit or receive, but not both simultaneously) digital protocol developed by Phillips in 1982 \cite{sparkfun_i2c_history}. It enables a host device\footnote{I2C does support multiple master devices, however, this article focuses on a single-master implementation.} (referred to as a \textit{master}\footnote{The phrases 'master' and 'slave' are slowly being phased out due to their origins. However, at time of writing, MISO and MOSI remain the most common, and are used in this guide. Alternative verbiage includes 'controller' for master and 'peripheral' or 'target' for slave.}) to communicate with multiple peripheral devices (referred to as \textit{slaves}) over a two-wire serial bus. 
 \subsubsection{Physical Layer}
-The physical layer of I2C consists of two wires: SDA (Serial Data) and SCL (Serial Clock). By definition, it is a \textit{synchronous} protocol, meaning that the clock signal is shared between the master and slave devices. The SDA line carries the data, while the SCL line carries the clock signal. The SDA line is bidirectional, allowing both the master and slave to transmit and receive data. The SCL line is unidirectional, controlled by the master device (though it can be asserted by the slave to slow the clock down, known as \textit{clock stretching}). A hardware bus diagram is shown in figure \ref{fig:i2c_bus}.
+The physical layer of I2C consists of two wires: SDA (Serial Data) and SCL (Serial Clock). By definition, it is a \textit{synchronous} protocol, meaning that the clock signal is shared between the master and slave devices. The SDA line carries the data, while the SCL line carries the clock signal. The SDA line is bidirectional, allowing both the master and slave to transmit and receive data. The SCL line is unidirectional, controlled by the master device (though it can be asserted by the slave to slow the clock down, known as \textit{clock stretching}). A hardware bus diagram is shown in Figure \ref{fig:i2c_bus}.
 
 \begin{figure}[H]
     \centering
@@ -20,7 +20,7 @@ The physical layer of I2C consists of two wires: SDA (Serial Data) and SCL (Seri
 % More information about RC circuit diagram is not given here as it will be covered in "passive_circuits.tex"
 
 \subsubsection{Data Format}
-The data format of I2C features the following components, and is shown graphically in figure \ref{fig:i2c_data_format}:
+The data format of I2C features the following components, and is shown graphically in Figure \ref{fig:i2c_data_format}:
 \begin{enumerate}
     \item \textbf{Start Condition}: The master device initiates communication by pulling the SDA line low while the SCL line is high, signalling the beginning of a transfer.
     \item \textbf{Address (7 bits)}: A 7-bit address is transmitted on the SDA line to indicate which slave device the master wishes to communicate with.
@@ -38,7 +38,7 @@ The data format of I2C features the following components, and is shown graphical
 \end{figure}
 
 \subsection{SPI}
-SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (simultaneous transmit and receive) synchronous serial communication protocol. It is commonly used in embedded systems to communicate between a master device and one or more slave devices. SPI is a \textit{four-wire} protocol, consisting of the following signals: MISO (Master In Slave Out), MOSI (Master Out Slave In), SCLK, and CS (Chip Select). A timing diagram of a 1-byte SPI transaction is shown in figure \ref{fig:spi_timing}.
+SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (simultaneous transmit and receive) synchronous serial communication protocol. It is commonly used in embedded systems to communicate between a master device and one or more slave devices. SPI is a \textit{four-wire} protocol, consisting of the following signals: MISO (Master In Slave Out), MOSI (Master Out Slave In), SCLK, and CS (Chip Select). A timing diagram of a 1-byte SPI transaction is shown in Figure \ref{fig:spi_timing}.
 
 \begin{figure}[H]
     \centering
@@ -47,7 +47,7 @@ SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (
     \label{fig:spi_timing}
 \end{figure}
 
-\noindent Unlike I2C, SPI does not have a standard addressing scheme, and the master device must \textit{assert} (pull down) a CS line to connected to the slave device it wishes to communicate with. Owing to the push-pull nature of SPI drivers, the bus is faster than I2C (low MHz range). The bus diagram is shown in figure \ref{fig:spi_bus} (Note the diagram uses \textit{SS} for \textit{Slave Select}, which is synonymous with \textit{CS}).
+\noindent Unlike I2C, SPI does not have a standard addressing scheme, and the master device must \textit{assert} (pull down) a CS line to connected to the slave device it wishes to communicate with. Owing to the push-pull nature of SPI drivers, the bus is faster than I2C (low MHz range). The bus diagram is shown in Figure \ref{fig:spi_bus} (Note the diagram uses \textit{SS} for \textit{Slave Select}, which is synonymous with \textit{CS}).
 
 \begin{figure}[H]
     \centering

@@ -6,7 +6,7 @@
 \spoilerline
 
 \subsection{Low Dropout Regulator}
-LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{Integrated Circuits}). LDOs are most commonly used as a voltage source for circuits that are characterized by requiring low voltage low current, and high stability, such as microcontrollers and analog circuitry. They are also ideal in space constrained applications as they can be extremely small. A schematic representation of an LDO is shown in figure \ref{fig:low_dropout_regulator}.
+LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{Integrated Circuits}). LDOs are most commonly used as a voltage source for circuits that are characterized by requiring low voltage low current, and high stability, such as microcontrollers and analog circuitry. They are also ideal in space constrained applications as they can be extremely small. A schematic representation of an LDO is shown in Figure \ref{fig:low_dropout_regulator}.
 
 \begin{figure}[H]
     \begin{center}
@@ -43,7 +43,7 @@ In an LDO, the pass element transistor (usually implemented as a PMOS FET or NPN
 \noindent Another source of losses in an LDO is quiescent losses - the LDO requires a small amount of current to operate, even when the load current $I_{out} = 0$. This is known as the quiescent current, and is usually negligible compared to conduction losses.
 
 \subsection{Buck Converter}
-The buck converter is a simple yet fundamental circuit in power electronics. It is a \textit{Switched-Mode Power Supply} (SMPS) that converts a higher input voltage to a lower output voltage. Note that buck converters and associated topics are frequently covered in electrical engineering interviews. An example of a buck converter is shown in figure \ref{fig:buck_converter}.
+The buck converter is a simple yet fundamental circuit in power electronics. It is a \textit{Switched-Mode Power Supply} (SMPS) that converts a higher input voltage to a lower output voltage. Note that buck converters and associated topics are frequently covered in electrical engineering interviews. An example of a buck converter is shown in Figure \ref{fig:buck_converter}.
 
 \begin{figure}[H]
     \begin{center}
@@ -86,7 +86,7 @@ When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit en
 When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with a peak of $\approx V_{out} \cdot 2$ converging towards $V_{out}$. This is because when $I_L \approx 0$, $V_{sw} = 0$, however, the output node is not at zero, $V_{out} \neq 0$ which means current will begin to flow through the inductor into the parasitic capacitance, $C_{parasitic}$ that exists between $V_{sw}$ and ground. This small resonant current, $I_L$, results in a noticable voltage fluctuation on $V_{sw}$, but not on $V_{out}$ because $C_{out} >> C_{parasitic}$ where $C_{out}$ is the output capacitance of the buck converter. 
 
 \subsubsection{Switching}
-The switch depicted in figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
+The switch depicted in Figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
 
 \noindent An asynchronous buck converter is depicted in Figure \ref{fig:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. 
 

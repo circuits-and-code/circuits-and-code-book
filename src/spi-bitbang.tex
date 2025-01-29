@@ -23,7 +23,7 @@ In embedded systems, communication protocols like SPI are typically handled by d
 \lstinputlisting[caption={Bit-Banged Square Wave Implementation}, label={code:bit-bang-square-ex}]{code/bitbang_spi/bitbang_ex.c}
 
 \subsection{SPI Review}
-Consider the SPI timing diagram in figure \ref{fig:spi_timing_2}. The SPI protocol consists of 4 signals: MOSI (Master Out Slave In), MISO (Master In Slave Out), SCLK (Serial Clock), and CS (Chip Select). The master device controls the clock signal and selects the device using the CS signal; data is transmitted on MOSI and received on MISO simultaneously on predefined edges of the clock signal.
+Consider the SPI timing diagram in Figure \ref{fig:spi_timing_2}. The SPI protocol consists of 4 signals: MOSI (Master Out Slave In), MISO (Master In Slave Out), SCLK (Serial Clock), and CS (Chip Select). The master device controls the clock signal and selects the device using the CS signal; data is transmitted on MOSI and received on MISO simultaneously on predefined edges of the clock signal.
 
 \begin{figure}[H]
     \centering
@@ -39,7 +39,7 @@ Consider the SPI timing diagram in figure \ref{fig:spi_timing_2}. The SPI protoc
 \end{itemize}
 
 \subsection{Bit-banging SPI Implementation}
-Going through the timing diagram in figure \ref{fig:spi_timing} piece by piece, we can implement the SPI protocol in software. The key parts are as follows:
+Going through the timing diagram in Figure \ref{fig:spi_timing} piece by piece, we can implement the SPI protocol in software. The key parts are as follows:
 \begin{itemize}
     \item Pull the CS line low to select the slave device. Wait for a brief period (referred to as \textit{setup time}).
     \item Generate a square wave on the SCLK line, ensuring the correct CPOL and CPHA settings.
