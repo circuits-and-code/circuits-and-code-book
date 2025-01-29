@@ -49,7 +49,7 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
     \begin{center}
         \begin{circuitikz}
             \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
-            \draw (0.5, 4) to[switch] (2, 4); % TODO : figure out how to make switch bigger so it looks better, for some reason using scale breaks it ... 
+            \draw (0.5, 4) to[switch] (2, 4); % TODO FORMATTING : figure out how to make switch bigger so it looks better, for some reason using scale breaks it ... 
             \draw (2, 2) to[diode] (2, 4);
             \draw (2, 4) to[inductor, l=$L$] (4, 4);
             \draw (4, 2) to[C, l=$C$] (4, 4);
@@ -59,16 +59,49 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
             \label{fig:buck_converter}
         \end{circuitikz}
     \end{center}
-    % TODO : it adds a very large new line after the figure, figure out how to fix this
+    % TODO FORMATTING : it adds a very large new line after the figure, figure out how to fix this
     \caption{Asynchronous Buck Converter Conceptual Schematic}
 \end{figure}
 
 \subsubsection{Operation}
-When a buck converter is operational, the high side switch turns on during $T_{on}$ and off during $T_{off}$. The duty cycle of a buck converter is defined as $D_{on} = \frac{T_{on}}{T_{on} + T_{off}}$. The switching frequency of a buck converter is given by $f_{SW} = \frac{1}{T_{on} + T_{off}}$. Buck converters generally operate under a roughly constant switching frequency, but modulate their duty cycle with an active control loop to produce a stable output voltage. The current paths for each state of the circuit are depicted below. 
+When a buck converter is operational, the high side switch turns on during $T_{on}$ and off during $T_{off}$. The duty cycle of a buck converter is defined as $D_{on} = \frac{T_{on}}{T_{on} + T_{off}}$. The switching frequency of a buck converter is given by $f_{SW} = \frac{1}{T_{on} + T_{off}}$. Buck converters generally operate under a roughly constant switching frequency, but modulate their duty cycle with an active control loop to produce a stable output voltage. The current paths during $T_{on}$ and $T_{off}$ are depicted by Figure \ref{fig:buck_converter_ton} and Figure \ref{fig:buck_converter_toff} respectively.
 
-% TODO DRAW : Buck Circuit Current Path HS ON
+% TODO FORMATTING: place both buck converter drawings side by side?
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}
+            \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
+            \draw (0.5, 4) -- (2, 4); 
+            % \draw (2, 2) to[diode] (2, 4);
+            \draw (2, 4) to[inductor, l=$L$, i=$I_l$] (4, 4);
+            \draw (4, 4) to[C, l=$C$, i=$I_c$] (4, 2);
+            \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2);
+            \draw (3, 2) node[ground]{};
+            \label{fig:buck_converter_ton}
+        \end{circuitikz}
+    \end{center}
+    % TODO FORMATTING : it adds a very large new line after the figure, figure out how to fix this
+    \caption{Buck Converter with High Side Switch ON}
+\end{figure}
 
-% TODO DRAW : Buck Circuit Current Path HS OFF
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}
+            \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
+            \draw (1.5, 4) -- (2, 4);
+            \draw (2, 2) -- (2, 4);
+            \draw (2, 4) to[inductor, l=$L$, i=$I_l$] (4, 4);
+            \draw (4, 4) to[C, l=$C$, i=$I_c$] (4, 2);
+            \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
+            \draw (-0.5, 2) -- (5.5, 2);
+            \draw (3, 2) node[ground]{};
+            \label{fig:buck_converter_toff}
+        \end{circuitikz}
+    \end{center}
+    % TODO FORMATTING : it adds a very large new line after the figure, figure out how to fix this
+    \caption{Buck Converter with Low Side Switch ON}
+\end{figure}
 
 \noindent Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM, $D_{on} = \frac{V_{out}}{V_{in}} = \frac{T_{on}}{T_{on} + T_{off}}$, describes the duty cycles of an ideal buck converter as shown in the following figure.
 
@@ -81,37 +114,43 @@ When a buck converter is operational, the high side switch turns on during $T_{o
 
 When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit enters DCM (\textit{Discontinuous Conduction Mode}) in which $I_L$ reaches $I_L = 0$.
 
-% DRAW : DCM Plotted Current Waveform (I_L and V_sw)
+% TODO DRAW : add plot of I_L 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{generated_images/buck_dcm.png}
+    \caption{Buck Converter in Discontinuous Conduction Mode}
+    \label{fig:buck-dcm}
+\end{figure}
 
 When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with a peak of $\approx V_{out} \cdot 2$ converging towards $V_{out}$. This is because when $I_L \approx 0$, $V_{sw} = 0$, however, the output node is not at zero, $V_{out} \neq 0$ which means current will begin to flow through the inductor into the parasitic capacitance, $C_{parasitic}$ that exists between $V_{sw}$ and ground. This small resonant current, $I_L$, results in a noticable voltage fluctuation on $V_{sw}$, but not on $V_{out}$ because $C_{out} >> C_{parasitic}$ where $C_{out}$ is the output capacitance of the buck converter. 
 
 \subsubsection{Switching}
-The switch depicted in Figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage.
+The switch depicted in Figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage. \newline
 
-\noindent An asynchronous buck converter is depicted in Figure \ref{fig:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. 
+\newnoindentpara An asynchronous buck converter is depicted in Figure \ref{fig:buck_converter} depicts the low side switch as a diode. The diode is nice to use because it does not require control and is cheaper than a transistor. Diodes, due to their forward voltage drop, have higher conduction losses than MOSFETs. \newline
 
-\noindent Synchronous buck converters replace this low side diode with a MOSFET. In order to avoid shorting out the input voltage source dead-time, a short period of time in which both high side and low side transistors are off, is inserted into the control loop. During the dead-time, current continues to flow through the body diode of the low side MOSFET. 
+\newnoindentpara Synchronous buck converters replace this low side diode with a MOSFET. In order to avoid shorting out the input voltage source dead-time, a short period of time in which both high side and low side transistors are off, is inserted into the control loop. During the dead-time, current continues to flow through the body diode of the low side MOSFET. 
 % May seem a bit out of scope of the question, but I find it fairly important, maybe this can be explained better?
 
 \subsubsection{Losses}
-In a buck converter there are two major forms of loss: switching losses and conduction losses. Switching losses is power dissipated every time the FETs are switched (transitioned from off to on, or vice-versa) and scale proportionally with switching frequency. Conduction losses are due to parasitic resistance of elements in the converter and consequently scale proportionally to load current. Buck converters have some quiescent current associated with their active control loop, however, these losses are negligible compared to switching and conduction losses and are not usually analyzed. 
+In a buck converter there are two major forms of loss: switching losses and conduction losses. Switching losses is power dissipated every time the FETs are switched (transitioned from off to on, or vice-versa) and scale proportionally with switching frequency. Conduction losses are due to parasitic resistance of elements in the converter and consequently scale proportionally to load current. Buck converters have some quiescent current associated with their active control loop, however, these losses are negligible compared to switching and conduction losses and are not usually analyzed. \newline
 
-For a majority of applications, especially when $I_{load}$ is large and/or $\frac{V_{out}}{V_{in}}$ is very small, buck converters are significantly more efficient than LDOs. Typical buck converter efficiency, $\frac{P_{out}}{P_{in}}$, exceeds 90 percent.  
+\newnoindentpara For a majority of applications, especially when $I_{load}$ is large and/or $\frac{V_{out}}{V_{in}}$ is very small, buck converters are significantly more efficient than LDOs. Typical buck converter efficiency, $\frac{P_{out}}{P_{in}}$, exceeds 90 percent.  
 
 \subsubsection{Switching Frequency}
-Selection of switching frequency is critical in the design of a buck converter. Increasing switching frequency increases switching losses in the converter, but allows the usage of a lower inductance inductors which are usually cheaper and come in smaller packages. Switching frequencies of modern buck converters range from roughly 100 KHz to 5 MHz. 
+Selection of switching frequency is critical in the design of a buck converter. Increasing switching frequency increases switching losses in the converter, but allows the usage of a lower inductance inductors which are usually cheaper and come in smaller packages\footnote{The inductor is often the largest single component in a buck converter so increasing switching frequency to reduce buck converter overall circuit board area is a common practice.}. Switching frequencies of modern buck converters range from roughly 100 KHz to 5 MHz. 
 
 \subsection{Comparison}
-Buck converters are more efficient than LDOs in a majority of applications though an LDO may be optimal in applications where $V_{in} \approx V_{out}$ and/or $I_{out} \approx 0$. 
+Buck converters are more efficient than LDOs in a majority of applications though an LDO may be optimal in applications where $V_{in} \approx V_{out}$ and/or $I_{out} \approx 0$. \newline
 
-Buck converters require more physical space than LDOs on a circuit board, mostly because they need an inductor to operate. The need for an inductor and switching circuitry also makes buck converters more expensive than LDOs. 
+\newnoindentpara Buck converters require more physical space than LDOs on a circuit board, mostly because they need an inductor to operate. The need for an inductor and switching circuitry also makes buck converters more expensive than LDOs. \newline
 
-LDOs produce a more stable output voltage and can have higher control loop bandwidth as they do not have a switching stage nor an output filter as compared to a buck converter. Both converter topologies require input and output capacitance to produce relatively stable output voltages.
+\newnoindentpara LDOs produce a more stable output voltage and can have higher control loop bandwidth as they do not have a switching stage nor an output filter as compared to a buck converter. Both converter topologies require input and output capacitance to produce relatively stable output voltages.
 
 \subsubsection{Power Tree}
-Embedded system controllers often have relatively high voltage power sources, to minimize current and in turn conduction losses, and are tasked with distributing lower voltage power to endpoints. Usually a single controller board is responsible for driving numerous loads with each having their own power requirements, most notably a roughly fixed voltage. 
+Embedded system controllers often have relatively high voltage power sources, to minimize current and in turn conduction losses, and are tasked with distributing lower voltage power to endpoints. Usually a single controller board is responsible for driving numerous loads with each having their own power requirements, most notably a roughly fixed voltage. \newline
 
-Consider a hypothetical controller in an automobile mobile controller tasked with powering a 24V motor and a 5V sensor from a 48V source. A solution could be to convert 48V to 24V for the motor and use another converter to convert 48V to 5V. However, a more efficient approach is to convert 48V to 24V and supplying the 24V to the motor and another converter to produce 5V for the sensor. There are numerous tradeoffs between operating cascaded versus parallel converters in a power tree including: failure modes, low power states, and conversion efficiency. 
+\newnoindentpara Consider a hypothetical controller in an automobile mobile controller tasked with powering a 24V motor and a 5V sensor from a 48V source. A solution could be to convert 48V to 24V for the motor and use another converter to convert 48V to 5V. However, a more efficient approach is to convert 48V to 24V and supplying the 24V to the motor and another converter to produce 5V for the sensor. There are numerous tradeoffs between operating cascaded versus parallel converters in a power tree including: failure modes, low power states, and conversion efficiency. 
 
 \subsection{Follow-ups}
 \begin{itemize}
@@ -123,3 +162,5 @@ Consider a hypothetical controller in an automobile mobile controller tasked wit
 \end{itemize}
 
 \end{document}
+
+% TODO FORMATTING: ensure used noindent for all paragraphs. finish other TODOs first because the figures break it up nicely sometimes. 

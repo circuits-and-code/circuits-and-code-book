@@ -24,7 +24,7 @@ The nominal voltage of the battery is 24 volts.
             \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
             \label{fig:voltage_divider}
         \end{circuitikz}
-        % TODO : remove weird space after figure before next section, idk how to do this correctly, need to figure it out eventually to save space on the page. Alternatively could put voltage divider off to the side of text. 
+        % TODO FORMATTING : remove weird space after figure before next section, idk how to do this correctly, need to figure it out eventually to save space on the page. Alternatively could put voltage divider off to the side of text. 
         % Do not rotate voltage divider, resistors are vertical deliberately for common drawing method.
         \caption{Voltage Divider Circuit}
     \end{center}
@@ -94,7 +94,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
             \draw (1.5, 0) node[ground]{};
             \label{fig:voltage_divider_loaded}
         \end{circuitikz}
-        % TODO : remove extra space after figure
+        % TODO FORMATTING : remove extra space after figure
         \caption{Voltage Divider Circuit with Loading}
     \end{center}
 \end{figure}
@@ -180,7 +180,7 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
             \draw (1, 4) node[]{Microcontroller};
             \label{fig:clamping_diodes}
         \end{circuitikz}
-        % TODO : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
+        % TODO FORMATTING : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
         \caption{Microcontroller Pin with Clamping Diodes}
     \end{center}
 \end{figure}
@@ -207,12 +207,13 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
             \draw (1.5, 0) node[ground]{};
             \label{fig:voltage_divider_low_passed}
         \end{circuitikz}
-        % \setlength{\belowcaptionskip}{-10pt} % TODO : remove extra space after figure
+        % TODO FORMATTING : remove extra space after figure
+        % \setlength{\belowcaptionskip}{-10pt} 
         \caption{Voltage Divider Circuit with Anti-Aliasing Capacitor}
     \end{center}
 \end{figure}
 
-% TODO : Consider moving to appendix? 
+% TODO APPENDIX : Consider moving to appendix? 
 % Moved to be a follow-up question instead for now, but could be appendixed in the future. This is a really important concept for low power systems but not going to worry about it for now due to it's complexity.
 % \subsection{Quiescent Current}
 % Quiescent current is current drawn when a circuit is inactive or not being used and is proportional to power consumption. Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. For low power devices, transistor based circuits can be used to disable current flow when sampling the voltage divider is not necessary. An example circuit is given:  

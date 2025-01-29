@@ -45,8 +45,9 @@
     morekeywords={uint8_t, uint16_t, uint32_t} % Custom keywords
 }
 
-% Set the style
-\lstset{style=modernC}
+\lstset{style=modernC} % Set the style for lists
+
+\hbadness=10000 % prevents LaTeX from reporting underfull boxes unless they are truly severe.
 
 \newcommand{\bluehref}[2]{%
     \textcolor{blue}{\underline{\href{#1}{#2}}}%

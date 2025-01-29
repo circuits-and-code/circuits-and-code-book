@@ -157,4 +157,5 @@
     },
     "cmake.ignoreCMakeListsMissing": true,
     "python.terminal.activateEnvironment": true,
+    "latex-workshop.chktex.enabled": false
 }
