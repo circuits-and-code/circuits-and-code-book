@@ -34,6 +34,7 @@
 
 \fancyfoot[L]{Teaser Preview Copy}    % Left footer (optional)
 \fancyfoot[C]{Page \thepage}       % Page number in center footer
+\fancyfoot[R]{\bluehref{https://circuits-and-code.github.io/website}{circuits-and-code.github.io/website}}      
 
 % Remove default header/footer rule lines if needed
 \renewcommand{\headrulewidth}{0.4pt}  % Header line thickness (0pt removes it)
@@ -98,18 +99,7 @@
 \tableofcontents
 \newpage
 
-% teaser preamble
-\section{Book Introduction}
-Circuits and Code offers over 20 interview-style questions and answers designed for embedded software and electrical engineering interns. Written by two authors with experience hiring and mentoring interns for embedded software and electrical engineering roles, it draws on their academic background and industry expertise to focus on the concepts that matter most to interviewers. \newline
-
-\newnoindentpara With clear, concise explanations, coding snippets, and sample circuit diagrams, this guide provides a practical resource for motivated students preparing for co-op interviews. The complete, thoughtfully designed questions are ideal for interview practice, helping you build confidence in areas like firmware development, control systems, and hardware design. Whether you’re tackling your first technical interview or refining your skills, this book offers you the tools to succeed.
-
-\subsection{Interested in purchasing the full book?}
-\textbf{This PDF is just a teaser - the full book contains 20+ questions and answers, as well as additional content.} Head on over to \bluehref{https://circuits-and-code.github.io/website}{the book's website}!
-
-\subsection{Disclaimer}
-This book is designed to be an educational resource, drawing from the authors' experiences and research. While we've done our best to ensure accuracy, readers are encouraged to use their own judgment and explore additional resources as needed. The authors and publisher are not responsible for any errors or omissions. Please note, the content is for informational purposes only and is not intended as professional advice. \newline
-
+\subfile{teaser-preamble.tex}
 \newpage
 
 \subfile{led.tex}
