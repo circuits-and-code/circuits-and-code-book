@@ -59,14 +59,13 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
             \label{fig:buck_converter}
         \end{circuitikz}
     \end{center}
-    % TODO FORMATTING : it adds a very large new line after the figure, figure out how to fix this
     \caption{Asynchronous Buck Converter Conceptual Schematic}
 \end{figure}
 
 \subsubsection{Operation}
 When a buck converter is operational, the high side switch turns on during $T_{on}$ and off during $T_{off}$. The duty cycle of a buck converter is defined as $D_{on} = \frac{T_{on}}{T_{on} + T_{off}}$. The switching frequency of a buck converter is given by $f_{SW} = \frac{1}{T_{on} + T_{off}}$. Buck converters generally operate under a roughly constant switching frequency, but modulate their duty cycle with an active control loop to produce a stable output voltage. The current paths during $T_{on}$ and $T_{off}$ are depicted by Figure \ref{fig:buck_converter_ton} and Figure \ref{fig:buck_converter_toff} respectively.
 
-% TODO FORMATTING: place both buck converter drawings side by side?
+% TODO FORMATTING: place both buck converter drawings side by side
 \begin{figure}[H]
     \begin{center}
         \begin{circuitikz}
@@ -81,7 +80,6 @@ When a buck converter is operational, the high side switch turns on during $T_{o
             \label{fig:buck_converter_ton}
         \end{circuitikz}
     \end{center}
-    % TODO FORMATTING : it adds a very large new line after the figure, figure out how to fix this
     \caption{Buck Converter with High Side Switch ON}
 \end{figure}
 
@@ -99,7 +97,6 @@ When a buck converter is operational, the high side switch turns on during $T_{o
             \label{fig:buck_converter_toff}
         \end{circuitikz}
     \end{center}
-    % TODO FORMATTING : it adds a very large new line after the figure, figure out how to fix this
     \caption{Buck Converter with Low Side Switch ON}
 \end{figure}
 
@@ -112,9 +109,8 @@ When a buck converter is operational, the high side switch turns on during $T_{o
     \label{fig:buck-ccm}
 \end{figure}
 
-When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit enters DCM (\textit{Discontinuous Conduction Mode}) in which $I_L$ reaches $I_L = 0$.
+\noindent When $I_{L_{avg}}$ decreases below a threshold, the buck converter circuit enters DCM (\textit{Discontinuous Conduction Mode}) in which $I_L$ reaches $I_L = 0$ at the end of the $t_{off}$ period as depicted in Figure \ref{fig:buck-dcm}.
 
-% TODO DRAW : add plot of I_L 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{generated_images/buck_dcm.png}
@@ -122,7 +118,7 @@ When $I_{L_{avg}}$ decreases below some threshold, the buck converter circuit en
     \label{fig:buck-dcm}
 \end{figure}
 
-When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with a peak of $\approx V_{out} \cdot 2$ converging towards $V_{out}$. This is because when $I_L \approx 0$, $V_{sw} = 0$, however, the output node is not at zero, $V_{out} \neq 0$ which means current will begin to flow through the inductor into the parasitic capacitance, $C_{parasitic}$ that exists between $V_{sw}$ and ground. This small resonant current, $I_L$, results in a noticable voltage fluctuation on $V_{sw}$, but not on $V_{out}$ because $C_{out} >> C_{parasitic}$ where $C_{out}$ is the output capacitance of the buck converter. 
+\noindent When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with a peak of $\approx V_{out} \cdot 2$\footnote{If the oscillation was undamped it would have a peak of exactly $V_{out} \cdot 2$.} converging towards $V_{out}$. This is because when $I_L \approx 0$, $V_{sw} = 0$, however, the output node is not at zero, $V_{out} \neq 0$ which means current will begin to flow through the inductor into the parasitic capacitance, $C_{parasitic}$ that exists between $V_{sw}$ and ground. This small resonant current, $I_L$, results in a noticable voltage fluctuation on $V_{sw}$, but not on $V_{out}$ because $C_{out} >> C_{parasitic}$ where $C_{out}$ is the output capacitance of the buck converter. 
 
 \subsubsection{Switching}
 The switch depicted in Figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage. \newline
@@ -154,13 +150,11 @@ Embedded system controllers often have relatively high voltage power sources, to
 
 \subsection{Follow-ups}
 \begin{itemize}
+    \item How would you measure the efficiency of a buck converter? What does the test setup look like? % Efficiency load current dependence, probing voltage directly at input and output but current can be anywehre, etc. <- this is a really important question, putting it first so people see it, maybe answer it in the solution in the future ?
     \item When would you use Diode Emulation Mode and Forced Pulse Width Modulation Mode for a Buck Converter?  % Deeper understanding of inductor current
     \item Why are input capacitors required? What happens if you do not have input capacitors? % Parasitic Inductance & Filtering, oscillations occur on switch node can overvolt low-side FET. 
     \item What are some considerations when selecting output capacitors? % Ripple & Stability
-    \item What are key considerations for measuring efficiency of a buck converter? What does the test setup look like? % Efficiency load current dependence, probing voltage directly at input and output but current can be anywehre, etc.
     % So many good follow-ups to this buck converter question that get asked! LDOs are much simpler but yea.
 \end{itemize}
 
 \end{document}
-
-% TODO FORMATTING: ensure used noindent for all paragraphs. finish other TODOs first because the figures break it up nicely sometimes. 
