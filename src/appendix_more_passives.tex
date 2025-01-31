@@ -1,0 +1,121 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Appendix: Determine the step response of the following circuits.} \label{appendix:more_passives}
+
+\noindent State any assumptions regarding component values. These questions are more complex then those given in Section \ref{section:passives}, but are fun to consider.
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american]
+                \draw (0,0) to[isource, l=$I_{in}$] (0,3) -- (2,3) to[C=$C$] (2,0) -- (0,0);
+                \draw (2, 3) node[right] {$V_{out}$};
+                \draw (1, 0) node[ground]{};
+                \label{fig:c_current_source}
+            \end{circuitikz}
+            \caption{Circuit E}
+        \end{minipage}%
+        \hfill%
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american]
+                \draw (0,0) to[isource, l=$I_{in}$] (0,3);
+                \draw (0, 3) to[resistor, l=$R$] (3, 3);
+                \draw (3, 3) node[right] {$V_{out}$};
+                \draw (3, 3) to[capacitor, l=$C$] (3, 0);
+                \draw (3, 0) -- (0, 0);
+                \draw(1.5, 0) node[ground]{};
+                \label{fig:rc_current_source}
+            \end{circuitikz}
+            \caption{Circuit F}
+        \end{minipage}
+    \end{center}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american]
+                \draw (0, 4) node[anchor=east] {$V_{in}$};
+                \draw (0, 4) to[inductor, l=$L$] (5, 4);
+                \draw (3.5, 4) to[capacitor, l=$C$] (3.5, 2);
+                \draw (5, 4) node[right] {$V_{out}$};
+                \draw (-0.5, 2) -- (5.5, 2);
+                \draw (3, 2) node[ground]{};
+                \label{fig:lseries_cshunt}
+            \end{circuitikz}
+            \caption{Circuit G}
+        \end{minipage}%
+        \hfill%
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \begin{circuitikz}[american]
+                \draw (0, 4) node[anchor=east] {$V_{in}$};
+                \draw (0, 4) -- (0.75, 4);
+                \draw (0.75, 4) to[inductor, l=$L$] (2.5, 4);
+                \draw (2.5, 4) to [capacitor, l=$C$] (4.25, 4);
+                \draw (4.25, 4) -- (5, 4);
+                \draw (5, 4) node[right] {$V_{out}$};
+                \draw (-0.5, 2) -- (5.5, 2);
+                \draw (3, 2) node[ground]{};
+                \label{fig:lseries_cseries}
+            \end{circuitikz}
+            \caption{Circuit H}
+        \end{minipage}
+    \end{center}
+\end{figure}
+
+% TODO DRAW CIRCUIT : If I wanted to add even more circuits: Circuit G but with series resistor after the L
+
+% TODO DRAW CIRCUIT : Ethan Abraham showed me a fun one with crossing capacitors and resistors. Could add it in here as a send. 
+
+\spoilerline
+
+\subsection{Circuit E: Series Capacitor with Current Source}
+
+Recall that for a capacitor, $I = C \cdot \dfrac{\text{dV}}{\text{dt}}$ and current through series elements is identical. This results in the solution given in Figure \ref{fig:step-response-series-cap-with-current-source}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{generated_images/series_cap_with_current_source.png}
+    \caption{Step Response of a Circuit with a Series Capacitor and Current Source}
+    \label{fig:step-response-series-cap-with-current-source}
+\end{figure}
+% TODO DRAW PLOT : @sahil y axis should be current and voltage here
+
+\subsection{Circuit F: Series RC with Current Source}
+As current through series elements is identical and for a resistor, $V = I \cdot R$, adding the series resistor does not affect the step response of this circuit. Circuit E and Circuit F have identical step response plots.
+
+\subsection{Circuit G: Series Inductor with Shunt Capacitor}
+% When analyzing this circuit, we begin with considering what happens as $t \approx \infty$ and $t \approx 0$, as these are the simplest states. For all of $t \leq 0$ it is reasonable to assume there is no energy stored in the passives, $E_l = 0$ and $E_c = 0$, and consequently $V_{out} = 0$ is a valid initial condition. When $t \approx \infty$ it is known that $Z_l \approx \infty$ and $Z_c \approx \infty$ as time increases there are significantly less high frequency components present. This means as $t \approx \infty$ Circuit G begins to appear as Circuit A. 
+% would need to add a solution here if I wanted to include this one
+% math proof
+% Plot
+% label midpoint of oscillation as V_in
+% label max as 2*Vin and the min as 0 
+% explain resonant frequency formula
+% explain rise waveform is based on L and C values 
+This circuit results in LC resonance and can be found inside a buck converter circuit. The step response solution is given in Figure \ref{fig:step-response-series-ind-with-shunt-cap}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{generated_images/series_inductor_with_shunt_cap.png}
+    \caption{Step Response of a Circuit with a Series Inductor with Shunt Capacitor}
+    \label{fig:step-response-series-ind-with-shunt-cap}
+\end{figure}
+
+\subsection{Circuit H: Series Inductor and Capacitor}
+% would need to add a solution here if I wanted to include this one
+% TODO WRITE : basic explanation of solution
+% TODO DRAW PLOT : would be really simple plot 
+
+% \subsection{Circuit G: Damped Inductor and Capcitor Oscillator}
+% would need to draw a plot for this if i wanted to add it. 
+
+% \subsection{Circuit H: }
+% soln
+
+\end{document}
