@@ -1,7 +1,7 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{Determine the step response of the following circuits.}
+\section{Determine the step response of the following circuits.} \label{section:passives}
 
 \noindent State any assumptions regarding component values. 
 % Deliberately not stating "Assume that there is no load on the output of the circuits" so that our guide questions are reflective of how questions are asked in real world. Stating this as a valid assumption is done in the solution.
@@ -69,73 +69,6 @@
     \end{center}
 \end{figure}
 
-% Removing the below questions because I'm going to consider them too complex for the guide. 
-
-% \begin{figure}[H]
-%     \begin{center}
-%         \begin{minipage}{0.45\textwidth}
-%             \centering
-%             \begin{circuitikz}[american]
-%                 \draw (0,0) to[isource, l=$I_{in}$] (0,3) -- (2,3) to[C=$C$] (2,0) -- (0,0);
-%                 \draw (2, 3) node[right] {$V_{out}$};
-%                 \draw (1, 0) node[ground]{};
-%                 \label{fig:c_current_source}
-%             \end{circuitikz}
-%             \caption{Circuit E}
-%         \end{minipage}%
-%         \hfill%
-%         \begin{minipage}{0.45\textwidth}
-%             \centering
-%             \begin{circuitikz}[american]
-%                 \draw (0,0) to[isource, l=$I_{in}$] (0,3);
-%                 \draw (0, 3) to[resistor, l=$R$] (3, 3);
-%                 \draw (3, 3) node[right] {$V_{out}$};
-%                 \draw (3, 3) to[capacitor, l=$C$] (3, 0);
-%                 \draw (3, 0) -- (0, 0);
-%                 \draw(1.5, 0) node[ground]{};
-%                 \label{fig:rc_current_source}
-%             \end{circuitikz}
-%             \caption{Circuit F}
-%         \end{minipage}
-%     \end{center}
-% \end{figure}
-
-% \begin{figure}[H]
-%     \begin{center}
-%         \begin{minipage}{0.45\textwidth}
-%             \centering
-%             \begin{circuitikz}[american]
-%                 \draw (0, 4) node[anchor=east] {$V_{in}$};
-%                 \draw (0, 4) to[inductor, l=$L$] (5, 4);
-%                 \draw (3.5, 4) to[capacitor, l=$C$] (3.5, 2);
-%                 \draw (5, 4) node[right] {$V_{out}$};
-%                 \draw (-0.5, 2) -- (5.5, 2);
-%                 \draw (3, 2) node[ground]{};
-%                 \label{fig:lseries_cshunt}
-%             \end{circuitikz}
-%             \caption{Circuit G}
-%         \end{minipage}%
-%         \hfill%
-%         \begin{minipage}{0.45\textwidth}
-%             \centering
-%             \begin{circuitikz}[american]
-%                 \draw (0, 4) node[anchor=east] {$V_{in}$};
-%                 \draw (0, 4) -- (0.75, 4);
-%                 \draw (0.75, 4) to[inductor, l=$L$] (2.5, 4);
-%                 \draw (2.5, 4) to [capacitor, l=$C$] (4.25, 4);
-%                 \draw (4.25, 4) -- (5, 4);
-%                 \draw (5, 4) node[right] {$V_{out}$};
-%                 \draw (-0.5, 2) -- (5.5, 2);
-%                 \draw (3, 2) node[ground]{};
-%                 \label{fig:lseries_cseries}
-%             \end{circuitikz}
-%             \caption{Circuit H}
-%         \end{minipage}
-%     \end{center}
-% \end{figure}
-
-% If I wanted to add even more circuits: Circuit G but with series resistor after the L
-
 \spoilerline
 
 \subsection{Passives}
@@ -183,8 +116,7 @@ The step response of a circuit is what the output waveform with respect to time 
 
 \subsection{Circuit A: Series Resistor}
 In this circuit we note Ohm's law, $V = I \cdot R$, however, as there is no load, $I=0$ on the resistor in this circuit we note there is no voltage drop, $V=I \cdot R=0 \cdot R=0$, across the resistor, consequently $V_{in} = V_{out}$ for this circuit.  
-
-% TODO DRAW PLOT : showing an input step being followed perfectly, I think Sahil's step response solver already does this, just need to add the figure in. 
+% No need to actual draw a plot of Vin = Vout as readers should be able to follow this themselves and the plot wouldn't really show it nicely anyways.
 
 Note for this circuit, and for all subsequent circuits as well, an assumption is made that there is no extra loading on $V_out$ and there is no source impedance on $V_in$. This is reasonable as the question shows no extra loading drawn and the question does not state otherwise.
 
@@ -217,26 +149,36 @@ From the two elements in the circuit we get in the time domain $I = C \cdot \fra
 % This circuit can also be analyzed in the frequency domain. In this case for the capacitor $Z_c = \frac{1}{j \cdot \omega \cdot c}$ and for the resistor $Z_r = R$. For the voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_2}{R_1 + R_2}$, can be extrapolated into $\frac{V_{out}}{V_{in}} = \frac{Z_2}{Z_1 + Z_2}$ so by substituting in the values for this circuit $H = \frac{V_{out}}{V_{in}} = \frac{Z_c}{Z_r + Z_c} = \frac{\frac{1}{j \cdot \omega \cdot c}}{R + \frac{1}{j \cdot \omega \cdot c}} = \frac{1}{1 + j \cdot \omega \cdot c \cdot R} = \frac{1}{1+\frac{j \cdot \omega}{\omega_{0}}}$ where $\omega_{0} = \frac{1}{R \cdot C}$ is defined is a pole of the system transfer function $H$. Plotting this single pole low pass filter reveals:
 % To find the step response using the Laplace domain $V_{out}(j \cdot \omega) = H(j \cdot \omega) \cdot \frac{1}{j \cdot w}$ is applied and then an inverse laplace transformation reveals an identical solution to the time domain solution.
 
-% consider appendix item : add in a current plot for the RC step response as well, this is sometimes asked as well but much rarer even though conceptually fairly easy
+% TODO APPENDIX : consider appendix item : add in a current plot for the RC step response as well, this is sometimes asked as well but much rarer even though conceptually fairly easy
 
 \subsubsection{Connection to I2C} 
-% Connecting the RC circuit to I2C is really important and should go somewhere in the book imo, maybe not in this section I guess.
-This circuit is extremely fundamental and has implications for numerous situations. Consider an I2C digital signal in which all drivers are not asserting the line low. In this case the signal trace has some parasitic capacitance to ground and a pullup resistor is responsible for pulling the line to a logic high state. This can be modelled as an RC circuit and consequently a real I2C signal showing states $0101010101$ in reality appear as follows on an oscilloscope:
+% Connecting the RC circuit to I2C is really important and should go somewhere in the book.
+This circuit is extremely fundamental and has implications for numerous situations. Consider an I2C digital signal in which all drivers are not asserting the line low. In this case the signal trace has some parasitic capacitance to ground and a pullup resistor is responsible for pulling the line to a logic high state. This can be modelled as an RC circuit and consequently a real I2C signal showing states SCL appears as follows on an oscilloscope:
 
-% DRAW PLOT : I2C signal with real rise time s
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{generated_images/i2c.png}
+    \caption{I2C SCL Rise/Fall}
+    \label{fig:i2c}
+\end{figure}
 
-Increasing the value of $R_{pullup}$ results in less power consumption, but slower rise times as $\tau = R \cdot C$. There is often a lower limit to the value of $R_{pullup}$ as drivers must be rated for the current to pull the line low. Selecting the value of $R_{pullup}$ is a careful consideration for design engineers with values commonly ranging from $1 k \Omega$ to $10 k \Omega$.
+Increasing the value of $R_{pullup}$ results in less power consumption, but slower rise times as $\tau = R \cdot C$. There is often a lower limit to the value of $R_{pullup}$ as drivers must be rated for the current to pull the line low. Selecting the value of $R_{pullup}$ is a careful consideration for design engineers with values commonly ranging from $1 \text{k} \Omega$ to $10 \text{k} \Omega$.
 % This is a really strong paragraph. I really want people to understand these tradeoffs! 
 
-% DRAW PLOT : I2C signal same as above but show a smaller R_pullup and a larger R_pullup as well for comparison
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{generated_images/i2c_comparison.png}
+    \caption{I2C SCL Rise/Fall with Varying Pullup Resistances}
+    \label{fig:i2c_comparison}
+\end{figure}
 
 When answering a question like this a conceptual sanity check is also useful! As a capacitor behaves like an open circuit in DC it makes sense that as time approaches infinity, Circuit C begins to look like Circuit A! 
 
 \subsection{Circuit D: RC High Pass Filter}
 For this question a complex impedance approach will be used rather than time domain analysis though both will produce the correct solution. For a voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_b}{R_t + R_b}$, this can be extrapolated to impedance values so $\frac{V_{out}}{V_{in}} = \frac{Z_b}{Z_t + Z_b}$ making it applicable in this question. For this circuit $Z_b = Z_r = R$ and $Z_t = Z_c = \frac{1}{j \cdot \omega \cdot C}$ can be substituted in to get $\frac{V_{out}}{V_{in}} = \frac{R}{\frac{1}{j \cdot \omega \cdot C} + R}$.
-% TODO : @daniel finish the math proof and explain this 
+% TODO WRITE : @daniel finish the math proof and explain this 
 
-% TODO DRAW : @daniel quick bode plot ? 
+% TODO DRAW PLOT : @daniel quick bode plot here maybe just to maek it clear these are a thing and prep people for seeing them
 
 \begin{figure}[H]
     \centering
@@ -245,48 +187,11 @@ For this question a complex impedance approach will be used rather than time dom
     \label{fig:step-response-high-pass-filter}
 \end{figure}
 
-
-% \subsection{Circuit E: Series Capacitor with Current Source}
-% % would need to add a solution here if I wanted to include this one
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{generated_images/series_cap_with_current_source.png}
-%     \caption{Step Response of a Circuit with a Series Capacitor and Current Source}
-%     \label{fig:step-response-series-cap-with-current-source}
-% \end{figure}
-
-% \subsection{Circuit F: Series RC with Current Source}
-% % would need to add a solution here if I wanted to include this one
-
-% \subsection{Circuit G: Series Inductor with Shunt Capacitor}
-% When analyzing this circuit, we begin with considering what happens as $t \approx \infty$ and $t \approx 0$, as these are the simplest states. For all of $t \leq 0$ it is reasonable to assume there is no energy stored in the passives, $E_l = 0$ and $E_c = 0$, and consequently $V_{out} = 0$ is a valid initial condition. When $t \approx \infty$ it is known that $Z_l \approx \infty$ and $Z_c \approx \infty$ as time increases there are significantly less high frequency components present. This means as $t \approx \infty$ Circuit G begins to appear as Circuit A. 
-
-% % would need to add a solution here if I wanted to include this one
-% % math proof
-
-% % Plot
-% % label midpoint of oscillation as V_in
-% % label max as 2*Vin and the min as 0 
-
-% % explain resonant frequency formula
-
-% % explain rise waveform is based on L and C values 
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{generated_images/series_inductor_with_shunt_cap.png}
-%     \caption{Step Response of a Circuit with a Series Inductor with Shunt Capacitor}
-%     \label{fig:step-response-series-ind-with-shunt-cap}
-% \end{figure}
-
-% \subsection{Circuit H: Series Inductor and Capacitor}
-% % would need to add a solution here if I wanted to include this one
-
 \subsection{Follow-ups}
 \begin{itemize}
     \item Given an unknown discrete capacitor find the capacitance? How would you determine the capacitance at a given DC bias voltage? % First part is Circuit C. Second part a solution is use Circuit E with an initial condition on Vout as the bias and a very small Iin current.
     \item For circuit C, does changing the value of R (assuming all else remains constant) change the total energy dissipated in the resistor? % Answer is no and requires an interesting integral to prove. Someone asked me this recently and I thought it was fun bc i had to do the proof live in fronta them lool. 
+    \item Consider the circuits given in appendix Section \ref{appendix:more_passive}. % More complex circuits for consideration
 \end{itemize}
 
 \end{document}
