@@ -34,7 +34,7 @@ The weather sensor outputs a UART packet with the following format. A graphical 
     \label{fig:packet-data}
 \end{figure}
 
-\spoilerline
+\spoilerlineraw
 
 \subsection{Packet Parsing Algorithm}
 A packet parsing algorithm is a staple of embedded systems programming. Generally, an implementation of such an algorithm involves receiving a buffer (packet) of bytes (also referred to as a \textit{bytestream}), followed by iterating through the buffer and extracting relevant data. If present in the packet, a checksum is used to verify the integrity of the data.
