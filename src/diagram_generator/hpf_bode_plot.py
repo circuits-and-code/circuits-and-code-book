@@ -5,9 +5,10 @@ import control
 
 TITLE = "Frequency vs Gain of High Pass Filter"
 
+
 def plotter():
     w0 = 1
-    sys = control.TransferFunction([1/w0, 0], [1/w0, 1])
+    sys = control.TransferFunction([1 / w0, 0], [1 / w0, 1])
     mag, phase, omega = control.frequency_response(sys, Hz=True)
 
     plt.figure(figsize=(10, 6))

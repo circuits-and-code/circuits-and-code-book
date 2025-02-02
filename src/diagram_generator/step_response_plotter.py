@@ -17,7 +17,9 @@ def plotter(t, y, title, y_labels: list, input_signal_label, output_signal_label
 
     # Plot input signal on primary y-axis
     ax1 = plt.gca()  # Primary axis
-    (input_line,) = ax1.plot(t_input, v_input, label=input_signal_label, color=PRIMARY_COLOUR)
+    (input_line,) = ax1.plot(
+        t_input, v_input, label=input_signal_label, color=PRIMARY_COLOUR
+    )
     ax1.set_xlabel("Time (s)")
 
     ax1_color = "black"
@@ -26,14 +28,18 @@ def plotter(t, y, title, y_labels: list, input_signal_label, output_signal_label
     if len(y_labels) == 2:
         # Plot output signal on secondary y-axis
         ax2 = ax1.twinx()  # Secondary axis
-        (output_line,) = ax2.plot(t, y, label=output_signal_label, color=SECONDARY_COLOUR)
+        (output_line,) = ax2.plot(
+            t, y, label=output_signal_label, color=SECONDARY_COLOUR
+        )
         ax2.set_ylabel(y_labels[1], color=SECONDARY_COLOUR)
         ax2.tick_params(axis="y", labelcolor=SECONDARY_COLOUR)
 
         ax1_color = PRIMARY_COLOUR
     else:
         # Plot output signal on primary y-axis if only one label
-        (output_line,) = ax1.plot(t, y, label=output_signal_label, color=SECONDARY_COLOUR)
+        (output_line,) = ax1.plot(
+            t, y, label=output_signal_label, color=SECONDARY_COLOUR
+        )
 
     ax1.set_ylabel(y_labels[0], color=ax1_color)
     ax1.tick_params(axis="y", labelcolor=ax1_color)

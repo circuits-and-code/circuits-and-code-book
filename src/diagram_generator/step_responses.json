@@ -42,7 +42,7 @@
     "series_inductor_with_shunt_cap": {
         "title" : "Step Response of a Series Inductor with Shunt Capacitor",
         "numerator": [1],
-        "denominator": [2, 0, 2],
+        "denominator": [1, 0, 1],
         "y_label": ["Voltage (V)"],
         "input_signal_label": "Step Voltage Input",
         "output_signal_label": "Step Response of System Voltage"

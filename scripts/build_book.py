@@ -81,10 +81,13 @@ def execute_latex_build(tex_path):
 
 def main(tex_paths_to_build=None):
     """Main entry point of the script."""
-    remove_and_create_dir(OUTPUT_DIR)
+    if tex_paths_to_build is not None:
+        remove_and_create_dir(OUTPUT_DIR)
     generate_images()
-    for tex_path in tex_paths_to_build:
-        execute_latex_build(tex_path)
+
+    if tex_paths_to_build is not None:
+        for tex_path in tex_paths_to_build:
+            execute_latex_build(tex_path)
     check_code_snippets.check_all_code_snippets()
 
 
@@ -96,10 +99,20 @@ if __name__ == "__main__":
         help="Build the teaser PDF",
         default=False,
     )
+    parser.add_argument(
+        "--only-gen-images",
+        action="store_true",
+        help="Only generate images",
+        default=False,
+    )
 
     args = parser.parse_args()
 
     tex_paths = ["main.tex"]
     if args.build_teaser:
         tex_paths.append("teaser.tex")
+
+    if args.only_gen_images:
+        tex_paths = None
+
     main(tex_paths)
