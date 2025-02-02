@@ -22,10 +22,10 @@ LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{In
                 (opamp.+) node[right] {$V_{ref}$}
                 (opamp.-) to[short] (5.5, 2);
             \draw (opamp.out) -- (1.5, 1.6) -- (npn.B);
-            \label{fig:low_dropout_regulator}
         \end{circuitikz}
     \end{center}
     \caption{Low Dropout Regulator Conceptual Schematic}
+    \label{fig:low_dropout_regulator}
 \end{figure}
 
 \subsubsection{Selection}
@@ -50,25 +50,25 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
         \begin{circuitikz}
             \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
             \draw (0.5, 4) to[switch] (2, 4); 
-            % TODO FORMATTING : figure out how to make switch bigger so it looks better, for some reason using scale breaks it ... 
             \draw (2, 2) to[diode] (2, 4);
             \draw (2, 4) to[inductor, l=$L$] (4, 4);
             \draw (4, 2) to[C, l=$C$] (4, 4);
             \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
             \draw (-0.5, 2) -- (5.5, 2);
             \draw (3, 2) node[ground]{};
-            \label{fig:buck_converter}
         \end{circuitikz}
     \end{center}
     \caption{Asynchronous Buck Converter Conceptual Schematic}
+    \label{fig:buck_converter}
 \end{figure}
 
 \subsubsection{Operation}
 When a buck converter is operational, the high side switch turns on during $T_{on}$ and off during $T_{off}$. The duty cycle of a buck converter is defined as $D_{on} = \frac{T_{on}}{T_{on} + T_{off}}$. The switching frequency of a buck converter is given by $f_{SW} = \frac{1}{T_{on} + T_{off}}$. Buck converters generally operate under a roughly constant switching frequency, but modulate their duty cycle with an active control loop to produce a stable output voltage. The current paths during $T_{on}$ and $T_{off}$ are depicted by Figure \ref{fig:buck_converter_ton} and Figure \ref{fig:buck_converter_toff} respectively.
 
-% TODO FORMATTING: place both buck converter drawings side by side
 \begin{figure}[H]
-    \begin{center}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
         \begin{circuitikz}
             \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
             \draw (0.5, 4) -- (2, 4); 
@@ -78,14 +78,13 @@ When a buck converter is operational, the high side switch turns on during $T_{o
             \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
             \draw (-0.5, 2) -- (5.5, 2);
             \draw (3, 2) node[ground]{};
-            \label{fig:buck_converter_ton}
         \end{circuitikz}
-    \end{center}
-    \caption{Buck Converter with High Side Switch ON}
-\end{figure}
-
-\begin{figure}[H]
-    \begin{center}
+        \caption{Buck Converter with High Side Switch ON}
+        \label{fig:buck_converter_ton}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
         \begin{circuitikz}
             \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
             \draw (1.5, 4) -- (2, 4);
@@ -95,10 +94,12 @@ When a buck converter is operational, the high side switch turns on during $T_{o
             \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
             \draw (-0.5, 2) -- (5.5, 2);
             \draw (3, 2) node[ground]{};
-            \label{fig:buck_converter_toff}
         \end{circuitikz}
-    \end{center}
-    \caption{Buck Converter with Low Side Switch ON}
+        \caption{Buck Converter with Low Side Switch ON}
+        \label{fig:buck_converter_toff}
+    \end{subfigure}
+    \caption{Buck Converter Operation in Different Switching States}
+    \label{fig:buck_converter_states}
 \end{figure}
 
 \noindent Buck converters usually operate in CCM (\textit{Continuous Conduction Mode}) meaning there is constantly current flowing forward in the inductor. In CCM, $D_{on} = \frac{V_{out}}{V_{in}} = \frac{T_{on}}{T_{on} + T_{off}}$, describes the duty cycles of an ideal buck converter as shown in the following figure.

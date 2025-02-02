@@ -22,11 +22,10 @@ The nominal voltage of the battery is 24 volts.
             \draw (0, 3) to[resistor, l=$R_t$] (0, 1.5) to[resistor, l=$R_b$] (0, 0);
             \draw (0, 0) node[ground]{};
             \draw (0, 1.5) -- (0.75, 1.5) node[right] {$V_{out}$};
-            \label{fig:voltage_divider}
         \end{circuitikz}
-        % TODO FORMATTING : remove weird space after figure before next section, idk how to do this correctly, need to figure it out eventually to save space on the page. Alternatively could put voltage divider off to the side of text. 
         % Do not rotate voltage divider, resistors are vertical deliberately for common drawing method intuition.
         \caption{Voltage Divider Circuit}
+        \label{fig:voltage_divider}
     \end{center}
 \end{figure}
 
@@ -64,7 +63,8 @@ Ohm's Law relates the voltage across a resistor, $V$, to current flowing through
     \end{aligned}
     \label{eq:voltage_divider}
 \end{equation}
-This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is scaled down from $V_{in}$ by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage rating, $V_{out}$, and a maximum battery voltage, $V_{in}$, a desired ratio between $R_t$ and $R_b$ can be determined. \newline
+
+\noindent This indicates, based on the values chosen for $R_t$ and $R_b$, $V_{out}$ is scaled down from $V_{in}$ by a ratio determined by $R_t$ and $R_b$. Given a maximum ADC voltage rating, $V_{out}$, and a maximum battery voltage, $V_{in}$, a desired ratio between $R_t$ and $R_b$ can be determined. \newline
 
 \newnoindentpara However, there are additional considerations in selecting $R_t$ and $R_b$, as the voltage divider circuit draws current proportional to the sum of its resistance ($R_{sum} = R_{t} + R_{b}$). Electrical power dissipation is given by $P = V \cdot I$. Substituting in Ohm's Law to describe the power dissipation of a resistor gives $P = \frac{V^2}{R}$ and $P = I^{2} \cdot R$. Note that if the input voltage of the battery is roughly fixed at some nominal $V_{in}$, then the circuit's power dissipation increases as $R_{sum}$ decreases. This power dissipation (\textit{referred to as quiescent current}) occurs constantly as voltage is always supplied to the circuit and can be significantly wasteful. \newline
 % Introducing power dissipation formula in this question is important in my opinion as it opens intuition for the future.
@@ -92,10 +92,9 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
             \draw (0, 1.5) -- (2.5, 1.5) node[right] {$V_{out}$};
             \draw (1.5, 1.5) to[isource, l=$I_{bias}$] (1.5, 0);
             \draw (1.5, 0) node[ground]{};
-            \label{fig:voltage_divider_loaded}
         \end{circuitikz}
-        % TODO FORMATTING : remove extra space after figure
         \caption{Voltage Divider Circuit with Loading}
+        \label{fig:voltage_divider_loaded}
     \end{center}
 \end{figure}
 
@@ -140,7 +139,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
     \end{center}
 \end{figure}
 
-Op-amps also have input bias current, however, we can compensate for it using the circuit in Figure \ref{fig:bufferred_divider_comp} where $R_c = R_t || R_b$.
+\noindent Op-amps also have input bias current, however, we can compensate for it using the circuit in Figure \ref{fig:bufferred_divider_comp} where $R_c = R_t || R_b$.
 
 \begin{figure}[H]
     \begin{center}
@@ -154,9 +153,10 @@ Op-amps also have input bias current, however, we can compensate for it using th
                 (opamp.-) -- ++(0,-1) coordinate(FB)
                 (FB) to[R=$R_c$] (FB -| opamp.out) -- (opamp.out)
                 to [short] ++(1,0) node[right]{$V_{out}$};
-            \label{fig:bufferred_divider_comp}
         \end{circuitikz}
-        \caption{Compensated Op-amp Buffered Resistor Divider}
+        \caption{Compensated Op-amp Buffered Resistor
+         Divider}
+         \label{fig:bufferred_divider_comp}
     \end{center}
 \end{figure}
 
@@ -179,10 +179,9 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
             \draw (-2, 1.5) node[anchor=east] {IO Pin};
             \draw[thick] (-1, 4.5) rectangle (3, -1);
             \draw (1, 4) node[]{Microcontroller};
-            \label{fig:clamping_diodes}
         \end{circuitikz}
-        % TODO FORMATTING : remove weird space after figure, idk how to do this correctly, need to figure it out eventually to save space on the page.
         \caption{Microcontroller Pin with Clamping Diodes}
+        \label{fig:clamping_diodes}
     \end{center}
 \end{figure}
 
@@ -208,8 +207,6 @@ An ADC (\textit{Analog to Digital Converter}) is a component that, as the name i
             \draw (1.5, 0) node[ground]{};
             \label{fig:voltage_divider_low_passed}
         \end{circuitikz}
-        % TODO FORMATTING : remove extra space after figure
-        % \setlength{\belowcaptionskip}{-10pt} 
         \caption{Voltage Divider Circuit with Anti-Aliasing Capacitor}
     \end{center}
 \end{figure}
