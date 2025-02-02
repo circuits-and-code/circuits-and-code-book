@@ -85,10 +85,10 @@ Transistors are three terminal, electronically-controlled switches in which one 
             \draw (0, 3.25) node[anchor=east]{$V_c$};
             \draw (0, 2) node[npn, xscale=-1] (q1) {};
             \draw (q1.E) node[ground]{};
-            \draw (q1.B) to[resistor, l=$R_b$] ++ (2.2, 0) -- ++ (1.2, 0) to[short, i=$I_B$] ++ (-1.2, 0);
-            \draw (q1.B) ++ (2.8, 0) node[anchor=south]{$V_{GPIO}$};
+            \draw (q1.B) to[resistor, l=$R_b$] ++ (3.2, 0) -- ++ (1.2, 0) to[short, i=$I_B$] ++ (-1.2, 0);
+            \draw (q1.B) ++ (3.4, 0.1) node[anchor=south]{$V_{GPIO}$};
             \draw (q1.B) node[anchor=south]{$V_b$};
-            \draw[thick] (4.5, 3) rectangle (6.5, 1) node[pos=0.5]{GPIO};
+            \draw[thick] (5.5, 3) rectangle (7.5, 1) node[pos=0.5]{MCU};
             \label{fig:led_circuit}
         \end{circuitikz}
         \caption{GPIO Driving an LED}
