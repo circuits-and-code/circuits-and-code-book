@@ -20,6 +20,7 @@ IMAGE_GENERATION_COMMANDS = [
     f"python3 src/diagram_generator/i2c_comparison.py --output_path={GENERATED_IMAGES_DIR}/i2c_comparison.png",
     f"python3 src/diagram_generator/step_response_plotter.py --input_file=src/diagram_generator/step_responses.json  --output_path={GENERATED_IMAGES_DIR}",
     f"python3 src/diagram_generator/scope-trigger.py --output_path={GENERATED_IMAGES_DIR}/scope-trigger.png",
+    f"python3 src/diagram_generator/hpf_bode_plot.py --output_path={GENERATED_IMAGES_DIR}/hpf_freq_response_plot.png",
 ]
 
 

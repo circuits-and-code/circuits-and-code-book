@@ -71,6 +71,7 @@
 
 \spoilerline
 
+% @daniel can I suggest moving the passive definitions to the appendix and providing a link here for the component relationships? We're already at 6 pages for this question :Sob:
 \subsection{Passives}
 \noindent For a question like this, assuming ideal components is expected as further information has not been provided to aid in a more complex analysis. In a real interview, it's likely you would be given just one of these circuits. Table \ref{tab:passive_definitions} provides a summary of the key properties of ideal resistors, capacitors, and inductors.
 % Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
@@ -178,14 +179,20 @@ When answering a question like this a conceptual sanity check is also useful! As
 For this question a complex impedance approach will be used rather than time domain analysis though both will produce the correct solution. For a voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_b}{R_t + R_b}$, this can be extrapolated to impedance values so $\frac{V_{out}}{V_{in}} = \frac{Z_b}{Z_t + Z_b}$ making it applicable in this question. For this circuit $Z_b = Z_r = R$ and $Z_t = Z_c = \frac{1}{j \cdot \omega \cdot C}$ can be substituted in to get $\frac{V_{out}}{V_{in}} = \frac{R}{\frac{1}{j \cdot \omega \cdot C} + R}$.
 % TODO WRITE : @daniel finish the math proof and explain this 
 
-% TODO DRAW PLOT : @daniel quick bode plot here maybe just to maek it clear these are a thing and prep people for seeing them
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{generated_images/high_pass_filter.png}
     \caption{Step Response of a High Pass Filter Circuit}
     \label{fig:step-response-high-pass-filter}
 \end{figure}
+
+% @daniel i gave u a 'freq response' plot for the high pass fitler if u want. i personally think this should be out of scope, but i can see a rationale for including it.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{generated_images/hpf_freq_response_plot.png}
+%     \caption{Frequency vs Gain Plot of a High Pass Filter Circuit}
+%     \label{fig:step-response-high-pass-filter}
+% \end{figure}
 
 \subsection{Follow-ups}
 \begin{itemize}
