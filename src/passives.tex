@@ -30,7 +30,7 @@
                 \draw (5, 4) node[right] {$V_{out}$};
                 \draw (-0.5, 2) -- (5.5, 2);
                 \draw (3, 2) node[ground]{};
-                \label{fig:voltage_divider}
+                \label{fig:voltage_divider_passives_question}
             \end{circuitikz}
             \caption{Circuit B}
         \end{minipage}
@@ -48,9 +48,9 @@
                 \draw (5, 4) node[right] {$V_{out}$};
                 \draw (-0.5, 2) -- (5.5, 2);
                 \draw (3, 2) node[ground]{};
-                \label{fig:rc_low_pass_filter}
             \end{circuitikz}
             \caption{Circuit C}
+            \label{fig:rc_low_pass_filter}
         \end{minipage}%
         \hfill%
         \begin{minipage}{0.45\textwidth}
@@ -62,9 +62,9 @@
                 \draw (5, 4) node[right] {$V_{out}$};
                 \draw (-0.5, 2) -- (5.5, 2);
                 \draw (3, 2) node[ground]{};
-                \label{fig:rc_high_pass_filter}
             \end{circuitikz}
             \caption{Circuit D}
+            \label{fig:rc_high_pass_filter}
         \end{minipage}
     \end{center}
 \end{figure}
@@ -192,7 +192,7 @@ For this question a complex impedance approach will be used rather than time dom
 \begin{itemize}
     \item Given an unknown discrete capacitor find the capacitance? How would you determine the capacitance at a given DC bias voltage? % First part is Circuit C. Second part a solution is use Circuit E with an initial condition on Vout as the bias and a very small Iin current.
     \item For circuit C, does changing the value of R (assuming all else remains constant) change the total energy dissipated in the resistor? % Answer is no and requires an interesting integral to prove. Someone asked me this recently and I thought it was fun bc i had to do the proof live in fronta them lool. 
-    \item Consider the circuits given in appendix Section \ref{appendix:more_passive}. % More complex circuits for consideration
+    \item Consider the circuits given in appendix Section \ref{appendix:more_passives}. % More complex circuits for consideration
 \end{itemize}
 
 \end{document}

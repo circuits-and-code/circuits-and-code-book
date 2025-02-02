@@ -25,9 +25,9 @@ Quiescent current is current drawn when a circuit is inactive or not being used 
             \draw (0.5, 3) to[resistor, l=$R_t$] (0.5, 1.5) to[resistor, l=$R_b$] (0.5, 0);
             \draw (0.5, 0) node[ground]{};
             \draw (0.5, 1.5) -- (1.25, 1.5) node[right] {$V_{out}$};
-            \label{fig:voltage_divider_switched}
         \end{circuitikz}
         \caption{Switched Voltage Divider Circuit}
+        \label{fig:voltage_divider_switched}
     \end{center}
 \end{figure}
 % comment, This circuit is also explained in https://electronics.stackexchange.com/questions/64490/low-current-battery-monitoring/64491#64491 & https://discord.com/channels/776618956638388305/779145203688013845/1199193108336889958 . It's fairly interesting so I figure it's worth including in the guide though it is a bit scope creep. In reality dual FETs in a single package can often be found for cheap so an NPN isn't usually used, thats why i drew it this way.

@@ -40,10 +40,10 @@ The simplest method of current sensing in embedded systems is the \textit{resist
             \draw (5, 3.5) node[]{Load};
             \draw (-3, 1.5) -- (4, 1.5);
             \draw (0.5, 1.5) node[ground]{};
-            \label{fig:high_side_current_sense}
         \end{circuitikz}
     \end{center}
     \caption{High Side Current Sensing}
+    \label{fig:high_side_current_sense}
 \end{figure}
 
 \subsubsection{Resistor Selection}
@@ -76,10 +76,10 @@ Figure \ref{fig:high_side_current_sense} demonstrates high side current sensing,
             \draw (opamp.-) -- ++ (0, -0.6);
             \draw (opamp.+) -- ++ (2, 0) -- ++ (0, -1.4);
             \draw (opamp.out) node[left]{$V_{sns}$};
-            \label{fig:low_side_current_sense}
         \end{circuitikz}
     \end{center}
     \caption{Low Side Current Sensing}
+    \label{fig:low_side_current_sense}
 \end{figure}
 
 \noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor where the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the loads high side. This means the CSA's input pins have a common-mode offset which the device must be rated to handle. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required.\footnote{More information can be found in \bluehref{https://www.ti.com/lit/ta/sszta51/sszta51.pdf}{Texas Instruments "System Trade-offs for High- and Low-side Current

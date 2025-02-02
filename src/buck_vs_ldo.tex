@@ -22,10 +22,10 @@ LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{In
                 (opamp.+) node[right] {$V_{ref}$}
                 (opamp.-) to[short] (5.5, 2);
             \draw (opamp.out) -- (1.5, 1.6) -- (npn.B);
-            \label{fig:low_dropout_regulator}
         \end{circuitikz}
     \end{center}
     \caption{Low Dropout Regulator Conceptual Schematic}
+    \label{fig:low_dropout_regulator}
 \end{figure}
 
 \subsubsection{Selection}
@@ -56,10 +56,10 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
             \draw (4, 4) -- (5, 4) node[right] {$V_{out}$};
             \draw (-0.5, 2) -- (5.5, 2);
             \draw (3, 2) node[ground]{};
-            \label{fig:buck_converter}
         \end{circuitikz}
     \end{center}
     \caption{Asynchronous Buck Converter Conceptual Schematic}
+    \label{fig:buck_converter}
 \end{figure}
 
 \subsubsection{Operation}
