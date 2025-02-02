@@ -25,7 +25,7 @@ The nominal voltage of the battery is 24 volts.
             \label{fig:voltage_divider}
         \end{circuitikz}
         % TODO FORMATTING : remove weird space after figure before next section, idk how to do this correctly, need to figure it out eventually to save space on the page. Alternatively could put voltage divider off to the side of text. 
-        % Do not rotate voltage divider, resistors are vertical deliberately for common drawing method.
+        % Do not rotate voltage divider, resistors are vertical deliberately for common drawing method intuition.
         \caption{Voltage Divider Circuit}
     \end{center}
 \end{figure}
@@ -164,6 +164,7 @@ Op-amps also have input bias current, however, we can compensate for it using th
 \subsection{Pin Overvoltage}
 % @sahil : I feel like this is better kept as a follow-up question rather than a part of the main answer, it doesn't build on top of itself in the scope of this answer (except for the tiny bit of a mention of bias current being added in). If you want to save the work perhaps consider a separate question for this topic?
 % @daniel : im not worried about saving my work, whatever, writing this is good experience as I learn. while this isn't a part of the question, it is really good to know and I usually talk about what happens if battery has a voltage higher than we expect when answering this question in interviews so I figured I would include it. We could expand the question to state "describe how this circuit deals with voltage fluctuations from the battery" as a method of baitting people into describing the low pass capacitor and voltage clamping methods (kill 2 birds with one stone here)
+% please respond @sahil
 Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages outside of the permissible operating range. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
 
 \begin{figure}[H]
