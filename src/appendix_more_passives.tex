@@ -68,9 +68,7 @@
     \end{center}
 \end{figure}
 
-% TODO DRAW CIRCUIT : If I wanted to add even more circuits: Circuit G but with series resistor after the L
-
-% TODO DRAW CIRCUIT : Ethan Abraham showed me a fun one with crossing capacitors and resistors. Could add it in here as a send. 
+% More circuit ideas will be added in the second edition, see notes gdocs
 
 \spoilerline
 
@@ -84,18 +82,12 @@ Recall that for a capacitor, $I = C \cdot \dfrac{\text{dV}}{\text{dt}}$ and curr
     \caption{Step Response of a Circuit with a Series Capacitor and Current Source}
     \label{fig:step-response-series-cap-with-current-source}
 \end{figure}
-% TODO DRAW PLOT : @sahil y axis should be current and voltage here
 
 \subsection{Circuit F: Series RC with Current Source}
 As current through series elements is identical and for a resistor, $V = I \cdot R$, adding the series resistor does not affect the step response of this circuit. Circuit E and Circuit F have identical step response plots.
 
 \subsection{Circuit G: Series Inductor with Shunt Capacitor}
-% When analyzing this circuit, we begin with considering what happens as $t \approx \infty$ and $t \approx 0$, as these are the simplest states. For all of $t \leq 0$ it is reasonable to assume there is no energy stored in the passives, $E_l = 0$ and $E_c = 0$, and consequently $V_{out} = 0$ is a valid initial condition. When $t \approx \infty$ it is known that $Z_l \approx \infty$ and $Z_c \approx \infty$ as time increases there are significantly less high frequency components present. This means as $t \approx \infty$ Circuit G begins to appear as Circuit A. 
-% would need to add a solution here if I wanted to include this one
-% math proof
-% Plot
-% label midpoint of oscillation as V_in
-% label max as 2*Vin and the min as 0 
+
 % explain resonant frequency formula
 % explain rise waveform is based on L and C values 
 This circuit results in LC resonance and can be found inside a buck converter circuit. The step response solution is given in Figure \ref{fig:step-response-series-ind-with-shunt-cap}.
@@ -106,16 +98,12 @@ This circuit results in LC resonance and can be found inside a buck converter ci
     \caption{Step Response of a Circuit with a Series Inductor with Shunt Capacitor}
     \label{fig:step-response-series-ind-with-shunt-cap}
 \end{figure}
+% TODO PLOT : @sahil Fix the plot, it's wrong right now 
+% label midpoint of oscillation as V_in
+% label max as 2*Vin and the min as 0 
 
 \subsection{Circuit H: Series Inductor and Capacitor}
-% would need to add a solution here if I wanted to include this one
 % TODO WRITE : basic explanation of solution
 % TODO DRAW PLOT : would be really simple plot 
-
-% \subsection{Circuit G: Damped Inductor and Capcitor Oscillator}
-% would need to draw a plot for this if i wanted to add it. 
-
-% \subsection{Circuit H: }
-% soln
 
 \end{document}
