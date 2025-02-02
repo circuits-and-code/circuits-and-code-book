@@ -71,8 +71,8 @@
 
 \spoilerline
 
-% @daniel can I suggest moving the passive definitions to the appendix and providing a link here for the component relationships? We're already at 6 pages for this question :Sob:
 \subsection{Passives}
+% This section introducing passives is very long, but it's critical information. Worst case we can move it to the appendix I guess, but I'd rather optimize this question's length in other methods. 
 \noindent For a question like this, assuming ideal components is expected as further information has not been provided to aid in a more complex analysis. In a real interview, it's likely you would be given just one of these circuits. Table \ref{tab:passive_definitions} provides a summary of the key properties of ideal resistors, capacitors, and inductors.
 % Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
@@ -81,11 +81,11 @@
     \begin{tabular}{|c|c|c|c|}
         \hline
         & Resistor & Capacitor & Inductor \\ \hline
-        Time Domain & $V = I \cdot R$ & $I = C \cdot \frac{dv}{dt}$ & $V = L \cdot \frac{di}{dt}$ \\ \hline
-        Frequency Domain & $Z = R$ & $Z = \frac{1}{j \cdot \omega \cdot C}$ & $Z = j \cdot \omega \cdot L$ \\ \hline
+        Time Domain & $V = I \cdot R$ & $I = C \cdot \dfrac{dv}{dt}$ & $V = L \cdot \dfrac{di}{dt}$ \\ \hline
+        Frequency Domain & $Z = R$ & $Z = \dfrac{1}{j \cdot \omega \cdot C}$ & $Z = j \cdot \omega \cdot L$ \\ \hline
         As $f \to \infty$ & $Z = R$ & $Z \to 0$ & $Z \to \infty$ \\ \hline
         As $f \to 0$ & $Z = R$ & $Z \to \infty$ & $Z \to 0$ \\ \hline
-        Energy Stored & $E = 0$ & $E = \frac{1}{2} \cdot C \cdot V^{2}$ & $E = \frac{1}{2} \cdot L \cdot I^{2}$ \\ \hline
+        Energy Stored & $E = 0$ & $E = \dfrac{1}{2} \cdot C \cdot V^{2}$ & $E = \dfrac{1}{2} \cdot L \cdot I^{2}$ \\ \hline
         Real Power Dissipation & $P = I \cdot V$ & $P = 0$ & $P = 0$ \\ \hline
     \end{tabular}
     \caption{Passive Element Definitions}
@@ -96,14 +96,14 @@
 \begin{itemize}
     \item The relationship between angular frequency and frequency is given by: $\omega = 2 \pi f$.
     \item Impedance, $Z$, is frequency dependent for circuits with inductors and capacitors.
-    \item $Z = \frac{V}{I}$ represents the impedance of a circuit. 
+    \item $Z = \dfrac{V}{I}$ represents the impedance of a circuit. 
     \item The imaginary component of impedance, $Z$, represents reactance $X$ which defines a phase shift between $V$ and $I$.
-    \item Resistors have no frequency dependence and do not store any energy though they do dissipate power, $P = I \cdot V = I^{2} \cdot R = \frac{V^2}{R}$.
+    \item Resistors have no frequency dependence and do not store any energy though they do dissipate power, $P = I \cdot V = I^{2} \cdot R = \dfrac{V^2}{R}$.
     \item An open circuit (nets that are completely isolated from each other) is represented as connected by an impedance of value $Z = \inf$.
     \item A short circuit (nets that are at the same voltage potential) is represented as connected by an impedance of value $Z = 0$. 
     \item For a series connection of impedances $Z_1$, $Z_2$, \dots, $Z_n$, the equivalent impedance is given by $Z = Z_1 + Z_2 + \cdots + Z_n$.
-    \item For a parallel connection of impedances $Z_1$, $Z_2$, \dots, $Z_n$, the equivalent impedance is calculated as $\frac{1}{Z} = \frac{1}{Z_1} + \frac{1}{Z_2} + \cdots + \frac{1}{Z_n}$.
-    \item For two impedances in parallel, $Z_1$ and $Z_2$, the formula $\frac{1}{Z} = \frac{1}{Z_1} + \frac{1}{Z_2}$ can be simplified algebraically to $Z = \frac{Z_1 \cdot Z_2}{Z_1 + Z_2}$. 
+    \item For a parallel connection of impedances $Z_1$, $Z_2$, \dots, $Z_n$, the equivalent impedance is calculated as $\dfrac{1}{Z} = \dfrac{1}{Z_1} + \dfrac{1}{Z_2} + \cdots + \dfrac{1}{Z_n}$.
+    \item For two impedances in parallel, $Z_1$ and $Z_2$, the formula $\dfrac{1}{Z} = \dfrac{1}{Z_1} + \dfrac{1}{Z_2}$ can be simplified algebraically to $Z = \dfrac{Z_1 \cdot Z_2}{Z_1 + Z_2}$. 
 \end{itemize}
 
 \subsection{Step Response}
@@ -112,7 +112,7 @@ The step response of a circuit is what the output waveform with respect to time 
 \[ V_{in}(t) = \begin{cases} 0 & t < 0 \\ 1 & t \geq 0 \end{cases} \]
 
 % Frequency domain connection probably isn't needed here? 
-% \noindent In the Laplace domain, the unit step function is given by $V_{in}(j \omega) = \frac{1}{j \omega}$. To determine the response of a circuit in the Laplace domain, $V_{out}(j \omega) = V_{in}{j \omega} * H(j \omega)$ where $H(j \omega)$ defines the system transfer function. 
+% \noindent In the Laplace domain, the unit step function is given by $V_{in}(j \omega) = \dfrac{1}{j \omega}$. To determine the response of a circuit in the Laplace domain, $V_{out}(j \omega) = V_{in}{j \omega} * H(j \omega)$ where $H(j \omega)$ defines the system transfer function. 
 % consider adding a plot in the frequency domain showing the step response and explain implications to above passives
 
 \subsection{Circuit A: Series Resistor}
@@ -122,7 +122,7 @@ In this circuit we note Ohm's law, $V = I \cdot R$, however, as there is no load
 Note for this circuit, and for all subsequent circuits as well, an assumption is made that there is no extra loading on $V_out$ and there is no source impedance on $V_in$. This is reasonable as the question shows no extra loading drawn and the question does not state otherwise.
 
 \subsection{Circuit B: Voltage Divider}
-This circuit is a voltage divider depicted slightly differently than in a previous question\footnote{Question: \ref{sec:voltage_divider}}, but the same equations hold: $\frac{V_{out}}{V_{in}} = \frac{R_2}{R_1 + R_2}$. In this case, to produce a step response plot an assumption is required about the values of $R_1$ and $R_2$. For simplicity, it is assumed that $R_1 = R_2$, resulting in the following transfer function: $\frac{V_{out}}{V_{in}} = 1/2$.
+This circuit is a voltage divider depicted slightly differently than in a previous question\footnote{Question: \ref{sec:voltage_divider}}, but the same equations hold: $\dfrac{V_{out}}{V_{in}} = \dfrac{R_2}{R_1 + R_2}$. In this case, to produce a step response plot an assumption is required about the values of $R_1$ and $R_2$. For simplicity, it is assumed that $R_1 = R_2$, resulting in the following transfer function: $\dfrac{V_{out}}{V_{in}} = 1/2$.
 
 \begin{figure}[H]
     \centering
@@ -136,7 +136,7 @@ Circuits with inductors and capacitors are dependent on time and frequency and c
 % Philosophy: the subsequent question uses frequency domain. Appendix questions allow readers to explore to their hearts desire either approach. 
 
 % Solving this circuit fully in time domain because it is conceptually simple even though mathematically complex.
-From the two elements in the circuit we get in the time domain $I = C \cdot \frac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I \cdot R$. Cancelling out $I$ which is equivalent in both elements we get $V_{in} - V_{out} = R \cdot C \cdot \frac{dV_{out}}{dt}$ which can be algebraically manipulated into $-\frac{dV_{out}}{V_{out}-V_{in}} = -\frac{dt}{R \cdot C}$ then performing the integral on each side revealing $\ln{\frac{V_{out}-V_{in}}{V_out}}=-\frac{t}{R \cdot C}$ which can be algebraically manipulated into $V_{out}=V_{in} \cdot (1-e^{\frac{-t}{R \cdot C}})$. Note when analyzing this circuit, a constant $\tau = R \cdot C$ is defined as the time constant of the RC circuit which represents the time it takes $1-e^{-1}$ or ~63 percent of the step size. As the question allows us to choose component values for the components I will assume $R$ and $C$ are chosen such that $\tau = R \cdot C = 1$ for simplicity.
+From the two elements in the circuit we get in the time domain $I = C \cdot \dfrac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I \cdot R$. Cancelling out $I$ which is equivalent in both elements we get $V_{in} - V_{out} = R \cdot C \cdot \dfrac{dV_{out}}{dt}$ which can be algebraically manipulated into $-\dfrac{dV_{out}}{V_{out}-V_{in}} = -\dfrac{dt}{R \cdot C}$ then performing the integral on each side revealing $\ln{\dfrac{V_{out}-V_{in}}{V_out}}=-\dfrac{t}{R \cdot C}$ which can be algebraically manipulated into $V_{out}=V_{in} \cdot (1-e^{\dfrac{-t}{R \cdot C}})$. Note when analyzing this circuit, a constant $\tau = R \cdot C$ is defined as the time constant of the RC circuit which represents the time it takes $1-e^{-1}$ or ~63 percent of the step size. As the question allows us to choose component values for the components I will assume $R$ and $C$ are chosen such that $\tau = R \cdot C = 1$ for simplicity.
 % TODO FORMATTING : break the math out so it's not interleaved with the text to improve readability.Will cost me a lot of space on the page to execute on this but yea
 
 \begin{figure}[H]
@@ -147,8 +147,8 @@ From the two elements in the circuit we get in the time domain $I = C \cdot \fra
 \end{figure}
 
 % Do not analyze in frequency domain though maybe worth including in the appendix because I did write it?
-% This circuit can also be analyzed in the frequency domain. In this case for the capacitor $Z_c = \frac{1}{j \cdot \omega \cdot c}$ and for the resistor $Z_r = R$. For the voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_2}{R_1 + R_2}$, can be extrapolated into $\frac{V_{out}}{V_{in}} = \frac{Z_2}{Z_1 + Z_2}$ so by substituting in the values for this circuit $H = \frac{V_{out}}{V_{in}} = \frac{Z_c}{Z_r + Z_c} = \frac{\frac{1}{j \cdot \omega \cdot c}}{R + \frac{1}{j \cdot \omega \cdot c}} = \frac{1}{1 + j \cdot \omega \cdot c \cdot R} = \frac{1}{1+\frac{j \cdot \omega}{\omega_{0}}}$ where $\omega_{0} = \frac{1}{R \cdot C}$ is defined is a pole of the system transfer function $H$. Plotting this single pole low pass filter reveals:
-% To find the step response using the Laplace domain $V_{out}(j \cdot \omega) = H(j \cdot \omega) \cdot \frac{1}{j \cdot w}$ is applied and then an inverse laplace transformation reveals an identical solution to the time domain solution.
+% This circuit can also be analyzed in the frequency domain. In this case for the capacitor $Z_c = \dfrac{1}{j \cdot \omega \cdot c}$ and for the resistor $Z_r = R$. For the voltage divider, $\dfrac{V_{out}}{V_{in}} = \dfrac{R_2}{R_1 + R_2}$, can be extrapolated into $\dfrac{V_{out}}{V_{in}} = \dfrac{Z_2}{Z_1 + Z_2}$ so by substituting in the values for this circuit $H = \dfrac{V_{out}}{V_{in}} = \dfrac{Z_c}{Z_r + Z_c} = \dfrac{\dfrac{1}{j \cdot \omega \cdot c}}{R + \dfrac{1}{j \cdot \omega \cdot c}} = \dfrac{1}{1 + j \cdot \omega \cdot c \cdot R} = \dfrac{1}{1+\dfrac{j \cdot \omega}{\omega_{0}}}$ where $\omega_{0} = \dfrac{1}{R \cdot C}$ is defined is a pole of the system transfer function $H$. Plotting this single pole low pass filter reveals:
+% To find the step response using the Laplace domain $V_{out}(j \cdot \omega) = H(j \cdot \omega) \cdot \dfrac{1}{j \cdot w}$ is applied and then an inverse laplace transformation reveals an identical solution to the time domain solution.
 
 % TODO APPENDIX : consider appendix item : add in a current plot for the RC step response as well, this is sometimes asked as well but much rarer even though conceptually fairly easy
 
@@ -176,8 +176,9 @@ Increasing the value of $R_{pullup}$ results in less power consumption, but slow
 When answering a question like this a conceptual sanity check is also useful! As a capacitor behaves like an open circuit in DC it makes sense that as time approaches infinity, Circuit C begins to look like Circuit A! 
 
 \subsection{Circuit D: RC High Pass Filter}
-For this question a complex impedance approach will be used rather than time domain analysis though both will produce the correct solution. For a voltage divider, $\frac{V_{out}}{V_{in}} = \frac{R_b}{R_t + R_b}$, this can be extrapolated to impedance values so $\frac{V_{out}}{V_{in}} = \frac{Z_b}{Z_t + Z_b}$ making it applicable in this question. For this circuit $Z_b = Z_r = R$ and $Z_t = Z_c = \frac{1}{j \cdot \omega \cdot C}$ can be substituted in to get $\frac{V_{out}}{V_{in}} = \frac{R}{\frac{1}{j \cdot \omega \cdot C} + R}$.
-% TODO WRITE : @daniel finish the math proof and explain this 
+For this question a complex impedance approach will be used rather than time domain analysis though both will produce the correct solution. For a voltage divider, $\dfrac{V_{out}}{V_{in}} = \dfrac{R_b}{R_t + R_b}$, this can be extrapolated to impedance values so $\dfrac{V_{out}}{V_{in}} = \dfrac{Z_b}{Z_t + Z_b}$ making it applicable in this question. For this circuit $Z_b = Z_r = R$ and $Z_t = Z_c = \dfrac{1}{j \cdot \omega \cdot C}$ can be substituted in to get $\dfrac{V_{out}}{V_{in}} = \dfrac{R}{\dfrac{1}{j \cdot \omega \cdot C} + R}$. \newline
+
+\newnoindentpara When in the time domain $t \approx \inf$ in the frequency $\omega \approx 0$ this the transfer function becomes $\dfrac{V_{out}}{V_{in}} = \dfrac{R}{\dfrac{1}{j \cdot 0 \cdot C} + R} = \dfrac{R}{\inf + R} = \dfrac{1}{\inf} = 0$. Additionally, at $t = 0$, the frequency domain representation of the edge contains very high frequencies where $\omega \approx \inf$ so the transfer function becomes $\dfrac{V_{out}}{V_{in}} = \dfrac{R}{\dfrac{1}{j \cdot \inf \cdot C} + R} = \dfrac{R}{0 + R} = 1$. Then because this is a single pole filter it is implied there is an exponential decay that occurs between these two states as shown in Figure \ref{fig:step-response-high-pass-filter}.
 
 \begin{figure}[H]
     \centering
@@ -186,7 +187,7 @@ For this question a complex impedance approach will be used rather than time dom
     \label{fig:step-response-high-pass-filter}
 \end{figure}
 
-% @daniel i gave u a 'freq response' plot for the high pass fitler if u want. i personally think this should be out of scope, but i can see a rationale for including it.
+% Real frequency response plot of high pass filter.
 % \begin{figure}[H]
 %     \centering
 %     \includegraphics[width=0.8\textwidth]{generated_images/hpf_freq_response_plot.png}
