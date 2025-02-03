@@ -72,7 +72,7 @@
 \spoilerline
 
 \subsection{Passives}
-% This section introducing passives is very long, but it's critical information. Worst case we can move it to the appendix I guess, but I'd rather optimize this question's length in other methods. 
+% This section introducing passives is very long, but it's critical information. Worst case we can move it to the extra practice question I guess, but I'd rather optimize this question's length in other methods. 
 \noindent For a question like this, assuming ideal components is expected as further information has not been provided to aid in a more complex analysis. In a real interview, it's likely you would be given just one of these circuits. Table \ref{tab:passive_definitions} provides a summary of the key properties of ideal resistors, capacitors, and inductors.
 % Numerous circuits are analyzed for the sake of building intuition and the showing first principles approach.
 
@@ -133,7 +133,7 @@ This circuit is a voltage divider depicted slightly differently than in a previo
 
 \subsection{Circuit C: RC Low Pass Filter}
 Circuits with inductors and capacitors are dependent on time and frequency and can be analyzed in either domain. For the circuit in Figure \ref{fig:rc_low_pass_filter} analysis will be performed in the time domain. \newline
-% Philosophy: the subsequent question uses frequency domain. Appendix questions allow readers to explore to their hearts desire either approach. 
+% Philosophy: the subsequent question uses frequency domain. extra practice questions allow readers to explore to their hearts desire either approach. 
 
 % Solving this circuit fully in time domain because it is conceptually simple even though mathematically complex.
 \newnoindentpara From the two elements in the circuit we get in the time domain $I = C \cdot \dfrac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I \cdot R$. Cancelling out $I$ which is equivalent in both elements we get $V_{in} - V_{out} = R \cdot C \cdot \dfrac{dV_{out}}{dt}$ which can be algebraically manipulated into $-\dfrac{dV_{out}}{V_{out}-V_{in}} = -\dfrac{dt}{R \cdot C}$ then performing the integral on each side revealing $\ln{\dfrac{V_{out}-V_{in}}{V_out}}=-\dfrac{t}{R \cdot C}$ which can be algebraically manipulated into $V_{out}=V_{in} \cdot (1-e^{\dfrac{-t}{R \cdot C}})$. Note when analyzing this circuit, a constant $\tau = R \cdot C$ is defined as the time constant of the RC circuit which represents the time it takes $1-e^{-1}$ or ~63 percent of the step size. As the question allows us to choose component values for the components I will assume $R$ and $C$ are chosen such that $\tau = R \cdot C = 1$ for simplicity.
@@ -192,7 +192,7 @@ For this question a complex impedance approach will be used rather than time dom
 \begin{itemize}
     \item Given an unknown discrete capacitor find the capacitance? How would you determine the capacitance at a given DC bias voltage? % First part is Circuit C. Second part a solution is use Circuit E with an initial condition on Vout as the bias and a very small Iin current.
     \item For circuit C, does changing the value of R (assuming all else remains constant) change the total energy dissipated in the resistor? % Answer is no and requires an interesting integral to prove. Someone asked me this recently and I thought it was fun bc i had to do the proof live in fronta them lool. 
-    \item Consider the circuits given in appendix Section \ref{appendix:more_passives}. % More complex circuits for consideration
+    \item Consider the circuits given in extra practice question \ref{extra_practice:more_passives}. % More complex circuits for consideration
 \end{itemize}
 
 \end{document}
