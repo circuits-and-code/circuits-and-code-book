@@ -165,6 +165,8 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
 % @sahil : I feel like this is better kept as a follow-up question rather than a part of the main answer, it doesn't build on top of itself in the scope of this answer (except for the tiny bit of a mention of bias current being added in). If you want to save the work perhaps consider a separate question for this topic?
 % @daniel : im not worried about saving my work, whatever, writing this is good experience as I learn. while this isn't a part of the question, it is really good to know and I usually talk about what happens if battery has a voltage higher than we expect when answering this question in interviews so I figured I would include it. We could expand the question to state "describe how this circuit deals with voltage fluctuations from the battery" as a method of baitting people into describing the low pass capacitor and voltage clamping methods (kill 2 birds with one stone here)
 % please respond @sahil
+% from @sahil -> given the page count is chilling on pin overvoltage, I would suggest that you put something in the beginning to put "pin overvoltage" in scope of the question to then make this section connect with the question  
+% TODO WRITE : @daniel
 Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages outside of the permissible operating range. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
 
 \begin{figure}[H]
