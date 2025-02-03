@@ -1,7 +1,7 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
-\section{Implement a C bytestream parsing function for a weather data sensor.} % Intended as an easier question without knowledge dependence on any other questions.
+\section{Implement a C bytestream parsing function for a weather data sensor.} \label{section:packet_parsing}
 Use the header in listing \ref{code:bytestream-header}. Note that within the \texttt{weather\_data\_t} structure, the temperature is stored as a float with units of degrees Celsius, while the pressure is stored as a float with units of \textbf{kilopascals}. The function will only be called on a complete packet (i.e. the entire packet is received before the function is called).
 
 \lstinputlisting[caption={Bytestream Parsing Header}, label={code:bytestream-header}]{code/packet_parsing/packet_parsing_header.h}
@@ -60,7 +60,7 @@ When implementing a parsing function, it's important to consider the failure cas
 \lstinputlisting[caption={Packet Parsing Function}, label={code:packet_parsing}]{code/packet_parsing/parsing_implementation.c}
 
 \subsubsection{Testing}
-In some interviews, an interviewer may ask you to write a test function to verify that the parsing function works correctly. The list of edge cases mentioned above can be used to write test cases - this is further elaborated upon in \nameref{appendix:packet_parsing_tests}.
+In some interviews, an interviewer may ask you to write a test function to verify that the parsing function works correctly. The list of edge cases mentioned above can be used to write test cases - this is further elaborated upon in \nameref{extra_practice:packet_parsing_tests}.
 
 \subsection{Follow-ups}
 \begin{itemize}
