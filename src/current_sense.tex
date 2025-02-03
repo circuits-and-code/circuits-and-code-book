@@ -10,9 +10,8 @@
 \subsection{Motivation}
 Embedded systems often need to track current consumption of loads for a variety of reasons, including:
 \begin{itemize}
-    \item Detect if a load is drawing an excessive amount of power, indicating it has failed or an anomaly is occurring. 
+    \item Detecting if a load is drawing an excessive amount of power, indicating it has failed or an anomaly is occurring. 
     \item Ensuring a system does not overload a source power supply as it could cause the entire system to lose power. 
-    \item Ensuring a load is connected nominally.
     \item Determine battery state of charge by integrating the power ($P = I \cdot V$) the battery has been charged and/or discharged with over time.
 \end{itemize}
 
@@ -20,7 +19,7 @@ Embedded systems often need to track current consumption of loads for a variety 
 % I want to include the power formula again here to drill that into people's brains. 
 
 \subsection{Resistive Current Sensing}
-The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load as shown in Figure \ref{fig:high_side_current_sense}, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Because the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$. This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
+The simplest method of current sensing in embedded systems is the \textit{resistive current sense} technique. By placing a resistor in series with the load as shown in Figure \ref{fig:high_side_current_sense}, the voltage drop across the resistor can be measured to determine the current flowing through the load. This is done by leveraging Ohm's Law, $V = I \cdot R$, where $I$ is the current flowing through the load, $V$ is the voltage drop across the resistor, and $R$ is the resistance of the resistor. Since the resulting voltage drop is proportional to the current flowing through the resistor, the amount of current flowing through the load can be calculated as $I = \frac{V}{R}$.
 
 \begin{figure}[H]
     \begin{center}
@@ -33,7 +32,7 @@ The simplest method of current sensing in embedded systems is the \textit{resist
             \draw (-0.5, 3) node[op amp, rotate=180, scale=0.8] (opamp) {};
             \draw (opamp.+) -- ++ (0, 0.6);
             \draw (opamp.-) -- ++ (2, 0) -- ++ (0, 1.4);
-            \draw (opamp.out) node[left]{$V_{sns}$};
+            \draw (opamp.out) node[left]{$V_{sense}$};
             \draw[thick] (-3, 4.5) rectangle (-5, 1);
             \draw (-4, 3.5) node[]{Source};
             \draw[thick] (4, 4.5) rectangle (6, 1);
@@ -46,6 +45,8 @@ The simplest method of current sensing in embedded systems is the \textit{resist
     \label{fig:high_side_current_sense}
 \end{figure}
 
+\noindent This technique can be used for both DC (\textit{Direct Current}) and AC (\textit{Alternating Current}) loads as the impedance of the resistor is not dependent on frequency or time.
+
 \subsubsection{Resistor Selection}
 An important design decision for engineers is selecting the resistor to use as $R$ when employing resistive current-sensing. If the value of $R$ is too large, then the resistor will dissipate excessive power - this is shown when Ohm's Law, $V=I \cdot R$, is substituted into $P=I \cdot V$ to get $P=I^{2} \cdot R$. Another issue that arises with a large $R$ value is that loads are often designed to operate with a fixed input voltage - the larger $R$ is, the larger the voltage drop induced by the series sense resistor due Ohm's Law, and by doing so, reduces the voltage across the load proportionally to the load current. \newline
 
@@ -57,7 +58,7 @@ Since the voltage drop across a sense resistor is typically in the low millivolt
 \noindent When selecting an amplifier, ensure it is rated for the common mode offset that it will be used at. Additionally, amplifiers usually come with a fixed voltage gain that must be selected based on the maximum input voltage difference, $V_{ID_{max}}$, and maximum ADC voltage, $V_{ADC_{max}}$. 
 
 \subsubsection{Low Side vs. High Side Sensing}
-Figure \ref{fig:high_side_current_sense} demonstrates high side current sensing, however, low side current sensing is also possible as shown in Figure \ref{fig:low_side_current_sense}.
+Figure \ref{fig:high_side_current_sense} shows a high side current sensing circuit, however, 'low side' current sensing is also possible, as shown in Figure \ref{fig:low_side_current_sense}.
 
 \begin{figure}[H]
     \begin{center}
@@ -75,21 +76,21 @@ Figure \ref{fig:high_side_current_sense} demonstrates high side current sensing,
             \draw (-0.5, 2.5) node[op amp, rotate=180, scale=0.8] (opamp) {};
             \draw (opamp.-) -- ++ (0, -0.6);
             \draw (opamp.+) -- ++ (2, 0) -- ++ (0, -1.4);
-            \draw (opamp.out) node[left]{$V_{sns}$};
+            \draw (opamp.out) node[left]{$V_{sense}$};
         \end{circuitikz}
     \end{center}
     \caption{Low Side Current Sensing}
     \label{fig:low_side_current_sense}
 \end{figure}
 
-\noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor where the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the loads high side. This means the CSA's input pins have a common-mode offset which the device must be rated to handle. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required.\footnote{More information can be found in \bluehref{https://www.ti.com/lit/ta/sszta51/sszta51.pdf}{Texas Instruments "System Trade-offs for High- and Low-side Current
+\noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor as the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the load's high side. This means the CSA's input pins have a common-mode offset which the device must be rated to handle. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though not theoretically required.\footnote{More information can be found in \bluehref{https://www.ti.com/lit/ta/sszta51/sszta51.pdf}{Texas Instruments "System Trade-offs for High- and Low-side Current
 Measurements"}}. 
 % A second edition of this book could cover low side vs. high side as it's own question. Would probably be more focussed on switching rather than sensing, but similar concepts! TI's doc I linked here really is very short and hits really similar content. 
 
 \subsection{Magnetic Sensing}
-When current flows through a wire, it creates a magnetic field around it that is proportional to the current flowing through the wire. This phenomenon is known as \textit{Ampere's Law} and gives rise to numerous methods of current sensing. \newline
+When current flows through a wire, it creates a magnetic field around it that is proportional to the current flowing through the wire. This phenomenon is known as \textit{Ampere's Law} and gives rise to numerous methods of current sensing. An application of this law is used by current clamps, where a core is placed around the current-carrying conductor under measurement. A current clamp core has sense windings on it, forming the secondary winding of a transformer that can then measure AC amplitudes. This method also works with DC currents if a winding around the core is used to actively cancel the magnetic field in the core to avoid saturating the core.  % @daniel this last sentence needs a reword i think, it didn't make sense to me lol
 
-\newnoindentpara A simple method implemented by current clamps in which a core is placed around the conductor under measurement. This core has sense windings on it forming the secondary of a transformer to measure AC amplitudes. This method also works in DC if a winding around the core is used to actively cancel the magnetic field in the core to avoid saturating the core.  
+% @ daniel can you find a wikiepdia image for current clamps? might be good idk ur choice
 
 \subsection{Follow-ups}
 \begin{itemize}
