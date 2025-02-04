@@ -5,10 +5,9 @@
 % Question is deliberately vague and short. The question is often asked in this manner in real interviews. 
 % The term "ADC" is not given in the question to test if an interviewer is familiar with the concept and also to bait interviewees into given excessively complex nonsensical solutions. 
 % An example of an excessively complex non-senical solution an interviewee could propose is using an ADC that supports really high input voltages such as ADS125H01 https://www.ti.com/product/ADS125H01 . The question is meant to leave bait for something like that and the first paragraph is intended to dispel this pitfall. 
-The nominal voltage of the battery is 24 volts.
-% This clarification is given to ensure interviewees understand the battery voltage is higher than a standard microcontroller's ADC maximum voltage without giving away too much of the solution while also being low enough to avoid high voltage considerations in the solution.
-% A maximum input voltage to microcontroller ADC is not given deliberately. Interviewees are expected to infer as a vast majority real microcontroller in the world don't feature a 24 V ADC. This is done to align with how the question is asked in real interviews.
-% 
+The nominal voltage of the battery is 24 volts. Consider how your solution behaves when the battery's voltage varies. 
+% This clarification to nominal voltage is given to ensure interviewees understand the battery voltage is higher than a standard microcontroller's ADC maximum voltage without giving away too much of the solution while also being low enough to avoid high voltage considerations in the solution.
+% A maximum input voltage to microcontroller ADC is not given deliberately. Interviewees are expected to infer as a vast majority real microcontroller in the world don't feature a 24 V ADC. This is done to align with how the question is asked in real interviews. The request for extra consideration of extrema is done to motivate the "Pin Overvoltage" section. 
 \spoilerline
 
 \noindent At first glance, an analog-to-digital converter (\textit{ADC}) could directly sample the battery voltage. While this is a valid solution, it is not commonly done as high voltage ADCs are less commonly included in microcontrollers and are more expensive to implement discretely. For this reason, the use of a low voltage ADC commonly found in microcontrollers is preferred. \newline
@@ -162,9 +161,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
 
 
 \subsection{Pin Overvoltage}
-% @sahil : I feel like this is better kept as a follow-up question rather than a part of the main answer, it doesn't build on top of itself in the scope of this answer (except for the tiny bit of a mention of bias current being added in). If you want to save the work perhaps consider a separate question for this topic?
-% @daniel : im not worried about saving my work, whatever, writing this is good experience as I learn. while this isn't a part of the question, it is really good to know and I usually talk about what happens if battery has a voltage higher than we expect when answering this question in interviews so I figured I would include it. We could expand the question to state "describe how this circuit deals with voltage fluctuations from the battery" as a method of baitting people into describing the low pass capacitor and voltage clamping methods (kill 2 birds with one stone here)
-% please respond @sahil
+% Leakage explanation offers an introduction to input bias current. Is important to consider in a real solution as battery voltage is likely to spike/overvolt in embedded systems with high power actuators. 
 Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages outside of the permissible operating range. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
 
 \begin{figure}[H]
@@ -187,7 +184,7 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
 
 \noindent These clamping diodes, shown in Figure \ref{fig:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when an ADC pin is overvolted, accurate ADC readings cannot be expected. \newline
 
-\newnoindentpara External Tvs. diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
+\newnoindentpara External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
 \subsection{Analog to Digital}
 An ADC (\textit{Analog to Digital Converter}) is a component that, as the name implies, converts an analog value into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory. \newline

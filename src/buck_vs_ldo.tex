@@ -48,8 +48,9 @@ The buck converter is a simple yet fundamental circuit in power electronics. It 
 \begin{figure}[H]
     \begin{center}
         \begin{circuitikz}
+            \ctikzset{switches/scale=1.8}
             \draw (0, 4) node[anchor=east] {$V_{in}$} -- (0.5, 4);
-            \draw (0.5, 4) to[switch] (2, 4); 
+            \draw (0.5, 4) to[switch] (2, 4);
             \draw (2, 2) to[diode] (2, 4);
             \draw (2, 4) to[inductor, l=$L$] (4, 4);
             \draw (4, 2) to[C, l=$C$] (4, 4);
