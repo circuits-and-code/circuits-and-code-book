@@ -37,7 +37,7 @@ def plotter() :
 
     fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 
-    ax[0].plot(t, v_sw, label="Switch Node Voltage (V_sw_")
+    ax[0].plot(t, v_sw, label="Switch Node Voltage (V_sw)")
     ax[0].axhline(y=VIN, color='r', linestyle='--', label=f"Input Voltage (V_in)")
     ax[0].axhline(y=VOUT, color='r', linestyle='--', label=f"Output Voltage (V_out)")
     ax[0].set_title(f"{TITLE}")
