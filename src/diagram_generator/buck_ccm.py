@@ -37,17 +37,17 @@ def plotter() :
 
     fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 
-    ax[0].plot(t, v_sw, label="Vsw")
-    ax[0].axhline(y=VIN, color='r', linestyle='--', label=f"Vin")
-    ax[0].axhline(y=VOUT, color='r', linestyle='--', label=f"Vout")
+    ax[0].plot(t, v_sw, label="Switch Node Voltage (V_sw_")
+    ax[0].axhline(y=VIN, color='r', linestyle='--', label=f"Input Voltage (V_in)")
+    ax[0].axhline(y=VOUT, color='r', linestyle='--', label=f"Output Voltage (V_out)")
     ax[0].set_title(f"{TITLE}")
     ax[0].set_ylim(0, VIN*1.1) 
-    ax[0].set_xlabel("Time")
+    ax[0].set_xlabel("Time (sec)")
     ax[0].set_ylabel("Voltage")
     ax[0].legend()
 
-    ax[1].plot(t, i_l, label="Il")
-    ax[1].axhline(y=IOUT_AVG, color='r', linestyle='--', label=f"Ioutavg")
+    ax[1].plot(t, i_l, label="Load Current (I_l)")
+    ax[1].axhline(y=IOUT_AVG, color='r', linestyle='--', label=f"Average Load Current (I_out_avg)")
     ax[1].set_ylim(0, iout_max*1.1) 
     ax[1].set_xlabel("Time")
     ax[1].set_ylabel("Current")
