@@ -31,7 +31,7 @@ Discrete LEDs (\textit{Light Emitting Diodes}) are often used on circuit boards 
 \begin{equation}
     \begin{aligned}[b]
         V_s - V_f &= R_l \cdot I _f \\
-        R_l &= \frac{V_s - V_f}{I_f}
+        R_l &= \dfrac{V_s - V_f}{I_f}
     \end{aligned}
     \label{eq:led_current_limitting_resistor_math}
 \end{equation}
@@ -97,14 +97,23 @@ Transistors are three terminal, electronically-controlled switches in which one 
 
 \newnoindentpara An NPN BJT is used to switch the LED on and off. This type of transistor has the governing equation: $I_C = I_B \cdot \beta$. $I_C$ represents current into the collector pin, $I_B$ represents current into the base pin, current out of the emitter, $I_E$, is given by $I_E = I_B + I_C$. Common parameters for this BJT are $V_{BE} \approx 0.7 V$, $\beta \approx 100$, where $V_{BE}$ is the forward voltage drop from the base to the emitter, and $\beta$ is the current gain of the transistor. From this circuit drawing, the emitter voltage (\( V_E \)) is connected to ground so \( V_E = 0 V\) meaning $V_{BE} = V_B$. Note that these are approximations and vary based on the part number selected. \newline
 
-\noindent When the GPIO pin is at logic low (\( V_{GPIO} = 0\,\text{V} \)), the base voltage (\( V_B \)) is approximately \( 0\,\text{V} \). Consequently, the base current (\( I_B \)) and collector current (\( I_C \)) are both \( 0\,\text{A} \), and the LED remains off. When the GPIO pin is at logic high (\( V_{GPIO} = 3.3\,\text{V} \)), the goal is to fully enable the transistor and allow more than \( 10\,\text{mA} \) of current through the collector (\( I_C \)). To achieve this, the base current is selected as \( I_B \approx \frac{I_{B_{max}}}{2} = 5 \ \text{mA}/2 = 2.5\,\text{mA} \), which allows a maximum collector current of \( I_C = 2.5\,\text{mA} \cdot 100 = 250\,\text{mA} \). Since \( 250\,\text{mA} \gg 10\,\text{mA} \), the LED will turn on, and the collector voltage (\( V_C \)) will approach \( 0\,\text{V} \). Note that the current flowing through the LED can be adjusted by setting \( R_l \) to an appropriate value. \newline
+\noindent When the GPIO pin is at logic low (\( V_{GPIO} = 0\,\text{V} \)), the base voltage (\( V_B \)) is approximately \( 0\,\text{V} \). Consequently, the base current (\( I_B \)) and collector current (\( I_C \)) are both \( 0\,\text{A} \), and the LED remains off. When the GPIO pin is at logic high (\( V_{GPIO} = 3.3\,\text{V} \)), the goal is to fully enable the transistor and allow more than \( 10\,\text{mA} \) of current through the collector (\( I_C \)). \newline
 
-\newnoindentpara The value of $R_b$ can be solved by using Ohm's law where $V_{GPIO} - V_B = I_b \cdot R_b$. For this circuit, $V_B = V_{BE}$ - therefore, the equation becomes $R_b = \frac{V_{GPIO} - V_B}{I_b} = \frac{3.3\text{V}-0.7\text{V}}{2.5 \text{mA}} = 1040 \Omega$. Rounding to commonly available resistor values gives  $R_b = 1 \text{k} \Omega$ as a potential solution. \newline
+\newnoindentpara To achieve this, the base current is selected as \( I_B \approx \dfrac{I_{B_{max}}}{2} = 5 \ \text{mA}/2 = 2.5\,\text{mA} \), which allows a maximum collector current of \( I_C = 2.5\,\text{mA} \cdot 100 = 250\,\text{mA} \). Since \( 250\,\text{mA} \gg 10\,\text{mA} \), the LED will turn on, and the collector voltage (\( V_C \)) will approach \( 0\,\text{V} \). Note that the current flowing through the LED can be adjusted by setting \( R_l \) to an appropriate value. \newline
+
+\newnoindentpara The value of $R_b$ can be solved by using Ohm's law where $V_{GPIO} - V_B = I_b \cdot R_b$. For this circuit, $V_B = V_{BE}$ - therefore, the equation becomes:
+\begin{equation}
+    R_b = \dfrac{V_{GPIO} - V_B}{I_b} = \dfrac{3.3V-0.7V}{2.5 \text{mA}} = 1040 \Omega
+    \label{eq:led_current_limitting_resistor_math}
+\end{equation}
+Rounding to commonly available resistor values gives  $R_b = 1 \text{k} \Omega$ as a potential solution. \newline
 
 \newnoindentpara The forward voltage drop, $V_f$, is given as 2V, so Ohm's law can be used to solve for the value of $R_l$. Ohm's Law gives $V_s - V_f = I_f \cdot R_l$ which can be rearranged into $R_l = \dfrac{V_s - V_f}{I_f} = \dfrac{3.3V-2V}{10m} = 130 \Omega$. This resistor can be found in the E24 resistor series as a common resistor value, so no rounding is needed. 
 
 \subsection{Pulse Width Modulation}
-When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. PWM implementations are usually done in hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted to control the brightness. An example of a PWM waveform with a duty cycle of 80\% is shown in Figure \ref{fig:pwm_waveform}.
+When controlling an LED from a microcontroller, the brightness of the LED can be modulated using PWM (\textit{Pulse Width Modulation}). Adjusting the \textit{duty cycle} (amount of 'on' or logic high time) of pulse width modulation, provided the frequency $f$ is much greater than perceivable by the human eye, results in the appearance that the LED brightness is changing. If $f$ is too low then it will be apparent to a viewer that the LED is turning on and off. \newline
+
+\newnoindentpara PWM waveforms are usually created by hardware via dedicated timers, where the frequency is set to a constant, high value and the timer's duty cycle is adjusted (in this case, to control the brightness of an LED). An example of a PWM waveform with a duty cycle of 80\% is shown in Figure \ref{fig:pwm_waveform}.
 
 \begin{figure}[H]
     \centering
@@ -113,7 +122,7 @@ When controlling an LED from a microcontroller, the brightness of the LED can be
     \label{fig:pwm_waveform}
 \end{figure}
 
-\noindent Note that PWM's application is not limited to LEDs - in general, PWM can be thought of as a way to control the average voltage across a load, and is used in motor control, power supplies, and more. 
+\noindent Note that PWM's application is not limited to LEDs - in a general, simplified manner, PWM can be thought of as a way to control the average voltage or current across a load, and is used in motor control, power supplies, and more. 
 % See notes for second edition about RMS vs AVG voltage where we could explore more of the complexities. This simplification is permissible for now.
 
 \end{document}
