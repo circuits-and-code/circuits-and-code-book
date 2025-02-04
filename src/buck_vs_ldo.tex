@@ -31,7 +31,7 @@ LDOs (\textit{Low Dropout Regulators}) are commonly available as ICs (\textit{In
 \subsubsection{Selection}
 When selecting an LDO for a given application, consider optimizing the following parameters in component selection to save board space and cost while ensuring functionality. 
 \begin{itemize}
-    \item \textbf{Dropout Voltage:} To maintain a stable output voltage, the LDO requires sufficient input voltage. Mathematically, this is expressed as $V_{\text{in}} > V_{\text{out}} + V_{\text{dropout}}$. The $V_{\text{dropout}}$ varies between components but is usually around 0.5 V.
+    \item \textbf{Dropout Voltage:} To maintain a stable output voltage, the LDO requires sufficient input voltage. Mathematically, this is expressed as $V_{in} > V_{out} + V_{dropout}$. The $V_{dropout}$ varies between components but is usually around 0.5 V.
     \item \textbf{Maximum Input Voltage:} The semiconductor pass element inside the transistor is rated to handle a specific maximum input voltage.
     \item \textbf{Maximum Output Current:} The pass element semiconductor has a specific limit to the maximum output current it can provide. Exceeding this limit can lead to overheating or failure. This relates to the maximum power dissipation of the package as there is a limit to the amount of heat that can be dissipated into the environment. 
     \item \textbf{Output Voltage:} Some LDOs feature adjustable output voltages with a feedback pin, while others have fixed output voltages.
@@ -121,7 +121,7 @@ When a buck converter is operational, the high side switch turns on during $T_{o
     \label{fig:buck-dcm}
 \end{figure}
 
-\noindent When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with a peak of $\approx V_{out} \cdot 2$\footnote{If the oscillation was undamped it would have a peak of exactly $V_{out} \cdot 2$.} converging towards $V_{out}$. This is because when $I_L \approx 0$, $V_{sw} = 0$, however, the output node is not at zero, $V_{out} \neq 0$ which means current will begin to flow through the inductor into the parasitic capacitance, $C_{parasitic}$ that exists between $V_{sw}$ and ground. This small resonant current, $I_L$, results in a noticable voltage fluctuation on $V_{sw}$, but not on $V_{out}$ because $C_{out} >> C_{parasitic}$ where $C_{out}$ is the output capacitance of the buck converter. 
+\noindent When $I_L \approx 0$ the switch node voltage, $V_{sw}$ begins to oscillate with a peak of $\approx V_{out} \cdot 2$ converging towards $V_{out}$.\footnote{If the oscillation was undamped it would have a peak of exactly $V_{out} \cdot 2$.} This is because when $I_L \approx 0$, $V_{sw} = 0$, however, the output node is not at zero, $V_{out} \neq 0$ which means current will begin to flow through the inductor into the parasitic capacitance, $C_{parasitic}$ that exists between $V_{sw}$ and ground. This small resonant current, $I_L$, results in a noticable voltage fluctuation on $V_{sw}$, but not on $V_{out}$ because $C_{out} >> C_{parasitic}$ (where $C_{out}$ is the output capacitance of the buck converter). 
 
 \subsubsection{Switching}
 The switch depicted in Figure \ref{fig:buck_converter} is commonly referred to as a high side switch. In practice, the high side switch is usually implemented with a MOSFET (\textit{Metal-oxide semiconductor field effect transistor}) that features fast switching speeds, low switching losses, low conduction losses, low cost, and low leakage. The gate of this MOSFET requires active control from a feedback loop to maintain a stable output voltage. \newline
@@ -132,7 +132,7 @@ The switch depicted in Figure \ref{fig:buck_converter} is commonly referred to a
 % May seem a bit out of scope of the question, but I find it fairly important, maybe this can be explained better?
 
 \subsubsection{Losses}
-In a buck converter there are two major forms of loss: switching losses and conduction losses. Switching losses is power dissipated every time the FETs are switched (transitioned from off to on, or vice-versa) and scale proportionally with switching frequency. Conduction losses are due to parasitic resistance of elements in the converter and consequently scale proportionally to load current. Buck converters have some quiescent current associated with their active control loop, however, these losses are negligible compared to switching and conduction losses and are not usually analyzed. \newline
+There are two major forms of loss in a buck converter: \textit{switching losses} and \textit{conduction losses}. Switching losses is power dissipated every time the FETs are switched (transitioned from off to on, or vice-versa) and scale proportionally with switching frequency. Conduction losses are due to parasitic resistance of elements in the converter and consequently scale proportionally to load current. Buck converters have some quiescent current associated with their active control loop, however, these losses are negligible compared to switching and conduction losses and are not usually analyzed. \newline
 
 \newnoindentpara For a majority of applications, especially when $I_{load}$ is large and/or $\frac{V_{out}}{V_{in}}$ is very small, buck converters are significantly more efficient than LDOs. Typical buck converter efficiency, $\frac{P_{out}}{P_{in}}$, exceeds 90 percent.  
 
@@ -149,7 +149,7 @@ Buck converters are more efficient than LDOs in a majority of applications thoug
 \subsubsection{Power Tree}
 Embedded system controllers often have relatively high voltage power sources, to minimize current and in turn conduction losses, and are tasked with distributing lower voltage power to endpoints. Usually a single controller board is responsible for driving numerous loads with each having their own power requirements, most notably a roughly fixed voltage. \newline
 
-\newnoindentpara Consider a hypothetical controller in an automobile mobile controller tasked with powering a 24V motor and a 5V sensor from a 48V source. A solution could be to convert 48V to 24V for the motor and use another converter to convert 48V to 5V. However, a more efficient approach is to convert 48V to 24V and supplying the 24V to the motor and another converter to produce 5V for the sensor. There are numerous tradeoffs between operating cascaded versus parallel converters in a power tree including: failure modes, low power states, and conversion efficiency. 
+\newnoindentpara Consider a hypothetical controller in an automobile tasked with powering a 24V motor and a 5V sensor from a 48V source. A solution could be to convert 48V to 24V for the motor and use another converter to convert 48V to 5V. However, a more efficient approach is to convert 48V to 24V and supplying the 24V to the motor and another converter from 48V to 5V intended solely for the sensor. There are numerous tradeoffs between operating cascaded versus parallel converters in a power tree including: failure modes, low power states, and conversion efficiency. % @daniel can u add something to the question to put this in scope
 
 \subsection{Follow-ups}
 \begin{itemize}
