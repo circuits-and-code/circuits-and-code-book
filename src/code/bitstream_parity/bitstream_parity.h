@@ -5,8 +5,8 @@
 typedef enum {
   BITSTREAM_PARITY_EVEN, // Parity bit = 0 if number of ones in bitstream is
                          // even, 1 otherwise
-  BITSTREAM_PARITY_ODD, // Parity bit = 0 if number of ones in bitstream is odd,
-                        // 1 otherwise
+  BITSTREAM_PARITY_ODD,  // Parity bit = 0 if number of ones in bitstream is
+                         // odd, 1 otherwise
 } bitstream_parity_E;
 
 /**
