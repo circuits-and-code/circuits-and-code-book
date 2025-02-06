@@ -8,13 +8,13 @@ Assume the following header in listing \ref{code:bitstream-parity-header} is ava
 
 \spoilerline
 \subsection{Concept of Parity}
-In digital communication, a parity bit is an extra bit appended to a binary data stream to assist in error detection. The goal is to keep the number of 1's in the data stream (including the parity bit) either even (\textit{even parity}) or odd (\textit{odd parity}), depending on the parity scheme. The \textit{parity} of a binary number refers to whether the number of 1's in the binary representation of the number is even or odd. Figure \ref{fig:parity-timing-dagiram} shows timing diagrams for no parity, odd, and even parity, as well as even parity with an error. 
+In digital communication, a parity bit is an extra bit appended to a binary data stream to assist in error detection. The goal is to keep the number of 1's in the data stream (including the parity bit) either even (\textit{even parity}) or odd (\textit{odd parity}), depending on the parity scheme. The \textit{parity} of a binary number refers to whether the number of 1's in the binary representation of the number is even or odd. Figure \ref{fig:parity-waveform-diagram} shows waveform diagrams for no parity, odd, and even parity, as well as even parity with an error. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.4]{generated_images/svg_generated/parity.png}
-    \caption{Parity Timing Diagram}
-    \label{fig:parity-timing-dagiram}
+    \caption{Parity Waveform Diagram}
+    \label{fig:parity-waveform-diagram}
 \end{figure}
 
 \subsection {Counting number of ones in a Byte}
