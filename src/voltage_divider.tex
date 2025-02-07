@@ -8,9 +8,11 @@
 The nominal voltage of the battery is 24 volts. Consider how your solution behaves when the battery's voltage varies. 
 % This clarification to nominal voltage is given to ensure interviewees understand the battery voltage is higher than a standard microcontroller's ADC maximum voltage without giving away too much of the solution while also being low enough to avoid high voltage considerations in the solution.
 % A maximum input voltage to microcontroller ADC is not given deliberately. Interviewees are expected to infer as a vast majority real microcontroller in the world don't feature a 24 V ADC. This is done to align with how the question is asked in real interviews. The request for extra consideration of extrema is done to motivate the "Pin Overvoltage" section. 
+
 \spoilerline
 
-\noindent At first glance, an analog-to-digital converter (\textit{ADC}) could directly sample the battery voltage. While this is a valid solution, it is not commonly done as high voltage ADCs are less commonly included in microcontrollers and are more expensive to implement discretely. For this reason, the use of a low voltage ADC commonly found in microcontrollers is preferred. \newline
+\subsection{Implementation}
+\noindent At first glance, an analog-to-digital converter (\textit{ADC}) could be used to directly sample the battery voltage. While this is a valid solution, it is not a standard practice as high voltage ADCs are less commonly included in microcontrollers and are more expensive to implement discretely. For this reason, the use of a low voltage ADC commonly found in microcontrollers is preferred. \newline
 
 \newnoindentpara To do this, a voltage divider circuit can be used to scale the voltage of the battery by a fixed ratio, specified by the two resistors, such that the ADC can sample the signal without exceeding the maximum input voltage threshold.
 
@@ -29,10 +31,10 @@ The nominal voltage of the battery is 24 volts. Consider how your solution behav
 \end{figure}
 
 \subsection{Motivation}
-Electronic systems often require high power actuators and batteries to operate - relatively high battery bus voltages are often selected by engineers to minimize current and conduction losses. Microcontrollers are often designed with low input voltages (i.e. 1.8V, 3.3V, 5V) in order to reduce power consumption and transistor size during operation. As chemical batteries charge and discharge the battery, its voltage varies due to numerous factors (notably, state of charge). As a result, many battery-based embedded systems feature a battery-voltage sensing circuit hooked into a microcontroller to monitor the battery's voltage, and to take action when the battery voltage is too low or too high.
+Electronic systems often require high power actuators and batteries to operate - relatively high battery bus voltages are often selected by engineers to minimize current and conduction losses. Microcontrollers are often designed with low input voltages (i.e. 1.8V, 3.3V, 5V) in order to reduce power consumption and transistor size during operation. As chemical batteries charge and discharge the battery, the battery's voltage varies due to numerous factors (notably, state of charge). As a result, many battery-based embedded systems feature a battery-voltage sensing circuit hooked into a microcontroller to monitor the battery's voltage, and to take action when the battery voltage is too low or too high.
 
 \subsection{Voltage Divider Circuit}
-Ohm's Law relates the voltage across a resistor, $V$, to current flowing through the resistor, $I$, by $V = I \cdot R$. Applying Ohm's Law to each of the two resistors shown results in equations \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot}. Because the resistors are in series, the current, $I$, flowing through them is the same ($I = I_{R_t} = I_{R_b}$).
+Ohm's Law relates the voltage across a resistor, $V$, to current flowing through the resistor, $I$, by $V = I \cdot R$. Applying Ohm's Law to each of the two resistors shown results in Equations \eqref{eq:ohms_law_top} and \eqref{eq:ohms_law_bot}. Because the resistors are in series, the current, $I$, flowing through them is the same ($I = I_{R_t} = I_{R_b}$).
 \begin{equation}
     \begin{aligned}[b]
         V_{in} - V_{out} &= I \cdot R_t \\
@@ -49,7 +51,7 @@ Ohm's Law relates the voltage across a resistor, $V$, to current flowing through
     \label{eq:ohms_law_bot}
 \end{equation}
 
-\noindent Solving the system of equations to eliminate $I$ gives \eqref{eq:voltage_divider} as follows. 
+\noindent Solving the system of equations to eliminate $I$ gives Equation \eqref{eq:voltage_divider} as follows. 
 
 \begin{equation}
     \begin{aligned}[b]
@@ -79,7 +81,7 @@ Consider a few specific cases of this circuit to help build intuition to approac
 \end{itemize}
 
 \subsection{Input Bias Current}
-Even when an ADC is not being subjected to overvoltage, they still suffer from a non-ideality known as input bias current. Note this may also be represented by input impedance in which the load current is instead modelled by a loading resistor, however, the concept remains similar. This input bias current, $I_{bias}$, is in the micro-amp range and is used to feed the internal analog circuit and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in \eqref{eq:voltage_divider} being incorrect. 
+When an ADC is operating nominally, it suffers from a non-ideality known as input bias current.\footnote{Note that input bias current may also be represented by input impedance in which the load current is instead modelled by a loading resistance to ground, however, the concept remains similar.} This input bias current, $I_{bias}$, is in the micro-amp range, is used to feed the internal analog circuit, and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in Equation \eqref{eq:voltage_divider} being incorrect. 
 
 \begin{figure}[H]
     \begin{center}
@@ -138,7 +140,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
     \end{center}
 \end{figure}
 
-\noindent Op-amps also have input bias current, however, we can compensate for it using the circuit in Figure \ref{fig:bufferred_divider_comp} where $R_c = R_t || R_b$.
+\noindent Op-amps also have input bias current, however, this can be compensated for it using the circuit in Figure \ref{fig:bufferred_divider_comp} where $R_c = R_t || R_b$.
 
 \begin{figure}[H]
     \begin{center}
@@ -162,7 +164,7 @@ Even when an ADC is not being subjected to overvoltage, they still suffer from a
 
 \subsection{Pin Overvoltage}
 % Leakage explanation offers an introduction to input bias current. Is important to consider in a real solution as battery voltage is likely to spike/overvolt in embedded systems with high power actuators. 
-Microcontroller pins often feature clamping diodes in an attempt to protect the device from transient voltages outside of the permissible operating range. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
+Microcontroller pins often feature clamping diodes to protect the device from some transient voltages outside of the permissible operating range. ESD (\textit{Electro-static discharge}) is an example of a potentially destructive transient event. The use of external clamping diodes is common to protect for higher power transients in addition to internal clamping. \newline
 
 \begin{figure}[H]
     \begin{center}
@@ -182,7 +184,7 @@ Microcontroller pins often feature clamping diodes in an attempt to protect the 
     \end{center}
 \end{figure}
 
-\noindent These clamping diodes, shown in Figure \ref{fig:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in heat and damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when an ADC pin is overvolted, accurate ADC readings cannot be expected. \newline
+\noindent These clamping diodes, shown in Figure \ref{fig:clamping_diodes}, will conduct current when a voltage is applied that exceeds the microcontroller's supply voltage, $V_{cc}$, and when a voltage is applied that is below the microcontroller's ground reference, $V_{ss}$. They will conduct current unless if the current becomes excessive resulting in damage to the diodes and consequently damage to the device. Allowing the microcontroller clamping diodes to sink some current during an overvoltage event is permissible. Note that when an ADC pin is overvolted, accurate ADC readings cannot be expected. \newline
 
 \newnoindentpara External TVS diodes are also used when faster response times are required. A disadvantage of external protection diodes is that they consume some leakage current which will result in less accurate ADC measurements. This leakage current is often difficult to model (non-linear) and can be dependent on numerous factors.
 
