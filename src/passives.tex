@@ -138,7 +138,7 @@ Circuits with inductors and capacitors are dependent on time and frequency and c
 % Solving this circuit fully in time domain because it is conceptually simple even though mathematically complex.
 \newnoindentpara Analyzing the two elements in the circuit in time domain shows $I = C \cdot \dfrac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I \cdot R$. As $I$ is equivalent in both elements, it can be cancelled out when solving the system of equations, resulting in $V_{in} - V_{out} = R \cdot C \cdot \dfrac{dV_{out}}{dt}$. This expression can be algebraically manipulated into $-\dfrac{dV_{out}}{V_{out}-V_{in}} = -\dfrac{dt}{R \cdot C}$. Integrating both sides, the expression becomes $\ln{\dfrac{V_{out}-V_{in}}{V_{out}}}=-\dfrac{t}{R \cdot C}$. \newline 
 
-\newnoindentpara After re-arranging the above expression, the solution to the differential equation is given by equation \ref{eq:lpf-ode}.
+\newnoindentpara After re-arranging the above expression, the solution to the differential equation is given by Equation \ref{eq:lpf-ode}.
 \begin{equation}
     \dfrac{V_{out}}{V_{in}} = 1-e^{\left( \dfrac{-t}{R \cdot C} \right)}
     \label{eq:lpf-ode}

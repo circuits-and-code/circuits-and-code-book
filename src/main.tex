@@ -1,13 +1,12 @@
 \documentclass[letterpaper,11pt]{article}
+
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 \usepackage{subfiles}
 \usepackage[T1]{fontenc}
 \usepackage[sfdefault]{cabin}
-\renewcommand{\familydefault}{\sfdefault}
-
-\usepackage[utf8]{inputenc} % For UTF-8 encoding
-\usepackage{amsmath}        % For mathematical typesetting
-\usepackage{graphicx}       % For images
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}       
+\usepackage{graphicx}
 \usepackage{float}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
@@ -15,7 +14,6 @@
 \usepackage{listings}
 \usepackage{courier}
 \usepackage[backend=biber,style=ieee]{biblatex}
-\addbibresource{references.bib}
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{multirow}
@@ -25,27 +23,16 @@
 \usepackage{titling}
 \usepackage{subcaption}
 \usepackage{caption}
-\setlength{\belowcaptionskip}{-8pt}  % Controls the space below the caption
+\usepackage{fancyhdr}
 
-\usepackage{fancyhdr}  % For headers and footers
-\pagestyle{fancy}      % Use fancy style
-
-% Define header and footer
-\fancyhead[L]{}    % Left header
-\fancyhead[C]{Circuits \& Code: Mastering Embedded Co-op Interviews}  % Center header (optional)
-\fancyhead[R]{}   % Right header
-
-%\fancyfoot[L]{Advance Review Copy} 
-\fancyfoot[C]{Page \thepage}       
-%\fancyfoot[R]{DO NOT DISTRIBUTE}    
-\fancyfoot[R]{\bluehref{https://circuits-and-code.github.io}{circuits-and-code.github.io}}      
-
-% Remove default header/footer rule lines if needed
-\renewcommand{\headrulewidth}{0.4pt}  % Header line thickness (0pt removes it)
-\renewcommand{\footrulewidth}{0.4pt}  % Footer line thickness (0pt removes it)
-
-% Listings settings for C language
-\lstdefinestyle{modernC}{
+% Configure Packages
+\renewcommand{\familydefault}{\sfdefault}
+\addbibresource{references.bib}
+\setlength{\belowcaptionskip}{-8pt}      % Controls the space below the caption
+\pagestyle{fancy}                        % Use fancy style
+\hbadness=10000                          % prevents LaTeX from reporting underfull boxes unless they are truly severe.
+\captionsetup{labelfont=it, textfont=it} % Makes all figure labels and captions italic
+\lstdefinestyle{modernC}{                % Listings settings for C language
     language=C,
     basicstyle=\ttfamily\small, % Use modern monospaced font
     keywordstyle=\color{blue}\bfseries,
@@ -64,21 +51,32 @@
     escapeinside={\%*}{*)}, % Escaping for inline LaTeX
     morekeywords={uint8_t, uint16_t, uint32_t} % Custom keywords
 }
-
 \lstset{style=modernC} % Set the style for lists
 
-\hbadness=10000 % prevents LaTeX from reporting underfull boxes unless they are truly severe.
+% Header
+\fancyhead[L]{}    
+\fancyhead[C]{Circuits \& Code: Mastering Embedded Co-op Interviews}
+\fancyhead[R]{}
 
+% Footer
+\fancyfoot[L]{Advance Review Copy} % comment before release, uncomment for reviewer copy
+\fancyfoot[C]{Page \thepage}       
+\fancyfoot[R]{DO NOT DISTRIBUTE} % comment before release, uncomment for reviewer copy
+\fancyfoot[R]{\bluehref{https://circuits-and-code.github.io}{circuits-and-code.github.io}}      
+
+% Remove default header/footer rule lines if needed
+\renewcommand{\headrulewidth}{0.4pt}  % Header line thickness (0pt removes it)
+\renewcommand{\footrulewidth}{0.4pt}  % Footer line thickness (0pt removes it)
+
+% Our defined commands (used in subsheets)
 \newcommand{\bluehref}[2]{%
     \textcolor{blue}{\underline{\href{#1}{#2}}}%
 }
-
 \newcommand{\spoilerlineraw}{%
     \begin{center}
         ------------ \textbf{Answers Ahead} ------------
     \end{center}
 }
-
 \newcommand{\spoilerline}{%
     \spoilerlineraw
     \begin{center}  
@@ -86,14 +84,10 @@
     \end{center}
     \newpage
 }
-
 \newcommand{\newnoindentpara}{
     \par
     \noindent
 }
-
-\captionsetup{labelfont=it, textfont=it} % Makes all figure labels and captions italic
-
 
 \begin{document}
 
@@ -105,7 +99,7 @@
 % Title Page
 \title{Circuits \& Code: Mastering Embedded Co-op Interviews}
 \author{\textcopyright \ Sahil Kale, Daniel Puratich}
-% \date{} % By leaving this blank it defaults to the build date
+% \date{} % By leaving this blank it defaults to the build date, when we actually release we should specify this?
 \setlength{\droptitle}{0.3\textheight} % Moves the text down from the top
 \maketitle % displays title, author, and build date field
 \thispagestyle{empty} % Removes the page number on the title page
@@ -114,9 +108,10 @@
 \tableofcontents
 \newpage
 
-% One .tex per question (first edition is twenty questions, roughly three pages of solution each and one page for the question)
 \subfile{preamble.tex}
 \newpage
+
+% Questions
 \subfile{bitstream_parity.tex}
 \newpage
 \subfile{voltage_divider.tex}
@@ -146,6 +141,8 @@
 \subfile{current_sense.tex}
 \newpage
 \subfile{adc_init.tex} 
+\newpage
+\subfile{switching.tex} % place after current_sense.tex, led.tex, passives.tex
 \newpage
 \subfile{64-bit-timer.tex}
 \newpage

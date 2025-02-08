@@ -3,7 +3,7 @@
 
 \section{Draw a circuit to control a LED from a microcontroller GPIO pin.} \label{section:led} 
 
-The LED is to operate at 10mA and has a 2V forward voltage. The microcontroller GPIO, with a 3.3V logic level, can source and sink up to 5mA. Describe a method to control the LED’s brightness without altering the circuit.
+The LED is to operate at $10\text{mA}$ and has a $2\text{V}$ forward voltage. The microcontroller GPIO, with a $3.3\text{V}$ logic level, can source and sink up to $5\text{mA}$. Describe a method to control the LED’s brightness without altering the circuit.
 % As we're giving the a forward voltage drop there is no need to specify the LED color. A more complex question would be to have interviewee guess the forward drop based on the color (which I have been asked to do in a real interview lol).
 
 \spoilerline
@@ -26,7 +26,7 @@ Discrete LEDs (\textit{Light Emitting Diodes}) are often used on circuit boards 
     \label{fig:led_circuit_simple}
 \end{wrapfigure}
 
-\noindent The circuit can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and applying Ohm's Law to solve for solve for $R_l$, as shown in equation \eqref{eq:led_current_limitting_resistor_math}:
+\noindent The circuit can be solved by modelling the forward voltage drop of the LED, $V_f$, as a fixed voltage and applying Ohm's Law to solve for solve for $R_l$, as shown in Equation \eqref{eq:led_current_limitting_resistor_math}:
 
 \begin{equation}
     \begin{aligned}[b]
@@ -36,7 +36,7 @@ Discrete LEDs (\textit{Light Emitting Diodes}) are often used on circuit boards 
     \label{eq:led_current_limitting_resistor_math}
 \end{equation}
 
-\noindent Note that for LEDs, the brightness is roughly proportional to the current flowing through the LED. Consequently, the brightness of the LED can be varied by changing the resistance value or the voltage to the LED.\footnote{To give a reference, a small, surface-mounted LED are usually rated for 20mA max (so 20mA * 2V = 40mW), and are visible indoors at just 1mA. For a firmware debugging LED, ~2.5mA, is very common.} In practice, an LED's forward voltage is somewhat dependent on $I_f$ and device temperature. "I-V curves" across temperature are usually given by LED manufacturers in the LED's datasheets, however, an assumption of a constant $V_f$ is enough for approximate solutions.
+\noindent Note that for LEDs, the brightness is roughly proportional to the current flowing through the LED. Consequently, the brightness of the LED can be varied by changing the resistance value or the voltage to the LED.\footnote{To give a reference, a small, surface-mounted LED are usually rated for $20\text{mA}$ max (so $20\text{mA} * 2\text{V} = 40\text{mW}$), and are visible indoors at just $1\text{mA}$. For a firmware debugging LED, $\approx 2.5\text{mA}$, is very common.} In practice, an LED's forward voltage is somewhat dependent on $I_f$ and device temperature. "I-V curves" across temperature are usually given by LED manufacturers in the LED's datasheets, however, an assumption of a constant $V_f$ is enough for approximate solutions.
 
 \subsection{Transistors}
 Transistors are three terminal, electronically-controlled switches in which one terminal is used to control the switching between the other two terminals. The two most commonly used transistors are MOSFETs (\textit{Metal Oxide Semiconductor Field Effect Transistors}) and BJTs (\textit{Bipolar Junction Transistors}), though there are other types. For a BJT, a small current to the base allows a large current to flow between emitter and collector terminals. For a FET (\textit{Field Effect Transistor}), a voltage potential difference between the gate and the source allows current to flow between drain and source. These devices can be drawn with a variety of schematic symbols, but are most commonly seen as:
@@ -66,10 +66,9 @@ Transistors are three terminal, electronically-controlled switches in which one 
     \end{center}
 \end{figure}
 
-\noindent FETs, ideally, do not require any power consumption to keep them enabled, whereas BJTs require current to be supplied constantly. This means FETs are typically preferred when power consumption is a critical consideration; this is primarily for higher power circuits in which excessive power consumption directly results in a need for expensive cooling systems. BJTs are a much older technology and are easier to fabricate, making them far preferred when optimizing for cost. \newline
+\noindent FETs, ideally, do not require any power consumption to keep them enabled, whereas BJTs require current to be supplied constantly. This means FETs are typically preferred when power consumption is a critical consideration; this is primarily for higher power circuits in which excessive power consumption directly results in a need for expensive cooling systems. BJTs are a much older technology and are easier to fabricate, making them far preferred when optimizing for cost.\footnote{A solid understanding of both types of transistors is important for common interview questions!} \newline
 
-\noindent Another consideration is low vs. high side switching when using a transistor to enable and disable (aka switch) a load. The solution given in Figure \ref{fig:led_circuit} demonstrates low side switching. There are numerous implications of this design decision that are out of the scope of this guide.
-% Trying to avoid scope creep here. This concept is not covered further at all in this guide, saving for second edition lol.
+\noindent Another consideration is low vs. high side switching when using a transistor to enable and disable (aka switch) a load. The solution given in Figure \ref{fig:led_circuit} demonstrates low side switching. There are numerous implications of this design decision that are explored further in Section \ref{section:switching}.
 
 \subsection{Controlling the LED from a Microcontroller}
 
@@ -99,7 +98,7 @@ Transistors are three terminal, electronically-controlled switches in which one 
 
 \noindent When the GPIO pin is at logic low (\( V_{GPIO} = 0\,\text{V} \)), the base voltage (\( V_B \)) is approximately \( 0\,\text{V} \). Consequently, the base current (\( I_B \)) and collector current (\( I_C \)) are both \( 0\,\text{A} \), and the LED remains off. When the GPIO pin is at logic high (\( V_{GPIO} = 3.3\,\text{V} \)), the goal is to fully enable the transistor and allow more than \( 10\,\text{mA} \) of current through the collector (\( I_C \)). \newline
 
-\newnoindentpara To achieve this, the base current is selected as \( I_B \approx \dfrac{I_{B_{max}}}{2} = 5 \ \text{mA}/2 = 2.5\,\text{mA} \), which allows a maximum collector current of \( I_C = 2.5\,\text{mA} \cdot 100 = 250\,\text{mA} \). Since \( 250\,\text{mA} \gg 10\,\text{mA} \), the LED will turn on, and the collector voltage (\( V_C \)) will approach \( 0\,\text{V} \). Note that the current flowing through the LED can be adjusted by setting \( R_l \) to an appropriate value. \newline
+\newnoindentpara To achieve this, the base current is selected as \( I_B \approx \dfrac{I_{B_{max}}}{2} = 5 \ \text{mA}/2 = 2.5\,\text{mA} \), which allows a maximum collector current of \( I_C = 2.5\,\text{mA} \cdot 100 = 250\,\text{mA} \). Since \( 250\,\text{mA} \gg 10\,\text{mA} \), the LED will turn on, and the collector voltage (\( V_C \)) will approach \( 0\,\text{V} \)\footnote{Technically $V_{ce}$ will not decrease entirely to zero, instead plateauing around $V_{ce} \approx 0.2 \text{V}$. As the question does not call for very precise control over the LED current the aproximation made here is permissible. In some cases using a smaller value for $\beta$ is done to compensate for the non-zero $V_{ce}$.}. Note that the current flowing through the LED can be adjusted by setting \( R_l \) to an appropriate value. \newline
 
 \newnoindentpara The value of $R_b$ can be solved by using Ohm's law where $V_{GPIO} - V_B = I_b \cdot R_b$. For this circuit, $V_B = V_{BE}$ - therefore, the equation becomes:
 \begin{equation}
@@ -124,5 +123,11 @@ When controlling an LED from a microcontroller, the brightness of the LED can be
 
 \noindent Note that PWM's application is not limited to LEDs - in a general, simplified manner, PWM can be thought of as a way to control the average voltage or current across a load, and is used in motor control, power supplies, and more. 
 % See notes for second edition about RMS vs AVG voltage where we could explore more of the complexities. This simplification is permissible for now.
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item Prpose a solution using a MOSFET instead of a BJT.
+    \item Propose a solution without using any transistors. 
+\end{itemize}
 
 \end{document}
