@@ -4,18 +4,54 @@
 
 \section{Design a circuit to allow a microcontroller to actuate a solenoid.} \label{section:switching}
 
-The solenoid NO and operates at $12\text{V}$ DC requiring $\approx 100\text{mA}$ of current. The microcontroller operates at a $3.3\text{V}$ logic level and must be able to close and open the solenoid. Power is supplied to the circuit from a bench top power supply. 
+The solenoid operates at $\approx 12\text{V}$ DC requiring $\approx 1\text{A}$ of current. The microcontroller operates at a $3.3\text{V}$ logic level and must be able to enable and disable the solenoid. Power is supplied to the circuit from a bench top power supply. 
 
 \spoilerline
 
 \subsection{Solenoids \& Flyback}
-% A solenoid is a form of inductive load. 
-% TODO WRITE @daniel
+A solenoid is an electromagnet based on a coil of wire usually wrapped around a magnetic core to concrentrate the magnetic field. These devices see numerous applications in electro-mechanical systems such as valves and circuit breakers. As the solenoid is made of a long wire, it has resistance. \newline
+
+\newnoindentpara Due to the coil of wire, a solenoid is highly inductive and requires extra considerations to control in an embedded system. Consider when a solenoid is enabled the question states $I = 1\text{A}$ so when disabling the solenoid the goal is to switch to a $I = 0 \text{A}$ state. If this state switch is performed quickly then the inductive load can see a very negative $\dfrac{d\text{I}}{d\text{t}}$ as $\dfrac{0 - 1}{\approx 0} = - \infty$. For an inductor $V_L = L \cdot \dfrac{d\text{I}}{d\text{t}}$ so this can lead to a very negative $V_L$ which can cause damage to the circuitry responsible for enabling and disabling the load. \newline
+
+\newnoindentpara This is commonly compensated for by using a Schottky diode accross the solenoid so that during normal operation the diode does nothing, but if the voltage accross the coil, $V_L$, goes negative then the diode conducts allowing the solenoid to dissipate it's energy without damaging the switching circuitry. As this diode protects the circuit from the flyback voltage spike induced by the inductive load it is referred to as a Flyback diode. 
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{circuitikz}[american]
+            \draw (0, 3) to[inductor] (0, 1.5) to[resistor] (0, 0);
+            \draw (0, 3) -- (0, 3.25);
+            \draw (0, 0) -- (0, -0.25);
+            \draw (-2, 1.5) node[emptysdiodeshape, rotate=90] (d1) {};
+            \draw[thick] (-1, 3.5) rectangle (1, -0.5) node[]{};
+            \node[] at (0, 3.75) {Solenoid};
+            \draw (0, 3.1) -- (-2, 3.1) -- (-2, 1.75);
+            \draw (0, -0.1) -- (-2, -0.1) -- (-2, 1.25);
+        \end{circuitikz}
+        \caption{Basic Solenoid Model with Flyback Diode}
+        \label{fig:solenoid_with_flyback}
+    \end{center}
+\end{figure}
+
+\subsection{High Side Switching}
+
+TODO WRITE @daniel (we're adding this question last minute due to reviewer feedback, sorry for it being incomplete, gimme a few days here, skip this question for now)
+
 WIP
 
-\subsection{High Side vs. Low Side}
-% TODO WRITE @daniel
+% Ground is more common around the system, espeacilly cars with grounded chassis
+% harnesses can share a ground wire 
+% common mode offset
+
+% draw 
+
+
+\subsection{Low Side Switching}
+
 WIP
+
+% referenced to ground
+
+% Draw
 
 % \subsection{Follow-ups}
 % \begin{itemize}
