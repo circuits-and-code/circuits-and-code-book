@@ -33,25 +33,40 @@ A solenoid is an electromagnet based on a coil of wire usually wrapped around a 
 \end{figure}
 
 \subsection{Switching Loads}
-Enabling and disabling a load can be done in with either switching the positive high side while connecting the low side constantly or by switching the lower voltage potential side while holding the higher voltage potential side connected.  
+Enabling and disabling a load can be done in with either switching the positive high side while connecting the low side constantly or by switching the lower voltage potential side while holding the higher voltage potential side connected. \newline
 
+\newnoindentpara For any common microcontroller, GPIO pins by themselves will not be capable of switching a load with these voltage and current requirements so the use of a pass element transistor is used. The selected transistor needs to be capable of handling the load's voltage and current requirements while being capable of being controlled from the microcontroller.
 
-% Ground is more common around the system, espeacilly cars with grounded chassis
-% harnesses can share a ground wire 
-% common mode offset
+\subsection{Transistors}
+As introduced in Question \ref{section:led}, a BJT or FET could be selected for this application\footnote{Of course other options exist, however, for a simple application these are the only options worthy of consideration.}.
 
-% draw 
-
-
-\subsection{Low Side Switching}
+As BJTs consume current at the base and have a constant base to emitter voltage drop, holding a BJT on requires constant power consumption. MOSFETs on the other hand require a gate to source voltage, but once the gate capacitance is filled they do not require any current to hold enabled. Additionally consider that the conduction losses of MOSFETs is much lower than BJTs. Consequently for driving loads, MOSFETs are prefferred! \newline
 
 WIP
 
+% TODO WRITE : PCh FETS have more RDSon (and therefore conduction losses) than Nch FETs so 
+
+\subsection{High Side vs Low Side}
+
+WIP
+
+% Ground is more common around the system, espeacilly cars with grounded chassis
+
+% think of high voltage, switching neutral would make unscrewing a lightbulb unsafe
+
+% harnesses can share a ground wire (or use a chassis for ground)
+
+% common mode offset 
+
+% TODO DRAW : high side switched solenoid 
+
+% The primary advantage of low side switching is that it is easier to switch a transistor on the low side rather than the high side. 
+
+% the existence of other ground referenced digital signals incentivizes high side switching for the loads
+
 % referenced to ground
 
-% Draw
-
-\subsection{}
+% TODO DRAW : low side switched solenoid 
 
 % \subsection{Follow-ups}
 % \begin{itemize}
