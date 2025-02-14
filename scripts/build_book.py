@@ -94,12 +94,6 @@ def main(tex_paths_to_build=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build the book")
     parser.add_argument(
-        "--build_teaser",
-        action="store_true",
-        help="Build the teaser PDF",
-        default=False,
-    )
-    parser.add_argument(
         "--only-gen-images",
         action="store_true",
         help="Only generate images",
@@ -109,8 +103,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     tex_paths = ["main.tex"]
-    if args.build_teaser:
-        tex_paths.append("teaser.tex")
 
     if args.only_gen_images:
         tex_paths = None
