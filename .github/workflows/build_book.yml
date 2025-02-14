@@ -22,7 +22,7 @@ jobs:
 
     # Step 2: Build the book
     - name: Build the book
-      run: python3 scripts/build_book.py --build_teaser
+      run: python3 scripts/build_book.py
 
     # Step 3: Archive the built book
     - name: Archive built book
@@ -30,7 +30,6 @@ jobs:
       run: |
         mkdir -p artifacts
         cp output/main.pdf artifacts/
-        cp output/teaser.pdf artifacts/
 
     # Step 4: Upload artifact
     - name: Upload artifact
