@@ -5,7 +5,7 @@
 \section{Given the following datasheet and code snippet, initialize the ADC and write a polling function to read the ADC voltage.}
 
 \subsection{Supporting Problem Information}
-Assume that the ADC is to be run with an ADC conversion clock frequency of 1 MHz. Implement the functions shown in listing \ref{code:adc-init-user-function} to initialize the ADC and read the ADC voltage.
+Assume that the ADC is to be run with an ADC conversion clock frequency of 1 MHz. Implement the functions shown in Listing\ref{code:adc-init-user-function} to initialize the ADC and read the ADC voltage.
 
 \lstinputlisting[caption={User Implemented Functions}, label={code:adc-init-user-function}]{code/adc_init/adc_init_header.h}
 
@@ -73,13 +73,13 @@ The ADC Data L register contains the lower 8 bits of the 12-bit ADC conversion r
 \spoilerline
 
 \subsection{Setting Up the Problem}
-When coming across a peripheral initialization problem, it is essential to break down the problem into smaller parts and to understand the requirements - they often have a lot of bark, but not much bite given the limited scope of an interview. The problem can be broken down into two main parts: initialization and conversion. As a first step, we can go ahead and define the register addresses and bit positions for the ADC configuration and status registers, shown in listing \ref{code:adc-registers}.
+When coming across a peripheral initialization problem, it is essential to break down the problem into smaller parts and to understand the requirements - they often have a lot of bark, but not much bite given the limited scope of an interview. The problem can be broken down into two main parts: initialization and conversion. As a first step, we can go ahead and define the register addresses and bit positions for the ADC configuration and status registers, shown in Listing\ref{code:adc-registers}.
 
 \lstinputlisting[caption={ADC Registers and Bit Positions}, label={code:adc-registers}]{code/adc_init/adc_init_registers.h}
 \noindent Note the use of \texttt{volatile} in the register definitions. This keyword tells the compiler that the value of the variable can change at any time, which is essential for memory-mapped registers.
 
 \subsection {Initialization} 
-Initializing the ADC can be broken down into the following steps. The code is shown in listing \ref{code:adc-init}.
+Initializing the ADC can be broken down into the following steps. The code is shown in Listing\ref{code:adc-init}.
 \begin{enumerate}
     \item \textbf{Set the ADC Clock Frequency}: Calculate the ADC clock prescaler value to achieve a 1 MHz ADC conversion clock frequency given the 8 MHz MCU clock frequency. We can use the formula $f_{ADC\_CLK} = f_{MCU}/(ADC\_CLK\_DIV + 1)$ to calculate the prescaler ($ADC\_CLK\_DIV$) value (7).
     \item \textbf{Enable the ADC}: Write to the ADC configuration register to enable the ADC.
@@ -89,7 +89,7 @@ Initializing the ADC can be broken down into the following steps. The code is sh
 \lstinputlisting[caption={ADC Initialization}, label={code:adc-init}]{code/adc_init/adc_init.c}
 
 \subsection{Conversion}
-The conversion problem can be addressed as follows. The code is shown in listing \ref{code:adc-conversion}.
+The conversion problem can be addressed as follows. The code is shown in Listing\ref{code:adc-conversion}.
 \begin{enumerate}
     \item \textbf{Set the ADC Multiplexer Channel}: Write to the ADC configuration register to select the desired ADC multiplexer channel.
     \item \textbf{Begin the ADC Conversion}: Write to the ADC configuration register to begin an ADC conversion.

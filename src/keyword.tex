@@ -10,7 +10,7 @@ For each keyword, explain its purpose, as well as use-cases where it would be be
 The \textbf{volatile} keyword is used to tell the compiler that a variable's value can be \textit{changed unexpectedly} (the value can be changed by something outside the current scope, such as an interrupt service routine (ISR) or by hardware via memory-mapped input/outputs, or I/O). The compiler should not optimize the variable's access, as it may change at any time. Note that using volatile where not necessary can lead to worse performance, as the compiler may not optimize the variable's access. 
 
 \subsubsection{Example Volatile Use Case}
-Consider a short program below in listing \ref{code:volatile-use-case} where a timer interrupt service routine (ISR) increments a variable \texttt{timer\_counter} every millisecond. 
+Consider a short program below in Listing\ref{code:volatile-use-case} where a timer interrupt service routine (ISR) increments a variable \texttt{timer\_counter} every millisecond. 
 
 \lstinputlisting[caption={Volatile Use Case}, label={code:volatile-use-case}]{code/keyword/volatile_ex.c}
 
@@ -26,7 +26,7 @@ The \textbf{const} keyword refers to a variable that is \textbf{read-only} \cite
 \noindent Const's primary use is to make code more readable and maintainable. By declaring a variable as \texttt{const}, the programmer can signal to others that the variable should not be modified and have the compiler enforce this behaviour. This can help prevent bugs and make the code easier to understand. As a general rule, it's good practice to declare variables as \texttt{const} whenever possible.
 
 \subsubsection{Example Const Use Case}
-Consider the code snippet in listing \ref{code:const-use-case}. The variable \texttt{UART\_RECEIVE\_REGISTER\_READ\_ONLY} is declared as \texttt{const}, meaning its value cannot be modified through the program (a compiler error will be thrown). However, the value at the memory address \texttt{0x12345678} can still change due to external events, such as hardware (e.g., UART) writing to it\footnote{It's also possible to bypass the protection of const, both intentionally and inadvertantly.}, which is why \texttt{const} does not mean \textit{constant}.
+Consider the code snippet in Listing\ref{code:const-use-case}. The variable \texttt{UART\_RECEIVE\_REGISTER\_READ\_ONLY} is declared as \texttt{const}, meaning its value cannot be modified through the program (a compiler error will be thrown). However, the value at the memory address \texttt{0x12345678} can still change due to external events, such as hardware (e.g., UART) writing to it\footnote{It's also possible to bypass the protection of const, both intentionally and inadvertantly.}, which is why \texttt{const} does not mean \textit{constant}.
 
 \begin{lstlisting}[caption={Example use case of Const}, label={code:const-use-case}]
 #include <stdint.h>
