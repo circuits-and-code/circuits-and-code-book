@@ -2,7 +2,7 @@
 \begin{document}
 
 \section{Implement a C bytestream parsing function for a weather data sensor.} \label{section:packet_parsing}
-Use the header in listing \ref{code:bytestream-header}. Note that within the \texttt{weather\_data\_t} structure, the temperature is stored as a float with units of degrees Celsius, while the pressure is stored as a float with units of \textbf{kilopascals}. The function will only be called on a complete packet (i.e. the entire packet is received before the function is called).
+Use the header in Listing\ref{code:bytestream-header}. Note that within the \texttt{weather\_data\_t} structure, the temperature is stored as a float with units of degrees Celsius, while the pressure is stored as a float with units of \textbf{kilopascals}. The function will only be called on a complete packet (i.e. the entire packet is received before the function is called).
 
 \lstinputlisting[caption={Bytestream Parsing Header}, label={code:bytestream-header}]{code/packet_parsing/packet_parsing_header.h}
 
@@ -40,7 +40,7 @@ The weather sensor outputs a UART packet with the following format. A graphical 
 A packet parsing algorithm is a staple of embedded systems programming. Generally, an implementation of such an algorithm involves receiving a buffer (packet) of bytes (also referred to as a \textit{bytestream}), followed by iterating through the buffer and extracting relevant data. If present in the packet, a checksum is used to verify the integrity of the data.
 
 \subsubsection{Checksum}
-A checksum is a simple error-detection method\footnote{In real-world implementations, a more robust method, like a cyclic redundancy check (CRC) is usually used.} that involves summing the bytes of a packet and comparing the result to a predefined value. If the checksum is incorrect, the packet is considered corrupt. In this case, the checksum is the sum of bytes 0-6. A simple algorithm for checksum calculation is shown in listing \ref{code:checksum_ex}.
+A checksum is a simple error-detection method\footnote{In real-world implementations, a more robust method, like a cyclic redundancy check (CRC) is usually used.} that involves summing the bytes of a packet and comparing the result to a predefined value. If the checksum is incorrect, the packet is considered corrupt. In this case, the checksum is the sum of bytes 0-6. A simple algorithm for checksum calculation is shown in Listing\ref{code:checksum_ex}.
 
 \lstinputlisting[caption={Checksum Calculation Example}, label={code:checksum_ex}]{code/packet_parsing/checksum_ex.c}
 
@@ -55,7 +55,7 @@ When implementing a parsing function, it's important to consider the failure cas
     \item The checksum is incorrect.
 \end{itemize}
 
-\noindent A sample implementation of the parsing function is shown in listing \ref{code:packet_parsing}. Note that type-punning is explicitly not used in this implementation to avoid dealing with endianness, alignment, and platform portability issues, although it is a common practice in embedded systems programming.
+\noindent A sample implementation of the parsing function is shown in Listing\ref{code:packet_parsing}. Note that type-punning is explicitly not used in this implementation to avoid dealing with endianness, alignment, and platform portability issues, although it is a common practice in embedded systems programming.
 
 \lstinputlisting[caption={Packet Parsing Function}, label={code:packet_parsing}]{code/packet_parsing/parsing_implementation.c}
 

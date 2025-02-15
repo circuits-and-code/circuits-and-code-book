@@ -1,4 +1,5 @@
 \documentclass[main.tex]{subfiles}
+
 \begin{document}
 
 \section{Write a C function to determine the direction of stack growth on a system.}
@@ -36,9 +37,8 @@ Since we know that a new stack frame is created for each function call, we can u
     \item In the dummy function, compare the address of the stack-allocated variable to the address of a local variable in the dummy function.
     \item If the address of the stack-allocated variable is less than the address of the local variable, the stack grows downwards. If the address of the stack-allocated variable is greater than the address of the local variable, the stack grows upwards.
 \end{enumerate}
-\noindent The code snippet in listing \ref{code:stack-growth} demonstrates this concept.
+\noindent The code snippet in Listing\ref{code:stack-growth} demonstrates this concept.
 
 \lstinputlisting[caption={Determining Stack Growth Direction}, label={code:stack-growth}]{code/stack/main.c}
     
-
 \end{document}
