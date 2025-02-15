@@ -1,13 +1,13 @@
-# fw-hw-questions
-FW/HW Interview Question Guide
+# Circuits & Code Book Source
+Circuits and Code offers over 20 interview-style questions and answers designed for embedded software and electrical engineering interns. Written by two authors with experience hiring and mentoring interns for embedded software and electrical engineering roles, it draws on their academic background and industry expertise to focus on the concepts that matter most to interviewers.
 
-## Notes
+## Download
 - Official PDF Download Link: https://circuits-and-code.github.io/
+
+### Internal Tracking Documents
 - Initial Notes: https://docs.google.com/document/d/1Akp2vB-8zvOjKRvKKtQ4xRd1HW5HwOgYOPMeZlsEUBo/edit
 - Progress Tracking Sheet: https://docs.google.com/spreadsheets/d/1r3ARHjxrXqaiC7ljZWcs_fc2r5LI8fe7ycGm_sgxs3k/edit?gid=0#gid=0
 - Internal Splitwise Finance: https://secure.splitwise.com/#/groups/76688172 
-- Google Drive Reviewer Folder: https://drive.google.com/drive/folders/1NroQ4ibecw3M8N8pJ0D5jh--wI3NLRnb
-- Teaser: https://circuits-and-code.github.io/teaser/
 
 ## Development Instructions
 
