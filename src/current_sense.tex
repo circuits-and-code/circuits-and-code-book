@@ -53,12 +53,12 @@ An important design decision for engineers is selecting the resistor to use as $
 \newnoindentpara On the other hand, if $R$ is too small, then the induced voltage drop across the resistor will be so small that it becomes difficult to measure. Common resistances employed in this technique include values ranging from 0.1 m$\Omega$ to 100 m$\Omega$, depending on the current range being measured and allowable power dissipation.
 
 \subsubsection{Current Sense Amplifiers}
-Since the voltage drop across a sense resistor is typically in the low millivolt range, amplifiers are often used to increase this small voltage difference, making it large enough for a microcontroller's ADC to sample accurately, improving the precision of current measurement. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits})\footnote{Common examples of simple amplifiers are INA180 and INA240 though numerous options exist for varying applications.} that implement op-amp based circuits.\footnote{Some ICs have current sense amplifiers (\textit{CSAs}) implemented along with other functionality, such as the INA226.} 
+Since the voltage drop across a sense resistor is typically in the low millivolt range, amplifiers are often used to increase this small voltage difference, making it large enough for a microcontroller's ADC to sample accurately, improving the precision of current measurement. The amplifier circuits are oftentimes handled by ICs (\textit{Integrated Circuits})\footnote{Common examples of simple amplifiers are INA180 and INA240 though numerous options exist for varying applications.} that implement op-amp based circuits.\footnote{Some ICs have current sense amplifiers (\textit{CSAs}) implemented along with other functionality, such as the INA226.}
 
 \noindent When selecting an amplifier, ensure it is rated for the common mode offset that it will be used at. Additionally, amplifiers usually come with a fixed voltage gain that must be selected based on the maximum input voltage difference, $V_{ID_{max}}$, and maximum ADC voltage, $V_{ADC_{max}}$. 
 
 \subsubsection{Low Side vs. High Side Sensing}
-Figure \ref{fig:high_side_current_sense} shows a high side current sensing circuit, however, 'low side' current sensing is also possible, as shown in Figure \ref{fig:low_side_current_sense}.\footnote{Low side and high side current sensing is heavily related to low side and high side circuit switching which is explored in Question \ref{section:switching}.}
+Figure \ref{fig:high_side_current_sense} shows a high side current sensing circuit, however, 'low side' current sensing is also possible, as shown in Figure \ref{fig:low_side_current_sense}.%\footnote{Low side and high side current sensing is heavily related to low side and high side circuit switching which is explored in Question \ref{section:switching}.}
 
 \begin{figure}[H]
     \begin{center}
@@ -84,7 +84,7 @@ Figure \ref{fig:high_side_current_sense} shows a high side current sensing circu
 \end{figure}
 
 \noindent Low side\footnote{The terms "low" and "high" side come from describing the location of the resistor relative to the load.} current sensing is advantageous as, in theory, only a single-ended amplifier is needed as one of the resistor ends is connected to ground. In contrast, high side sensing needs to amplify the voltage difference across the sense resistor as the voltage drop across the resistor is not referenced to ground, but rather between the input voltage and the load's high side. This means the CSA's input pins have a common-mode offset which the device must be rated to handle. Often, in high precision current-sensing applications, differential amplifiers are used even for low side applications, though they are not theoretically required.\footnote{More information can be found in \bluehref{https://www.ti.com/lit/ta/sszta51/sszta51.pdf}{Texas Instruments "System Trade-offs for High- and Low-side Current
-Measurements"}}. 
+Measurements"}}
 % A second edition of this book could cover low side vs. high side as it's own question. Would probably be more focussed on switching rather than sensing, but similar concepts! TI's doc I linked here really is very short and hits really similar content. 
 
 \subsection{Magnetic Sensing}

@@ -28,7 +28,7 @@ Using a semaphore involves two main operations: \begin{itemize}
         \item Ex: An interrupt service routine (ISR) can signal to a worker thread that an event has occurred. \textit{Note: Event flags are also commonly used for this purpose, if provided by the OS.}
     \end{itemize}
 \end{itemize}
-A short example of using a semaphore is shown in Listing\ref{code:semaphore-example}.
+A short example of using a semaphore is shown in Listing \ref{code:semaphore-example}.
 \begin{lstlisting}[caption={Example of Semaphore Usage}, label={code:semaphore-example}]
 semaphore_wait(conn_semaphore); // Wait for an available connection
 use_connection();
@@ -44,7 +44,7 @@ A \textit{mutex} (short for \textit{mutual exclusion}) is a signalling mechanism
     \item \texttt{unlock\_mutex()} - unlocks the mutex, allowing other threads to lock it.
 \end{itemize}
 
-\noindent Consider a UART driver that is being accessed by multiple threads. If the UART driver is not thread-safe, it is possible that two threads could attempt to write to the UART at the same time, causing garbled output. In this case, a mutex could be used to ensure that only one thread can access the UART at a time. Pseudocode for this scenario is shown in Listing\ref{code:mutex-example}.
+\noindent Consider a UART driver that is being accessed by multiple threads. If the UART driver is not thread-safe, it is possible that two threads could attempt to write to the UART at the same time, causing garbled output. In this case, a mutex could be used to ensure that only one thread can access the UART at a time. Pseudocode for this scenario is shown in Listing \ref{code:mutex-example}.
 \begin{lstlisting}[caption={Example of Mutex Usage}, label={code:mutex-example}]
 mutex_lock(uart_mutex, DELAY_INFINITE);
 uart_write("Hello");
