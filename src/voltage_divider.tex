@@ -80,6 +80,7 @@ Consider a few specific cases of this circuit to help build intuition to approac
     \item This circuit assumes no source impedance from $V_{in}$ and no loading connected to $V_{out}$. However, this assumption is not always valid in practical circuits (and explored later in this answer).
 \end{itemize}
 
+% TODO : Consider moving the below to the appendix or a new question
 \subsection{Input Bias Current}
 When an ADC is operating nominally, it suffers from a non-ideality known as input bias current.\footnote{Note that input bias current may also be represented by input impedance in which the load current is instead modelled by a loading resistance to ground, however, the concept remains similar.} This input bias current, $I_{bias}$, is in the micro-amp range, is used to feed the internal analog circuit, and is present to varying degrees of severity in all forms of ADCs. This is a problem because it adds loading to our resistor divider and results in Equation \eqref{eq:voltage_divider} being incorrect. 
 
