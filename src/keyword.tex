@@ -7,7 +7,13 @@ For each keyword, explain its purpose, as well as where it would be beneficial t
 \spoilerline
 
 \subsection{Volatile}
-The \textbf{volatile} keyword is used to tell the compiler that a variable's value can be \textit{changed unexpectedly} (the value can be changed by something outside the current scope, such as an interrupt service routine (ISR) or by hardware via memory-mapped input/outputs, or I/O). The compiler should not optimize the variable's access, as it may change at any time. Note that using volatile where not necessary can lead to worse performance, as the compiler may not optimize the variable's access. 
+The \textbf{volatile} keyword is used to tell the compiler that there are \textit{unexpected side-effects} associated with reads and writes of a variable, and as a result, should \textbf{not} optimize reads/writes to a variable declared as \texttt{volatile}. From \cite{wikipediaVolatile}, it tells the compiler to:
+\begin{itemize}
+    \item \textbf{Not remove or add any reads/writes} to the variable, even if it appears unused in the program. Specifically, this ensures that the compiler does not optimize away accesses or cache the variable's value, forcing every read and write to occur exactly as written. This prevents incorrect behavior, especially when interacting with hardware registers or shared memory.
+    \item \textbf{Not to reorder the reads/writes} to the variable with respect to other reads/writes in the program.
+\end{itemize}
+
+\noindent Note that using volatile where not necessary can lead to worse performance, as the compiler may not optimize the variable's access. 
 
 \subsubsection{Example Volatile Use Case}
 Consider a short program below in Listing \ref{code:volatile-use-case} where a timer interrupt service routine (ISR) increments a variable \texttt{timer\_counter} every millisecond. 
