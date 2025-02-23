@@ -36,7 +36,6 @@
         \end{minipage}
     \end{center}
 \end{figure}
-
 \begin{figure}[H]
     \begin{center}
         \begin{minipage}{0.45\textwidth}
@@ -68,6 +67,7 @@
         \end{minipage}
     \end{center}
 \end{figure}
+% Names for the circuits are not given to avoid spolling the solutions. Labels are not shown to readers.
 
 \spoilerline
 
@@ -115,13 +115,13 @@ The step response of a circuit is what the output waveform with respect to time 
 % \noindent In the Laplace domain, the unit step function is given by $V_{in}(j \omega) = \dfrac{1}{j \omega}$. To determine the response of a circuit in the Laplace domain, $V_{out}(j \omega) = V_{in}{j \omega} * H(j \omega)$ where $H(j \omega)$ defines the system transfer function. 
 % consider adding a plot in the frequency domain showing the step response and explain implications to above passives
 
-\subsection{Circuit A: Series Resistor}
+\subsection{Circuit A}
 In this circuit we note Ohm's law, $V = I \cdot R$, however, as there is no load, $I=0$ on the resistor in this circuit we note there is no voltage drop, $V=I \cdot R=0 \cdot R=0$, across the resistor, consequently $V_{in} = V_{out}$ for this circuit. \newline
 % No need to actual draw a plot of Vin = Vout as readers should be able to follow this themselves and the plot wouldn't really show it nicely anyways.
 
 \newnoindentpara Note for this circuit, and for all subsequent circuits as well, an assumption is made that there is no extra loading on $V_{out}$ and there is no source impedance on $V_{in}$. This is reasonable as the question shows no extra loading drawn and the question does not state otherwise.
 
-\subsection{Circuit B: Voltage Divider}
+\subsection{Circuit B}
 This circuit is a voltage divider depicted slightly differently than in a previous question\footnote{Question: \ref{sec:voltage_divider}}, but the same equations hold: $\dfrac{V_{out}}{V_{in}} = \dfrac{R_2}{R_1 + R_2}$. In this case, to produce a step response plot an assumption is required about the values of $R_1$ and $R_2$. For simplicity, it is assumed that $R_1 = R_2$, resulting in the following transfer function: $\dfrac{V_{out}}{V_{in}} = 1/2$.
 
 \begin{figure}[H]
@@ -131,7 +131,7 @@ This circuit is a voltage divider depicted slightly differently than in a previo
     \label{fig:step-response-voltage-divider}
 \end{figure}
 
-\subsection{Circuit C: RC Low Pass Filter}
+\subsection{Circuit C}
 Circuits with inductors and capacitors are dependent on time and frequency and can be analyzed in either domain. For the circuit in Figure \ref{fig:rc_low_pass_filter} analysis will be performed in the time domain. \newline
 % Philosophy: the subsequent question uses frequency domain. extra practice questions allow readers to explore to their hearts desire either approach. 
 
@@ -144,7 +144,7 @@ Circuits with inductors and capacitors are dependent on time and frequency and c
     \label{eq:lpf-ode}
 \end{equation}
 
-\noindent Note when analyzing this circuit, a constant $\tau = R \cdot C$ is defined as the time constant of the RC circuit which represents the time it takes $1-e^{-1}$ or ~63 percent of the step size. As the question allows assumptions to be made for component values, a logical assumption is to select $R$ and $C$ that $\tau = R \cdot C = 1$ for simplicity as the transfer function becomes $\dfrac{V_{out}}{V_{in}} = 1-e^{-t}$.
+\noindent This circuit is commonly referred to as a RC low pass filter where a constant $\tau = R \cdot C$ is defined as the time constant which represents the time it takes $1-e^{-1}$ or ~63 percent of the step size. As the question allows assumptions to be made for component values, a logical assumption is to select $R$ and $C$ that $\tau = R \cdot C = 1$ for simplicity as the transfer function becomes $\dfrac{V_{out}}{V_{in}} = 1-e^{-t}$.
 
 \begin{figure}[H]
     \centering
@@ -173,10 +173,9 @@ The low-pass filter circuit is extremely fundamental and shows up in a variety o
     \label{fig:i2c_comparison}
 \end{figure}
 
-
 \noindent When tackling a question like this, performing a conceptual sanity check can be invaluable! Since a capacitor acts as an open circuit under DC conditions, it follows logically that as time approaches infinity, Circuit C will resemble Circuit A. 
 
-\subsection{Circuit D: RC High Pass Filter}
+\subsection{Circuit D}
 For this question, a complex impedance approach will be used rather than time domain analysis (though both will produce the correct solution). The transfer function of a voltage divider, $\dfrac{V_{out}}{V_{in}} = \dfrac{R_b}{R_t + R_b}$, can be applied to impedance values, resulting in $\dfrac{V_{out}}{V_{in}} = \dfrac{Z_b}{Z_t + Z_b}$. For this circuit $Z_b = Z_r = R$ and $Z_t = Z_c = \dfrac{1}{j \cdot \omega \cdot C}$ can be substituted in to get $\dfrac{V_{out}}{V_{in}} = \dfrac{R}{\dfrac{1}{j \cdot \omega \cdot C} + R}$. \newline
 
 \newnoindentpara When in the time domain $t \approx \infty$ in the frequency $\omega \approx 0$, this the transfer function becomes $\dfrac{V_{out}}{V_{in}} = \dfrac{R}{\dfrac{1}{j \cdot 0 \cdot C} + R} = \dfrac{R}{\infty + R} = \dfrac{1}{\infty} = 0$. Additionally, at $t = 0$, the frequency domain representation of the edge contains very high frequencies where $\omega \approx \infty$, so the transfer function becomes $\dfrac{V_{out}}{V_{in}} = \dfrac{R}{\dfrac{1}{j \cdot \infty \cdot C} + R} = \dfrac{R}{0 + R} = 1$. \newline

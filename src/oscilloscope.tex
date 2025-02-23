@@ -32,7 +32,7 @@ Oscilloscope probes typically share a common ground (which is often attached by 
 \subsection{Triggering}
 Since the signals being analyzed typically operate at frequencies much higher than humans can process (e.g., in the MHz range), oscilloscopes provide a 'trigger' function that establishes a \( t = 0 \, \text{s} \) reference point based on a specific signal event. \newline
 
-\newnoindentpara The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0 \text{s}$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. Untriggered waveforms can appear inconsistent, as illustrated in Figure \ref{fig:scope-triggering}, where the sampled waveform appears highly distorted.\footnote{Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.}
+\newnoindentpara The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0 \text{s}$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. Untriggered waveforms can appear inconsistent, as illustrated in Figure \ref{fig:scope-triggering}, where the sampled waveform appears highly distorted.\footnote{Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.} See also \bluehref{https://www.youtube.com/watch?v=N2novzfmVQ0}{"Demystifying Oscilloscope Triggering" by "w2aew" on Youtube} for a more detailed video explanation. 
 
 \begin{figure}[H]
     \centering
@@ -52,6 +52,10 @@ This means if you probe a 10 MHz signal with an oscilloscope with 10 MHz bandwid
 % Removed memory discussion due to lack of relevance.
 % \subsection{Memory}
 % Sampling generates a lot of discrete data-points very quickly that need to be stored quickly for analysis later. When a high sample rate and long time period of sampling is needed to analyze a signal, more memory is important, and can become costly due to the speed requirements of oscilloscope memory.
+
+% TODO write :@daniel   
+% \subsection{Coupling}
+% Another consideration is the coupling setting for each channel of the oscilloscope. 
 
 \subsection{DMM}
 Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean square of a signal which allows the measurement of AC signal amplitude, DC signals, and PWM duty cycle.
