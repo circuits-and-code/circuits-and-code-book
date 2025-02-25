@@ -24,6 +24,7 @@
 \usepackage{subcaption}
 \usepackage{caption}
 \usepackage{fancyhdr}
+\usepackage{eso-pic}
 
 % Configure Packages
 \renewcommand{\familydefault}{\sfdefault}
@@ -89,9 +90,7 @@
 
 \begin{document}
 
-\begin{center}
-    \includegraphics[width=0.8\textwidth]{images/cover.jpg}
-\end{center}
+\subfile{title.tex}
 \newpage
 
 % Title Page
