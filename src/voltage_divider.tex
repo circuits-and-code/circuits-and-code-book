@@ -102,23 +102,35 @@ When an ADC is operating nominally, it suffers from a non-ideality known as inpu
 
 \begin{equation}
     \begin{aligned}[b]
-        % Commented out on purpose I just want to be sure I didn't mess up the solution
-        % I_{R_t} &= I_{R_b} + I_{load} \\
+        % Proof of formula (Commented out on purpose I just want to be sure I didn't mess up the solution)
+        % I_{R_t} &= I_{R_b} + I_{bias} \\
         % I_{R_b} &= \frac{V_{out}}{R_b} \\
         % I_{R_t} &= \frac{V_{in} - V_{out}}{R_t} \\
-        % \frac{V_{out}}{R_b} + I_{load} &= \frac{V_{in} - V_{out}}{R_t} \\
-        % V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot (V_{in} - V_{out}) \\
-        % V_{out} \cdot R_t + I_{load} \cdot R_t \cdot R_b &= R_b \cdot V_{in} - R_b \cdot V_{out} \\
-        % V_{out} \cdot R_t + R_b \cdot V_{out} &= R_b \cdot V_{in} - I_{load} \cdot R_t \cdot R_b \\
-        % V_{out} \cdot (R_t + R_b) &= V_{in} \cdot (R_b - \frac{I_{load} \cdot R_t \cdot R_b}{V_{in}}) \\
-        % \frac{V_{out}}{V_{in}} &= \frac{R_b - \frac{I_{load} \cdot R_t \cdot R_b}{V_{in}}}{R_t + R_b} \\
-        % \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_t + R_b} - \frac{I_{load} \cdot R_t \cdot R_b}{(R_t + R_b) \cdot V_{in}} \\
-        \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_t + R_b} - \frac{I_{load}}{V_{in}} \cdot \frac{R_t \cdot R_b}{R_t + R_b}
+        % \frac{V_{out}}{R_b} + I_{bias} &= \frac{V_{in} - V_{out}}{R_t} \\
+        % V_{out} \cdot R_t + I_{bias} \cdot R_t \cdot R_b &= R_b \cdot (V_{in} - V_{out}) \\
+        % V_{out} \cdot R_t + I_{bias} \cdot R_t \cdot R_b &= R_b \cdot V_{in} - R_b \cdot V_{out} \\
+        % V_{out} \cdot R_t + R_b \cdot V_{out} &= R_b \cdot V_{in} - I_{bias} \cdot R_t \cdot R_b \\
+        % V_{out} \cdot (R_t + R_b) &= V_{in} \cdot (R_b - \frac{I_{bias} \cdot R_t \cdot R_b}{V_{in}}) \\
+        % \frac{V_{out}}{V_{in}} &= \frac{R_b - \frac{I_{bias} \cdot R_t \cdot R_b}{V_{in}}}{R_t + R_b} \\
+        % \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_t + R_b} - \frac{I_{bias} \cdot R_t \cdot R_b}{(R_t + R_b) \cdot V_{in}} \\
+        \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_t + R_b} - \frac{I_{bias}}{V_{in}} \cdot \frac{R_t \cdot R_b}{R_t + R_b}
     \end{aligned}
     \label{eq:loaded_voltage_divider}
 \end{equation}
 
-\noindent Using the circuit in Figure \ref{fig:voltage_divider_loaded} results in an adjusted transfer function shown in Figure \ref{eq:loaded_voltage_divider}. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this by reducing $R_{sum} = R_t + R_b$ which increases $R_t || R_b = \frac{R_t \cdot R_b}{R_t + R_b}$ and decreases the entire second term of Figure \ref{eq:loaded_voltage_divider}. \newline
+% \begin{equation}
+%     \begin{aligned}[b]
+        % Proof of conclusion (commented on purpose, leaving to the reader to figure it out themselves)
+        % \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_{sum}} - \frac{I_{bias}}{V_{in}} \cdot \frac{R_t \cdot R_b}{R_{sum}} \\
+        % \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_{sum}} - \frac{I_{bias} \cdot R_t}{V_{in}} \cdot \frac{R_b}{R_{sum}} \\
+        % \frac{V_{out}}{V_{in}} &= \frac{R_b}{R_{sum}} \cdot (1 - \frac{I_{bias} \cdot R_t}{V_{in}} ) \\
+        % Decreasing R_{sum} derceases R_t and R_b so while the 1 is constant, the second term (the error term) decreases.
+        % Decreasing $R_{sum} = R_t + R_b$ also decreases $R_t || R_b = \frac{R_t \cdot R_b}{R_t + R_b}$ % in previous versions of the book i stated exactly the opisote which was wrong, whoops.
+%     \end{aligned}
+%     \label{eq:loaded_voltage_divider_further_proof}
+% \end{equation}
+
+\noindent Using the circuit in Figure \ref{fig:voltage_divider_loaded} results in an adjusted transfer function shown in Equation \ref{eq:loaded_voltage_divider}. Input bias current is also hard to model and can vary significantly so the simplest method of compensating for this is by reducing $R_{sum} = R_t + R_b$ while maintainning the same result for $\dfrac{R_b}{R_t + R_b}$. \label{statement:input_bias_compensated_voltage_divider} \newline
 
 % Consider converting this into a follow-up
 \newnoindentpara Another method to compensate for a large input bias current is to use an external voltage buffer, aka a unity gain op-amp (\textit{Operational Amplifier}) to repeat the voltage, but buffer the current. 
@@ -222,6 +234,7 @@ When placing a voltage divider circuit on a PCB, consider:
 \begin{itemize}
     \item Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. Propose a simple circuit to disable current consumption when the voltage divider is not needed.\footnote{A solution is given in extra practice question \ref{extra_practice:switched_divider}}
     \item What if all analog input pins of the microcontroller are already in use? % analog mux, extremely cheap 
+    \item Why does \ref{statement:input_bias_compensated_voltage_divider} work? % Algebraic proof as I showed in my commented formulas 
 \end{itemize}
 
 \end{document}
