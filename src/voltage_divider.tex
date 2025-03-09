@@ -205,7 +205,7 @@ Microcontroller pins often feature clamping diodes to protect the device from so
 An ADC (\textit{Analog to Digital Converter}) is a component that, as the name implies, converts an analog value into a digital value. The frequency components of the sampled signal and sample rate are critical design decisions to avoid aliasing. Aliasing is a large concept in sampling theory that will not be explored in this guide, however, Tim Wescott's article titled \bluehref{https://www.wescottdesign.com/articles/Sampling/sampling.pdf}{Sampling: What Nyquist Didn’t Say, and What to Do About It} provides a deeper understanding of this sampling theory. \newline
 % Paragraph provides motivation for why we want a low pass capacitor. I don't want to do too much detail, I think if you can say the word "Aliasing" in an interview it's plenty.
 
-\newnoindentpara To avoid aliasing, it is common to see a low pass filter (LPF) added to voltage divider circuits (a capacitor added in parallel to the $V_{out}$ signal) to filter out higher frequency noise. The cutoff frequency of a LPF is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of its input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing\footnote{Refer to LPF theory as to why the cutoff frequency is chosen to be higher - the need arises due to the cutoff being -20dB/decade}. 
+\newnoindentpara To avoid aliasing, it is common to see a low pass filter (LPF) added to voltage divider circuits (a capacitor added in parallel to the $V_{out}$ signal) to filter out higher frequency noise. The cutoff frequency of a LPF is the frequency in which the circuit will attenuate to half its input power or $\frac{1}{\sqrt{2}}$ of its input voltage. The cutoff frequency of this low pass filter is usually selected to be roughly five times lower than the sampling frequency to avoid aliasing\footnote{Refer to LPF theory as to why the cutoff frequency is chosen to be higher - the need arises due to the cutoff being -20dB/decade.}. 
 % Just intended to bring up the concept and build intuition, no proof or definitions or math is worth giving here. 
 
 \begin{figure}[H]
@@ -232,7 +232,7 @@ When placing a voltage divider circuit on a PCB, consider:
 
 \subsection{Follow-ups}
 \begin{itemize}
-    \item Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. Propose a simple circuit to disable current consumption when the voltage divider is not needed.\footnote{A solution is given in extra practice question \ref{extra_practice:switched_divider}}
+    \item Reducing the quiescent current of a voltage divider can be done by increasing $R_{sum}$, however, this only gets you so far. Propose a simple circuit to disable current consumption when the voltage divider is not needed.\footnote{A solution is given in extra practice question \ref{extra_practice:switched_divider}.}
     \item What if all analog input pins of the microcontroller are already in use? % analog mux, extremely cheap 
     \item Why does reducing $R_{sum} = R_t + R_b$ reduce the impact of input bias current on a voltage divider circuit as shown in Figure \ref{voltage_divider_loaded}? % Algebraic proof as I showed in my commented formulas, this is a bit complex in my opinion so a fun follow-up
 \end{itemize}
