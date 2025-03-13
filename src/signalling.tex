@@ -53,7 +53,7 @@ The some common digital protocols in embedded systems are:
 \begin{figure}[H]
     \begin{center}
         \begin{circuitikz}[american]
-            \draw (0, 0) node[nigfete, rotate=270](fet){};
+            \draw (0, 0) node[nigfete, bodydiode, rotate=270](fet){};
             \draw (fet.G) -- ++ (0, 1) node[vcc]{+3V3};
             \draw (fet.S) -- ++ (-2, 0) node[anchor=east]{A};
             \draw (fet.S) ++ (-1, 0) to[resistor] ++ (0, 2) node[vcc]{+3V3};
