@@ -36,7 +36,7 @@ Since the signals being analyzed typically operate at frequencies much higher th
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{generated_images/scope-trigger.png}
+    \includegraphics[width=1.0\textwidth, scale=0.8]{generated_images/scope-trigger.png}
     \caption{Impact of Triggering on an Oscilloscope Display}
     \label{fig:scope-triggering}
 \end{figure}
@@ -53,9 +53,17 @@ This means if you probe a 10 MHz signal with an oscilloscope with 10 MHz bandwid
 % \subsection{Memory}
 % Sampling generates a lot of discrete data-points very quickly that need to be stored quickly for analysis later. When a high sample rate and long time period of sampling is needed to analyze a signal, more memory is important, and can become costly due to the speed requirements of oscilloscope memory.
 
-% TODO write :@daniel   
-% \subsection{Coupling}
-% Another consideration is the coupling setting for each channel of the oscilloscope. AC vs DC coupling settings
+\subsection{Coupling}
+Another consideration is the coupling setting for each channel of the oscilloscope. AC vs DC coupling settings. Mathematically signals can be broken down into a static offset component and a dynamic component. Electrically these are represented as the DC and AC component of a signal. 
+
+When DC coupling is used the oscilloscope displays the entire signal while in AC coupling mode the DC offset is filterred out leaving only the AC component. An example of AC and DC coupling for an offset sin wave is shown in Figure \ref{fig:ac_dc}. DC coupling is a default setting, however, when trying to analyze small variations in a signal with a large offset using AC coupling is preferred.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{generated_images/ac_dc.png}
+    \caption{Signal with AC and DC Demonstrated}
+    \label{fig:ac_dc}
+\end{figure}
 
 \subsection{DMM}
 Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean square of a signal which allows the measurement of AC signal amplitude, DC signals, and PWM duty cycle.
