@@ -38,7 +38,7 @@ Enabling and disabling a load can be done in with either switching the positive 
 \newnoindentpara For any common microcontroller, GPIO pins by themselves will not be capable of switching a load with these voltage and current requirements so the use of a pass element transistor is used. The selected transistor needs to be capable of handling the load's voltage and current requirements while being capable of being controlled from the microcontroller.
 
 \subsection{Transistors}
-As introduced in Question \ref{section:led}, a BJT or FET could be selected for this application\footnote{Of course other options exist, however, for a simple application these are the only options worthy of consideration.}.
+As introduced in Question \ref{section:led}, a BJT or FET could be selected for this application.\footnote{Of course other options exist, however, for a simple application these are the only options worthy of consideration.}
 
 As BJTs consume current at the base and have a constant base to emitter voltage drop, holding a BJT on requires constant power consumption. MOSFETs on the other hand require a gate to source voltage, but once the gate capacitance is filled they do not require any current to hold enabled. Additionally consider that the conduction losses of MOSFETs is much lower than BJTs. Consequently for driving loads, MOSFETs are prefferred! \newline
 
