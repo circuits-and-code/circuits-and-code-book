@@ -13,19 +13,22 @@ A solenoid is an electromagnet based on a coil of wire usually wrapped around a 
 
 \newnoindentpara Due to the coil of wire, a solenoid is highly inductive and requires extra considerations to control in an embedded system. Consider when a solenoid is enabled the question states $I = 1\text{A}$ so when disabling the solenoid the goal is to switch to a $I = 0 \text{A}$ state. If this state switch is performed quickly then the inductive load can see a very negative $\dfrac{d\text{I}}{d\text{t}}$ as $\dfrac{0 - 1}{\approx 0} = - \infty$. For an inductor $V_L = L \cdot \dfrac{d\text{I}}{d\text{t}}$ so this can lead to a very negative $V_L$ which can cause damage to the circuitry responsible for enabling and disabling the load. \newline
 
-\newnoindentpara This is commonly compensated for by using a Schottky diode accross the solenoid so that during normal operation the diode does nothing, but if the voltage accross the coil, $V_L$, goes negative then the diode conducts allowing the solenoid to dissipate it's energy without damaging the switching circuitry. As this diode protects the circuit from the flyback voltage spike induced by the inductive load it is referred to as a Flyback diode. 
+\newnoindentpara This is commonly compensated for by using a Schottky diode accross the solenoid so that during normal operation the diode does nothing, but if the voltage accross the coil, $V_L$, goes negative then the diode begins conducting quickly allowing the solenoid to dissipate it's energy without damaging the switching circuitry. As this diode protects the circuit from the flyback voltage spike induced by the inductive load it is referred to as a Flyback Diode. 
 
 \begin{figure}[H]
     \begin{center}
         \begin{circuitikz}[american]
+            % R & L Vertical
             \draw (0, 3) to[inductor] (0, 1.5) to[resistor] (0, 0);
-            \draw (0, 3) -- (0, 3.25);
-            \draw (0, 0) -- (0, -0.25);
-            \draw (-2, 1.5) node[emptysdiodeshape, rotate=90] (d1) {};
-            \draw[thick] (-1, 3.5) rectangle (1, -0.5) node[]{};
-            \node[] at (0, 3.75) {Solenoid};
-            \draw (0, 3.1) -- (-2, 3.1) -- (-2, 1.75);
-            \draw (0, -0.1) -- (-2, -0.1) -- (-2, 1.25);
+            \draw (0, 3) -- (0, 4.5);
+            \draw (0, 0) -- (0, -2);
+            % Flyback Diode
+            \draw (-1.5, 1.5) node[emptysdiodeshape, rotate=90, scale=0.7] (d1) {};
+            \draw (0, 3.1) -- (-1.5, 3.1) -- (-1.5, 1.75);
+            \draw (0, -0.1) -- (-1.5, -0.1) -- (-1.5, 1.25);
+            % Labels
+            \draw[thick] (-0.75, 3.5) rectangle (0.75, -0.5) node[]{};
+            \node[] at (0, 5) {Solenoid};
         \end{circuitikz}
         \caption{Basic Solenoid Model with Flyback Diode}
         \label{fig:solenoid_with_flyback}

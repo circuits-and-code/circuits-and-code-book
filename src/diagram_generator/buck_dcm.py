@@ -54,16 +54,16 @@ def plotter() :
     ax[0].axhline(y=VOUT*2, color='y', linestyle='--', label=f"V_out*2")
     ax[0].set_title(f"{TITLE}")
     ax[0].set_ylim(0, VIN*1.1) 
-    ax[0].set_xlabel("Time (sec)")
-    ax[0].set_ylabel("Voltage (V)")
+    ax[0].set_xlabel("Time (seconds)")
+    ax[0].set_ylabel("Voltage (volts)")
     ax[0].legend()
 
     ax[1].plot(t, i_l, label="Load Current (I_l)")
     ax[1].axhline(y=i_out_avg, color='r', linestyle='--', label=f"Avg Output Current (I_out_avg)")
     ax[1].axhline(y=i_out_max, color='y', linestyle='--', label=f"Max Output Current (I_out_max)")
     ax[1].set_ylim(0, i_out_max*1.1) 
-    ax[1].set_xlabel("Time (sec)")
-    ax[1].set_ylabel("Current (A)")
+    ax[1].set_xlabel("Time (seconds)")
+    ax[1].set_ylabel("Current (amps)")
     ax[1].legend()
 
 if __name__ == "__main__":
