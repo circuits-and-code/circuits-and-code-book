@@ -2,7 +2,7 @@
 \begin{document}
 
 \section{Implement a function to validate the parity of a bitstream.}
-Assume the following header in Listing \ref{code:bitstream-parity-header} is available for use in the bitstream parity implementation. 
+Assume the following header in Snippet \ref{code:bitstream-parity-header} is available for use in the bitstream parity implementation. 
 
 \lstinputlisting[caption={Bitstream Parity Header}, label={code:bitstream-parity-header}]{code/bitstream_parity/bitstream_parity.h}
 
@@ -24,14 +24,14 @@ To implement a parity bit, we need to count the number of 1's in the data stream
 Before counting the number of \texttt{1}s in a byte, it’s important to understand bitwise operations. If you’re not familiar with these (ex: \&, |, >>, etc.), consider reviewing \bluehref{https://www.geeksforgeeks.org/bitwise-operators-in-c-cpp/}{Geeks for Geek's explanation on the topic}. Bitwise operations are common topics in embedded software interviews, and it's essential to understand them.
 
 \subsubsection{Simple Approach}
-A simple approach to count the number of 1's in a byte is to iterate through each bit and check if it's set. Listing \ref{code:count-one-simple} shows a simple implementation of this approach.
+A simple approach to count the number of 1's in a byte is to iterate through each bit and check if it's set. Snippet \ref{code:count-one-simple} shows a simple implementation of this approach.
 
 \lstinputlisting[caption={Simple Approach to Count Number of 1's in a Byte}, label={code:count-one-simple}]{code/bitstream_parity/count_ones_simple.c}
 
 \noindent While effective, this approach is not efficient. It requires 8 iterations to count the number of 1's in a byte. We can improve this by using a technique called \textit{Brian Kernighan's Algorithm}.
 
 \subsubsection{Brian Kernighan's Algorithm}
-Brian Kernighan's Algorithm is a technique to count the number of set bits in a byte. The algorithm works by repeatedly 'removing' the least significant $1$ bit and counting the number of iterations required to reach 0. Listing \ref{code:count-one-brian-kernighan} shows the implementation of this algorithm. It is more efficient than the simple approach as it only requires the number of set bits to be counted \cite{seander_bithacks}.
+Brian Kernighan's Algorithm is a technique to count the number of set bits in a byte. The algorithm works by repeatedly 'removing' the least significant $1$ bit and counting the number of iterations required to reach 0. Snippet \ref{code:count-one-brian-kernighan} shows the implementation of this algorithm. It is more efficient than the simple approach as it only requires the number of set bits to be counted \cite{seander_bithacks}.
 
 \lstinputlisting[caption={Brian Kernighan's Algorithm to Count Number of 1's in a Byte}, label={code:count-one-brian-kernighan}]{code/bitstream_parity/count_ones_bk.c}
 
@@ -46,7 +46,7 @@ Putting it together, the steps to implement a parity bit are as follows:
     \item Compare the parity bit to the expected parity bit.
 \end{enumerate}
 
-\noindent Listing \ref{code:bitstream-parity} shows the implementation of the \texttt{check\_parity} function that implements the steps mentioned above.
+\noindent Snippet \ref{code:bitstream-parity} shows the implementation of the \texttt{check\_parity} function that implements the steps mentioned above.
 
 \lstinputlisting[caption={Bitstream Parity Implementation}, label={code:bitstream-parity}]{code/bitstream_parity/bitstream_parity.c}
 

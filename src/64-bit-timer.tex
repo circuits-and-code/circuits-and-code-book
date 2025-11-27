@@ -2,7 +2,7 @@
 \begin{document}
 
 \section{Given a 64-bit timer consisting of two 32-bit count registers, implement a function to get the 64 bit count.}
-Assume that the timer is initialized, counts up, and updates itself atomically. The following registers are available, with the header for the question available in Listing~\ref{code:timer-registers}:
+Assume that the timer is initialized, counts up, and updates itself atomically. The following registers are available, with the header for the question available in Snippet~\ref{code:timer-registers}:
 \begin{itemize}
     \item \texttt{CNT\_LOW} is the lower 32 bits of the timer count.
     \item \texttt{CNT\_HIGH} is the upper 32 bits of the timer.
@@ -16,7 +16,7 @@ Assume that the timer is initialized, counts up, and updates itself atomically. 
 As a review, a timer is a hardware peripheral that can be configured in firmware to perform specific operations. Generally, timers have a counter that increments or decrements at a fixed rate, and the current count of the timer is accessed by means of a dedicated \texttt{COUNT} register. In the context of this question, it's mentioned that the timer counts up, meaning the count value increases with time at some unspecified rate. As an example, suppose we want to keep track of the number of milliseconds that have passed since the timer was started. If the timer is configured to increment every millisecond, the count value will increase by 1 every millisecond, and the count value can be read to determine the time elapsed in milliseconds.
 
 \subsection{Simple Implementation}
-On first glance, it's tempting to claim the answer is as simple as combining the two 32-bit registers into a 64-bit value, much like what is presented in Listing~\ref{code:timer-64bit-naive}.
+On first glance, it's tempting to claim the answer is as simple as combining the two 32-bit registers into a 64-bit value, much like what is presented in Snippet~\ref{code:timer-64bit-naive}.
 
 \lstinputlisting[caption={Naive 64-bit Timer Read}, label={code:timer-64bit-naive}]{code/timer/timer_64bit_naive.c}
 
@@ -32,7 +32,7 @@ On first glance, it's tempting to claim the answer is as simple as combining the
 \noindent The implications of this is that the 64 bit time value is no longer \textit{monotonic} (constantly increasing), aside from being straight up incorrect. Consumers of this function may experience unexpected behavior if the timer is used for timekeeping or scheduling, as the time value may appear to jump backwards if called near a timer update/roll-over. Note that this issue would also occur if the read order of the high and low COUNT registers were swapped in the implementation.
 
 \subsection{Correct Implementation}
-To correctly read the 64-bit timer value, we need to ensure that the \texttt{CNT\_HIGH} register and \texttt{CNT\_LOW} register are 'synchronized' in time. This can be achieved by reading the \texttt{CNT\_HIGH} register first, then reading the \texttt{CNT\_LOW} register, and finally reading the \texttt{CNT\_HIGH} register again. If the two \texttt{CNT\_HIGH} reads are equal, we can be confident that the 64-bit value is correct as a roll-over did not occur. If a roll-over did occur, we re-read the low and high values and use that for the computation of the 64 bit time, as we are no longer close to a roll-over event. The correct implementation is shown in Listing~\ref{code:timer-64bit-correct}.
+To correctly read the 64-bit timer value, we need to ensure that the \texttt{CNT\_HIGH} register and \texttt{CNT\_LOW} register are 'synchronized' in time. This can be achieved by reading the \texttt{CNT\_HIGH} register first, then reading the \texttt{CNT\_LOW} register, and finally reading the \texttt{CNT\_HIGH} register again. If the two \texttt{CNT\_HIGH} reads are equal, we can be confident that the 64-bit value is correct as a roll-over did not occur. If a roll-over did occur, we re-read the low and high values and use that for the computation of the 64 bit time, as we are no longer close to a roll-over event. The correct implementation is shown in Snippet~\ref{code:timer-64bit-correct}.
 
 \lstinputlisting[caption={Correct 64-bit Timer Read}, label={code:timer-64bit-correct}]{code/timer/timer_64bit_correct.c}
 
