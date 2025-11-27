@@ -16,7 +16,7 @@ The \textbf{volatile} keyword is used to tell the compiler that there are \texti
 \noindent Note that using volatile where not necessary can lead to worse performance, as the compiler may not optimize the variable's access. 
 
 \subsubsection{Example Volatile Use Case}
-Consider a short program below in Listing \ref{code:volatile-use-case} where a timer interrupt service routine (ISR) increments a variable \texttt{timer\_counter} every millisecond. 
+Consider a short program below in Snippet \ref{code:volatile-use-case} where a timer interrupt service routine (ISR) increments a variable \texttt{timer\_counter} every millisecond. 
 
 \lstinputlisting[caption={Volatile Use Case}, label={code:volatile-use-case}]{code/keyword/volatile_ex.c}
 
@@ -32,7 +32,7 @@ The \textbf{const} keyword refers to a variable that is \textbf{read-only} \cite
 \noindent Const's primary use is to make code more readable and maintainable. By declaring a variable as \texttt{const}, the programmer can signal to others that the variable should not be modified and have the compiler enforce this behaviour. This can help prevent bugs and make the code easier to understand. As a general rule, it's good practice to declare variables as \texttt{const} whenever possible.
 
 \subsubsection{Example Const Use Case}
-Consider the code snippet in Listing \ref{code:const-use-case}. The variable \texttt{UART\_RECEIVE\_REGISTER\_READ\_ONLY} is declared as \texttt{const}, meaning its value cannot be modified through the program (a compiler error will be thrown). However, the value at the memory address \texttt{0x12345678} can still change due to external events, such as hardware (e.g., UART) writing to it,\footnote{It's also possible to bypass the protection of const, both intentionally and inadvertantly.} which is why \texttt{const} does not mean \textit{constant}.
+Consider the code in Snippet \ref{code:const-use-case}. The variable \texttt{UART\_RECEIVE\_REGISTER\_READ\_ONLY} is declared as \texttt{const}, meaning its value cannot be modified through the program (a compiler error will be thrown). However, the value at the memory address \texttt{0x12345678} can still change due to external events, such as hardware (e.g., UART) writing to it,\footnote{It's also possible to bypass the protection of const, both intentionally and inadvertantly.} which is why \texttt{const} does not mean \textit{constant}.
 
 \begin{lstlisting}[caption={Example use case of Const}, label={code:const-use-case}]
 #include <stdint.h>
@@ -49,7 +49,7 @@ int main() {
 \subsection{Static}
 The \textbf{static} keyword has different meanings depending on the context in which it is used.
 \subsubsection{Static Functions}
-When used with functions, the \texttt{static} keyword limits the function's scope to the file in which it is defined (as all functions are implicitly declared as extern without the \texttt{static} qualifier \cite{arm_static}). This means that the function cannot be accessed by other files through linking. This is useful for helper functions that are only used within a single file and should not be exposed to other files, in effect creating a private function. Listing \ref{code:static-function} shows an example of a static function.
+When used with functions, the \texttt{static} keyword limits the function's scope to the file in which it is defined (as all functions are implicitly declared as extern without the \texttt{static} qualifier \cite{arm_static}). This means that the function cannot be accessed by other files through linking. This is useful for helper functions that are only used within a single file and should not be exposed to other files, in effect creating a private function. Snippet \ref{code:static-function} shows an example of a static function.
 
 
 \begin{lstlisting}[caption={Example of a Static Function}, label={code:static-function}]
@@ -63,7 +63,7 @@ When used with global variables, the \texttt{static} keyword limits the variable
 
 
 \subsubsection{Static Local Variables}
-When used with local variables within functions, the \texttt{static} keyword changes the variable's storage class to static. This means that the variable is stored in the data segment rather than the stack (where temporary data and variables are stored \cite{embedded_com_Static}), and its value is retained between function calls. This is useful when you want a variable to retain its value between function calls. Listing \ref{code:static-local-variable} shows an example of a static local variable.
+When used with local variables within functions, the \texttt{static} keyword changes the variable's storage class to static. This means that the variable is stored in the data segment rather than the stack (where temporary data and variables are stored \cite{embedded_com_Static}), and its value is retained between function calls. This is useful when you want a variable to retain its value between function calls. Snippet \ref{code:static-local-variable} shows an example of a static local variable.
 
 \lstinputlisting[caption={Static Local Variable}, label={code:static-local-variable}]{code/keyword/main.c}
 

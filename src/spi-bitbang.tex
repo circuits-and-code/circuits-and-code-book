@@ -4,7 +4,7 @@
 \section{Implementing a bit-bang'ed SPI master.}
 
 \subsection{Given Code}
-Assume the header shown in Listing \ref{code:bit-bang-header} is available for use in the bit-banging implementation of SPI. The transceive function should use CPOL = 1, CPHA = 1. 
+Assume the header shown in Snippet \ref{code:bit-bang-header} is available for use in the bit-banging implementation of SPI. The transceive function should use CPOL = 1, CPHA = 1. 
 
 \lstinputlisting[caption={Bit Bang HAL Header}, label={code:bit-bang-header}]{code/bitbang_spi/bitbang_spi_header.h}
 
@@ -17,7 +17,7 @@ In embedded systems, communication protocols like SPI are typically handled by d
     \item When a custom or non-standard protocol is required, which cannot be supported by existing hardware peripherals.
 \end{itemize}
 
-\noindent Bit-banging is usually implemented by manually controlling the individual pins of a microcontroller in software to emulate a hardware peripheral \cite{looi_bitbanging}. While this approach is slower and uses more CPU resources, it provides flexibility for situations where hardware support is limited. Listing \ref{code:bit-bang-square-ex} shows an example of a square wave generator implemented using bit-banging. Note the use of \texttt{delayMicroseconds()} to control the timing of the square wave, which blocks the CPU until the desired time has passed, contributing to the inefficiency of bit-banging.
+\noindent Bit-banging is usually implemented by manually controlling the individual pins of a microcontroller in software to emulate a hardware peripheral \cite{looi_bitbanging}. While this approach is slower and uses more CPU resources, it provides flexibility for situations where hardware support is limited. Snippet \ref{code:bit-bang-square-ex} shows an example of a square wave generator implemented using bit-banging. Note the use of \texttt{delayMicroseconds()} to control the timing of the square wave, which blocks the CPU until the desired time has passed, contributing to the inefficiency of bit-banging.
 
 \lstinputlisting[caption={Bit-Banged Square Wave Implementation}, label={code:bit-bang-square-ex}]{code/bitbang_spi/bitbang_ex.c}
 
@@ -48,7 +48,7 @@ Going through the timing diagram in Figure \ref{fig:spi_timing} piece by piece, 
     \item Terminate the SPI transaction by pulling the CS and SCLK line high to deselect the slave device.
 \end{itemize}
 
-\noindent Listing \ref{code:bit-bang-spi} shows a basic implementation of a bit-banged SPI master transceive.
+\noindent Snippet \ref{code:bit-bang-spi} shows a basic implementation of a bit-banged SPI master transceive.
 
 \lstinputlisting[caption={Bit Bang SPI Implementation}, label={code:bit-bang-spi}]{code/bitbang_spi/bitbang_spi.c}
 
