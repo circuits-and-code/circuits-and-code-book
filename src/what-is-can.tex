@@ -76,10 +76,10 @@ A CAN message consists of a variety of fields, of which the most important are:
     \item \textbf{Acknowledgement Field:} This field is used to acknowledge the receipt of a message.
 \end{itemize}
 
-\noindent Typically, a microcontroller will have a CAN peripheral that handles the low-level details of the CAN protocol, such as message transmission, reception, error detection, etc. The microcontroller's firmware will interact with the CAN peripheral to send and receive messages, as well as configure key parameters such as the bitrate, message filters (only receive certain message ID's), etc.
+\noindent Typically, a microcontroller will have a CAN peripheral that handles the low-level details of the CAN protocol, such as message transmission, reception, error detection, etc. The microcontroller's firmware will interact with the CAN peripheral to send and receive messages, as well as configure key parameters such as the bitrate, message filters (only receive certain message IDs), etc.
 
 \subsubsection{CAN Arbitration}
-CAN features a unique, \textit{non-destructive} (without data loss), \textit{bit-wise} arbitration mechanism, based on the message identifier. Due to the open-drain nature of the bus, a dominant bit (0) will always override a recessive bit (1). When two nodes start transmitting a message identifier, they constantly monitor the bus to see if the message identifier bit they are transmitting is the same as the message identifier bit on the bus. If a node sees that the message identifier it is transmitting is different from the message identifier on the bus, it will stop transmitting and wait for the bus to become idle before trying to transmit again. Because of this, the node with the lowest message identifier will always win the arbitration and be able to transmit its message (and thus, lower message ID's have higher priority). An example of CAN arbitration in action is shown in Figure \ref{fig:can-arbitration}.
+CAN features a unique, \textit{non-destructive} (without data loss), \textit{bit-wise} arbitration mechanism, based on the message identifier. Due to the open-drain nature of the bus, a dominant bit (0) will always override a recessive bit (1). When two nodes start transmitting a message identifier, they constantly monitor the bus to see if the message identifier bit they are transmitting is the same as the message identifier bit on the bus. If a node sees that the message identifier it is transmitting is different from the message identifier on the bus, it will stop transmitting and wait for the bus to become idle before trying to transmit again. Because of this, the node with the lowest message identifier will always win the arbitration and be able to transmit its message (and thus, lower message IDs have higher priority). An example of CAN arbitration in action is shown in Figure \ref{fig:can-arbitration}.
 
 \begin{figure}[H]
     \centering
@@ -92,9 +92,9 @@ CAN features a unique, \textit{non-destructive} (without data loss), \textit{bit
 
 \subsection{Follow-ups}
 \begin{itemize}
-    \item Explain how CAN can detect TX errors using TX/RX loopback?
+    \item Explain how CAN can detect TX errors using TX/RX loopback.
     \item How would you debug a CAN bus that is not working?
-    \item What is 'Time Quanta' in CAN?
+    \item What is ``Time Quanta'' in CAN?
 \end{itemize}
 
 \end{document}

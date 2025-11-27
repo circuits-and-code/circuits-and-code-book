@@ -70,7 +70,7 @@ A common follow-up question is to ask about the potential consequences of using 
 \end{figure}
 
 \subsubsection{Priority Inheritance}
-A solution to fix this is called \textit{priority inheritance} - the OS will temporarily boost the priority of the low-priority task to the priority of the high-priority task while the low-priority task holds the mutex \cite{digikey_priority_inversion}. This ensures that the high-priority task can run as soon as the low-priority task releases the mutex. An example of this situation is shown in Figure \ref{fig:priority_inheritance}.
+\noindent A solution to fix this is called \textit{priority inheritance}---the OS will temporarily boost the priority of the low-priority task to the priority of the high-priority task while the low-priority task holds the mutex \cite{digikey_priority_inversion}. This ensures that the high-priority task can run as soon as the low-priority task releases the mutex. An example of this situation is shown in Figure \ref{fig:priority_inheritance}.
 
 \begin{figure}[H]
     \centering

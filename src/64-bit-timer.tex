@@ -13,10 +13,10 @@ Assume that the timer is initialized, counts up, and updates itself atomically. 
 \spoilerline
 
 \subsection{Timer Background}
-As a review, a timer is a hardware peripheral that can be configured in firmware to perform specific operations. Generally, timers have a counter that increments or decrements at a fixed rate, and the current count of the timer is accessed by means of a dedicated \texttt{COUNT} register. In the context of this question, it's mentioned that the timer counts up, meaning the count value increases with time at some unspecified rate. As an example, suppose we want to keep track of the number of milliseconds that have passed since the timer was started. If the timer is configured to increment every millisecond, the count value will increase by 1 every millisecond, and the count value can be read to determine the time elapsed in milliseconds.
+As a review, a timer is a hardware peripheral that can be configured in firmware to perform specific operations. Generally, timers have a counter that increments or decrements at a fixed rate, and the current count of the timer is accessed by means of a dedicated \texttt{COUNT} register. In the context of this question, it is mentioned that the timer counts up, meaning the count value increases with time at some unspecified rate. As an example, suppose we want to keep track of the number of milliseconds that have passed since the timer was started. If the timer is configured to increment every millisecond, the count value will increase by 1 every millisecond, and the count value can be read to determine the time elapsed in milliseconds.
 
 \subsection{Simple Implementation}
-On first glance, it's tempting to claim the answer is as simple as combining the two 32-bit registers into a 64-bit value, much like what is presented in Snippet~\ref{code:timer-64bit-naive}.
+On first glance, it is tempting to claim the answer is as simple as combining the two 32-bit registers into a 64-bit value, much like what is presented in Snippet~\ref{code:timer-64bit-naive}.
 
 \lstinputlisting[caption={Naive 64-bit Timer Read}, label={code:timer-64bit-naive}]{code/timer/timer_64bit_naive.c}
 
@@ -29,7 +29,7 @@ On first glance, it's tempting to claim the answer is as simple as combining the
     \item The resulting 64-bit value is \texttt{0x00000001 FFFFFFFF}, which is incorrect. The correct value should be \texttt{0x00000001 00000000}.
 \end{enumerate}
 
-\noindent The implications of this are that the 64-bit time value is no longer \textit{monotonic} (constantly increasing), aside from being incorrect. Consumers of this function may experience unexpected behaviour if the timer is used for timekeeping or scheduling, as the time value may appear to jump backwards if called near a timer update/roll-over. Note that this issue would also occur if the read order of the high and low COUNT registers were swapped in the implementation.
+\noindent The implications of this are that the 64-bit time value is no longer \textit{monotonic} (constantly increasing), aside from being incorrect. Consumers of this function may experience unexpected behaviour if the timer is used for timekeeping or scheduling, as the time value may appear to jump backward if called near a timer update/roll-over. Note that this issue would also occur if the read order of the high and low COUNT registers were swapped in the implementation.
 
 \subsection{Correct Implementation}
 To correctly read the 64-bit timer value, we need to ensure that the \texttt{CNT\_HIGH} register and \texttt{CNT\_LOW} register are ``synchronized'' in time. This can be achieved by reading the \texttt{CNT\_HIGH} register first, then reading the \texttt{CNT\_LOW} register, and finally reading the \texttt{CNT\_HIGH} register again. If the two \texttt{CNT\_HIGH} reads are equal, we can be confident that the 64-bit value is correct as a roll-over did not occur. If a roll-over did occur, we re-read the low and high values and use that for the computation of the 64-bit time, as we are no longer close to a roll-over event. The correct implementation is shown in Snippet~\ref{code:timer-64bit-correct}.

@@ -4,35 +4,35 @@
 \section{Describe how to use an oscilloscope to measure a signal.}
 
 Include the following in your response:
-\begin {itemize}
+\begin{itemize}
     \item How does the trigger function?
     \item Describe bandwidth considerations.
-    \item When the use of probe multiplication is warranted?
-\end {itemize}
+    \item When is the use of probe multiplication warranted?
+\end{itemize}
 
 \spoilerline
 
 \subsection{Oscilloscopes}
-An oscilloscope (in shorthand, just \textit{scope}) is a device that plots the voltage of a probed signal with respect to time. It does so by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize a the signal into quantized samples that can be plotted on a monitor. As a result, the oscilloscope can perform many digital logic operations on the probed signal and offers a variety of features for engineers (such as logic analysis, protocol decryption, and frequency domain analysis).
+An oscilloscope (in shorthand, just \textit{scope}) is a device that plots the voltage of a probed signal with respect to time. It does so by utilizing an ADC (\textit{Analog to Digital Converter}) to discretize the signal into quantized samples that can be plotted on a monitor. As a result, the oscilloscope can perform many digital logic operations on the probed signal and offers a variety of features for engineers (such as logic analysis, protocol decryption, and frequency domain analysis).
 
 \subsection{Probes}
 The most basic oscilloscope probes have a ground clip and probe hook connected through a coaxial cable to a BNC connector that connects to the oscilloscope. These probes are designed to have a relatively high impedance and affect the circuit under test minimally.\footnote{In reality, probes often specify the capacitance the probe will add when it is connected to a circuit. This capacitance may have a noticeable impact on the circuit, especially at higher frequencies.} \newline
 
 \subsubsection{Probe Multipliers}
-\newnoindentpara Often, it's desired to measure voltages outside of the input voltage range of the oscilloscope. As a result, probes often have a "probe multiplication" setting (commonly, a 1x or 10x switch) that scales the voltage being probed to a safe level before it enters the oscilloscope. For example, a 10x probe will scale the voltage by a factor of 10 before it enters the oscilloscope. Another advantage of using a higher probe multiplication is that the bandwidth of the probe is increased and the capacitance the probe adds to the circuit is decreased.\footnote{This is because the step down is performed in the probe tip so a lower voltage (and therefore less energy) signal propagates in the coaxial cable and into the scope. This phenomenon is often described as the probe having less effective/apparent capacitance as it pulls less current from the circuit under test.}
+\newnoindentpara Often, it is desired to measure voltages outside of the input voltage range of the oscilloscope. As a result, probes often have a ``probe multiplication'' setting (commonly, a 1x or 10x switch) that scales the voltage being probed to a safe level before it enters the oscilloscope. For example, a 10x probe will scale the voltage by a factor of 10 before it enters the oscilloscope. Another advantage of using a higher probe multiplication is that the bandwidth of the probe is increased and the capacitance the probe adds to the circuit is decreased.\footnote{This is because the step down is performed in the probe tip so a lower voltage (and therefore less energy) signal propagates in the coaxial cable and into the scope. This phenomenon is often described as the probe having less effective/apparent capacitance as it pulls less current from the circuit under test.}
 
 \subsubsection{Other Types of Probes}
-Oscilloscope probes typically share a common ground (which is often attached by a clip), which is tied to earth ground for safety by the oscilloscope. This complicates differential voltage measurements, such as across a resistor not connected to ground. Using single-ended probes, two probes are needed—one on each side of the resistor—with the oscilloscope calculating the difference. Alternatively, a differential probe simplifies this by directly outputting the voltage difference between 2 arbitrary probed signals, saving an oscilloscope channel. \newline 
+Oscilloscope probes typically share a common ground (which is often attached by a clip), which is tied to earth ground for safety by the oscilloscope. This complicates differential voltage measurements, such as across a resistor not connected to ground. Using single-ended probes, two probes are needed---one on each side of the resistor---with the oscilloscope calculating the difference. Alternatively, a differential probe simplifies this by directly outputting the voltage difference between two arbitrary probed signals, saving an oscilloscope channel. \newline 
 
-\newnoindentpara A current clamp is another type of probe that can be used to measure the current going through a wire - it works by outputting a voltage that is proportional to the current going through the wire. When a current clamp is connected to an oscilloscope, the oscilloscope can mathematically convert the voltage output by the current clamp to a current measurement. Current clamps work on the principle of magnetic current sensing and have an active amplifier in them.
+\newnoindentpara A current clamp is another type of probe that can be used to measure the current going through a wire---it works by outputting a voltage that is proportional to the current going through the wire. When a current clamp is connected to an oscilloscope, the oscilloscope can mathematically convert the voltage output by the current clamp to a current measurement. Current clamps work on the principle of magnetic current sensing and have an active amplifier in them.
 
 % Oscilloscopes feature a sample waveform output, usually a 1 kHz square wave. This is intended for verifying probes are functional and the oscilloscope is setup correctly. 
 % Removing this section because it isn't relevant except for tuning and testing which is somewhat out of scope of this question.
 
 \subsection{Triggering}
-Since the signals being analyzed typically operate at frequencies much higher than humans can process (e.g., in the MHz range), oscilloscopes provide a 'trigger' function that establishes a \( t = 0 \, \text{s} \) reference point based on a specific signal event. \newline
+Since the signals being analyzed typically operate at frequencies much higher than humans can process (e.g., in the MHz range), oscilloscopes provide a ``trigger'' function that establishes a \( t = 0 \, \text{s} \) reference point based on a specific signal event. \newline
 
-\newnoindentpara The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0 \text{s}$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. Untriggered waveforms can appear inconsistent, as illustrated in Figure \ref{fig:scope-triggering}, where the sampled waveform appears highly distorted.\footnote{Another parameter of the trigger is the mode. In normal mode the oscilloscope will only trigger when a trigger event occurs. In auto mode the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped which means no trigger events are allowed meaning the display does not update.} See also \bluehref{https://www.youtube.com/watch?v=N2novzfmVQ0}{"Demystifying Oscilloscope Triggering" by "w2aew" on Youtube} for a more detailed video explanation. 
+\newnoindentpara The most common form of trigger is known as edge triggering. When rising edge trigger mode is used, the oscilloscope begins a displayed image at $t=0 \text{s}$ every time the sampled signal rises across a voltage threshold. Other trigger types occur, specifically for digital protocols, to trigger on more complex conditions such as a specific series of bytes in a digital protocol. Untriggered waveforms can appear inconsistent, as illustrated in Figure \ref{fig:scope-triggering}, where the sampled waveform appears highly distorted.\footnote{Another parameter of the trigger is the mode. In normal mode, the oscilloscope will only trigger when a trigger event occurs. In auto mode, the oscilloscope will automatically trigger if a trigger event has not occurred for some period of time. The oscilloscope can also be stopped, which means no trigger events are allowed meaning the display does not update.} See also \bluehref{https://www.youtube.com/watch?v=N2novzfmVQ0}{``Demystifying Oscilloscope Triggering'' by ``w2aew'' on YouTube} for a more detailed video explanation. 
 
 \begin{figure}[H]
     \centering
@@ -66,7 +66,7 @@ When DC coupling is used the oscilloscope displays the entire signal while in AC
 \end{figure}
 
 \subsection{DMM}
-Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean square of a signal which allows the measurement of AC signal amplitude, DC signals, and PWM duty cycle.
+Digital multi-meters (\textit{DMMs}) are also capable of sampling voltage with respect to time, however, their sample rate and bandwidth is significantly lower than that of an oscilloscope. However, DMMs feature circuitry to determine the root-mean-square of a signal which allows the measurement of AC signal amplitude, DC signals, and PWM duty cycle.
 
 \subsection{Follow-ups}
 \begin{itemize}  

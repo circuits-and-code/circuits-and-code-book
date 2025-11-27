@@ -20,7 +20,7 @@ Some examples are as follows:
 \subsubsection{Theory of Operation Review}
 When an interrupt occurs, the CPU saves the current state of the program and pushes it on the stack, executes the \textit{interrupt service routine} (ISR), and then restores the program's state. \cite{white2024}
 \newline
-\newnoindentpara Broadly speaking, there are 2 types of interrupt handling mechanisms. Depending on the system architecture and interrupt source type, one or both may be used \cite{myersInterrupts}:
+\newnoindentpara Broadly speaking, there are two types of interrupt handling mechanisms. Depending on the system architecture and interrupt source type, one or both may be used \cite{myersInterrupts}:
 \begin{itemize}
     \item \textbf{Non-Vectored/Polled Interrupts:} Interrupts are handled by a common ISR, which then determines the source of the interrupt. An example would be when 3 unique button interrupts are handled by a single ISR, which then determines which button was pressed.
     \item \textbf{Vectored Interrupts:} The interrupting device directly specifies the ISR to be executed; the address of the ISR to call is usually stored in a table of function pointers called the \textit{vector table}. An example would be when 3 button interrupts are handled by 3 separate ISRs, avoiding the need for the ISR to explicitly determine the button issuing the interrupt.
@@ -36,8 +36,8 @@ When an interrupt occurs, the CPU saves the current state of the program and pus
 \subsection{Interrupt Service Routines}
 An \textit{Interrupt Service Routine} (ISR) is a special type of function that is called when an interrupt occurs. Because they are called asynchronously and through hardware, ISRs differ from regular functions in several key ways.
 \begin{itemize}
-    \item \textbf{Execution Time:} ISRs should be kept as short as possible, as they can block other interrupts from being serviced and stall the main program from running. This is especially important in real-time systems, where missing an interrupt can have serious consequences. In an RTOS, a key assumption made by deadline scheduling algorithms is that ISRs are extremely fast when compared to task execution time \cite{BetterEmbeddedSystemSoftware}. As a corollary, ISR's should avoid blocking operations.
-    \item \textbf{Concurrency:} ISR's, by their very nature, are concurrent with the main program. This means that they can interrupt the main program at any time, and the main program must be written with this in mind. 
+    \item \textbf{Execution Time:} ISRs should be kept as short as possible, as they can block other interrupts from being serviced and stall the main program from running. This is especially important in real-time systems, where missing an interrupt can have serious consequences. In an RTOS, a key assumption made by deadline scheduling algorithms is that ISRs are extremely fast when compared to task execution time \cite{BetterEmbeddedSystemSoftware}. As a corollary, ISRs should avoid blocking operations.
+    \item \textbf{Concurrency:} ISRs, by their very nature, are concurrent with the main program. This means that they can interrupt the main program at any time, and the main program must be written with this in mind. 
     \begin{itemize} 
         \item In particular, attention should be paid to shared variables and resources between the ISR and the main program, and may require the use of queues, semaphores, or other synchronization mechanisms.
         \item In addition, ISRs should avoid non-reentrant (\textit{reentrant functions are functions that can be called again, or re-entered, before a previous invocation completes}) functions, as they can be interrupted and cause unexpected behaviour. Examples of non-reentrant functions include those that use global variables or static variables, as well as \texttt{malloc()} and \texttt{printf()}.
