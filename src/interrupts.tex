@@ -28,8 +28,8 @@ When an interrupt occurs, the CPU saves the current state of the program and pus
 
 \newnoindentpara Several other concepts are important to understand when working with interrupts, but are not directly related to the question. These include:
 \begin{itemize}
-    \item \textbf{Interrupt Priority:} Determines which interrupt is serviced first when multiple interrupts occur simultaneously.
     \item \textbf{Interrupt Nesting:} The ability to handle interrupts while another interrupt is being serviced.
+    \item \textbf{Interrupt Priority:} Determines which interrupt is serviced first when multiple interrupts occur simultaneously. Note that higher priority interrupts can interrupt lower priority interrupts, but not vice versa.
     \item \textbf{Interrupt Masking:} Disabling interrupts to prevent them from being serviced.
 \end{itemize}
 
