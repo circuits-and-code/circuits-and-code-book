@@ -40,7 +40,7 @@ An \textit{Interrupt Service Routine} (ISR) is a special type of function that i
     \item \textbf{Concurrency:} ISR's, by their very nature, are concurrent with the main program. This means that they can interrupt the main program at any time, and the main program must be written with this in mind. 
     \begin{itemize} 
         \item In particular, attention should be paid to shared variables and resources between the ISR and the main program, and may require the use of queues, semaphores, or other synchronization mechanisms.
-        \item In addition, ISR's should avoid non-reentrant (\textit{reentrant functions are functions that can be called again, or re-entered, before a previous invocation completes}) functions, as they can be interrupted and cause unexpected behavior. Examples of non-reentrant functions include those that use global variables or static variables, as well as \texttt{malloc()} and \texttt{printf()}.
+        \item In addition, ISRs should avoid non-reentrant (\textit{reentrant functions are functions that can be called again, or re-entered, before a previous invocation completes}) functions, as they can be interrupted and cause unexpected behaviour. Examples of non-reentrant functions include those that use global variables or static variables, as well as \texttt{malloc()} and \texttt{printf()}.
     \end{itemize}
     \item \textbf{No Return Value:} ISRs do not return a value, as they are not called by the program but by the hardware.
 \end{itemize}

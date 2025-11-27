@@ -95,14 +95,14 @@ The conversion problem can be addressed as follows. The code is shown in Snippet
     \item \textbf{Begin the ADC Conversion}: Write to the ADC configuration register to begin an ADC conversion.
     \item \textbf{Poll the ADC Status Register}: Wait for the ADC to finish the conversion by polling the ADC status register.
     \item \textbf{Read the ADC Data Registers}: Read the ADC data registers to get the 12-bit ADC conversion result. We need to read the ADC data registers in two separate reads (high and low) and combine the results by shifting the high bits left by 8 and ORing with the low bits.
-    \item \textbf{Calculate the ADC Voltage}: Calculate the ADC voltage from the 12-bit ADC conversion result by using the formula $V_{ADC} = \frac{ADC\_RESULT \cdot V_{REF}}{2^{12} - 1}$. Note that the $2^{12} - 1$ term is the maximum value of a 12-bit number, and corrosponds to the ADC reference voltage.
+    \item \textbf{Calculate the ADC Voltage}: Calculate the ADC voltage from the 12-bit ADC conversion result by using the formula $V_{ADC} = \frac{ADC\_RESULT \cdot V_{REF}}{2^{12} - 1}$. Note that the $2^{12} - 1$ term is the maximum value of a 12-bit number, and corresponds to the ADC reference voltage.
 \end{enumerate}
 
 \lstinputlisting[caption={ADC Conversion}, label={code:adc-conversion}]{code/adc_init/adc_conversion.c}
 
 \subsection{Follow-ups}
 \begin{itemize}
-    \item \textbf{Avoiding Polling}: What are strategies for avoiding polling in the ADC conversion function (ex: DMA, interrupts, etc)?
+    \item \textbf{Avoiding Polling}: What are strategies for avoiding polling in the ADC conversion function (e.g., DMA, interrupts)?
     \item \textbf{Sample Frequency}: Generally, what is the impact of the ADC clock frequency on the ADC conversion time and resolution?
     \item \textbf{ADC Error Sources}: What are sources of error in an ADC and how are they mitigated?
 \end{itemize}
