@@ -37,7 +37,7 @@ Consider the code in Snippet \ref{code:const-use-case}. The variable \texttt{UAR
 \begin{lstlisting}[caption={Example use case of Const}, label={code:const-use-case}]
 #include <stdint.h>
 
-volatile const uint8_t* const UART_RECEIVE_REGISTER_READ_ONLY = (uint32_t*)0x12345678;
+volatile const uint8_t* const UART_RECEIVE_REGISTER_READ_ONLY = (uint8_t*)0x12345678;
 
 int main() {
     uint8_t uart_receive_char = *UART_RECEIVE_REGISTER_READ_ONLY; // Valid C code!
