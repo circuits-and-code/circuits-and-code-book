@@ -7,7 +7,7 @@
 \spoilerline
 
 \subsection{I2C}
-I2C is a \textit{half-duplex} (can either transmit or receive, but not both simultaneously) digital protocol developed by Phillips in 1982 \cite{sparkfun_i2c_history}. It enables a host device\footnote{I2C does support multiple master devices, however, this article focuses on the significantly more prevalent single-master implementation.} (referred to as a \textit{master}\footnote{The phrases 'master' and 'slave' are slowly being phased out due to their origins. However, at time of writing, 'master' and 'slave' are the most commonly used terms and are used in this guide. Alternative verbiage includes 'controller' for master and 'peripheral' or 'target' for slave.}) to communicate with multiple peripheral devices (referred to as \textit{slaves}) over a two-wire serial bus. 
+I2C is a \textit{half-duplex} (can either transmit or receive, but not both simultaneously) digital protocol developed by Phillips in 1982 \cite{sparkfun_i2c_history}. It enables a host device\footnote{I2C does support multiple master devices, however, this article focuses on the significantly more prevalent single-master implementation.} (referred to as a \textit{master}\footnote{The phrases ``master'' and ``slave'' are slowly being phased out due to their origins. However, at time of writing, ``master'' and ``slave'' are the most commonly used terms and are used in this guide. Alternative verbiage includes ``controller'' for master and ``peripheral'' or ``target'' for slave.}) to communicate with multiple peripheral devices (referred to as \textit{slaves}) over a two-wire serial bus. 
 % Unfortunately at the time of writing, master/slave is the pervasive industry standard terms.
 
 \subsubsection{Physical Layer}
@@ -20,7 +20,7 @@ The physical layer of I2C consists of two wires: SDA (Serial Data) and SCL (Seri
     \label{fig:i2c_bus}
 \end{figure}
 
-\noindent The bidirectional nature of the SDA and SCL lines is achieved by using \textit{open-drain} drivers. Open-drain drivers can pull the line low, but not drive it high, instead relying on a \textit{pull-up} resistor to "pull the voltage up". This is contrast to a \textit{push-pull} driver, which can drive the line both high and low. Open-drain drivers, while advantageous in ensuring that the bus can never be shorted by two devices driving the line with different voltages, suffers from slower rise/fall times due to the pull-up resistor forming an RC circuit with the parasitic bus capacitance, and limits the maximum bus speed to 400kHz traditionally, though higher speeds just above 1 MHz are permissible in newer versions of the specification.
+\noindent The bidirectional nature of the SDA and SCL lines is achieved by using \textit{open-drain} drivers. Open-drain drivers can pull the line low, but not drive it high, instead relying on a \textit{pull-up} resistor to ``pull the voltage up''. This is in contrast to a \textit{push-pull} driver, which can drive the line both high and low. Open-drain drivers, while advantageous in ensuring that the bus can never be shorted by two devices driving the line with different voltages, suffer from slower rise/fall times due to the pull-up resistor forming an RC circuit with the parasitic bus capacitance, and limit the maximum bus speed to 400 kHz traditionally, though higher speeds just above 1 MHz are permissible in newer versions of the specification.
 % More information about RC circuit diagram is not given here as it will be covered in "passive_circuits.tex"
 
 \subsubsection{Data Format}
@@ -51,7 +51,7 @@ SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (
     \label{fig:spi_timing}
 \end{figure}
 
-\noindent Unlike I2C, SPI does not have a standard addressing scheme, and the master device must \textit{assert} (pull down) a CS line to connected to the slave device it wishes to communicate with - the requirement for each slave device to feature its own CS line increases SPI's wiring complexity. Owing to the push-pull nature of SPI drivers, the bus is faster than I2C (low MHz range). The bus diagram is shown in Figure \ref{fig:spi_bus} (Note the diagram in Figure \ref{fig:spi_bus} uses \textit{SS} for \textit{Slave Select}, which is synonymous with \textit{CS}).
+\noindent Unlike I2C, SPI does not have a standard addressing scheme, and the master device must \textit{assert} (pull down) a CS line connected to the slave device it wishes to communicate with---the requirement for each slave device to feature its own CS line increases SPI's wiring complexity. Owing to the push-pull nature of SPI drivers, the bus is faster than I2C (low MHz range). The bus diagram is shown in Figure \ref{fig:spi_bus} (note the diagram in Figure \ref{fig:spi_bus} uses \textit{SS} for \textit{Slave Select}, which is synonymous with \textit{CS}).
 
 \begin{figure}[H]
     \centering
@@ -62,7 +62,7 @@ SPI was developed by Motorola \cite{SPI_history} and is a \textit{full-duplex} (
 
 \subsection{Comparison}
 \begin{itemize}
-    \item \textbf{Bus Speed}: SPI is faster than I2C, with speeds in the MHz range (ex: 1-40 MHz) compared to I2C's 400 kHz range due to the differences in drive type. As a result, SPI is often used in applications where the transfer speed is required to be high.
+    \item \textbf{Bus Speed}: SPI is faster than I2C, with speeds in the MHz range (e.g., 1--40 MHz) compared to I2C's 400 kHz range due to the differences in drive type. As a result, SPI is often used in applications where high transfer speed is required.
     \item \textbf{Wiring Complexity}: I2C requires, at most, two wires, regardless of the number of devices on the bus owing to its addressing scheme. A SPI master requires at least four wires, plus an additional wire for each slave device (each slave will require 4 wires).
     \item \textbf{Frame Format}: I2C has a more complex frame format than SPI, with start and stop conditions, address bytes, and acknowledge bits, which can assist in debugging unresponsive slave devices. However, SPI has a simpler frame format, with no addressing scheme and no acknowledge bits, which reduces the overhead of each transaction and affords more flexibility in the data format.
     % Comparison of I2C and SPI with analog signals is further elaborated on in signalling.tex

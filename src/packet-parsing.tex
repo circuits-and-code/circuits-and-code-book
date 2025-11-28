@@ -47,7 +47,7 @@ A checksum is a simple error-detection method\footnote{In real-world implementat
 \noindent For this example, the checksum is calculated by summing the bytes from 1 to 6. However, the checksum that is transmitted is the lowest byte of the sum. This is done to save bandwidth and reduce the number of bytes transmitted. It is equivalent to saying that \texttt{checksum\_transmitted = checksum\_calculated \& 0xFF}.
 
 \subsection{Parsing Function Implementation}
-When implementing a parsing function, it's important to consider the failure cases that require attention in our implementation (and usually make up most of what interviewers are expecting). In the scope of this question, the edge cases include:
+When implementing a parsing function, it is important to consider the failure cases that require attention in our implementation (and usually make up most of what interviewers are expecting). In the scope of this question, the edge cases include:
 \begin{itemize}
     \item The packet length is incorrect (the length is fixed and the packet is assumed to be completely received, therefore, any buffer length that is not equal to the expected packet length is considered an error).
     \item The buffer or data packet arguments are \texttt{NULL}.

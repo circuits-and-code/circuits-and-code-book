@@ -51,12 +51,12 @@ Ideal operational amplifiers (\textit{op-amps}) are active devices characterized
 \end{figure}
 
 \subsubsection{Virtual Short}
-\noindent When an op-amp is connected in a negative feedback configuration, the inputs ($V_{+}$ and $V_{-}$) are considered "virtually shorted", meaning $V_{+} = V_{-}$. Negative feedback in an op-amp circuit means there is a current path from it's output, $V_{out}$, to it's inverting terminal, $V_{-}$.
+\noindent When an op-amp is connected in a negative feedback configuration, the inputs ($V_{+}$ and $V_{-}$) are considered ``virtually shorted'', meaning $V_{+} = V_{-}$. Negative feedback in an op-amp circuit means there is a current path from its output, $V_{out}$, to its inverting terminal, $V_{-}$.
 
 \subsection{Solving}
-\noindent When analyzing circuits, begin by defining equations for simple elements and build from there. In this circuit,  Ohms' law can be applied to the $R_f$ and $R_i$ resistors, which results in the following relationships: $V_{out} - V_{-} = I \cdot R_f$ and $V_{-} = I \cdot R_i$. Note in this case, $I_{-} = 0$ as the current ($I$) through resistor $R_f$ is the same as the current through $R_i$. \newline
+\noindent When analyzing circuits, begin by defining equations for simple elements and build from there. In this circuit, Ohm's law can be applied to the $R_f$ and $R_i$ resistors, which results in the following relationships: $V_{out} - V_{-} = I \cdot R_f$ and $V_{-} = I \cdot R_i$. Note in this case, $I_{-} = 0$ as the current ($I$) through resistor $R_f$ is the same as the current through $R_i$. \newline
 
-\newnoindentpara Next, because $R_f$ connects a current path from $V_{out}$ to $V_{-}$, the virtual short assumption holds for the op-amp - therefore, $V_{+} = V_{-}$. From the circuit, it's seen that $V_{in} = V_{+}$, so $V_{in} = V_{+} = V_{-}$. This conclusion can be substituted into the above-derived resistor equations to get $V_{out} - V_{in} = I \cdot R_f$ and $V_{in} = I \cdot R_i$. \newline
+\newnoindentpara Next, because $R_f$ connects a current path from $V_{out}$ to $V_{-}$, the virtual short assumption holds for the op-amp---therefore, $V_{+} = V_{-}$. From the circuit, it is seen that $V_{in} = V_{+}$, so $V_{in} = V_{+} = V_{-}$. This conclusion can be substituted into the above-derived resistor equations to get $V_{out} - V_{in} = I \cdot R_f$ and $V_{in} = I \cdot R_i$. \newline
 
 \newnoindentpara These equations can be substituted into each other to cancel out $I$ and algebraically rearranged to determine Equation \ref{eq:non-inverting-transfer-function}. The solution for $\frac{V_{out}}{V_{in}}$ is known as the transfer function of the circuit. The concept of a transfer function is used to analyze numerous circuits. 
 
@@ -68,7 +68,7 @@ Ideal operational amplifiers (\textit{op-amps}) are active devices characterized
 \subsubsection{Intuition}
 To understand this circuit better, consider how this circuit operates.
 \begin{itemize}
-    \item Because negative resistors don't exist, $R_f > 0$ and $R_i > 0$, $\frac{V_{out}}{V_{in}} > 1$ always. As the gain of the circuit is always positive, this circuit is referred to as a \textit{Non-inverting Amplifier}. 
+    \item Because negative resistors do not exist, $R_f > 0$ and $R_i > 0$, $\frac{V_{out}}{V_{in}} > 1$ always. As the gain of the circuit is always positive, this circuit is referred to as a \textit{Non-inverting Amplifier}. 
     \item When $R_f = R_i = R$ the transfer function simplifies into $\frac{V_{out}}{V_{in}} = 2$.
     \item When $R_f >> R_i$ the gain becomes very large, $\frac{V_{out}}{V_{in}} \approx \infty$.
     \item When $R_i >> R_f$ the gain approaches unity, $\frac{V_{out}}{V_{in}} \approx 1$.
@@ -93,7 +93,7 @@ A special case of this circuit occurs when $R_f$ is replaced with a short circui
 
 \noindent In this case the transfer function becomes unity, $\frac{V_{out}}{V_{in}} = 1$ which can be simplified into $V_{out} = V_{in}$. \newline
 
-\newnoindentpara This circuit acts as a current buffer. Because $I_{V_{+}} = 0$ and $V_{in} = V_{+}$ we see that $I_{in} = 0$ so the circuit doesn't load the input at all. Instead, any current required by the load is provided by the op-amp! 
+\newnoindentpara This circuit acts as a current buffer. Because $I_{V_{+}} = 0$ and $V_{in} = V_{+}$, we see that $I_{in} = 0$ so the circuit does not load the input at all. Instead, any current required by the load is provided by the op-amp. 
 
 % \subsection{Non-idealities}
 % While most interview questions focus on ideal op-amps, real op-amps suffer from numerous non-idealities. The most important of which should be understood to aid in circuit design questions and are described below. 

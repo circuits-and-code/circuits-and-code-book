@@ -9,7 +9,7 @@ For each keyword, explain its purpose, as well as where it would be beneficial t
 \subsection{Volatile}
 The \textbf{volatile} keyword is used to tell the compiler that there are \textit{unexpected side-effects} associated with reads and writes of a variable, and as a result, should \textbf{not} optimize reads/writes to a variable declared as \texttt{volatile}. From \cite{wikipediaVolatile}, it tells the compiler to:
 \begin{itemize}
-    \item \textbf{Not remove or add any reads/writes} to the variable, even if it appears unused in the program. Specifically, this ensures that the compiler does not optimize away accesses or cache the variable's value, forcing every read and write to occur exactly as written. This prevents incorrect behavior, especially when interacting with hardware registers or shared memory.
+    \item \textbf{Not remove or add any reads/writes} to the variable, even if it appears unused in the program. Specifically, this ensures that the compiler does not optimize away accesses or cache the variable's value, forcing every read and write to occur exactly as written. This prevents incorrect behaviour, especially when interacting with hardware registers or shared memory.
     \item \textbf{Not to reorder the reads/writes} to the variable with respect to other reads/writes in the program.
 \end{itemize}
 
@@ -23,16 +23,16 @@ Consider a short program below in Snippet \ref{code:volatile-use-case} where a t
 \noindent The main loop checks if the \texttt{timer\_counter}'s modulo (remainder) has reached a certain value and then performs an action. If the \texttt{timer\_counter} variable is not declared as \texttt{volatile}, the compiler may optimize the loop and cache the value of \texttt{timer\_counter} after reading it only once as the ISR\_Timer function does not appear to be called, causing the if statement to never be true. Effectively, the compiler assumes that you, the human, has written dead code (\textit{term for code that is unreachable}) and thinks it can optimize it away. By declaring \texttt{timer\_counter} as \texttt{volatile}, the compiler will always read the variable from memory, ensuring the loop works as expected.
 \newline
 \newline
-\textbf{Note:} A major use-case of volatile is to access memory-mapped I/O registers in embedded systems. These registers can change due to external events by the hardware (\textit{HW}) rather than code, and the compiler should not optimize the reads/writes to these registers. Memory-mapped I/O registers should be declared as such (ex: \texttt{volatile uint32\_t * const UART\_DR = (uint32\_t *)0x40000000;}) to avoid the aforementioned issues.
+\textbf{Note:} A major use-case of volatile is to access memory-mapped I/O registers in embedded systems. These registers can change due to external events by the hardware (\textit{HW}) rather than code, and the compiler should not optimize the reads/writes to these registers. Memory-mapped I/O registers should be declared as such (e.g., \texttt{volatile uint32\_t * const UART\_DR = (uint32\_t *)0x40000000;}) to avoid the aforementioned issues.
 
 \subsection{Const}
-The \textbf{const} keyword refers to a variable that is \textbf{read-only} \cite{beningoConst}. The compiler will throw an error if an attempt is made to modify a variable labeled as \texttt{const}. \textbf{Importantly, \texttt{const} does not mean that the value is constant, but rather that the variable cannot be modified by the program}. The distinction is important, as it's possible to have values that are declared as \texttt{const}, but are not constant. 
+The \textbf{const} keyword refers to a variable that is \textbf{read-only} \cite{beningoConst}. The compiler will throw an error if an attempt is made to modify a variable labeled as \texttt{const}. \textbf{Importantly, \texttt{const} does not mean that the value is constant, but rather that the variable cannot be modified by the program}. The distinction is important, as it is possible to have values that are declared as \texttt{const}, but are not constant. 
 \newline
 \newline
 \noindent Const's primary use is to make code more readable and maintainable. By declaring a variable as \texttt{const}, the programmer can signal to others that the variable should not be modified and have the compiler enforce this behaviour. This can help prevent bugs and make the code easier to understand. As a general rule, it's good practice to declare variables as \texttt{const} whenever possible.
 
 \subsubsection{Example Const Use Case}
-Consider the code in Snippet \ref{code:const-use-case}. The variable \texttt{UART\_RECEIVE\_REGISTER\_READ\_ONLY} is declared as \texttt{const}, meaning its value cannot be modified through the program (a compiler error will be thrown). However, the value at the memory address \texttt{0x12345678} can still change due to external events, such as hardware (e.g., UART) writing to it,\footnote{It's also possible to bypass the protection of const, both intentionally and inadvertantly.} which is why \texttt{const} does not mean \textit{constant}.
+Consider the code in Snippet \ref{code:const-use-case}. The variable \texttt{UART\_RECEIVE\_REGISTER\_READ\_ONLY} is declared as \texttt{const}, meaning its value cannot be modified through the program (a compiler error will be thrown). However, the value at the memory address \texttt{0x12345678} can still change due to external events, such as hardware (e.g., UART) writing to it,\footnote{It is also possible to bypass the protection of const, both intentionally and inadvertently.} which is why \texttt{const} does not mean \textit{constant}.
 
 \begin{lstlisting}[caption={Example use case of Const}, label={code:const-use-case}]
 #include <stdint.h>
@@ -59,7 +59,7 @@ static void helper_function() {
 \end{lstlisting}
 
 \subsubsection{Static Declarations}
-When used with global variables, the \texttt{static} keyword limits the variable's scope to the file in which it is defined \cite{arm_static}. This means that the variable cannot be accessed by other files through linking. This is useful for creating private global variables that are only accessible within a single file. Ex: declaring \texttt{static uint8\_t counter = 0U;} in a file means \texttt{counter} is accessible only within that file, and no where else. These variables are stored in the data segment, or Block Starting Symbol (BSS) segment if uninitialized, and retain their value throughout the program's execution.\footnote{For more information, see \href{https://cosmic-software.com/faq/faq17.php}{this FAQ entry on static variables}.}
+When used with global variables, the \texttt{static} keyword limits the variable's scope to the file in which it is defined \cite{arm_static}. This means that the variable cannot be accessed by other files through linking. This is useful for creating private global variables that are only accessible within a single file. E.g., declaring \texttt{static uint8\_t counter = 0U;} in a file means \texttt{counter} is accessible only within that file, and nowhere else. These variables are stored in the data segment, or Block Starting Symbol (BSS) segment if uninitialized, and retain their value throughout the program's execution.\footnote{For more information, see \href{https://cosmic-software.com/faq/faq17.php}{this FAQ entry on static variables}.}
 
 
 \subsubsection{Static Local Variables}

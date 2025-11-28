@@ -6,7 +6,7 @@
 \spoilerline
 
 \subsection{Introduction}
-\noindent A mutex and a semaphore are both synchronization primitives that can be used to signal and/or synchronize access to shared resources in a multi-threaded environment. This section summarizes general principles of interrupt service routines, as commonly described in embedded systems literature - DigiKey has excellent articles on the implementation of real-time operating systems (RTOS) and synchronization primitives \cite{digikey_rtos}.
+\noindent A mutex and a semaphore are both synchronization primitives that can be used to signal and/or synchronize access to shared resources in a multi-threaded environment. This section summarizes general principles of mutexes and semaphores, as commonly described in embedded systems literature---DigiKey has excellent articles on the implementation of real-time operating systems (RTOS) and synchronization primitives \cite{digikey_rtos}.
 
 \subsection{Semaphore}
 A \textit{semaphore} (also known as a \textit{counting semaphore}) is a signalling mechanism that allows a thread to signal one or more waiting threads that a particular event has occurred. It can be thought of as a shared non-negative integer counter.
@@ -21,11 +21,11 @@ Using a semaphore involves two main operations: \begin{itemize}
 \begin{itemize}
     \item Controlling access to a pool of resources 
     \begin{itemize}
-        \item Ex: A server thread with a limited number of connections - the semaphore count would represent the number of available connections, with the semaphore being decremented when a connection is acquired and incremented when a connection is released. A client thread would wait for the semaphore to be incremented before attempting to acquire a connection.
+        \item E.g., a server thread with a limited number of connections---the semaphore count would represent the number of available connections, with the semaphore being decremented when a connection is acquired and incremented when a connection is released. A client thread would wait for the semaphore to be incremented before attempting to acquire a connection.
     \end{itemize}
-    \item Signalling to thread(s) that a particular event has occurred. In the context of an RTOS, where there is only one core available, a semaphore can be used to signal an event to a higher priority task from a lower priority task, and have the higher priority task run instantly. This is because the higher priority task will preempt the lower priority task once it is no longer 'blocked' by the semaphore as it will be available for the higher priority task to acquire.
-    \begin {itemize}
-        \item Ex: An interrupt service routine (ISR) can signal to a worker thread that an event has occurred. \textit{Note: Event flags are also commonly used for this purpose, if provided by the OS.}
+    \item Signalling to thread(s) that a particular event has occurred. In the context of an RTOS, where there is only one core available, a semaphore can be used to signal an event to a higher priority task from a lower priority task, and have the higher priority task run instantly. This is because the higher priority task will preempt the lower priority task once it is no longer ``blocked'' by the semaphore as it will be available for the higher priority task to acquire.
+    \begin{itemize}
+        \item E.g., an interrupt service routine (ISR) can signal to a worker thread that an event has occurred. \textit{Note: Event flags are also commonly used for this purpose, if provided by the OS.}
     \end{itemize}
 \end{itemize}
 A short example of using a semaphore is shown in Snippet \ref{code:semaphore-example}.
@@ -52,7 +52,7 @@ mutex_unlock(uart_mutex);
 \end{lstlisting}
 
 \subsection{Putting it together}
-The key differences between a mutex and a semaphore are that
+The key differences between a mutex and a semaphore are as follows:
 \begin{itemize}
     \item A mutex only has 2 states, locked and unlocked, while a semaphore can count.
     \item A mutex has a concept of ownership, while a semaphore does not. This means that the thread that locks a mutex must be the one to unlock it, while any thread can signal or wait on a semaphore.
@@ -70,7 +70,7 @@ A common follow-up question is to ask about the potential consequences of using 
 \end{figure}
 
 \subsubsection{Priority Inheritance}
-A solution to fix this is called \textit{priority inheritance} - the OS will temporarily boost the priority of the low-priority task to the priority of the high-priority task while the low-priority task holds the mutex \cite{digikey_priority_inversion}. This ensures that the high-priority task can run as soon as the low-priority task releases the mutex. An example of this situation is shown in Figure \ref{fig:priority_inheritance}.
+\noindent A solution to fix this is called \textit{priority inheritance}---the OS will temporarily boost the priority of the low-priority task to the priority of the high-priority task while the low-priority task holds the mutex \cite{digikey_priority_inversion}. This ensures that the high-priority task can run as soon as the low-priority task releases the mutex. An example of this situation is shown in Figure \ref{fig:priority_inheritance}.
 
 \begin{figure}[H]
     \centering

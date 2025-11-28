@@ -24,7 +24,7 @@ Digital signals represent data using discrete values. Digital protocols describe
     % \item balanced vs. unbalanced differential signals 
 \end{itemize}
 
-The some common digital protocols in embedded systems are:
+Some common digital protocols in embedded systems are shown in Table \ref{tab:digital_protocols}:
 \begin{table}[H]
     \centering
     \resizebox{\textwidth}{!}{
@@ -48,7 +48,7 @@ The some common digital protocols in embedded systems are:
     \label{tab:digital_protocols}
 \end{table}
 
-\noindent Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds. Consequently, for them to communicate properly, logic level shifting the signal between devices may required. For low speed, single-ended signals, this can be implemented with a single transistor as shown in Figure \ref{fig:nch_logic_shifter} - for more complex cases, there are often level-shifting ICs available. 
+\noindent Digital signals have discrete states defined by voltage thresholds. Using smaller voltage differences between states results in lower power consumption, but offers less noise immunity. For this reason, some devices may natively support different voltage thresholds. Consequently, for them to communicate properly, logic level shifting the signal between devices may be required. For low speed, single-ended signals, this can be implemented with a single transistor as shown in Figure \ref{fig:nch_logic_shifter}---for more complex cases, there are often level-shifting ICs available. 
 
 \begin{figure}[H]
     \begin{center}
@@ -68,15 +68,15 @@ The some common digital protocols in embedded systems are:
 \subsection{Analog Signalling}
 Analog signals are continuous in both time and value (as compared to digital signals, which typically only contain logical values, such as 0 or 1). While microcontrollers operate digitally, there are many reasons to rely on analog signals.
 \begin{itemize}
-    \item All signals from sensors begin as "analog" values. Any IC (\textit{integrated circuit}) that outputs a digital value is doing so because it features an on-board ADC (\textit{Analog to Digital Converter}). Because digital signals from sensors begin as analog signals, working only with analog signals can simplify the design process.
-    \item Analog signalling circuitry is often cheap to implement in a variety of embedded system contexts. Microcontrollers often feature internal ADC's, and may only require a few additional components to directly interface with an analog sensor.
-    \item Simple signal processing can be performed in hardware before digital computation is required. An example of analog signal processing in hardware is first order low pass filter. 
+    \item All signals from sensors begin as ``analog'' values. Any IC (\textit{integrated circuit}) that outputs a digital value is doing so because it features an on-board ADC (\textit{Analog to Digital Converter}). Because digital signals from sensors begin as analog signals, working only with analog signals can simplify the design process.
+    \item Analog signalling circuitry is often cheap to implement in a variety of embedded system contexts. Microcontrollers often feature internal ADCs, and may only require a few additional components to directly interface with an analog sensor.
+    \item Simple signal processing can be performed in hardware before digital computation is required. An example of analog signal processing in hardware is a first-order low-pass filter. 
     \item More complex analog circuits are used in applications where higher bandwidth is needed in control loops. Analog feedback loops are very common in power electronics, but the flexibility and easy modification of digital control loops is becoming more common on highly integrated embedded systems.
 \end{itemize}
 
 \noindent A drawback of analog signalling techniques is that they are quite often less resilient when faced with noise compared to digital signalling techniques. While a digital signal is tolerant to small amounts of noise without affecting the signal transmission at all, analog signals directly realize the effects of noise. For this reason, virtually all long distance data transmission systems employ some form of digital transmission. \newline
 
-\newnoindentpara Differential signalling is also an option in the analog world to compensate for common-mode noise for cost optimized analog circuitry. This is uncommon however as conversion to a digital protocol is often preferred when optimizing for noise immunity. 
+\newnoindentpara Differential signalling is also an option in the analog world to compensate for common-mode noise for cost-optimized analog circuitry. This is uncommon, however, as conversion to a digital protocol is often preferred when optimizing for noise immunity. 
 % This is our understanding from what we've seen in industry, kind of hard to verify just googling around so yea, see what the reviewers think.
 
 \subsection{Conclusion}

@@ -13,7 +13,7 @@ Assume the header shown in Snippet \ref{code:bit-bang-header} is available for u
 \subsection{Bit-Banging Basics}
 In embedded systems, communication protocols like SPI are typically handled by dedicated hardware peripherals. These peripherals manage the precise timing and fast data transmission required to communicate over physical wires. However, it is also possible to implement these protocols purely in software, a technique commonly known as \textit{bit-banging}. Bit-banging can be useful in the following scenarios:
 \begin{itemize}
-    \item When a hardware peripheral (ex: SPI/I2C/UART) is unavailable on the microcontroller, usually because it's not supported, or the EE (\textit{Electrical Engineer}) gave the pins a 'creative reassignment' (accidentally routed incorrect pins during schematic capture).
+    \item When a hardware peripheral (e.g., SPI/I2C/UART) is unavailable on the microcontroller, usually because it is not supported, or the EE (\textit{Electrical Engineer}) gave the pins a ``creative reassignment'' (accidentally routed incorrect pins during schematic capture).
     \item When a custom or non-standard protocol is required, which cannot be supported by existing hardware peripherals.
 \end{itemize}
 
@@ -31,8 +31,8 @@ Consider the SPI timing diagram in Figure \ref{fig:spi_timing_2}. The SPI protoc
     \label{fig:spi_timing_2}
 \end{figure}
 
-\noindent Note that the SPI protocol can be configured in different clock sampling modes, which define the clock polarity (CPOL) and phase (CPHA). Figure \ref{fig:spi_timing} shows CPOL = 1, CPHA = 1. A SPI slave device's datasheet will usually specify the required CPOL and CPHA settings for proper communication real-world implementation.
-\begin {itemize}
+\noindent Note that the SPI protocol can be configured in different clock sampling modes, which define the clock polarity (CPOL) and phase (CPHA). Figure \ref{fig:spi_timing} shows CPOL = 1, CPHA = 1. A SPI slave device's datasheet will usually specify the required CPOL and CPHA settings for proper communication in a real-world implementation.
+\begin{itemize}
     \item \textbf{CPOL (Clock Polarity)}: Determines the idle state of the clock signal. CPOL = 0 means the clock is low when idle, while CPOL = 1 means the clock is high when idle.
     \item \textbf{CPHA (Clock Phase)}: Determines when data is sampled and changed. CPHA = 0 means data is sampled on the leading edge (first transition) of the clock, while CPHA = 1 means data is sampled on the trailing edge (second transition) of the clock.
 \end{itemize}
