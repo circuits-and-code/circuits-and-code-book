@@ -14,7 +14,7 @@ A \textit{semaphore} (also known as a \textit{counting semaphore}) is a signalli
 \newline
 Using a semaphore involves two main operations: \begin{itemize}
     \item \texttt{signal\_semaphore()} - increments the semaphore counter
-    \item \texttt{wait\_for\_semaphore\_signal(timeout)} - decrements the semaphore count, and if the count is less than zero, blocks the calling thread for the duration of the timeout until the count is greater than zero.
+    \item \texttt{wait\_for\_semaphore\_signal(timeout)} - if the semaphore count is greater than zero, decrements it and proceeds; otherwise, blocks the calling thread for the duration of the timeout until the count becomes greater than zero.
 \end{itemize}
 
 \noindent A semaphore is often used in the following scenarios:
