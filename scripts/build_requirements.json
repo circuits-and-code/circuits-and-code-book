@@ -10,7 +10,6 @@
         "build-essential",
         "texlive-fonts-extra",
         "texlive-bibtex-extra",
-        "biber",
-        "python3-tk"
+        "biber"
     ]
 }
