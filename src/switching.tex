@@ -11,7 +11,7 @@ The solenoid operates at $\approx 12\text{V}$ DC requiring $\approx 1\text{A}$ o
 \subsection{Solenoids \& Flyback}
 A solenoid is an electromagnet based on a coil of wire usually wrapped around a magnetic core to concentrate the magnetic field. These devices see numerous applications in electro-mechanical systems such as valves and circuit breakers. As the solenoid is made of a long wire, it has resistance. \newline
 
-\newnoindentpara Due to the coil of wire, a solenoid is highly inductive and requires extra considerations to control in an embedded system. Consider when a solenoid is enabled the question states $I = 1\text{A}$ so when disabling the solenoid the goal is to switch to a $I = 0 \text{A}$ state. If this state switch is performed quickly then the inductive load can see a very negative $\dfrac{d\text{I}}{d\text{t}}$ as $\dfrac{0 - 1}{\approx 0} = - \infty$. For an inductor $V_L = L \cdot \dfrac{d\text{I}}{d\text{t}}$ so this can lead to a very negative $V_L$ which can cause damage to the circuitry responsible for enabling and disabling the load. \newline
+\newnoindentpara Due to the coil of wire, a solenoid is highly inductive and requires extra considerations to control in an embedded system. Consider when a solenoid is enabled the question states $I \approx 1\text{A}$ so when disabling the solenoid the goal is to switch to a $I = 0 \text{A}$ state. If this state switch is performed quickly then the inductive load can see a very negative $\dfrac{d\text{I}}{d\text{t}}$ as $\dfrac{0 - 1}{\approx 0} = - \infty$. For an inductor $V_L = L \cdot \dfrac{d\text{I}}{d\text{t}}$ so this can lead to a very negative $V_L$ which can cause damage to the circuitry responsible for enabling and disabling the load. \newline
 
 \newnoindentpara This is commonly compensated for by using a Schottky diode across the solenoid so that during normal operation the diode does nothing, but if the voltage across the coil, $V_L$, goes negative then the diode begins conducting quickly allowing the solenoid to dissipate it's energy without damaging the switching circuitry. As this diode protects the circuit from the flyback voltage spike induced by the inductive load it is referred to as a Flyback Diode. 
 
@@ -41,39 +41,45 @@ Enabling and disabling a load can be done in with either switching the positive 
 \newnoindentpara For any common microcontroller, GPIO pins by themselves will not be capable of switching a load with these voltage and current requirements so the use of a pass element transistor is used. The selected transistor needs to be capable of handling the load's voltage and current requirements while being capable of being controlled from the microcontroller.
 
 \subsection{Transistors}
-As introduced in Question \ref{section:led}, a BJT or FET could be selected for this application.\footnote{Of course other options exist, however, for a simple application these are the only options worthy of consideration.}
+As introduced in Question \ref{section:led}, a BJT or FET could be selected for this application\footnote{Of course other options exist, however, for a simple application these are the only options worthy of consideration.}. An electromechanical relay is not considered for this application due to their large size, cost, and low switching speed compared to solid state semiconductor devices.
 
-As BJTs consume current at the base and have a constant base to emitter voltage drop, holding a BJT on requires constant power consumption. MOSFETs on the other hand require a gate to source voltage, but once the gate capacitance is filled they do not require any current to hold enabled. Additionally consider that the conduction losses of MOSFETs is much lower than BJTs. Consequently for driving loads, MOSFETs are prefferred! \newline
+\newnoindentpara As BJTs consume current at their base and have a constant base to emitter voltage drop, holding a BJT in the ON state requires constant power consumption. MOSFETs on the other hand require a gate to source voltage, but once the gate capacitance is filled they do not require any current (and therefore power) to hold enabled. Additionally, consider that the conduction losses of MOSFETs is much lower than BJTs. Consequently for driving loads, MOSFETs are preferred! \newline
 
-WIP
+\newnoindentpara There are numerous types of MOSFET, but a key differentiator is N-Channel (aka NMOS) and P-Channel (aka PMOS). Depletion mode MOSFETs are most common and will be discussed here exclusively. NMOS FETs require a positive voltage between the gate and source terminals for them to turn ON, knwn as a positive $V_{gs}$, whereas PMOS FETs require a negative $V_{gs}$ to turn ON. Both types of FETs turn OFF when $V_{gs} \approx 0$. Consequently, saying a FET is ON means $\bar{V_{gs}} >> \bar{V_{th}}$ and a FET being OFF means $\bar{V_{gs}} \approx 0$. When a FET is ON, $V_{ds} \approx 0$, and when it is OFF, $I_{ds} \approx 0$. The conditions to enable and disable the FETs drive which applications the FETs can be used in, however, NMOS FETs generally have lower RDSon (Resistance between the drain and source pins when ON) then PMOS FETs have making them preferred. A lower RDSON results in decreased conduction losses. 
 
-% TODO WRITE : PCh FETS have more RDSon (and therefore conduction losses) than Nch FETs so 
+\subsection{High Side vs. Low Side}
+The solenoid can be switched using a MOSFET using a PMOS FET at the high side or an NMOS FET at the low side as shown in Figure x and Figure y respectively. 
 
-\subsection{High Side vs Low Side}
+% TODO DRAW : High Side PMOS & Solenoid w/ Flyback
 
-WIP
+% TODO DRAW : Low Side NMOS & Solenoid w/ Flyback
 
-% Ground is more common around the system, espeacilly cars with grounded chassis
+There are numerous tradeoffs with choosing either solution for this application including:
 
-% think of high voltage, switching neutral would make unscrewing a lightbulb unsafe
+\begin{itemize}
+    \item If multiple load devices are present, it is likely all of them need ground while they could require different voltage level power sources. By performing high side switching the total number of wires required in the harness could be decreased. For automotive applications the chassis also serves as ground meaning a low impedance ground connection to peripherals can come for free. 
+    \item If a load requires a higher voltage and ground is prevelant then having high voltage always connected to the harness to the load exposes humans to a risk even when they preseive the load as unpowerred as the human can touch the high voltage harness and the chassis to receive a shock even whehn the load is not powerred.
+    \item Low side switching is the easiest bc % TODO write -> % The primary advantage of low side switching is that it is easier to switch a transistor on the low side rather than the high side. % Also lower conduction losses by using an NMOS
+    \item Loads may also have signal connections so ensuring they always share a ground reference even when high voltage power is disabled can be important
+\end{itemize}
 
-% harnesses can share a ground wire (or use a chassis for ground)
+While the low side NMOS is easy to drive from the MCU, to do a high side PMOS, an NMOS FET must be used to buffer the switching. This NMOS FET does not need a large current rating as it is only driving the gate of the PMOS. It's purpose is to protect the pin of the microcontroller from being exposed to a high voltage. This completed circuit is shown in:
 
-% common mode offset 
+% TODO DRAW : high side switched solenoid with low side NMOS to pull the gate with connection to MCU 
 
-% TODO DRAW : high side switched solenoid 
+To achieve low RDSON and high side switching, a high side NMOS can be used, however,
+% TODO WRITE
+% Note a high side NMOS can be used but then a higher voltage is required. Gets the best of both worlds
+% introduce the concept of a switched capacitor (bootstrap cap / charge pump) to create this rail without an inductor? 
 
-% The primary advantage of low side switching is that it is easier to switch a transistor on the low side rather than the high side. 
+In this case as the voltage is low and the solenoid lacks any other IO or system level considerations, a low side NMOS circuit is optimal as shown in:
 
-% the existence of other ground referenced digital signals incentivizes high side switching for the loads
+% TODO DRAW : low side switched solenoid with connection to MCU
 
-% referenced to ground
-
-% TODO DRAW : low side switched solenoid 
-
-% \subsection{Follow-ups}
-% \begin{itemize}
-%     \item 
-% \end{itemize}
+\subsection{Follow-ups}
+\begin{itemize}
+    \item What is the use case of adding a pull-up or pull-down resistor onto the gate of the switching MOSFET? % consider turn on case of the microcontroller, the pull-up asserts the logic state of the line when the microcontroller is not driving it. 
+    \item Describe a technique for reducing the power consumption required to hold the solenoid enabled? % after reaching a steady state, PWM can be used to hold the position usually while putting less RMS current into the coil. 
+\end{itemize}
 
 \end{document}

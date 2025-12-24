@@ -4,7 +4,7 @@ import argparse
 
 # fmt: off
 
-TITLE = "AC vs DC Coupling"
+TITLE = "AC vs. DC Coupling"
 
 def plotter() :
 
