@@ -33,25 +33,32 @@ def remove_and_create_dir(directory_path):
     os.makedirs(directory_path)
 
 
-def run_command(command):
-    """Run a shell command and handle its output."""
+import sys
+
+
+def run_command(command: str) -> None:
+    """Run a shell command and stream output safely."""
     click.secho(f"Running command: {command}", fg="green")
+
     process = subprocess.Popen(
-        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+        command,
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,  # merge streams so ordering is correct
+        text=True,
+        encoding="utf-8",
+        errors="replace",  # <-- key fix
+        bufsize=1,  # line-buffered
     )
 
-    # Print stdout in real-time
+    assert process.stdout is not None
     for line in process.stdout:
-        print(line.strip())
+        print(line.rstrip("\n"))
     process.stdout.close()
 
-    # Wait for process to finish and handle errors
     return_code = process.wait()
     if return_code != 0:
-        click.secho("An error occurred:", fg="red")
-        for line in process.stderr:
-            print(line.strip())
-        raise RuntimeError("Command failed: {}".format(command))
+        raise RuntimeError(f"Command failed: {command}")
 
 
 def generate_images():
