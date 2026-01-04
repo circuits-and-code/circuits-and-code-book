@@ -137,6 +137,7 @@ Circuits with inductors and capacitors are dependent on time and frequency and c
 
 % Solving this circuit fully in time domain because it is conceptually simple even though mathematically complex.
 \newnoindentpara Analyzing the two elements in the circuit in time domain shows $I = C \cdot \dfrac{dV_{out}}{dt}$ and $V_{in} - V_{out} = I \cdot R$. As $I$ is equivalent in both elements, it can be cancelled out when solving the system of equations, resulting in $V_{in} - V_{out} = R \cdot C \cdot \dfrac{dV_{out}}{dt}$. This expression can be algebraically manipulated into $-\dfrac{dV_{out}}{V_{out}-V_{in}} = -\dfrac{dt}{R \cdot C}$. Integrating both sides, the expression becomes $\ln{\dfrac{V_{out}-V_{in}}{V_{out}}}=-\dfrac{t}{R \cdot C}$. \newline 
+% Note that this result of integration relies on a set of initial conditions and the way it is explained here abuses notation slightly. This is confusing to explain so I will not be doing it in this solution, however, readers who are not familiar with circuits and attempt the mathematical derivation themselves will likely become confused. I am not sure if there is an easy solution to this as a full explanation is far beyond what an interviewer would ever ask though the result is critical to know.
 
 \newnoindentpara After re-arranging the above expression, the solution to the differential equation is given by Equation \ref{eq:lpf-ode}.
 \begin{equation}
@@ -152,6 +153,8 @@ Circuits with inductors and capacitors are dependent on time and frequency and c
     \caption{Step Response of a Low Pass Filter Circuit}
     \label{fig:step-response-low-pass-filter}
 \end{figure}
+% It may be nice to give the readers a frequency domain bode plot of the RC circuit as well. That question is sometimes asked, however, that is a bit of scope creep though? . 
+% Also consider: Define the term "Bode Plot" for readers and use it?
 
 \subsubsection{Connection to I2C}
 The low-pass filter circuit is extremely fundamental and shows up in a variety of situations. Consider an I2C digital signal in which all drivers are not asserting the line low - in this case, the signal trace has some parasitic capacitance to ground and a pull-up resistor is responsible for pulling the line to a logic high state. This can be modelled as an RC low-pass filter circuit - consequently, an I2C signal (such as the one shown in Figure \ref{fig:i2c_scl}, SCL line) will have a similar step response to the low-pass filter circuit.
@@ -194,15 +197,16 @@ For this question, a complex impedance approach will be used rather than time do
 % \begin{figure}[H]
 %     \centering
 %     \includegraphics[width=0.8\textwidth]{generated_images/hpf_freq_response_plot.png}
-%     \caption{Frequency vs Gain Plot of a High Pass Filter Circuit}
+%     \caption{Frequency vs. Gain Plot of a High Pass Filter Circuit}
 %     \label{fig:step-response-high-pass-filter}
 % \end{figure}
 
 \subsection{Follow-ups}
 \begin{itemize}
     \item Given an unknown discrete capacitor find the capacitance? How would you determine the capacitance at a given DC bias voltage? % First part is Circuit C. Second part a solution is use Circuit E with an initial condition on Vout as the bias and a very small Iin current.
-    \item For circuit C, does changing the value of R (assuming all else remains constant) change the total energy dissipated in the resistor? % Answer is no and requires an interesting integral to prove. Someone asked me this recently and I thought it was fun bc i had to do the proof live in fronta them lool. 
-    \item Consider the circuits given in extra practice question \ref{extra_practice:more_passives}. % More complex circuits for consideration
+    % TODO : Remove this follow-up when unknown_capacitor.tex is added into the book
+    \item For Circuit C, does changing the value of R (assuming all else remains constant) change the total energy dissipated in the resistor? % Answer is no and requires an interesting integral to prove. This result is fairly unintuitive in my opinion. Someone asked me this recently and I thought it was fun bc i had to do the proof live in front of them. 
+    \item Determine the step response of the circuits given in Section \ref{extra_practice:more_passives}. % More complex circuits for consideration, good for practice
 \end{itemize}
 
 \end{document}

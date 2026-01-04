@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 import argparse
 import control
 
-TITLE = "Frequency vs Gain of High Pass Filter"
-
+TITLE = "Frequency vs. Gain of High Pass Filter"
 
 def plotter():
     w0 = 1
@@ -21,7 +20,6 @@ def plotter():
     plt.ylabel("")
     plt.legend()
     plt.grid(True)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(f"{TITLE} Plotter")

@@ -4,7 +4,7 @@ import argparse
 
 # fmt: off
 
-TITLE = "AC vs DC Coupling"
+TITLE = "AC vs. DC Coupling"
 
 def plotter() :
 
@@ -16,7 +16,6 @@ def plotter() :
     OFFSET = 2
     AMPLITUDE = 1
 
-    # TODO : draw a sinusoid with a DC offset
     ac = AMPLITUDE * np.sin(2 * np.pi * FREQ * t)
     full = ac + OFFSET
 
