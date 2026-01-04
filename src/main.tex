@@ -1,6 +1,10 @@
 \documentclass[letterpaper,11pt]{article}
 
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\geometry{
+  headheight=14pt
+}
+\usepackage{microtype}
 \usepackage{subfiles}
 \usepackage[T1]{fontenc}
 \usepackage[sfdefault]{cabin}
@@ -8,7 +12,10 @@
 \usepackage{amsmath}       
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
+\usepackage{etoolbox}
+\apptocmd{\bibsetup}{\sloppy}{}{}
 \usepackage{xcolor}
 \usepackage{titlesec}
 \usepackage{listings}

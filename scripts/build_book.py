@@ -4,6 +4,7 @@ import shutil
 import click
 import check_code_snippets
 import argparse
+import sys
 
 # Constants
 OUTPUT_DIR = "output"
@@ -33,31 +34,40 @@ def remove_and_create_dir(directory_path):
     os.makedirs(directory_path)
 
 
-import sys
-
-
 def run_command(command: str) -> None:
-    """Run a shell command and stream output safely."""
+    """Run a shell command, stream output live, and raise on failure.
+
+    Fixes UnicodeDecodeError by decoding with a tolerant error handler.
+    """
     click.secho(f"Running command: {command}", fg="green")
 
+    # Use the console's encoding if available; otherwise fall back to utf-8.
+    encoding = sys.stdout.encoding or "utf-8"
+
+    # Merge stderr into stdout so we stream everything and avoid stderr buffering issues.
     process = subprocess.Popen(
         command,
         shell=True,
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,  # merge streams so ordering is correct
+        stderr=subprocess.STDOUT,
         text=True,
-        encoding="utf-8",
-        errors="replace",  # <-- key fix
-        bufsize=1,  # line-buffered
+        encoding=encoding,
+        errors="replace",  # or "backslashreplace" if you want to see the bytes escaped
+        bufsize=1,  # line-buffered (best effort)
+        universal_newlines=True,
     )
 
     assert process.stdout is not None
-    for line in process.stdout:
-        print(line.rstrip("\n"))
-    process.stdout.close()
+    try:
+        for line in process.stdout:
+            # Avoid .strip() eating meaningful whitespace; just drop the trailing newline.
+            print(line.rstrip("\n"))
+    finally:
+        process.stdout.close()
 
     return_code = process.wait()
     if return_code != 0:
+        click.secho(f"Command failed with exit code {return_code}: {command}", fg="red")
         raise RuntimeError(f"Command failed: {command}")
 
 
