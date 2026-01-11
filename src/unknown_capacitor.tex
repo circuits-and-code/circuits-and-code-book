@@ -1,0 +1,63 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Determine the capacitance of an unknown discrete capacitor.} \label{section:unknown_capacitor}
+
+\subsection{Constraints}
+\begin{itemize}
+    \item Ensure your method can determine the capacitance at any given DC bias voltage. 
+    \item Using a tool with a direct capacitor meter (i.e. Digital Multimeter (DMM), LC Meter, Vector Network Analyzer (VNA)) is not permitted. Consider using a bench-top power supply, components of known values, and the oscilloscope only. % Force a solution based on first principles instead of "connect it to a DMM in capacitance reading mode..."
+    \item Assume the capacitance is known to be larger than $1 \mu H$. % avoid the RF implications of this question mostly 
+\end{itemize}
+
+\spoilerline
+
+\subsection{RC Time Domain}
+
+A simple approach is to connect a resistor in series with the unknown capacitor and then apply a voltage step to the input while measuring the voltage of the output. This circuit appears and behaves as shown in Figure \ref{fig:rc_low_pass_filter}. Recall that the output of the circuit, $V_{out}$ takes one time constant, $\tau = R \cdot C$, to go from it's initial voltage, $V_i$, to an intermediary voltage $V_i+(1-e^{-1}) \cdot V_s$ where the voltage of the applied step is represented by $V_s$. Note that $1-e^{-1} \approx 0.632 $ is a simple mathematical constant. 
+
+\newnoindentpara By plotting $V_{out}$ on the oscilloscope after a step the time constant, $\tau$, can be measured. Because the resistor value, $R$, is known for the circuit the capacitance can be easily calculated as $C = \frac{\tau}{R}$. To achieve a reasonable time constant trial and error with varying the value of the resistor, $R$, can be used. The input voltage step is applied by enabling a constant voltage power supply. As the power supply is not an ideal source, there will be some finite rise time to the applied input step. To ensure an accurate measurement it is critical that the rise time of the power supply input voltage step is significantly shorter than the time constant of the RC Circuit to ensure assuming an ideal step is a reasonable assumption. 
+
+\newnoindentpara The capacitance of a physical capacitor changes with varying DC bias voltages. If a large voltage step, $V_s$, is used then the effects of DC bias will start to affect the measurement. If a small voltage step, $V_s$, is used then quantization error of the oscilloscope will make it difficult to determine the time constant $\tau$ from the plot exactly. Varying the value of the initial voltage, $V_i$, allows for measurements of the unknown capacitor at different DC bias points. Separating $V_i$ and $V_s$ can be done by using two different channels of a power supply unit in the following circuit.
+
+% TODO DRAW: 2x series power supply channels into an RC circuit with probes on VIN and VOUT 
+
+\subsection{Constant Current}
+
+% TODO WRITE
+% can apply a constant current to it and measure slope of the voltage plot, challenges with dc bias
+
+\subsection{LC Resonance}
+
+Another method of accomplishing this is to resonate the capacitor with a known inductance. 
+
+% TODO DRAW : Series LC Circuit with probes
+
+% TODO DRAW : Parallel LC Circuit with probes
+
+% parallel and series options for resonance, pros and cons, capacitor has some ESL as is ... 
+
+% TODO
+
+\subsection{Non-Ideal Capacitor Modelling}
+
+% consider if this section should even exist? might be nice to show it just for reference ?? 
+
+% TODO
+Discrete capacitors differ from ideal capacitors due to the addition of parasitic effects. Capacitor models of increasing complexity exist for numerous different types of capacitors, however, the following model shown in Figure x is commonly considered.
+
+% TODO DRAW : Series RLC with bleed R in par with C model of a capacitor 
+
+The Bode Plot for this circuit appears as follows
+
+% TODO PLOT : bode plot of RLC series circuit ? figure out the formulas LT Spice uses :sob: 
+
+\subsection{Follow-ups}
+\begin{itemize}
+    \item Consider other possible solutions? % I'm sure there are, will let people get creative on it, no particular solution I'm fishing for.
+    \item If a DMM set to resistance measurement mode is connected to a very large capacitor, what readings will it give and why? % Looking for an increasing resistance as the observed impedance. Requires understanding of how a DMM works
+    \item How would you use a VNA to determine the capacitance? % looking for a solution with some RF insight, S-params & Smith Chart stuff, some VNA's might have easy capacitance meters? looking for a relatively low frequency answer. 
+\end{itemize}
+
+\end{document}
